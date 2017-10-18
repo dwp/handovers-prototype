@@ -1,0 +1,35 @@
+{
+  "title": "officeData",
+  "offices": [
+    {
+      "id": "1",
+      "officeName": "Barnsley Jobcentre",
+      "postcode": "S71 3AA"
+    },
+    {
+      "id": "2",
+      "officeName": "Sheffield South West Jobcentre",
+      "postcode": "S13 7XX"
+    },
+    {
+      "id": "3",
+      "officeName": "York Jobcentre",
+      "postcode": "YO3 5GF"
+    },
+    {
+      "id": "4",
+      "officeName": "Manchester South Benefit Centre",
+      "postcode": "M13 6RS"
+    },
+    {
+      "id": "5",
+      "officeName": "Rotherham Benefit Centre",
+      "postcode": "S16 8RD"
+    },
+    {
+      "id": "6",
+      "officeName": "York Jobcentre",
+      "postcode": "YO5 4BN"
+    }
+  ]
+}

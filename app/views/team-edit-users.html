@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main id="content" role="main">
+    <div class="main-content">
+        <h1 class="heading-large">Add team member to {{ team.teamName }} team</h1>
+        <br>
+        <form action="/team/user/add" method="post" class="form" id="team-user-add-form">
+            <div class="form-group grid-row">
+                <div class="column-full">
+                    <legend class="form-label-bold">Existing team members</legend>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">First name</th>
+                                <th scope="col">Last name</th>
+                                <th scope="col">Staff Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for existingTeamMember in team.userList %}
+                            <tr>
+                                <td>{{ existingTeamMember.firstName }}</td>
+                                <td>{{ existingTeamMember.lastName }}</td>
+                                <td>{{ existingTeamMember.staffId }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <fieldset class="inline">
+                    <legend class="form-label-bold">Select a team member to add to the {{ team.teamName }} team</legend>
+                    <select class="select form-control" name="selected-user" id="selected-user">
+                        <option value="">Select</option>
+                        {% for availableUser in availableUsers %}
+                            <option value="{{ availableUser.staffId }}">{{ availableUser.firstName }} {{ availableUser.lastName }} - {{ availableUser.staffId }}</option>
+                        {% endfor %}
+                    </select>
+                </fieldset>
+            </div>
+
+            <div class="form-group grid-row">
+                <div class="column-full">
+                    <input class="button" type="submit"></input>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
+
+{% endblock %}

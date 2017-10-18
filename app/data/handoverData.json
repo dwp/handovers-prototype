@@ -1,0 +1,114 @@
+{ "title": "handoverData",
+  "benefits": [{
+      "id": "1",
+      "benefitName" : "Employment & Support Allowance [ESA]"
+    },{
+      "id": "2",
+      "benefitName" : "Jobseekers Allowance [JSA}"
+    },{
+      "id": "3",
+      "benefitName" : "Universal Credit [UC]"
+    },{
+      "id": "4",
+      "benefitName" : "Housing Benefit [HB]"
+    }],
+  "handoverTypes": [{
+      "id": "1",
+      "handoverType" : "Appointment confirmation"
+    },{
+      "id": "2",
+      "handoverType" : "Claim closure"
+    },{
+      "id": "3",
+      "handoverType" : "Hardship"
+    },{
+      "id": "4",
+      "handoverType" : "Missing evidence"
+    },{
+      "id": "5",
+      "handoverType" : "New claim"
+    },{
+      "id": "6",
+      "handoverType" : "Reconsiderations"
+    }],
+  "handoverReasons" : [{
+      "id": "1",
+      "handoverReason" : "Appointment form"
+    },{
+      "id": "2",
+      "handoverReason" : "Claim termination"
+    },{
+      "id": "3",
+      "handoverReason" : "General query"
+    },{
+      "id": "4",
+      "handoverReason" : "Joint claim"
+    },{
+      "id": "5",
+      "handoverReason" : "Missing direct payment"
+    },{
+      "id": "6",
+      "handoverReason" : "Payment query"
+    }],
+  "handovers": [{
+      "id" : "1",
+      "nino": "AA123456B",
+      "staffId": "40001001",
+      "owningOfficeId": "3",
+      "benefitId": "1",
+      "typeId": "2",
+      "reasonId": "3",
+      "callback" : "1",
+      "priority" : "Standard callback"
+    },{
+      "id" : "2",
+      "nino": "AA123456B",
+      "staffId": "40001001",
+      "owningOfficeId": "3",
+      "benefitId": "2",
+      "typeId": "3",
+      "reasonId": "4",
+      "callback" : "0",
+      "priority" : "Priority duplicate"
+    },{
+      "id" : "3",
+      "nino": "ZZ123456A",
+      "staffId": "40001002",
+      "owningOfficeId": "1",
+      "benefitId": "4",
+      "typeId": "4",
+      "reasonId": "5",
+      "callback" : "0",
+      "priority" : "Non-callback"
+    },{
+     "id" : "4",
+      "nino": "AA345678B",
+      "staffId": "40001003",
+      "owningOfficeId": "3",
+      "benefitId": "1",
+      "typeId": "2",
+      "reasonId": "3",
+      "priority" : "Standard callback"
+    },{
+      "id" : "5",
+      "nino": "AA345678B",
+      "staffId": "40001003",
+      "owningOfficeId": "3",
+      "benefitId": "1",
+      "typeId": "2",
+      "reasonId": "3",
+      "callback" : "0",
+      "priority" : "Standard callback"
+    },{
+      "id" : "6",
+      "nino": "ZZ234567A",
+      "staffId": "40001004",
+      "owningOfficeId": "3",
+      "benefitId": "4",
+      "typeId": "5",
+      "reasonId": "6",
+      "callback" : "0",
+      "priority" : "Escalation"
+    }]
+}
+

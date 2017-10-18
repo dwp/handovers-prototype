@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main id="content" role="main">
+    <div class="main-content">
+        <h1 class="heading-large">View claimant details - {{ firstName }} {{ lastName }}</h1>
+        <br>
+        <div>
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">First name</legend>
+                        <div>
+                            <p>{{ firstName }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Telephone number</legend>
+                        <div>
+                            <p>{{ telNum }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Last name</legend>
+                        <div>
+                            <p>{{ lastName }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Mobile</legend>
+                        <div>
+                            <p>{{ mobile }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Date of birth</legend>
+                        <div>
+                            <p>{{ dob }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Postcode</legend>
+                        <div>
+                            <p>{{ postcode}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">National insurance number</legend>
+                        <div>
+                            <p>{{ nino }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <a href="/handover/create?nino={{ nino }}" class="button">Create handover</a>
+                    </div>
+                </div>
+                <div class="column-half">
+                    <div class="form-group">
+                        <a href="/index">Back to index page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
+
+{% endblock %}

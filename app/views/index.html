@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+  {% block page_title %}Handovers Prototype Index Page{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="heading-xlarge">
+        Handovers prototype
+        <span class="heading-secondary">{{releaseVersion}}</span>
+      </h1>{{ releaseVersion | log }}
+      <p>
+        Allows prototyping of service to raise and process handovers
+      </p>
+
+    </div>
+  </div>
+
+  <div class="grid-row">
+    {% set groupLinksScreens = [{
+    workTitle : 'Claimants',
+    links: [{
+    link : '/claimant/view', title : 'View claimant details'
+    }, {
+    link : '/claimant/find', title : 'Find claimant'
+    }]
+    }] %}
+
+    {{ sprintLinks( 'Handovers Pages', groupLinksScreens) }}
+
+    {% set groupLinksScreens = [{
+    workTitle : 'Teams',
+    links: [{
+    link : '/team/user/add', title : 'Add user to team'
+    }, {
+    link : '/team/skill/add', title : 'Add skills area to team'
+    }]
+    }] %}
+
+    {{ sprintLinks( '', groupLinksScreens) }}
+
+    {% set groupLinksScreens = [{
+    workTitle : 'Handovers',
+    links: [{
+    link : '/handover/create?nino=AA123456B', title : 'Create handover'
+    }]
+    }] %}
+
+    {{ sprintLinks( '', groupLinksScreens) }}
+
+  </div>
+
+</main>
+
+{% endblock %}
+
+
+{% macro sprintLinks(sprintName, sprintWorkInfo) %}
+<div class="column-third">
+    {% if sprintName %}
+      <h2 class="heading-medium">{{sprintName}}</h2>
+    {% else %}
+      <h2 class="heading-medium">&nbsp;</h2>
+    {% endif %}
+
+  {% for thisSprintWorkInfo in sprintWorkInfo %}
+  <ul class="bullets">
+    <h3 class="heading-small">{{thisSprintWorkInfo.workTitle}}</h3>
+    {% for link in thisSprintWorkInfo.links %}
+    <ul>
+      <li><a href="{{link.link}}">{{link.title}}</a></li>
+    </ul>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</div>
+{% endmacro %}

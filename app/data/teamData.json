@@ -1,0 +1,113 @@
+{
+    "title": "teamData",
+    "teams": [
+      {
+        "teamName": "Red",
+        "userList": [],
+        "skillList": [],
+        "startDate": "20 Sep 2016",
+        "endDate": ""
+      },
+      {
+        "teamName": "Blue",
+        "userList": [],
+        "skillList": [],
+        "startDate": "13 Aug 2016",
+        "endDate": "20 Aug 2017"
+      },
+      {
+        "teamName": "Green",
+        "userList": [],
+        "skillList": [],
+        "startDate": "12 Mar 2015",
+        "endDate": ""
+      },
+      {
+        "teamName": "Black",
+        "userList": [],
+        "skillList": [],
+        "startDate": "14 Feb 2017",
+        "endDate": ""
+      }
+    ],
+    "users": [
+      {
+        "firstName": "Alex",
+        "lastName": "Black",
+        "staffId": "40001000",
+        "telNum": "01234 567890"
+      },
+      {
+        "firstName": "Callum",
+        "lastName": "Dalton",
+        "staffId": "40001001",
+        "telNum": "02345 678901"
+      },
+      {
+        "firstName": "Ellie",
+        "lastName": "Fuller",
+        "staffId": "40001002",
+        "telNum": "03456 789012"
+      },
+      {
+        "firstName": "Grant",
+        "lastName": "Hopper",
+        "staffId": "40001003",
+        "telNum": "04567 890123"
+      },
+      {
+        "firstName": "Imogen",
+        "lastName": "Johnson",
+        "staffId": "40001004",
+        "telNum": "05678 901234"
+      },
+      {
+        "firstName": "Kevin",
+        "lastName": "Lambeth",
+        "staffId": "40001005",
+        "telNum": "06789 123456"
+      }
+    ],
+    "skills": [
+      {
+        "id": "1",
+        "name": "ESA New Claims",
+        "description": "Can raise, record, and notify customer of result of new ESA claim"
+      },
+      {
+        "id": "2",
+        "name": "IS New Claims",
+        "description": "Can raise, record, and notify customer of result of new IS claim"
+      },
+      {
+        "id": "3",
+        "name": "HB New Claims",
+        "description": "Can raise, record, and notify customer of result of new Housing Benefit claim"
+      },
+      {
+        "id": "4",
+        "name": "ESA Appeals",
+        "description": "Can record, process, and notify customer of result of ESA appeal"
+      },
+      {
+        "id": "5",
+        "name": "IS Appeals",
+        "description": "Can record, process, and notify customer of result of IS appeal"
+      },
+      {
+        "id": "6",
+        "name": "HB Appeals",
+        "description": "Can record, process, and notify customer of result of Housing Benefit appeal"
+      },
+      {
+        "id": "7",
+        "name": "Council Tax Forms",
+        "description": "Can help customer with Council Tax forms"
+      },
+      {
+        "id": "8",
+        "name": "JSA Payments",
+        "description": "Can process, record, and authorise JSA payments"
+      }
+    ]
+}

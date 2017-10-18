@@ -1,0 +1,45 @@
+{
+  "title": "claimantData",
+  "claimants": [{
+      "firstName": "Adam",
+      "lastName": "Brown",
+      "dob": "25 Jan 1982",
+      "nino": "AA123456B",
+      "telNum": "01134 567890",
+      "mobile": "07000 123456",
+      "postcode": "S75 3RB"
+    },
+    {"firstName": "Christine",
+      "lastName": "Dixon",
+      "dob": "16 Dec 1960",
+      "nino": "ZZ123456A",
+      "telNum": "01134 678901",
+      "mobile": "07000 987654",
+      "postcode": "S17 3JX"
+    },
+    {"firstName": "Eddie",
+      "lastName": "Frost",
+      "dob": "04 Mar 1982",
+      "nino": "AA234567B",
+      "telNum": "01132 789012",
+      "mobile": "07000 135791",
+      "postcode": "SW1 1AA"
+    },
+    {"firstName": "Grace",
+      "lastName": "Harris",
+      "dob": "10 Feb 1990",
+      "nino": "ZZ234567A",
+      "telNum": "01135 890123",
+      "mobile": "07000 246802",
+      "postcode": "HA3 4DF"
+    },
+    {"firstName": "Ian",
+      "lastName": "Jackson",
+      "dob": "21 Aug 1977",
+      "nino": "AA345678B",
+      "telNum": "01136 901234",
+      "mobile": "07000 468024",
+      "postcode": "MN4 3HK"
+    }]
+
+}
