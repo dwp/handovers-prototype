@@ -1,5 +1,5 @@
 const Team = require('../models/team');
-const dataUtils = require('../utils/setInitialTeamsData');
+const teamUtils = require('../utils/teamUtils');
 const userUtils = require('../utils/userUtils');
 const skillUtils = require('../utils/skillUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -27,7 +27,7 @@ const skillUtils = require('../utils/skillUtils');
 
 function teamUserAddPage (req, res) {
 
-    var initialData = dataUtils.setInitialTeamsData();
+    var initialData = teamUtils.setInitialTeamsData();
     var team = req.session.team ? req.session.team : initialData.initialTeams[0];
     var fullUserList = initialData.initialUsers;
     // Get list of users not already members of this team, and so available to be selected
@@ -74,7 +74,7 @@ function teamUserAddPageAction (req, res) {
 
 function teamSkillAddPage (req, res) {
 
-    var initialData = dataUtils.setInitialTeamsData();
+    var initialData = teamUtils.setInitialTeamsData();
     var team = req.session.team ? req.session.team : initialData.initialTeams[0];
     var fullSkillList = initialData.initialSkills;
     // Get list of skills not already possessed by this team, and so available to be selected

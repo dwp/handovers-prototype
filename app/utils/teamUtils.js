@@ -1,7 +1,7 @@
 const Team = require('../models/team');
 const User = require('../models/user');
 const Skill = require('../models/skill');
-const controllerData = require('../data/teamData.json');
+const teamData = require('../data/teamData.json');
 
 function setInitialTeamsData() {
 
@@ -11,9 +11,9 @@ function setInitialTeamsData() {
     var initialSkills = [];
 
     // Get teams, users, and skills, from json file data
-    var teamsList = controllerData['teams'];
-    var usersList = controllerData['users'];
-    var skillsList = controllerData['skills'];
+    var teamsList = teamData['teams'];
+    var usersList = teamData['users'];
+    var skillsList = teamData['skills'];
 
     // Set up list of team objects from json file data
     for (var i=0; i < teamsList.length; i++) {

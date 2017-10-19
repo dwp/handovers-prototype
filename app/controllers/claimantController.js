@@ -1,5 +1,5 @@
 const Claimant = require('../models/claimant');
-const dataUtils = require('../utils/setInitialClaimantsData');
+const claimantUtils = require('../utils/claimantUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Claimant Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -7,7 +7,7 @@ const dataUtils = require('../utils/setInitialClaimantsData');
 
 function claimantPage(req, res) {
 
-    var initialData = dataUtils.setInitialClaimantsData();
+    var initialData = claimantUtils.setInitialClaimantsData();
     var claimants = initialData.initialClaimants;
 
     var claimant = req.session.claimantForDisplay ? req.session.claimantForDisplay : claimants[0];
@@ -24,7 +24,7 @@ function claimantFindPage(req, res) {
 
 function claimantFindPageAction(req, res) {
 
-    var initialData = dataUtils.setInitialClaimantsData();
+    var initialData = claimantUtils.setInitialClaimantsData();
     var claimants = req.session.claimants ? req.session.claimants : initialData.initialClaimants;
     var inputNino = req.body.nino;
 
