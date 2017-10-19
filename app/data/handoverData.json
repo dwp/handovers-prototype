@@ -88,6 +88,7 @@
       "benefitId": "1",
       "typeId": "2",
       "reasonId": "3",
+      "callback": "1",
       "priority" : "Standard callback"
     },{
       "id" : "5",
