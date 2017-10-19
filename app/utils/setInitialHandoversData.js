@@ -43,8 +43,8 @@ function setInitialHandoversData(){
 
 // Create list of handover objects
     for (var i=0; i < handoversList.length; i++) {
-        var id = handoversList[i].firstName;
-        var claimantNino = handoversList[i].claimantNino;
+        var id = handoversList[i].id;
+        var nino = handoversList[i].nino;
         var staffId = handoversList[i].staffId;
         var owningOfficeId = handoversList[i].owningOfficeId;
         var benefitId = handoversList[i].benefitId;
@@ -53,7 +53,9 @@ function setInitialHandoversData(){
         var callback = handoversList[i].callback;
         var priority = handoversList[i].priority;
 
-        var handoverObject = new Handover(id, claimantNino, staffId, owningOfficeId, benefitId, typeId, reasonId, callback);
+        var handoverObject = new Handover(id, nino, staffId, owningOfficeId, benefitId, typeId, reasonId, callback, priority);
+        handoverObject.setTimeAndDateRaised();
+        handoverObject.calculateTargetTime();
         initialHandovers.push(handoverObject);
     }
 

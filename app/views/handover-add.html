@@ -24,7 +24,7 @@
                         <select class="select form-control" name="benefit" id="benefit">
                             <option value="">Select</option>
                             {% for benefit in benList %}
-                                <option value="{{ benefit.id }}" {{ 'selected' if  handover.handoverBen === benefit.id else ''}}>{{ benefit.benefitName }}</option>
+                                <option value="{{ benefit.id }}" {{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -42,14 +42,18 @@
                         <select class="select form-control" name="handover-type" id="handover-type">
                             <option value="">Select</option>
                             {% for handoverType in handTypesList %}
-                            <option value="{{ handoverType.id }}" {{ 'selected' if handover.handoverType === handoverType.id else ''}}>{{ handoverType.handoverType }}</option>
+                            <option value="{{ handoverType.id }}" {{ 'selected' if handover.typeId === handoverType.id else ''}}>{{ handoverType.handoverType }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     {% if confirm === 1 %}
                     <div class="column-half>">
                         <legend class="form-label-bold">Target callback time</legend>
-                        <p>Date: 18 October 2017&nbsp;&nbsp;&nbsp;&nbsp;Time: 14:30</p>
+                        {% if handover.priority === "Non-callback" %}
+                            <p>No target date and time for this priority</p>
+                        {% else %}
+                            <p>Date: 18 October 2017&nbsp;&nbsp;&nbsp;&nbsp;Time: 14:30</p>
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>
@@ -60,11 +64,13 @@
                         <select class="select form-control" name="handover-reason" id="handover-reason">
                             <option value="">Select</option>
                             {% for handoverReason in handReasonsList %}
-                            <option value="{{ handoverReason.id }}" {{ 'selected' if  handover.handoverReason === handoverReason.id else ''}}>{{ handoverReason.handoverReason }}</option>
+                            <option value="{{ handoverReason.id }}" {{ 'selected' if  handover.reasonId === handoverReason.id else ''}}>{{ handoverReason.handoverReason }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="column-half">
+                    <div class="column-half>">
+                        <legend class="form-label-bold">Add attachment</legend>
+                        <input type="text" class="form-control" id="handover-attachment" name="handover-attachment" value="Will be able to select attachment to handover here">
                     </div>
                 </div>
                 <br>
@@ -73,13 +79,15 @@
                         <legend class="form-label-bold">Select a priority</legend>
                         <select class="select form-control" name="handover-priority" id="handover-priority">
                             <option value="">Select</option>
-                            <option value="Standard callback" {{ 'selected' if  handover.handoverPriority === 'Standard callback' else ''}}>Standard callback</option>
-                            <option value="Non-callback" {{ 'selected' if  handover.handoverPriority === 'Non-callback' else ''}}>Non-callback</option>
-                            <option value="Escalation" {{ 'selected' if  handover.handoverPriority === 'Escalation' else ''}}>Escalation</option>
-                            <option value="Priority duplicate" {{ 'selected' if  handover.handoverPriority === 'Priority duplicate' else ''}}>Priority duplicate</option>
+                            <option value="Standard callback" {{ 'selected' if  handover.priority === 'Standard callback' else ''}}>Standard callback</option>
+                            <option value="Non-callback" {{ 'selected' if  handover.priority === 'Non-callback' else ''}}>Non-callback</option>
+                            <option value="Escalation" {{ 'selected' if  handover.priority === 'Escalation' else ''}}>Escalation</option>
+                            <option value="Priority duplicate" {{ 'selected' if  handover.priority === 'Priority duplicate' else ''}}>Priority duplicate</option>
                         </select>
                     </div>
-                    <div class="column-half">
+                    <div class="column-half>">
+                        <legend class="form-label-bold">Add note</legend>
+                        <input type="text" class="form-control" id="handover-note" name="handover-note" value="Will be able to add note to handover here">
                     </div>
                 </div>
                 <br>
@@ -87,12 +95,15 @@
             {% if confirm === 1 %}
                 <div class="form-group">
                     <input type="submit" class="button" value="Save">
+                    {% set saveOrSubmit = 1 %}
                 </div>
             {% else %}
                 <div class="form-group">
+                    {% set saveOrSubmit = 0 %}
                     <input type="submit" class="button" value="Submit and confirm">
                 </div>
             {% endif %}
+                <input class="hidden" id="save-or-submit" name="save-or-submit" value="{{ saveOrSubmit }}">
         </form>
     </div>
 </main>

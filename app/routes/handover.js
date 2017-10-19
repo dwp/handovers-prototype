@@ -5,4 +5,6 @@ module.exports = function(router) {
     // Handover page routes
     router.get('/handover/create', handover.createHandoverPage);
     router.post('/handover/create', handover.createHandoverPageAction);
+    router.get('/handover/edit', handover.editHandoverPage);
+    router.post('/handover/edit', handover.editHandoverPageAction);
 }
