@@ -13,32 +13,29 @@ function createHandoverPage(req, res) {
     var benefitsList = initialData.initialBenefits;
     var handoverTypesList = initialData.initialHandoverTypes;
     var handoverReasonsList = initialData.initialHandoverReasons;
-    var handoversList = initialData.initialHandovers;
-
+    var handovers = initialData.initialHandovers;
+    var handover = req.session.handover ? req.session.handover : null;
     var confirm = req.session.confirm ? req.session.confirm : 0;
     var claimant = claimantUtils.getClaimantByNino(req.query.nino);
-    var handover = req.session.handover ? req.session.handover : null;
 
     req.session.claimant = claimant;
-    req.session.handovers = handoversList;
+    req.session.handovers = handovers;
 
     res.render('handover-add', {
         "benList" : benefitsList,
         "handTypesList" : handoverTypesList,
         "handReasonsList" : handoverReasonsList,
         "claimant" : claimant,
-        "confirm" : confirm,
-        "handover" : handover
+        "handover" : handover,
+        "confirm" : confirm
     });
 }
 
 function createHandoverPageAction(req, res) {
 
-    var handoversList = req.session.handovers;
-
     var newHandoversList;
-    var handover = req.session.handover;
     var newHandover;
+    var handoversList = req.session.handovers;
     var benefitId = req.body['benefit'];
     var handoverTypeId = req.body['handover-type'];
     var handoverReasonId = req.body['handover-reason'];
