@@ -7,31 +7,76 @@ const claimantUtils = require('../utils/claimantUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-function createHandoverPage(req, res) {
+function viewHandoverPage(req, res) {
 
     var initialData = handoverUtils.setInitialHandoversData();
     var benefitsList = initialData.initialBenefits;
     var handoverTypesList = initialData.initialHandoverTypes;
     var handoverReasonsList = initialData.initialHandoverReasons;
+    var handoversList = initialData.initialHandovers;
+    var claimant = claimantUtils.getClaimantByNino(req.query.nino);
+    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverById(req.query.id);
+
+    req.session.claimant = claimant;
+    req.session.handovers = handoversList;
+
+    res.render('handover', {
+        "benList" : benefitsList,
+        "handTypesList" : handoverTypesList,
+        "handReasonsList" : handoverReasonsList,
+        "claimant" : claimant,
+        "handover" : handover
+    });
+
+}
+
+function viewHandoverPageAction(req, res) {
+
+    var handover = req.session.handover;
+    var claimantNino = req.session.claimant && req.session.claimant.nino || console.log("No claimant in session, or not nino in claimant");
+    var handoverClaimant = req.session.claimant;
+
+    var redirectString = "/handover/edit?nino=" + claimantNino;
+
+    req.session.claimant = handoverClaimant;
+
+    res.redirect(redirectString);
+
+}
+
+function editHandoverPage(req, res) {
+
+    var editOrCreate;
+    var initialData = handoverUtils.setInitialHandoversData();
+    var benefitsList = initialData.initialBenefits;
+    var handoverTypesList = initialData.initialHandoverTypes;
+    var handoverReasonsList = initialData.initialHandoverReasons;
     var handovers = initialData.initialHandovers;
-    var handover = req.session.handover ? req.session.handover : null;
-    var confirm = req.session.confirm ? req.session.confirm : 0;
+    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverById(req.query.id);
+
     var claimant = claimantUtils.getClaimantByNino(req.query.nino);
 
     req.session.claimant = claimant;
+    req.session.handover = handover;
     req.session.handovers = handovers;
 
-    res.render('handover-add', {
+    if (handover.timeAndDateRaised || handover.id === '1') {
+        editOrCreate = 'edit';
+    } else {
+        editOrCreate = 'create';
+    }
+
+    res.render('handover-edit', {
         "benList" : benefitsList,
         "handTypesList" : handoverTypesList,
         "handReasonsList" : handoverReasonsList,
         "claimant" : claimant,
         "handover" : handover,
-        "confirm" : confirm
+        "editOrCreate" : editOrCreate
     });
 }
 
-function createHandoverPageAction(req, res) {
+function editHandoverPageAction(req, res) {
 
     var newHandoversList;
     var newHandover;
@@ -44,57 +89,25 @@ function createHandoverPageAction(req, res) {
     var handoverAttachment = req.body['handover-attachment'];
     var claimant = req.session.claimant;
     var newId = handoversList.length + 1;
-    var saveOrSubmit = req.body['save-or-submit'];
 
     newHandover = new Handover(newId, claimant.id, '40001001', '1', benefitId, handoverTypeId, handoverReasonId, '1', handoverPriority);
     newHandover.addNote(handoverNote);
     newHandover.addAttachment(handoverAttachment);
+    newHandover.setTimeAndDateRaised();
+    newHandover.calculateTargetTime();
     req.session.handover = newHandover;
     newHandoversList = handoversList;
     newHandoversList.push(newHandover);
     req.session.handovers = newHandoversList;
 
     req.session.claimant = claimant;
-    req.session.confirm = 1;
 
-    if (saveOrSubmit === '1') {
-        res.redirect('/handover/edit');
-    } else {
-        res.redirect('/handover/create');
-    }
+    res.redirect('/handover/view');
 
 }
 
-function editHandoverPage(req, res) {
 
-    var initialData = handoverUtils.setInitialHandoversData();
-    var benefitsList = initialData.initialBenefits;
-    var handoverTypesList = initialData.initialHandoverTypes;
-    var handoverReasonsList = initialData.initialHandoverReasons;
-    var handoversList = initialData.initialHandovers;
-    var confirm = req.session.confirm ? req.session.confirm : null;
-    var claimant = claimantUtils.getClaimantByNino(req.query.nino);
-    var handover = req.session.handover ? req.session.handover : null;
-
-    req.session.claimant = claimant;
-    req.session.handovers = handoversList;
-
-    res.render('handover-edit', {
-        "benList" : benefitsList,
-        "handTypesList" : handoverTypesList,
-        "handReasonsList" : handoverReasonsList,
-        "claimant" : claimant,
-        "confirm" : confirm,
-        "handover" : handover
-    });
-
-}
-
-function editHandoverPageAction(req, res) {
-
-}
-
-module.exports.createHandoverPage= createHandoverPage;
-module.exports.createHandoverPageAction= createHandoverPageAction;
+module.exports.viewHandoverPage = viewHandoverPage;
+module.exports.viewHandoverPageAction = viewHandoverPageAction;
 module.exports.editHandoverPage = editHandoverPage;
 module.exports.editHandoverPageAction = editHandoverPageAction;

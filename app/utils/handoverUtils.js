@@ -69,4 +69,33 @@ function setInitialHandoversData(){
     return initialHandoversData;
 }
 
+function getHandoverById(id) {
+
+    var handovers = this.setInitialHandoversData().initialHandovers;
+    var inputId = id|| "1";
+    var foundHandover= {};
+
+    for (var i=0; i < handovers.length; i++) {
+        if (handovers[i].id === id) {
+            var handover = handovers[i];
+            foundHandover = {
+                "id" : handover.id,
+                "nino" : handover.nino,
+                "staffId" : handover.staffId,
+                "owningOfficeId" : handover.owningOfficeId,
+                "benefitId" : handover.benefitId,
+                "typeId" : handover.typeId,
+                "reasonId" : handover.reasonId,
+                "callback" : handover.callback,
+                "priority" : handover.priority
+            }
+        }
+    }
+
+    return foundHandover;
+
+
+
+}
 module.exports.setInitialHandoversData = setInitialHandoversData;
+module.exports.getHandoverById = getHandoverById;

@@ -7,9 +7,8 @@ const claimantUtils = require('../utils/claimantUtils');
 
 function claimantPage(req, res) {
 
-    var claimant = req.session.claimant ? req.session.claimant : claimants[0];
     var claimants = claimantUtils.setInitialClaimantsData();
-
+    var claimant = req.session.claimant ? req.session.claimant : claimants[0];
 
     res.render('claimant', claimant);
 }
@@ -43,4 +42,4 @@ function claimantFindPageAction(req, res) {
 
 module.exports.claimantPage = claimantPage;
 module.exports.claimantFindPage = claimantFindPage;
-module.exports.claimantFindPageAction= claimantFindPageAction;
+module.exports.claimantFindPageAction = claimantFindPageAction;

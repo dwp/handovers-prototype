@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main id="content" role="main">
+    <div class="main-content">
+        <h1 class="heading-large">View handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
+        <form action="/handover/view" method="POST" class="form">
+            <div class="form-group">
+                <div class="grid-row">
+                    <div class="column-full">
+                        <div class="form-group">
+                            <legend class="form-label-bold">National insurance number</legend>
+                            <div>
+                                <p>{{ claimant.nino }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="grid-row">
+                        <div class="column-half">
+                            <legend class="form-label-bold">Benefit</legend>
+                                {% for benefit in benList %}
+                                    {% if handover.benefitId === benefit.id %}
+                                        <p>{{ benefit.benefitName }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                        </div>
+
+                        <div class="column-half>">
+                            <legend class="form-label-bold">Date and time raised</legend>
+                            <p>Date: 18 October 2017&nbsp;&nbsp;&nbsp;&nbsp;Time: 11:30</p>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="grid-row">
+                        <div class="column-half">
+                            <legend class="form-label-bold">Handover type</legend>
+                                {% for handoverType in handTypesList %}
+                                    {% if handover.typeId === handoverType.id %}
+                                        <p>{{ handoverType.handoverType }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                        </div>
+
+                        <div class="column-half>">
+                            <legend class="form-label-bold">Target callback time</legend>
+                            {% if handover.priority === "Non-callback" %}
+                                <p>No target date and time for this priority</p>
+                            {% else %}
+                                <p>Date: 18 October 2017&nbsp;&nbsp;&nbsp;&nbsp;Time: 14:30</p>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="grid-row">
+                        <div class="column-half">
+                            <legend class="form-label-bold">Handover reason</legend>
+                                {% for handoverReason in handReasonsList %}
+                                    {% if handover.reasonId === handoverReason.id %}
+                                        <p>{{ handoverReason.handoverReason }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                        </div>
+                        <div class="column-half>">
+                            <legend class="form-label-bold">Add attachment</legend>
+                            <p>A list of attachments will be shown here</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="grid-row">
+                        <div class="column-half">
+                            <legend class="form-label-bold">Priority</legend>
+                            <p>{{ handover.priority }}</p>
+                        </div>
+                        <div class="column-half>">
+                            <legend class="form-label-bold">Add note</legend>
+                            <p>A panel of notes will be shown here</p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="button" value="Edit">
+                </div>
+        </form>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
+
+{% endblock %}}
