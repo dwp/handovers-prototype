@@ -3,15 +3,15 @@ class Office {
         this.id= id;
         this.officeName = officeName;
         this.officePostcode = officePostcode;
-        this.officeSkillsList = [];
+        this.officeQueuesList = [];
     }
 
-    addSkill(skill) {
-        this.officeSkillsList.push(skill);
+    addQueue(queue) {
+        this.officeQueuesList.push(queue);
     }
 
-    addSkillList(skillList) {
-        this.officeSkillsList = skillList;
+    addQueuesList(queueList) {
+        this.officeSkillsList = queueList;
     }
 }
 

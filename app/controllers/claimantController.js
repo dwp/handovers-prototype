@@ -1,5 +1,5 @@
 const Claimant = require('../models/claimant');
-const dataUtils = require('../utils/setInitialClaimantsData');
+const claimantUtils = require('../utils/claimantUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Claimant Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -7,12 +7,8 @@ const dataUtils = require('../utils/setInitialClaimantsData');
 
 function claimantPage(req, res) {
 
-    var initialData = dataUtils.setInitialClaimantsData();
-    var claimants = initialData.initialClaimants;
-
-    var claimant = req.session.claimantForDisplay ? req.session.claimantForDisplay : claimants[0];
-
-    req.session.claimants= claimants;
+    var claimants = claimantUtils.setInitialClaimantsData();
+    var claimant = req.session.claimant ? req.session.claimant : claimants[0];
 
     res.render('claimant', claimant);
 }
@@ -24,28 +20,26 @@ function claimantFindPage(req, res) {
 
 function claimantFindPageAction(req, res) {
 
-    var initialData = dataUtils.setInitialClaimantsData();
-    var claimants = req.session.claimants ? req.session.claimants : initialData.initialClaimants;
+    var claimant = {};
     var inputNino = req.body.nino;
+    var claimants = claimantUtils.setInitialClaimantsData();
 
-    var claimantForDisplay = {};
 
     if (inputNino === '') {
-        console.log ('Nino: ', + inputNino + ' not input')
+        console.log ('Nino not input');
     } else {
         for (var i=0; i < claimants.length; i++) {
             if (claimants[i].nino === inputNino) {
-                claimantForDisplay = claimants[i];
+                claimant = claimants[i];
             }
         }
     }
 
-    req.session.claimants = claimants;
-    req.session.claimantForDisplay = claimantForDisplay;
+    req.session.claimant = claimant;
 
     res.redirect('/claimant/view');
 }
 
 module.exports.claimantPage = claimantPage;
 module.exports.claimantFindPage = claimantFindPage;
-module.exports.claimantFindPageAction= claimantFindPageAction;
+module.exports.claimantFindPageAction = claimantFindPageAction;

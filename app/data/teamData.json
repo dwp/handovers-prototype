@@ -4,28 +4,28 @@
       {
         "teamName": "Red",
         "userList": [],
-        "skillList": [],
+        "queueList": [],
         "startDate": "20 Sep 2016",
         "endDate": ""
       },
       {
         "teamName": "Blue",
         "userList": [],
-        "skillList": [],
+        "queueList": [],
         "startDate": "13 Aug 2016",
         "endDate": "20 Aug 2017"
       },
       {
         "teamName": "Green",
         "userList": [],
-        "skillList": [],
+        "queueList": [],
         "startDate": "12 Mar 2015",
         "endDate": ""
       },
       {
         "teamName": "Black",
         "userList": [],
-        "skillList": [],
+        "queueList": [],
         "startDate": "14 Feb 2017",
         "endDate": ""
       }
@@ -68,7 +68,7 @@
         "telNum": "06789 123456"
       }
     ],
-    "skills": [
+    "queues": [
       {
         "id": "1",
         "name": "ESA New Claims",

@@ -1,7 +1,7 @@
 const Team = require('../models/team');
-const dataUtils = require('../utils/setInitialTeamsData');
+const teamUtils = require('../utils/teamUtils');
 const userUtils = require('../utils/userUtils');
-const skillUtils = require('../utils/skillUtils');
+const queueUtils = require('../utils/queueUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Team Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -24,19 +24,20 @@ const skillUtils = require('../utils/skillUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-
 function teamUserAddPage (req, res) {
 
-    var initialData = dataUtils.setInitialTeamsData();
-    var team = req.session.team ? req.session.team : initialData.initialTeams[0];
-    var fullUserList = initialData.initialUsers;
-    // Get list of users not already members of this team, and so available to be selected
-    var availableUsers = userUtils.getListOfAvailableUsers(team, fullUserList);
     var teamAndAvailableUsersList;
+    var initialData = teamUtils.setInitialTeamsData();
+    var fullUsersList = initialData.initialUsers;
+    var team = req.session.team ? req.session.team : initialData.initialTeams[0];
 
-    teamAndAvailableUsersList = { team : team,
-                                  availableUsers : availableUsers
-                                };
+    // Get list of users not already members of this team, and so available to be selected
+    var availableUsersList = userUtils.getListOfAvailableUsers(team, fullUsersList);
+
+    teamAndAvailableUsersList = {
+        team : team,
+        availableUsers : availableUsersList
+    };
 
     req.session.teamAndAvailableUsersList = teamAndAvailableUsersList;
 
@@ -46,10 +47,10 @@ function teamUserAddPage (req, res) {
 
 function teamUserAddPageAction (req, res) {
 
-    var oldTeamAndAvailableUsersList = req.session.teamAndAvailableUsersList ? req.session.teamAndAvailableUsersList : console.log("Nothing in teamAndAvailableUsersList session object");
-    var team = oldTeamAndAvailableUsersList.team;
+    var teamAndAvailableUsersList = req.session.teamAndAvailableUsersList ? req.session.teamAndAvailableUsersList : console.log("Nothing in teamAndAvailableUsersList session object");
+    var team = teamAndAvailableUsersList.team;
     var selectedUserStaffId = req.body['selected-user'];
-    var availableUsersList = oldTeamAndAvailableUsersList.availableUsers;
+    var availableUsersList = teamAndAvailableUsersList.availableUsers;
     var userToAddToTeam = availableUsersList.find(findSelectedUserByStaffId);
 
     if(userToAddToTeam === false) {
@@ -68,49 +69,52 @@ function teamUserAddPageAction (req, res) {
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-/*                                        Team Skill Controllers
+/*                                        Team Queue Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-function teamSkillAddPage (req, res) {
+function teamQueueAddPage (req, res) {
 
-    var initialData = dataUtils.setInitialTeamsData();
+    var teamAndAvailableQueuesList;
+    var initialData = teamUtils.setInitialTeamsData();
+    var fullQueuesList = initialData.initialQueues;
     var team = req.session.team ? req.session.team : initialData.initialTeams[0];
-    var fullSkillList = initialData.initialSkills;
-    // Get list of skills not already possessed by this team, and so available to be selected
-    var availableSkills = skillUtils.getListOfAvailableSkills(team, fullSkillList);
-    var teamAndAvailableSkillsList;
 
-    teamAndAvailableSkillsList = { team : team,
-        availableSkills : availableSkills
+    // Get list of queues not already possessed by this team, and so available to be selected
+    var availableQueuesList = queueUtils.getListOfAvailableQueues(team, fullQueuesList);
+
+
+    teamAndAvailableQueuesList = {
+        team : team,
+        availableQueues : availableQueuesList
     };
 
-    req.session.teamAndAvailableSkillsList = teamAndAvailableSkillsList;
+    req.session.teamAndAvailableQueuesList = teamAndAvailableQueuesList;
 
-    res.render('team-edit-skills', teamAndAvailableSkillsList);
+    res.render('team-edit-queues', teamAndAvailableQueuesList);
 
 }
 
-function teamSkillAddPageAction (req, res) {
+function teamQueueAddPageAction (req, res) {
 
-    var oldTeamAndAvailableSkillsList = req.session.teamAndAvailableSkillsList ? req.session.teamAndAvailableSkillsList : console.log("Nothing in teamAndAvailableSkillsList session object");
-    var team = oldTeamAndAvailableSkillsList.team;
-    var selectedSkillId = req.body['selected-skill'];
-    var availableSkillsList = oldTeamAndAvailableSkillsList.availableSkills;
-    var skillToAddToTeam = availableSkillsList.find(findSelectedSkillBySkillId);
+    var teamAndAvailableQueuesList = req.session.teamAndAvailableQueuesList ? req.session.teamAndAvailableQueuesList : console.log("Nothing in teamAndAvailableQueuesList session object");
+    var team = teamAndAvailableQueuesList.team;
+    var selectedQueueId = req.body['selected-queue'];
+    var availableQueuesList = teamAndAvailableQueuesList.availableQueues;
+    var queueToAddToTeam = availableQueuesList.find(findSelectedQueueByQueueId);
 
-    if(skillToAddToTeam === false) {
-        console.log('Skill not found in list');
+    if(queueToAddToTeam === false) {
+        console.log('Queue not found in list');
     } else {
         var newTeam = new Team(team.teamName, team.startDate, team.endDate);
-        newTeam.addSkillList(team.skillList);
-        newTeam.addSkill(skillToAddToTeam);
+        newTeam.addQueueList(team.queueList);
+        newTeam.addQueue(queueToAddToTeam);
     }
     req.session.team = newTeam;
-    res.redirect('/team/skill/add');
+    res.redirect('/team/queue/add');
 
-    function findSelectedSkillBySkillId(listOfSkills) {
-        return listOfSkills.id === selectedSkillId;
+    function findSelectedQueueByQueueId(listOfQueues) {
+        return listOfQueues.id === selectedQueueId;
     }
 }
 
@@ -120,5 +124,5 @@ function teamSkillAddPageAction (req, res) {
 //module.exports.teamEditPageAction= teamEditPageAction;
 module.exports.teamUserAddPage = teamUserAddPage;
 module.exports.teamUserAddPageAction = teamUserAddPageAction;
-module.exports.teamSkillAddPage = teamSkillAddPage;
-module.exports.teamSkillAddPageAction = teamSkillAddPageAction;
+module.exports.teamQueueAddPage = teamQueueAddPage;
+module.exports.teamQueueAddPageAction = teamQueueAddPageAction;

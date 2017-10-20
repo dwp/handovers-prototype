@@ -4,12 +4,12 @@
 
 <main id="content" role="main">
     <div class="main-content">
-        <h1 class="heading-large">Add skills area to {{ team.teamName }} team</h1>
+        <h1 class="heading-large">Add queues to {{ team.teamName }} team</h1>
         <br>
-        <form action="/team/skill/add" method="post" class="form" id="team-skill-add-form">
+        <form action="/team/queue/add" method="post" class="form" id="team-queue-add-form">
             <div class="form-group grid-row">
                 <div class="column-full">
-                    <legend class="form-label-bold">Existing skills areas</legend>
+                    <legend class="form-label-bold">Existing queues</legend>
                     <table>
                         <thead>
                             <tr>
@@ -18,10 +18,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for existingSkillsArea in team.skillList %}
+                        {% for existingQueue in team.queueList %}
                             <tr>
-                                <td>{{ existingSkillsArea.name }}</td>
-                                <td>{{ existingSkillsArea.description}}</td>
+                                <td>{{ existingQueue.name }}</td>
+                                <td>{{ existingQueue.description}}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -31,11 +31,11 @@
 
             <div class="form-group">
                 <fieldset class="inline">
-                    <legend class="form-label-bold">Select a skills area to add to the {{ team.teamName }} team</legend>
-                    <select class="select form-control" name="selected-skill" id="selected-skill">
+                    <legend class="form-label-bold">Select a queue to add to the {{ team.teamName }} team</legend>
+                    <select class="select form-control" name="selected-queue" id="selected-queue">
                         <option value="">Select</option>
-                        {% for availableSkill in availableSkills %}
-                            <option value="{{ availableSkill.id}}">{{ availableSkill.name }}</option>
+                        {% for availableQueue in availableQueues %}
+                            <option value="{{ availableQueue.id}}">{{ availableQueue.name }}</option>
                         {% endfor %}
                     </select>
                 </fieldset>
