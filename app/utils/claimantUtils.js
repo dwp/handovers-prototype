@@ -3,7 +3,6 @@ const claimantData = require('../data/claimantData.json');
 
 function setInitialClaimantsData(){
 
-    var initialClaimantsData;
     var initialClaimants = [];
 
     // Get claimants from json file data
@@ -23,18 +22,13 @@ function setInitialClaimantsData(){
         initialClaimants.push(claimant);
     }
 
-    initialClaimantsData = {
-        "initialClaimants" : initialClaimants
-    }
-
-    return initialClaimantsData;
+    return initialClaimants;
 
 }
 
 function getClaimantByNino(nino) {
 
-    var initialData = this.setInitialClaimantsData();
-    var claimants = initialData.initialClaimants;
+    var claimants = this.setInitialClaimantsData();
     var inputNino = nino || "AA123456B";
     var foundClaimant = {};
 

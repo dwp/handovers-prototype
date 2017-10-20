@@ -1,6 +1,6 @@
 const Team = require('../models/team');
 const User = require('../models/user');
-const Skill = require('../models/skill');
+const Queue = require('../models/queue');
 const teamData = require('../data/teamData.json');
 
 function setInitialTeamsData() {
@@ -8,12 +8,12 @@ function setInitialTeamsData() {
     var initialTeamsData;
     var initialTeams = [];
     var initialUsers = [];
-    var initialSkills = [];
+    var initialQueues = [];
 
     // Get teams, users, and skills, from json file data
     var teamsList = teamData['teams'];
     var usersList = teamData['users'];
-    var skillsList = teamData['skills'];
+    var queuesList = teamData['queues'];
 
     // Set up list of team objects from json file data
     for (var i=0; i < teamsList.length; i++) {
@@ -34,25 +34,25 @@ function setInitialTeamsData() {
         initialUsers.push(user);
     }
 
-    // Set up list of skill objects from json file data
-    for (var i=0; i < skillsList.length; i++) {
-        var id = skillsList[i].id;
-        var name = skillsList[i].name;
-        var description = skillsList[i].description;
-        var skill = new Skill(id, name, description);
-        initialSkills.push(skill);
+    // Set up list of queue objects from json file data
+    for (var i=0; i < queuesList.length; i++) {
+        var id = queuesList[i].id;
+        var name = queuesList[i].name;
+        var description = queuesList[i].description;
+        var queue= new Queue(id, name, description);
+        initialQueues.push(queue);
     }
 
     // Set up one team with users and skills
     initialTeams[0].addUser(initialUsers[0]);
     initialTeams[0].addUser(usersList[1]);
-    initialTeams[0].addSkill(skillsList[0]);
-    initialTeams[0].addSkill(skillsList[1]);
+    initialTeams[0].addQueue(queuesList[0]);
+    initialTeams[0].addQueue(queuesList[1]);
 
     initialTeamsData = {
         "initialTeams" : initialTeams,
         "initialUsers" : initialUsers,
-        "initialSkills" : initialSkills
+        "initialQueues" : initialQueues
     }
 
     return initialTeamsData;

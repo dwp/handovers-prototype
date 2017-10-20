@@ -2,7 +2,7 @@ class Team {
     constructor(teamName, teamStartDate, teamEndDate) {
         this.teamName = teamName;
         this.userList = [];
-        this.skillList = [];
+        this.queueList = [];
         this.startDate = teamStartDate;
         this.endDate = teamEndDate;
     }
@@ -15,12 +15,12 @@ class Team {
         this.userList = userList;
     }
 
-    addSkill(skill) {
-        this.skillList.push(skill);
+    addQueue(queue) {
+        this.queueList.push(queue);
     }
 
-    addSkillList(skillList) {
-        this.skillList = skillList;
+    addQueueList(queueList) {
+        this.queueList = queueList;
     }
 }
 

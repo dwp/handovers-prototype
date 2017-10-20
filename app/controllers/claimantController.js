@@ -7,12 +7,8 @@ const claimantUtils = require('../utils/claimantUtils');
 
 function claimantPage(req, res) {
 
-    var initialData = claimantUtils.setInitialClaimantsData();
-    var claimants = initialData.initialClaimants;
-
-    var claimant = req.session.claimantForDisplay ? req.session.claimantForDisplay : claimants[0];
-
-    req.session.claimants= claimants;
+    var claimants = claimantUtils.setInitialClaimantsData();
+    var claimant = req.session.claimant ? req.session.claimant : claimants[0];
 
     res.render('claimant', claimant);
 }
@@ -24,24 +20,22 @@ function claimantFindPage(req, res) {
 
 function claimantFindPageAction(req, res) {
 
-    var initialData = claimantUtils.setInitialClaimantsData();
-    var claimants = req.session.claimants ? req.session.claimants : initialData.initialClaimants;
+    var claimants = claimantUtils.setInitialClaimantsData();
     var inputNino = req.body.nino;
 
-    var claimantForDisplay = {};
+    var claimant = {};
 
     if (inputNino === '') {
         console.log ('Nino: ', + inputNino + ' not input')
     } else {
         for (var i=0; i < claimants.length; i++) {
             if (claimants[i].nino === inputNino) {
-                claimantForDisplay = claimants[i];
+                claimant = claimants[i];
             }
         }
     }
 
-    req.session.claimants = claimants;
-    req.session.claimantForDisplay = claimantForDisplay;
+    req.session.claimant = claimant;
 
     res.redirect('/claimant/view');
 }
