@@ -80,7 +80,7 @@ function editHandoverPageAction(req, res) {
 
     var newHandoversList;
     var newHandover;
-    var handoversList = req.session.handovers;
+    var handoversList = req.session.handovers ? req.session.handovers : handoverUtils.setInitialHandoversData();
     var benefitId = req.body['benefit'];
     var handoverTypeId = req.body['handover-type'];
     var handoverReasonId = req.body['handover-reason'];
