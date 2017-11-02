@@ -20,11 +20,10 @@ function claimantFindPage(req, res) {
 
 function claimantFindPageAction(req, res) {
 
-    var claimant = {};
-    var inputNino = req.body.nino;
     var claimants = claimantUtils.setInitialClaimantsData();
+    var inputNino = req.body.nino;
+    var claimant = {};
     var claimantFound = 0;
-
 
     if (inputNino === '') {
         console.log('Nino not input');
