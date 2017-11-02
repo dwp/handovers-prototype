@@ -26,9 +26,9 @@ function setInitialClaimantsData(){
 
 }
 
-function getClaimantByNino(nino) {
+function getClaimantByNino(claimantsList, nino) {
 
-    var claimants = this.setInitialClaimantsData();
+    var claimants = claimantsList ? claimantsList : this.setInitialClaimantsData();
     var inputNino = nino || "AA123456B";
     var foundClaimant = {};
 

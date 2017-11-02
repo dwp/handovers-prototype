@@ -53,12 +53,14 @@ function editHandoverPage(req, res) {
     var handoverReasonsList = initialData.initialHandoverReasons;
     var handovers = initialData.initialHandovers;
     var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverById(req.query.id);
+    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData()
 
-    var claimant = claimantUtils.getClaimantByNino(req.query.nino);
+    var claimant = claimantUtils.getClaimantByNino(claimants, req.query.nino);
 
     req.session.claimant = claimant;
     req.session.handover = handover;
     req.session.handovers = handovers;
+    req.session.claimants = claimants;
 
     if (handover.timeAndDateRaised || handover.id === '1') {
         editOrCreate = 'edit';
