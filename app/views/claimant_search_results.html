@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+    <div class="main-content">
+        <div class="grid-row">
+            <div class="column-full">
+
+                <h1 class="heading-large">No results found</h1>
+
+                <p>There is no entry for <span class="bold">'{{ nino }}'</span>.</p>
+            </div>
+            <div class="column-full">
+                <div class="form-group">
+                    <a class="button" href="/claimant/create?nino={{ nino }}">Create new claimant record</a>
+                </div>
+                <div class="form-group">
+                    <a href="/claimant/find" class="clear">Search again</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

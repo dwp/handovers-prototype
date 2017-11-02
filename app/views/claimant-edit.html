@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main id="content" role="main">
+    <div class="main-content">
+        <h1 class="heading-large">Create new claimant for {{ nino }}</h1>
+        <br>
+        <form action="/claimant/create" method="POST" class="form">
+            <div class="form-group">
+                <div class="grid-row">
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">First name</legend>
+                            <div>
+                                <input type="text" class="form-control" id="firstName" name="firstName">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Telephone number</legend>
+                            <div>
+                                <input type="text" class="form-control" id="telNum" name="telNum">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-row">
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Last name</legend>
+                            <div>
+                                <input type="text" class="form-control" id="lastName" name="lastName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Mobile</legend>
+                            <div>
+                                <input type="text" class="form-control" id="mobile" name="mobile">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-row">
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Date of birth</legend>
+                            <div>
+                                <input type="text" class="form-control" id="dob" name="dob">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Postcode</legend>
+                            <div>
+                                <input type="text" class="form-control" id="postcode" name="postcode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-row">
+                    <div class="column-half">
+                        <div class="form-group">
+                            <div>
+                                <input type="hidden" id="nino" name="nino" value="{{ nino }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-row">
+                    <div class="column-half">
+                        <div class="form-group">
+                            <input type="submit" class="button" value="Submit">
+                        </div>
+                    </div>
+                    <div class="column-half">
+                        <div class="form-group">
+                            <a href="/index">Back to index page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
+
+{% endblock %}
