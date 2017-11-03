@@ -17,8 +17,9 @@ function setInitialClaimantsData(){
         var telNum = claimantsList[i].telNum;
         var mobile = claimantsList[i].mobile;
         var postcode = claimantsList[i].postcode;
+        var welshSpeaker = claimantsList[i].welshSpeaker;
 
-        var claimant = new Claimant(firstName, lastName, dob, nino, telNum, mobile, postcode);
+        var claimant = new Claimant(firstName, lastName, dob, nino, telNum, mobile, postcode, welshSpeaker);
         initialClaimants.push(claimant);
     }
 
@@ -42,7 +43,8 @@ function getClaimantByNino(claimantsList, nino) {
                 "dob" : claimant.dob,
                 "telNum" : claimant.telNum,
                 "postcode" : claimant.postcode,
-                "mobile" : claimant.mobile
+                "mobile" : claimant.mobile,
+                "welshSpeaker": claimant.welshSpeaker
               }
         }
     }

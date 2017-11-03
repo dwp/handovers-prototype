@@ -65,7 +65,8 @@ function claimantEditPageAction(req, res) {
     var telNum = req.body['telNum'];
     var mobile = req.body['mobile'];
     var postcode = req.body['postcode'];
-    var claimant = new Claimant(firstName, lastName, dob, nino, telNum, mobile, postcode);
+    var welshSpeaker = req.body['welsh-speaker'];
+    var claimant = new Claimant(firstName, lastName, dob, nino, telNum, mobile, postcode, welshSpeaker);
     claimants.push(claimant);
     req.session.claimant = claimant;
     req.session.claimants = claimants;
