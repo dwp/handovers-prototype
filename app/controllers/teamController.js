@@ -7,17 +7,6 @@ const queueUtils = require('../utils/queueUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-//function teamViewPage (req, res) {
-//
-//}
-//
-//function teamEditPage (req,res) {
-//
-//}
-//
-//function teamEditPageAction (req, res) {
-//
-//}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Team Member Controllers
@@ -118,10 +107,6 @@ function teamQueueAddPageAction (req, res) {
     }
 }
 
-
-//module.exports.teamViewPage = teamViewPage;
-//module.exports.teamEditPage = teamEditPage;
-//module.exports.teamEditPageAction= teamEditPageAction;
 module.exports.teamUserAddPage = teamUserAddPage;
 module.exports.teamUserAddPageAction = teamUserAddPageAction;
 module.exports.teamQueueAddPage = teamQueueAddPage;

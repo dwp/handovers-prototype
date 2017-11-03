@@ -1,4 +1,5 @@
 module.exports = function(router){
+
   router.get('/', function (req, res) {
 
     req.session.regenerate(err => {});

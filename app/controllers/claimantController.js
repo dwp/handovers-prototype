@@ -47,7 +47,7 @@ function claimantFindPageAction(req, res) {
 
 }
 
-function claimantCreatePage(req, res) {
+function claimantEditPage(req, res) {
 
     var payload = {};
     payload.nino = req.query.nino ? req.query.nino : "AB987654C";
@@ -55,7 +55,7 @@ function claimantCreatePage(req, res) {
 
 }
 
-function claimantCreatePageAction(req, res) {
+function claimantEditPageAction(req, res) {
 
     var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
     var nino = req.body['nino'];
@@ -77,5 +77,5 @@ function claimantCreatePageAction(req, res) {
 module.exports.claimantPage = claimantPage;
 module.exports.claimantFindPage = claimantFindPage;
 module.exports.claimantFindPageAction = claimantFindPageAction;
-module.exports.claimantCreatePage = claimantCreatePage;
-module.exports.claimantCreatePageAction = claimantCreatePageAction;
+module.exports.claimantEditPage = claimantEditPage;
+module.exports.claimantEditPageAction = claimantEditPageAction;
