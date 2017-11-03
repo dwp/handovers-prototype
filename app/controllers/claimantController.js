@@ -20,7 +20,7 @@ function claimantFindPage(req, res) {
 
 function claimantFindPageAction(req, res) {
 
-    var claimants = claimantUtils.setInitialClaimantsData();
+    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
     var inputNino = req.body.nino;
     var claimant = {};
     var claimantFound = 0;

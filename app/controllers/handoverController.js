@@ -14,7 +14,8 @@ function viewHandoverPage(req, res) {
     var handoverTypesList = initialData.initialHandoverTypes;
     var handoverReasonsList = initialData.initialHandoverReasons;
     var handoversList = initialData.initialHandovers;
-    var claimant = claimantUtils.getClaimantByNino(req.query.nino);
+    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
+    var claimant = req.session.claimant ? claimantUtils.getClaimantByNino(claimants, req.session.claimant.nino) : claimantUtils.getClaimantByNino(claimants, req.query.nino);
     var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverById(req.query.id);
 
     req.session.claimant = claimant;
@@ -53,7 +54,7 @@ function editHandoverPage(req, res) {
     var handoverReasonsList = initialData.initialHandoverReasons;
     var handovers = initialData.initialHandovers;
     var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverById(req.query.id);
-    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData()
+    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
 
     var claimant = claimantUtils.getClaimantByNino(claimants, req.query.nino);
 
@@ -92,7 +93,7 @@ function editHandoverPageAction(req, res) {
     var claimant = req.session.claimant;
     var newId = handoversList.length + 1;
 
-    newHandover = new Handover(newId, claimant.id, '40001001', '1', benefitId, handoverTypeId, handoverReasonId, '1', handoverPriority);
+    newHandover = new Handover(newId, claimant.nino, '40001001', '1', benefitId, handoverTypeId, handoverReasonId, '1', handoverPriority);
     newHandover.addNote(handoverNote);
     newHandover.addAttachment(handoverAttachment);
     newHandover.setTimeAndDateRaised();
