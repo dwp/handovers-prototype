@@ -4,10 +4,22 @@
 
 <main id="content" role="main">
     <div class="main-content">
-        <h1 class="heading-large">Create new claimant for {{ nino }}</h1>
+        <h1 class="heading-large">Create new claimant</h1>
         <br>
         <form action="/claimant/edit" method="POST" class="form">
             <div class="form-group">
+                <div class="grid-row">
+                    <div class="column-half">
+                        <div class="form-group">
+                            <div>
+                                <legend class="form-label-bold">National insurance number</legend>
+                                <input type="hidden" id="nino" name="nino" value="{{ nino }}">
+                                <p>{{ nino }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid-row">
                     <div class="column-half">
                         <div class="form-group">
@@ -17,31 +29,11 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Telephone number</legend>
-                            <div>
-                                <input type="text" class="form-control" id="telNum" name="telNum">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid-row">
                     <div class="column-half">
                         <div class="form-group">
                             <legend class="form-label-bold">Last name</legend>
                             <div>
                                 <input type="text" class="form-control" id="lastName" name="lastName">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Mobile</legend>
-                            <div>
-                                <input type="text" class="form-control" id="mobile" name="mobile">
                             </div>
                         </div>
                     </div>
@@ -69,8 +61,17 @@
                 <div class="grid-row">
                     <div class="column-half">
                         <div class="form-group">
+                            <legend class="form-label-bold">Telephone number</legend>
                             <div>
-                                <input type="hidden" id="nino" name="nino" value="{{ nino }}">
+                                <input type="text" class="form-control" id="telNum" name="telNum">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Mobile</legend>
+                            <div>
+                                <input type="text" class="form-control" id="mobile" name="mobile">
                             </div>
                         </div>
                     </div>
@@ -79,10 +80,22 @@
                 <div class="grid-row">
                     <div class="column-half">
                         <div class="form-group">
+                            <legend class="form-label-bold">Welsh speaker ?</legend>
+                            <p class="form-hint">Yes or No</p>
+                            <div>
+                                <input type="text" class="form-control" id="welsh-speaker" name="welsh-speaker">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-row">
+                    <div class="column-third">
+                        <div class="form-group">
                             <input type="submit" class="button" value="Submit">
                         </div>
                     </div>
-                    <div class="column-half">
+                    <div class="column-third">
                         <div class="form-group">
                             <a href="/index">Back to index page</a>
                         </div>

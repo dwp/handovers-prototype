@@ -4,9 +4,20 @@
 
 <main id="content" role="main">
     <div class="main-content">
-        <h1 class="heading-large">View claimant details - {{ firstName }} {{ lastName }}</h1>
+        <h1 class="heading-large">View claimant details for {{ firstName }} {{ lastName }}</h1>
         <br>
         <div>
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">National insurance number</legend>
+                        <div>
+                            <p>{{ nino }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid-row">
                 <div class="column-half">
                     <div class="form-group">
@@ -18,28 +29,9 @@
                 </div>
                 <div class="column-half">
                     <div class="form-group">
-                        <legend class="form-label-bold">Telephone number</legend>
-                        <div>
-                            <p>{{ telNum }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-row">
-                <div class="column-half">
-                    <div class="form-group">
                         <legend class="form-label-bold">Last name</legend>
                         <div>
                             <p>{{ lastName }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="column-half">
-                    <div class="form-group">
-                        <legend class="form-label-bold">Mobile</legend>
-                        <div>
-                            <p>{{ mobile }}</p>
                         </div>
                     </div>
                 </div>
@@ -58,7 +50,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Postcode</legend>
                         <div>
-                            <p>{{ postcode}}</p>
+                            <p>{{ postcode }}</p>
                         </div>
                     </div>
                 </div>
@@ -67,9 +59,28 @@
             <div class="grid-row">
                 <div class="column-half">
                     <div class="form-group">
-                        <legend class="form-label-bold">National insurance number</legend>
+                        <legend class="form-label-bold">Telephone number</legend>
                         <div>
-                            <p>{{ nino }}</p>
+                            <p>{{ telNum }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Mobile</legend>
+                        <div>
+                            <p>{{ mobile }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Welsh speaker ?</legend>
+                        <div>
+                            <p>{{ welshSpeaker}}</p>
                         </div>
                     </div>
                 </div>

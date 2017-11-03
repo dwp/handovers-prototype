@@ -1,5 +1,5 @@
 class Claimant {
-    constructor(firstName, lastName, dob, nino, telNum, mobile, postcode) {
+    constructor(firstName, lastName, dob, nino, telNum, mobile, postcode, welshSpeaker) {
         this.nino = nino;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -7,6 +7,7 @@ class Claimant {
         this.telNum = telNum;
         this.mobile = mobile;
         this.postcode = postcode;
+        this.welshSpeaker = welshSpeaker;
     }
 }
 

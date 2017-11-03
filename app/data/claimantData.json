@@ -7,7 +7,8 @@
       "nino": "AA123456B",
       "telNum": "01134 567890",
       "mobile": "07000 123456",
-      "postcode": "S75 3RB"
+      "postcode": "S75 3RB",
+      "welshSpeaker": "Yes"
     },
     {"firstName": "Christine",
       "lastName": "Dixon",
@@ -15,7 +16,8 @@
       "nino": "ZZ123456A",
       "telNum": "01134 678901",
       "mobile": "07000 987654",
-      "postcode": "S17 3JX"
+      "postcode": "S17 3JX",
+      "welshSpeaker": "No"
     },
     {"firstName": "Eddie",
       "lastName": "Frost",
@@ -23,7 +25,8 @@
       "nino": "AA234567B",
       "telNum": "01132 789012",
       "mobile": "07000 135791",
-      "postcode": "SW1 1AA"
+      "postcode": "SW1 1AA",
+      "welshSpeaker": "Yes"
     },
     {"firstName": "Grace",
       "lastName": "Harris",
@@ -31,7 +34,8 @@
       "nino": "ZZ234567A",
       "telNum": "01135 890123",
       "mobile": "07000 246802",
-      "postcode": "HA3 4DF"
+      "postcode": "HA3 4DF",
+      "welshSpeaker": "No"
     },
     {"firstName": "Ian",
       "lastName": "Jackson",
@@ -39,7 +43,8 @@
       "nino": "AA345678B",
       "telNum": "01136 901234",
       "mobile": "07000 468024",
-      "postcode": "MN4 3HK"
+      "postcode": "MN4 3HK",
+      "welshSpeaker": "Yes"
     }]
 
 }
