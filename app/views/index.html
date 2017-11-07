@@ -20,11 +20,11 @@
     {% set groupLinksScreens = [{
     workTitle : 'Claimants',
     links: [{
-    link : '/claimant/view', title : 'View claimant details'
+    link : '/claimant/find', title : 'Find claimant'
     }, {
     link : '/claimant/edit?nino=MN121212P', title : 'Create new claimant'
     }, {
-    link : '/claimant/find', title : 'Find claimant'
+    link : '/claimant/view', title : 'View claimant details'
     }]
     }] %}
 
@@ -45,6 +45,8 @@
     workTitle : 'Handovers',
     links: [{
     link : '/handover/edit?nino=AA123456B', title : 'Create handover'
+    },{
+    link : '/handover/view?id=1', title : 'View handover'
     },{
     link : '/handover/edit?id=1', title : 'Edit handover'
     }]

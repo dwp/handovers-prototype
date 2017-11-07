@@ -49,9 +49,9 @@ function claimantFindPageAction(req, res) {
 
 function claimantEditPage(req, res) {
 
-    var payload = {};
-    payload.nino = req.query.nino ? req.query.nino : "AB987654C";
-    res.render('claimant-edit', payload)
+    var claimant = {};
+    claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
+    res.render('claimant-edit', claimant)
 
 }
 

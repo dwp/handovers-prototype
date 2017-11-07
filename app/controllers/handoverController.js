@@ -20,6 +20,7 @@ function viewHandoverPage(req, res) {
 
     req.session.claimant = claimant;
     req.session.handovers = handoversList;
+    req.session.handover = handover;
 
     res.render('handover', {
         "benList" : benefitsList,
@@ -34,14 +35,13 @@ function viewHandoverPage(req, res) {
 function viewHandoverPageAction(req, res) {
 
     var handover = req.session.handover;
-    var claimantNino = req.session.claimant && req.session.claimant.nino || console.log("No claimant in session, or not nino in claimant");
+    var claimantNino = req.session.claimant && req.session.claimant.nino || console.log("No claimant in session, or no nino in claimant");
     var handoverClaimant = req.session.claimant;
 
-    var redirectString = "/handover/edit?nino=" + claimantNino;
-
     req.session.claimant = handoverClaimant;
+    req.session.handover = handover;
 
-    res.redirect(redirectString);
+    res.redirect('/handover/edit?nino=' + claimantNino);
 
 }
 
