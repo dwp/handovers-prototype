@@ -80,7 +80,7 @@
                                 {% if handover.notes %}
                                     {% for note in handover.notes %}
                                         <p>{{ note.noteContent }}</p>
-                                        <p class="font-xsmall form-hint">&nbsp&nbsp&nbspAdded by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }}</p>
+                                        <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(added by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }})</p>
                                         <br>
                                     {% endfor %}
                                 {% else %}

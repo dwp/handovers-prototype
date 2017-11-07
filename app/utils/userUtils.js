@@ -25,7 +25,7 @@ function checkIfUserAlreadyInTeam(user, team) {
     return result;
 }
 
-function getUserByStaffId(listOfUsers, staffId) {
+function getUserByStaffIdFromListOfUsers(listOfUsers, staffId) {
     var user = {};
     var userList = listOfUsers;
     var listLength = userList.length;
@@ -49,4 +49,4 @@ function getUserByStaffId(listOfUsers, staffId) {
 }
 
 module.exports.getListOfAvailableUsers = getListOfAvailableUsers;
-module.exports.getUserByStaffId = getUserByStaffId;
+module.exports.getUserByStaffIdFromListOfUsers = getUserByStaffIdFromListOfUsers;

@@ -16,8 +16,9 @@ function viewHandoverPage(req, res) {
     var handoverNotesList = initialData.initialHandoverNotes;
     var handoversList = initialData.initialHandovers;
     var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
-    var claimant = req.session.claimant ? claimantUtils.getClaimantByNino(claimants, req.session.claimant.nino) : claimantUtils.getClaimantByNino(claimants, req.query.nino);
-    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverById(req.query.id);
+    var claimant = req.session.claimant ? claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.session.claimant.nino) :
+                                          claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
 
     req.session.claimant = claimant;
     req.session.handovers = handoversList;
@@ -53,22 +54,21 @@ function editHandoverPage(req, res) {
     var benefitsList = initialData.initialBenefits;
     var handoverTypesList = initialData.initialHandoverTypes;
     var handoverReasonsList = initialData.initialHandoverReasons;
-    var handovers = initialData.initialHandovers;
-    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverById(req.query.id);
+    var handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
+    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
     var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
-
-    var claimant = claimantUtils.getClaimantByNino(claimants, req.query.nino);
-
-    req.session.claimant = claimant;
-    req.session.handover = handover;
-    req.session.handovers = handovers;
-    req.session.claimants = claimants;
+    var claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
 
     if (handover.timeAndDateRaised || handover.id === '1') {
         editOrCreate = 'edit';
     } else {
         editOrCreate = 'create';
     }
+
+    req.session.claimant = claimant;
+    req.session.handover = handover;
+    req.session.handovers = handovers;
+    req.session.claimants = claimants;
 
     res.render('handover-edit', {
         "benList" : benefitsList,

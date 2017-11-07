@@ -86,7 +86,7 @@ function setInitialHandoversData(){
     return initialHandoversData;
 }
 
-function getHandoverById(id) {
+function getHandoverByIdFromListOfHandovers(handoversList, id) {
 
     var handovers = this.setInitialHandoversData().initialHandovers;
     var inputId = id || "1";
@@ -113,4 +113,4 @@ function getHandoverById(id) {
     return foundHandover;
 }
 module.exports.setInitialHandoversData = setInitialHandoversData;
-module.exports.getHandoverById = getHandoverById;
+module.exports.getHandoverByIdFromListOfHandovers = getHandoverByIdFromListOfHandovers;

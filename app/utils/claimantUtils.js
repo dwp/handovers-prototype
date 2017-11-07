@@ -27,7 +27,7 @@ function setInitialClaimantsData(){
 
 }
 
-function getClaimantByNino(claimantsList, nino) {
+function getClaimantByNinoFromListOfClaimants(claimantsList, nino) {
 
     var claimants = claimantsList ? claimantsList : this.setInitialClaimantsData();
     var inputNino = nino || "AA123456B";
@@ -54,4 +54,4 @@ function getClaimantByNino(claimantsList, nino) {
 }
 
 module.exports.setInitialClaimantsData = setInitialClaimantsData;
-module.exports.getClaimantByNino = getClaimantByNino;
+module.exports.getClaimantByNinoFromListOfClaimants = getClaimantByNinoFromListOfClaimants;
