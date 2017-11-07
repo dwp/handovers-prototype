@@ -114,9 +114,9 @@
   "handoverNotes" : [{
       "id" : "1",
       "handoverId" : "1",
-      "dateNoteAdded": "17 Oct 2017",
+      "dateNoteAdded": "31 Oct 2017",
       "userWhoAddedNote" : "40001001",
-      "noteContent" : "Claimant could not contact own office"
+      "noteContent": "Claimant called for progress update as had not heard from own office since calling on 17th October"
     },
     {
       "id": "2",
@@ -127,9 +127,9 @@
     }, {
       "id" : "3",
       "handoverId" : "1",
-      "dateNoteAdded": "31 Oct 2017",
+      "dateNoteAdded": "17 Oct 2017",
       "userWhoAddedNote" : "40001001",
-      "noteContent": "Claimant called for progress update as had not heard from own office since calling on 17th October"
+      "noteContent" : "Claimant could not contact own office"
     }
   ]
 }

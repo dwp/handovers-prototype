@@ -44,7 +44,6 @@ function setInitialHandoversData(){
         initialHandoverReasons.push(handoverReasonObject);
     }
 
-
 //Create list of handover note objects
     for (var i=0; i < handoverNotesList.length; i++) {
         var id = handoverNotesList[i].id;
@@ -75,11 +74,12 @@ function setInitialHandoversData(){
         initialHandovers.push(handoverObject);
     }
 
+    initialHandovers[0].notes = initialHandoverNotes;
+
     initialHandoversData = {
         "initialBenefits" : initialBenefits,
         "initialHandoverTypes" : initialHandoverTypes,
         "initialHandoverReasons" : initialHandoverReasons,
-        "initialHandoverNotes" : initialHandoverNotes,
         "initialHandovers" : initialHandovers
     }
 

@@ -28,7 +28,7 @@
                                 {% endfor %}
                         </div>
 
-                        <div class="column-half>">
+                        <div class="column-half">
                             <legend class="form-label-bold">Date and time raised</legend>
                             <p>Date: 18 October 2017&nbsp;&nbsp;&nbsp;&nbsp;Time: 11:30</p>
                         </div>
@@ -44,8 +44,7 @@
                                     {% endif %}
                                 {% endfor %}
                         </div>
-
-                        <div class="column-half>">
+                        <div class="column-half">
                             <legend class="form-label-bold">Target callback time</legend>
                             {% if handover.priority === "Non-callback" %}
                                 <p>No target date and time for this priority</p>
@@ -65,7 +64,7 @@
                                     {% endif %}
                                 {% endfor %}
                         </div>
-                        <div class="column-half>">
+                        <div class="column-half">
                             <legend class="form-label-bold">Attachments</legend>
                             <p>A list of attachments will be shown here</p>
                         </div>
@@ -76,22 +75,17 @@
                             <legend class="form-label-bold">Priority</legend>
                             <p>{{ handover.priority }}</p>
                         </div>
-                        <div class="column-half>">
+                        <div class="column-half">
                             <legend class="form-label-bold">Notes</legend>
-                            {% if notes !== "" %}
-                                {% for note in notes %}
-                                    <div>
-                                        <p>Note {{ note.id }}</p>
-                                        <p>Date note added: {{ note.dateNoteAdded }}</p>
-                                        <p>Note added by: {{ note.userWhoAddedNote }}</p>
-                                        <p>Content: {{ note.noteContent }}</p>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                <div>
-                                    <p>No notes recorded for this handover</p>
-                                </div>
-                            {% endif %}
+                                {% if handover.notes %}
+                                    {% for note in handover.notes %}
+                                        <p>{{ note.noteContent }}</p>
+                                        <p class="font-xsmall form-hint">&nbsp&nbsp&nbspAdded by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }}</p>
+                                        <br>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>There are no notes for this handover yet</p>
+                                {% endif %}
                         </div>
                     </div>
                     <br>

@@ -13,6 +13,7 @@ function viewHandoverPage(req, res) {
     var benefitsList = initialData.initialBenefits;
     var handoverTypesList = initialData.initialHandoverTypes;
     var handoverReasonsList = initialData.initialHandoverReasons;
+    var handoverNotesList = initialData.initialHandoverNotes;
     var handoversList = initialData.initialHandovers;
     var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
     var claimant = req.session.claimant ? claimantUtils.getClaimantByNino(claimants, req.session.claimant.nino) : claimantUtils.getClaimantByNino(claimants, req.query.nino);
