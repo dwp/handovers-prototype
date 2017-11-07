@@ -25,4 +25,28 @@ function checkIfUserAlreadyInTeam(user, team) {
     return result;
 }
 
+function getUserByStaffId(listOfUsers, staffId) {
+    var user = {};
+    var userList = listOfUsers;
+    var listLength = userList.length;
+    var userFound = false;
+
+    for (var i=0; i < listLength; i++) {
+        if (userList[i].staffId === staffId) {
+            userFound = true;
+            user.staffId = userList[i].staffId;
+            user.firstName = userList[i].firstName;
+            user.lastName = userList[i].lastName;
+            user.telNum = userList[i].telNum;
+        }
+    }
+
+    if (userFound === false) {
+        console.log("User with staff id: " + staffId + " was not found in the provided list of users");
+    } else {
+        return user;
+    }
+}
+
 module.exports.getListOfAvailableUsers = getListOfAvailableUsers;
+module.exports.getUserByStaffId = getUserByStaffId;

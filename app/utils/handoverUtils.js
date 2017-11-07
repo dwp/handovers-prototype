@@ -2,6 +2,7 @@ const Handover = require('../models/handover');
 const Benefit = require('../models/benefit');
 const HandoverType = require('../models/handover-type');
 const HandoverReason = require('../models/handover-reason');
+const HandoverNote = require('../models/handover-note');
 const handoverData = require('../data/handoverData.json');
 
 function setInitialHandoversData(){
@@ -11,12 +12,14 @@ function setInitialHandoversData(){
     var initialHandoverTypes = [];
     var initialHandoverReasons = [];
     var initialHandovers = [];
+    var initialHandoverNotes = [];
 
 // Get data file and create lists
     var benefitsList = handoverData['benefits'];
     var handoverTypesList = handoverData['handoverTypes'];
     var handoverReasonsList = handoverData['handoverReasons'];
     var handoversList = handoverData['handovers'];
+    var handoverNotesList = handoverData['handoverNotes'];
 
 // Create list of benefit objects
     for (var i=0; i < benefitsList.length; i++) {
@@ -41,6 +44,19 @@ function setInitialHandoversData(){
         initialHandoverReasons.push(handoverReasonObject);
     }
 
+
+//Create list of handover note objects
+    for (var i=0; i < handoverNotesList.length; i++) {
+        var id = handoverNotesList[i].id;
+        var handoverId = handoverNotesList[i].handoverId;
+        var dateNoteAdded = handoverNotesList[i].dateNoteAdded;
+        var userWhoAddedNote = handoverNotesList[i].userWhoAddedNote;
+        var noteContent = handoverNotesList[i].noteContent;
+
+        var handoverNoteObject = new HandoverNote(id, handoverId, dateNoteAdded, userWhoAddedNote, noteContent);
+        initialHandoverNotes.push(handoverNoteObject);
+    }
+
 // Create list of handover objects
     for (var i=0; i < handoversList.length; i++) {
         var id = handoversList[i].id;
@@ -63,6 +79,7 @@ function setInitialHandoversData(){
         "initialBenefits" : initialBenefits,
         "initialHandoverTypes" : initialHandoverTypes,
         "initialHandoverReasons" : initialHandoverReasons,
+        "initialHandoverNotes" : initialHandoverNotes,
         "initialHandovers" : initialHandovers
     }
 
@@ -72,11 +89,11 @@ function setInitialHandoversData(){
 function getHandoverById(id) {
 
     var handovers = this.setInitialHandoversData().initialHandovers;
-    var inputId = id|| "1";
+    var inputId = id || "1";
     var foundHandover= {};
 
     for (var i=0; i < handovers.length; i++) {
-        if (handovers[i].id === id) {
+        if (handovers[i].id === inputId) {
             var handover = handovers[i];
             foundHandover = {
                 "id" : handover.id,
@@ -87,15 +104,13 @@ function getHandoverById(id) {
                 "typeId" : handover.typeId,
                 "reasonId" : handover.reasonId,
                 "callback" : handover.callback,
-                "priority" : handover.priority
+                "priority" : handover.priority,
+                "notes" : handover.notes
             }
         }
     }
 
     return foundHandover;
-
-
-
 }
 module.exports.setInitialHandoversData = setInitialHandoversData;
 module.exports.getHandoverById = getHandoverById;

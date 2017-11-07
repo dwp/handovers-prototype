@@ -66,7 +66,7 @@
                                 {% endfor %}
                         </div>
                         <div class="column-half>">
-                            <legend class="form-label-bold">Add attachment</legend>
+                            <legend class="form-label-bold">Attachments</legend>
                             <p>A list of attachments will be shown here</p>
                         </div>
                     </div>
@@ -77,8 +77,21 @@
                             <p>{{ handover.priority }}</p>
                         </div>
                         <div class="column-half>">
-                            <legend class="form-label-bold">Add note</legend>
-                            <p>A panel of notes will be shown here</p>
+                            <legend class="form-label-bold">Notes</legend>
+                            {% if notes !== "" %}
+                                {% for note in notes %}
+                                    <div>
+                                        <p>Note {{ note.id }}</p>
+                                        <p>Date note added: {{ note.dateNoteAdded }}</p>
+                                        <p>Note added by: {{ note.userWhoAddedNote }}</p>
+                                        <p>Content: {{ note.noteContent }}</p>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div>
+                                    <p>No notes recorded for this handover</p>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <br>
