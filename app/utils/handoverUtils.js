@@ -74,8 +74,10 @@ function setInitialHandoversData(){
         initialHandovers.push(handoverObject);
     }
 
+// Add lst of notes to first handover in initialHandovers
     initialHandovers[0].notes = initialHandoverNotes;
 
+// Set up return object from initialised data sets
     initialHandoversData = {
         "initialBenefits" : initialBenefits,
         "initialHandoverTypes" : initialHandoverTypes,
@@ -88,9 +90,9 @@ function setInitialHandoversData(){
 
 function getHandoverByIdFromListOfHandovers(handoversList, id) {
 
-    var handovers = this.setInitialHandoversData().initialHandovers;
+    var handovers = handoversList;
     var inputId = id || "1";
-    var foundHandover= {};
+    var foundHandover = {};
 
     for (var i=0; i < handovers.length; i++) {
         if (handovers[i].id === inputId) {
@@ -112,5 +114,47 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
 
     return foundHandover;
 }
+
+function getHandoverDetails(handover) {
+
+    var textVersions = {};
+    var initialHandoversData = this.setInitialHandoversData();
+    var benefitsList = initialHandoversData.initialBenefits;
+    var handoverTypesList = initialHandoversData.initialHandoverTypes;
+    var handoverReasonsList = initialHandoversData.initialHandoverReasons;
+
+    var benefitName;
+    var handoverType;
+    var handoverReason;
+
+
+    for (var i=0; i < benefitsList.length; i++) {
+        if (handover.benefitId === benefitsList[i].id) {
+            benefitName = benefitsList[i].benefitName;
+        }
+    }
+
+    for (var i=0; i < handoverTypesList.length; i++) {
+        if (handover.typeId === handoverTypesList[i].id) {
+            handoverType = handoverTypesList[i].handoverType;
+        }
+    }
+
+    for (var i=0; i < handoverReasonsList.length; i++) {
+        if (handover.reasonId === handoverReasonsList[i].id) {
+            handoverReason = handoverReasonsList[i].handoverReason;
+        }
+    }
+
+    textVersions.benefitName = benefitName;
+    textVersions.handoverType = handoverType;
+    textVersions.handoverReason = handoverReason;
+
+
+    return textVersions;
+
+}
+
 module.exports.setInitialHandoversData = setInitialHandoversData;
 module.exports.getHandoverByIdFromListOfHandovers = getHandoverByIdFromListOfHandovers;
+module.exports.getHandoverDetails = getHandoverDetails;

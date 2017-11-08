@@ -7,4 +7,6 @@ module.exports = function(router) {
     router.post('/handover/view', handover.viewHandoverPageAction);
     router.get('/handover/edit', handover.editHandoverPage);
     router.post('/handover/edit', handover.editHandoverPageAction);
+    router.get('/handover/create', handover.createHandoverPage);
+    router.post('/handover/create', handover.createHandoverPageAction);
 }

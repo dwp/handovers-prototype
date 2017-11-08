@@ -21,11 +21,7 @@
                     <div class="grid-row">
                         <div class="column-half">
                             <legend class="form-label-bold">Benefit</legend>
-                                {% for benefit in benList %}
-                                    {% if handover.benefitId === benefit.id %}
-                                        <p>{{ benefit.benefitName }}</p>
-                                    {% endif %}
-                                {% endfor %}
+                            <p>{{ benefitName }}</p>
                         </div>
 
                         <div class="column-half">
@@ -38,11 +34,7 @@
                     <div class="grid-row">
                         <div class="column-half">
                             <legend class="form-label-bold">Handover type</legend>
-                                {% for handoverType in handTypesList %}
-                                    {% if handover.typeId === handoverType.id %}
-                                        <p>{{ handoverType.handoverType }}</p>
-                                    {% endif %}
-                                {% endfor %}
+                            <p>{{ handoverType }}</p>
                         </div>
                         <div class="column-half">
                             <legend class="form-label-bold">Target callback time</legend>
@@ -58,11 +50,7 @@
                     <div class="grid-row">
                         <div class="column-half">
                             <legend class="form-label-bold">Handover reason</legend>
-                                {% for handoverReason in handReasonsList %}
-                                    {% if handover.reasonId === handoverReason.id %}
-                                        <p>{{ handoverReason.handoverReason }}</p>
-                                    {% endif %}
-                                {% endfor %}
+                            <p>{{ handoverReason }}</p>
                         </div>
                         <div class="column-half">
                             <legend class="form-label-bold">Attachments</legend>
@@ -77,7 +65,7 @@
                         </div>
                         <div class="column-half">
                             <legend class="form-label-bold">Notes</legend>
-                                {% if handover.notes %}
+                                {% if not handover.notes %}
                                     {% for note in handover.notes %}
                                         <p>{{ note.noteContent }}</p>
                                         <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(added by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }})</p>

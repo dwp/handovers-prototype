@@ -1,3 +1,4 @@
+const HandoverNote = require('../models/handover-note');
 class Handover {
     constructor(id, nino, staffId, owningOfficeId, benefitId, typeId, reasonId, callback, priority) {
         this.id = id;
@@ -19,8 +20,13 @@ class Handover {
         this.attachments.push(attachment);
     }
 
-    addNote(note) {
-        this.notes.push(note);
+    addNote(noteId, user, content) {
+        var handoverId = this.id;
+        var dateNoteAdded = new Date();
+        var userWhoAddedNote = user;
+        var noteContent = content;
+        var handoverNote = new HandoverNote(noteId, handoverId, dateNoteAdded, userWhoAddedNote, noteContent)
+        this.notes.push(handoverNote);
     }
 
     setTimeAndDateRaised() {

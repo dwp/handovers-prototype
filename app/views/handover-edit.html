@@ -6,10 +6,12 @@
     <div class="main-content">
         {% if editOrCreate === 'edit' %}
             <h1 class="heading-large">Edit handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
+            <form action="/handover/edit" method="POST" class="form">
         {% else %}
             <h1 class="heading-large">Create handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
+            <form action="/handover/create" method="POST" class="form">
         {% endif %}
-        <form action="/handover/edit" method="POST" class="form">
+
             <div class="form-group">
                 <div class="grid-row">
                     <div class="column-full">
@@ -36,7 +38,7 @@
                         <div class="column-half">
                         </div>
                     {% else %}
-                        <div class="column-half>">
+                        <div class="column-half">
                             <legend class="form-label-bold">Date and time raised</legend>
                             <p>Date: 18 October 2017&nbsp;&nbsp;&nbsp;&nbsp;Time: 11:30</p>
                         </div>
@@ -57,7 +59,7 @@
                         <div class="column-half">
                         </div>
                     {% else %}
-                    <div class="column-half>">
+                    <div class="column-half">
                         <legend class="form-label-bold">Target callback time</legend>
                         {% if handover.priority === "Non-callback" %}
                             <p>No target date and time for this priority</p>
@@ -78,9 +80,9 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="column-half>">
-                        <legend class="form-label-bold">Add attachment</legend>
-                        <input type="text" class="form-control" id="handover-attachment" name="handover-attachment" value="Will be able to select attachment to handover here">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Attachments</legend>
+                        <input type="text" class="form-control" id="handover-attachment" name="handover-attachment" value="Add attachment">
                     </div>
                 </div>
                 <br>
@@ -95,9 +97,18 @@
                             <option value="Priority duplicate" {{ 'selected' if  handover.priority === 'Priority duplicate' else ''}}>Priority duplicate</option>
                         </select>
                     </div>
-                    <div class="column-half>">
-                        <legend class="form-label-bold">Add note</legend>
-                        <input type="text" class="form-control" id="handover-note" name="handover-note" value="Will be able to add note to handover here">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Notes</legend>
+                        {% if not handover.notes %}
+                            {% for note in handover.notes %}
+                                <p>{{ note.noteContent }}</p>
+                                <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(added by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }})</p>
+                                <br>
+                            {% endfor %}
+                        {% else %}
+                            <p>There are no notes for this handover yet</p>
+                        {% endif %}
+                        <input class="form-control" type="text" id="handover-note" name="handover-note" value="Add note here">
                     </div>
                 </div>
                 <br>
