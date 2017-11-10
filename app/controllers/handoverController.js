@@ -82,14 +82,36 @@ function createHandoverPageAction(req, res) {
     var handoverPriority = req.body['handover-priority'];
     var handoverNote = req.body['handover-note'];
     var handoverAttachment = req.body['handover-attachment'];
+    var handoverStaffId = '40001001';
+    var handoverOwningOfficeId = "1";
+    var dateAndTimeRaised = new Date();
+    var targetDateAndTime = new Date();
+    var callback = "1";
     var claimant = req.session.claimant;
     var newId = handoversList.length + 1;
 
-    newHandover = new Handover(newId, claimant.nino, '40001001', '1', benefitId, handoverTypeId, handoverReasonId, '1', handoverPriority);
-    newHandover.addNote(newHandover.notes.length, '40001001', handoverNote);
-    newHandover.addAttachment(handoverAttachment);
-    newHandover.setTimeAndDateRaised();
-    newHandover.calculateTargetTime();
+    if (callback === '1') {
+        targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
+    }
+
+    newHandover = new Handover(newId, claimant.nino, handoverStaffId, handoverOwningOfficeId, benefitId, handoverTypeId, handoverReasonId, dateAndTimeRaised, targetDateAndTime, callback, handoverPriority);
+
+    if (handoverNote === "" || handoverNote === null) {
+        console.log("No new handover note added");
+    } else {
+        newHandover.addNote(newHandover.notes.length, handoverStaffId, handoverNote);
+    }
+
+    if (handoverAttachment === "" || handoverAttachment === null) {
+        console.log("No new attachment added");
+    } else {
+        newHandover.addAttachment(handoverAttachment);
+    }
+
+    newHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(dateAndTimeRaised);
+    newHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(targetDateAndTime);
+
+
     req.session.handover = newHandover;
     newHandoversList = handoversList;
     newHandoversList.push(newHandover);
@@ -143,7 +165,6 @@ function editHandoverPageAction(req, res) {
     var claimant = req.session.claimant;
     var index = findPositionOfHandoverInArray(handover.id, handoversList);
 
-    //editedHandover.addAttachment(handoverAttachment);
     if (callback === '1') {
         targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
     }
@@ -157,6 +178,12 @@ function editHandoverPageAction(req, res) {
         console.log("No new handover note added");
     } else {
         editedHandover.addNote(handover.notes.length + 1, "40001001", handoverNote);
+    }
+
+    if (handoverAttachment === "" || handoverAttachment === null) {
+        console.log("No new attachment added");
+    } else {
+        editedHandover.addAttachment(handoverAttachment);
     }
 
     handoversList[index] = editedHandover;

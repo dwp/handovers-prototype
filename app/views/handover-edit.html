@@ -40,7 +40,8 @@
                     {% else %}
                         <div class="column-half">
                             <legend class="form-label-bold">Date and time raised</legend>
-                            <p>Date: 18 October 2017&nbsp;&nbsp;&nbsp;&nbsp;Time: 11:30</p>
+                            <p>Date: {{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</p>
                         </div>
                     {% endif %}
                 </div>
@@ -64,7 +65,8 @@
                         {% if handover.priority === "Non-callback" %}
                             <p>No target date and time for this priority</p>
                         {% else %}
-                            <p>Date: 18 October 2017&nbsp;&nbsp;&nbsp;&nbsp;Time: 14:30</p>
+                        <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
+                            &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
                         {% endif %}
                     </div>
                     {% endif %}
