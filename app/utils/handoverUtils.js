@@ -4,6 +4,7 @@ const HandoverType = require('../models/handover-type');
 const HandoverReason = require('../models/handover-reason');
 const HandoverNote = require('../models/handover-note');
 const handoverData = require('../data/handoverData.json');
+const dateUtils = require('../utils/dateUtils');
 
 function setInitialHandoversData(){
 
@@ -67,14 +68,18 @@ function setInitialHandoversData(){
         var reasonId = handoversList[i].reasonId;
         var callback = handoversList[i].callback;
         var priority = handoversList[i].priority;
+        var dateAndTimeRaised = new Date();
+        var targetDateAndTime = new Date();
 
-        var handoverObject = new Handover(id, nino, staffId, owningOfficeId, benefitId, typeId, reasonId, callback, priority);
-        handoverObject.setTimeAndDateRaised();
-        handoverObject.calculateTargetTime();
+        if (callback === '1') {
+            targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
+        }
+
+        var handoverObject = new Handover(id, nino, staffId, owningOfficeId, benefitId, typeId, reasonId, dateAndTimeRaised, targetDateAndTime, callback, priority);
         initialHandovers.push(handoverObject);
     }
 
-// Add lst of notes to first handover in initialHandovers
+// Add list of notes to first handover in initialHandovers
     initialHandovers[0].notes = initialHandoverNotes;
 
 // Set up return object from initialised data sets
@@ -105,6 +110,10 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
                 "benefitId" : handover.benefitId,
                 "typeId" : handover.typeId,
                 "reasonId" : handover.reasonId,
+                "dateAndTimeRaised" : handover.dateAndTimeRaised,
+                "dateAndTimeRaisedForDisplay" : dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised),
+                "targetDateAndTime" : handover.targetDateAndTime,
+                "targetDateAndTimeForDisplay" : dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime),
                 "callback" : handover.callback,
                 "priority" : handover.priority,
                 "notes" : handover.notes

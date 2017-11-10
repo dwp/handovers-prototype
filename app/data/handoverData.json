@@ -112,7 +112,7 @@
       "priority" : "Escalation"
     }],
   "handoverNotes" : [{
-      "id" : "1",
+      "id" : "3",
       "handoverId" : "1",
       "dateNoteAdded": "31 Oct 2017",
       "userWhoAddedNote" : "40001001",
@@ -124,7 +124,7 @@
       "userWhoAddedNote": "40001002",
       "noteContent": "Claimant called and asked to be called on his mobile telephone number"
     }, {
-      "id" : "3",
+      "id" : "1",
       "handoverId" : "1",
       "dateNoteAdded": "17 Oct 2017",
       "userWhoAddedNote" : "40001001",

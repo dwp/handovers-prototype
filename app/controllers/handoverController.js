@@ -1,6 +1,7 @@
 const Handover = require('../models/handover');
 const handoverUtils = require('../utils/handoverUtils');
 const claimantUtils = require('../utils/claimantUtils');
+const dateUtils = require('../utils/dateutils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Handover Controllers
@@ -10,9 +11,6 @@ const claimantUtils = require('../utils/claimantUtils');
 function viewHandoverPage(req, res) {
 
     var initialHandoversData = handoverUtils.setInitialHandoversData();
-    //var benefitsList = initialHandoversData.initialBenefits;
-    //var handoverTypesList = initialHandoversData.initialHandoverTypes;
-    //var handoverReasonsList = initialHandoversData.initialHandoverReasons;
     var handoversList = req.session.handovers ? req.session.handovers : initialHandoversData.initialHandovers;
     var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
     var claimant = req.session.claimant ? claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.session.claimant.nino) :
@@ -98,7 +96,6 @@ function createHandoverPageAction(req, res) {
     req.session.handovers = newHandoversList;
     req.session.claimant = claimant;
 
-    console.log("Leaving createHandoverPageAction, with newHandover : " + newId + " created and now in list: " + newHandoversList);
     res.redirect('/handover/view?id=' + newId);
 
 }
@@ -140,27 +137,33 @@ function editHandoverPageAction(req, res) {
     var handoverPriority = req.body['handover-priority'];
     var handoverNote = req.body['handover-note'];
     var handoverAttachment = req.body['handover-attachment'];
+    var dateAndTimeRaised = new Date(handover.dateAndTimeRaised);
+    var targetDateAndTime = new Date(handover.dateAndTimeRaised);
+    var callback = "1";
     var claimant = req.session.claimant;
-
-    handover.benefitId = benefitId;
-    handover.typeId = handoverTypeId;
-    handover.reasonId = handoverReasonId;
-    handover.priority = handoverPriority;
-    handover.addNote(existingHandover.notes.length + 1, '40001001', handoverNote);
-    //handover.addAttachment(handoverAttachment);
-    handover.calculateTargetTime();
-
-    req.session.handover = handover;
-
     var index = findPositionOfHandoverInArray(handover.id, handoversList);
-    handoversList[index] = handover;
+
+    //editedHandover.addAttachment(handoverAttachment);
+    if (callback === '1') {
+        targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
+    }
+
+    var editedHandover = new Handover(handover.id, claimant.nino, handover.staffId, handover.owningOfficeId, benefitId, handoverTypeId, handoverReasonId, dateAndTimeRaised, targetDateAndTime, callback, handoverPriority);
+    editedHandover.notes = handover.notes;
+    editedHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(dateAndTimeRaised);
+    editedHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(targetDateAndTime);
+
+    if (handoverNote === "" || handoverNote === null) {
+        console.log("No new handover note added");
+    } else {
+        editedHandover.addNote(handover.notes.length + 1, "40001001", handoverNote);
+    }
+
+    handoversList[index] = editedHandover;
 
     req.session.handovers = handoversList;
-
+    req.session.handover = editedHandover;
     req.session.claimant = claimant;
-
-    console.log('handoverNote got from page is : ', handoverNote);
-    console.log('editedHandover.notes is : ', editedHandover.notes);
 
     res.redirect('/handover/view');
 
