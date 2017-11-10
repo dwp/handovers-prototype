@@ -1,7 +1,7 @@
 const Handover = require('../models/handover');
 const handoverUtils = require('../utils/handoverUtils');
 const claimantUtils = require('../utils/claimantUtils');
-const dateUtils = require('../utils/dateutils');
+const dateUtils = require('../utils/dateUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Handover Controllers
