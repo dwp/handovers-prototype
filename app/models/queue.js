@@ -1,4 +1,4 @@
-class Skill {
+class Queue {
     constructor(id, name, description) {
         this.id = id;
         this.name = name;
@@ -6,4 +6,4 @@ class Skill {
     }
 }
 
-module.exports = Skill;
+module.exports = Queue;

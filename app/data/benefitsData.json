@@ -1,0 +1,22 @@
+{
+  "title": "benefitsData",
+  "benefitTypes": [
+    {
+    "id": "1",
+    "benefitName" : "Employment & Support Allowance [ESA]"
+    },{
+    "id": "2",
+    "benefitName" : "Jobseekers Allowance [JSA}"
+    },{
+    "id": "3",
+    "benefitName" : "Universal Credit [UC]"
+    },{
+    "id": "4",
+    "benefitName" : "Housing Benefit [HB]"
+    },{
+    "id": "5",
+    "benefitName" : "Social Fund [SF]",
+    "benefitSubTypes" : ["Social Fund Type 1", "Social Fund Type 2", "Social Fund Type 3", "Social Fund Type 4"]
+    }
+  ]
+}

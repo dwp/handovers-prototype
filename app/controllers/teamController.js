@@ -1,5 +1,5 @@
 const Team = require('../models/team');
-const teamUtils = require('../utils/teamUtils');
+const sIDU = require('../utils/setInitialDataUtils');
 const userUtils = require('../utils/userUtils');
 const queueUtils = require('../utils/queueUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -16,9 +16,9 @@ const queueUtils = require('../utils/queueUtils');
 function teamUserAddPage (req, res) {
 
     var teamAndAvailableUsersList;
-    var initialData = teamUtils.setInitialTeamsData();
-    var fullUsersList = initialData.initialUsers;
-    var team = req.session.team ? req.session.team : initialData.initialTeams[0];
+    var initialTeamsData = sIDU.setInitialTeamsData();
+    var fullUsersList = sIDU.setInitialUsersData();
+    var team = req.session.team ? req.session.team : initialTeamsData[0];
 
     // Get list of users not already members of this team, and so available to be selected
     var availableUsersList = userUtils.getListOfAvailableUsers(team, fullUsersList);
