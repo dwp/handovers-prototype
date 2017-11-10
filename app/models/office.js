@@ -11,7 +11,7 @@ class Office {
     }
 
     addQueuesList(queueList) {
-        this.officeSkillsList = queueList;
+        this.officeQueuesList = queueList;
     }
 }
 
