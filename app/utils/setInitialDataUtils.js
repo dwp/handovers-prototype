@@ -36,7 +36,7 @@ function setInitialBenefitsData() {
         let benefit = new Object();
         benefit.id= benefitsList[i].id;
         benefit.benefitName = benefitsList[i].benefitName;
-        if (benefit.id === 5) {
+        if (benefit.id === '5') {
             benefit.benefitSubTypes = benefitsList.benefitSubTypes;
         }
         initialBenefits.push(benefit);
@@ -83,7 +83,7 @@ function setInitialOfficeTypesAndOfficesData() {
         let office = new Object();
         office.id = officesList[i].id;
         office.officeName = officesList[i].officeName;
-        office.officeType = officesList[i].officeType:
+        office.officeType = officesList[i].officeType;
         office.postcode = officesList[i].postcode;
         initialOffices.push(office);
 
@@ -145,8 +145,6 @@ function setInitialUsersData() {
     return initialUsers;
 
 }
-
-
 
 module.exports.setInitialClaimantsData = setInitialClaimantsData;
 module.exports.setInitialBenefitsData = setInitialBenefitsData;
