@@ -83,8 +83,8 @@
                         </select>
                     </div>
                     <div class="column-half">
-                        <legend class="form-label-bold">Attachments</legend>
-                        <input type="text" class="form-control" id="handover-attachment" name="handover-attachment" value="Add attachment">
+                        <!--<legend class="form-label-bold">Attachments</legend>-->
+                        <!--<input type="text" class="form-control" id="handover-attachment" name="handover-attachment" value="Add attachment">-->
                     </div>
                 </div>
                 <br>
@@ -101,14 +101,16 @@
                     </div>
                     <div class="column-half">
                         <legend class="form-label-bold">Notes</legend>
-                        {% if handover.notes %}
-                            {% for note in handover.notes %}
-                                <p>{{ note.noteContent }}</p>
-                                <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(added by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }})</p>
-                                <br>
-                            {% endfor %}
-                        {% else %}
-                            <p>There are no notes for this handover yet</p>
+                        {% if editOrCreate === 'edit' %}
+                            {% if handover.notes %}
+                                {% for note in handover.notes %}
+                                    <p>{{ note.noteContent }}</p>
+                                    <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(added by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }})</p>
+                                    <br>
+                                {% endfor %}
+                            {% else %}
+                                <p>There are no notes for this handover yet</p>
+                            {% endif %}
                         {% endif %}
                         <input class="form-control" type="text" id="handover-note" name="handover-note">
                     </div>
