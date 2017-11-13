@@ -10,7 +10,7 @@ const dateUtils = require('../utils/dateUtils');
 
 function viewHandoverPage(req, res) {
 
-    let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
+    let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData().initialHandovers;
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let claimant = req.session.claimant ? claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.session.claimant.nino) :
                                           claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
