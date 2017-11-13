@@ -1,35 +1,8 @@
-const Claimant = require('../models/claimant');
-const claimantData = require('../data/claimantData.json');
-
-function setInitialClaimantsData(){
-
-    var initialClaimants = [];
-
-    // Get claimants from json file data
-    var claimantsList = claimantData['claimants'];
-
-    // Set up list of claimant objects from json file data
-    for (var i=0; i < claimantsList.length; i++) {
-        var firstName = claimantsList[i].firstName;
-        var lastName = claimantsList[i].lastName;
-        var dob = claimantsList[i].dob;
-        var nino = claimantsList[i].nino;
-        var telNum = claimantsList[i].telNum;
-        var mobile = claimantsList[i].mobile;
-        var postcode = claimantsList[i].postcode;
-        var welshSpeaker = claimantsList[i].welshSpeaker;
-
-        var claimant = new Claimant(firstName, lastName, dob, nino, telNum, mobile, postcode, welshSpeaker);
-        initialClaimants.push(claimant);
-    }
-
-    return initialClaimants;
-
-}
+const sIDU = require('../utils/setInitialDataUtils');
 
 function getClaimantByNinoFromListOfClaimants(claimantsList, nino) {
 
-    var claimants = claimantsList ? claimantsList : this.setInitialClaimantsData();
+    var claimants = claimantsList ? claimantsList : sIDU.setInitialClaimantsData();
     var inputNino = nino || "AA123456B";
     var foundClaimant = {};
 
@@ -53,5 +26,4 @@ function getClaimantByNinoFromListOfClaimants(claimantsList, nino) {
 
 }
 
-module.exports.setInitialClaimantsData = setInitialClaimantsData;
 module.exports.getClaimantByNinoFromListOfClaimants = getClaimantByNinoFromListOfClaimants;

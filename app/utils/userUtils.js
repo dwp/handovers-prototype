@@ -1,11 +1,11 @@
 function getListOfAvailableUsers(team, fullUserList) {
 
-    var availableUsers = [];
-    var allUsers = fullUserList;
+    let availableUsers = [];
+    let allUsers = fullUserList;
 
-    for (var i=0; i < allUsers.length; i++) {
+    for (let i=0; i < allUsers.length; i++) {
         if (checkIfUserAlreadyInTeam(allUsers[i], team) === false) {
-            var availableUser = allUsers[i];
+            let availableUser = allUsers[i];
             availableUsers.push(availableUser);
         }
     }
@@ -13,10 +13,10 @@ function getListOfAvailableUsers(team, fullUserList) {
 }
 
 function checkIfUserAlreadyInTeam(user, team) {
-    var result = false;
-    var inputTeamUsers = team.userList;
+    let result = false;
+    let inputTeamUsers = team.userList;
 
-    for (var j=0; j < inputTeamUsers.length; j++) {
+    for (let j=0; j < inputTeamUsers.length; j++) {
         if (user.staffId === inputTeamUsers[j].staffId) {
             result = true;
         }
@@ -26,12 +26,12 @@ function checkIfUserAlreadyInTeam(user, team) {
 }
 
 function getUserByStaffIdFromListOfUsers(listOfUsers, staffId) {
-    var user = {};
-    var userList = listOfUsers;
-    var listLength = userList.length;
-    var userFound = false;
+    let user = {};
+    let userList = listOfUsers;
+    let listLength = userList.length;
+    let userFound = false;
 
-    for (var i=0; i < listLength; i++) {
+    for (let i=0; i < listLength; i++) {
         if (userList[i].staffId === staffId) {
             userFound = true;
             user.staffId = userList[i].staffId;

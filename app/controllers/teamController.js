@@ -1,5 +1,4 @@
-const Team = require('../models/team');
-const teamUtils = require('../utils/teamUtils');
+const sIDU = require('../utils/setInitialDataUtils');
 const userUtils = require('../utils/userUtils');
 const queueUtils = require('../utils/queueUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -15,17 +14,18 @@ const queueUtils = require('../utils/queueUtils');
 
 function teamUserAddPage (req, res) {
 
-    var teamAndAvailableUsersList;
-    var initialData = teamUtils.setInitialTeamsData();
-    var fullUsersList = initialData.initialUsers;
-    var team = req.session.team ? req.session.team : initialData.initialTeams[0];
+    let teamAndAvailableUsersList;
+    let initialTeamsQueuesAndUsersData = sIDU.setInitialTeamsQueuesAndUsersData();
+    let initialTeams = initialTeamsQueuesAndUsersData.initialTeams;
+    let fullUsersList = sIDU.setInitialUsersData();
+    let team = req.session.team ? req.session.team : initialTeams[0];
 
     // Get list of users not already members of this team, and so available to be selected
-    var availableUsersList = userUtils.getListOfAvailableUsers(team, fullUsersList);
+    let availableUsersList = userUtils.getListOfAvailableUsers(team, fullUsersList);
 
     teamAndAvailableUsersList = {
-        team : team,
-        availableUsers : availableUsersList
+        "team" : team,
+        "availableUsers" : availableUsersList
     };
 
     req.session.teamAndAvailableUsersList = teamAndAvailableUsersList;
@@ -36,18 +36,23 @@ function teamUserAddPage (req, res) {
 
 function teamUserAddPageAction (req, res) {
 
-    var teamAndAvailableUsersList = req.session.teamAndAvailableUsersList ? req.session.teamAndAvailableUsersList : console.log("Nothing in teamAndAvailableUsersList session object");
-    var team = teamAndAvailableUsersList.team;
-    var selectedUserStaffId = req.body['selected-user'];
-    var availableUsersList = teamAndAvailableUsersList.availableUsers;
-    var userToAddToTeam = availableUsersList.find(findSelectedUserByStaffId);
+    let teamAndAvailableUsersList = req.session.teamAndAvailableUsersList ? req.session.teamAndAvailableUsersList : console.log("Nothing in teamAndAvailableUsersList session object");
+    let team = teamAndAvailableUsersList.team;
+    let newTeam = new Object();
+    let selectedUserStaffId = req.body['selected-user'];
+    let availableUsersList = teamAndAvailableUsersList.availableUsers;
+    let userToAddToTeam = availableUsersList.find(findSelectedUserByStaffId);
 
     if(userToAddToTeam === false) {
         console.log('User not found in list');
     } else {
-        var newTeam = new Team(team.teamName, team.startDate, team.endDate);
-        newTeam.addUserList(team.userList);
-        newTeam.addUser(userToAddToTeam);
+        newTeam.id = team.id
+        newTeam.teamName = team.teamName;
+        newTeam.userList = team.userList;
+        newTeam.queueList = team.queueList;
+        newTeam.startDate = team.startDate;
+        newTeam.endDate = team.endDate;
+        newTeam.userList.push(userToAddToTeam);
     }
     req.session.team = newTeam;
     res.redirect('/team/user/add');
@@ -64,18 +69,18 @@ function teamUserAddPageAction (req, res) {
 
 function teamQueueAddPage (req, res) {
 
-    var teamAndAvailableQueuesList;
-    var initialData = teamUtils.setInitialTeamsData();
-    var fullQueuesList = initialData.initialQueues;
-    var team = req.session.team ? req.session.team : initialData.initialTeams[0];
+    let teamAndAvailableQueuesList;
+    let initialData = sIDU.setInitialTeamsQueuesAndUsersData();
+    let fullQueuesList = initialData.initialQueues;
+    let team = req.session.team ? req.session.team : initialData.initialTeams[0];
 
     // Get list of queues not already possessed by this team, and so available to be selected
-    var availableQueuesList = queueUtils.getListOfAvailableQueues(team, fullQueuesList);
+    let availableQueuesList = queueUtils.getListOfAvailableQueues(team, fullQueuesList);
 
 
     teamAndAvailableQueuesList = {
-        team : team,
-        availableQueues : availableQueuesList
+        "team" : team,
+        "availableQueues" : availableQueuesList
     };
 
     req.session.teamAndAvailableQueuesList = teamAndAvailableQueuesList;
@@ -86,19 +91,26 @@ function teamQueueAddPage (req, res) {
 
 function teamQueueAddPageAction (req, res) {
 
-    var teamAndAvailableQueuesList = req.session.teamAndAvailableQueuesList ? req.session.teamAndAvailableQueuesList : console.log("Nothing in teamAndAvailableQueuesList session object");
-    var team = teamAndAvailableQueuesList.team;
-    var selectedQueueId = req.body['selected-queue'];
-    var availableQueuesList = teamAndAvailableQueuesList.availableQueues;
-    var queueToAddToTeam = availableQueuesList.find(findSelectedQueueByQueueId);
+    let teamAndAvailableQueuesList = req.session.teamAndAvailableQueuesList ? req.session.teamAndAvailableQueuesList : console.log("Nothing in teamAndAvailableQueuesList session object");
+    let team = teamAndAvailableQueuesList.team;
+    let newTeam = new Object();
+    let selectedQueueId = req.body['selected-queue'];
+    let availableQueuesList = teamAndAvailableQueuesList.availableQueues;
+    let queueToAddToTeam = availableQueuesList.find(findSelectedQueueByQueueId);
+
 
     if(queueToAddToTeam === false) {
-        console.log('Queue not found in list');
+        console.log('User not found in list');
     } else {
-        var newTeam = new Team(team.teamName, team.startDate, team.endDate);
-        newTeam.addQueueList(team.queueList);
-        newTeam.addQueue(queueToAddToTeam);
+        newTeam.id = team.id
+        newTeam.teamName = team.teamName;
+        newTeam.userList = team.userList;
+        newTeam.queueList = team.queueList;
+        newTeam.startDate = team.startDate;
+        newTeam.endDate = team.endDate;
+        newTeam.queueList.push(queueToAddToTeam);
     }
+
     req.session.team = newTeam;
     res.redirect('/team/queue/add');
 

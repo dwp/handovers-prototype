@@ -1,5 +1,9 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/*                                        Not currently used
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*/
+
 const HandoverNote = require('../models/handover-note');
-const dateUtils = require('../utils/dateUtils');
 class Handover {
     constructor(id, nino, staffId, owningOfficeId, benefitId, typeId, reasonId, dateAndTimeRaised, targetDateAndTime, callback, priority) {
         this.id = id;

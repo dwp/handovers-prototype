@@ -3,33 +3,49 @@
   "offices": [
     {
       "id": "1",
-      "officeName": "Barnsley Jobcentre",
+      "officeName": "Barnsley",
+      "officeTypeId" : "1",
       "postcode": "S71 3AA"
     },
     {
       "id": "2",
-      "officeName": "Sheffield South West Jobcentre",
+      "officeName": "Sheffield South West",
+      "officeTypeId" : "1",
       "postcode": "S13 7XX"
     },
     {
       "id": "3",
-      "officeName": "York Jobcentre",
+      "officeName": "York",
+      "officeTypeId" : "1",
       "postcode": "YO3 5GF"
     },
     {
       "id": "4",
-      "officeName": "Manchester South Benefit Centre",
+      "officeName": "Manchester South",
+      "officeTypeId" : "2",
       "postcode": "M13 6RS"
     },
     {
       "id": "5",
-      "officeName": "Rotherham Benefit Centre",
+      "officeName": "Rotherham",
+      "officeTypeId" : "2",
       "postcode": "S16 8RD"
     },
     {
       "id": "6",
-      "officeName": "York Jobcentre",
+      "officeName": "York",
+      "officeTypeId" : "1",
       "postcode": "YO5 4BN"
+    }
+  ],
+  "officeTypes" : [
+    {
+      "id": "1",
+      "officeType": "Jobcentre"
+    },
+    {
+      "id": "2",
+      "officeType": "Benefit Centre"
     }
   ]
 }

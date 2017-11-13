@@ -1,5 +1,11 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/*                                        Not currently used
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*/
+
 class Team {
-    constructor(teamName, teamStartDate, teamEndDate) {
+    constructor(id, teamName, teamStartDate, teamEndDate) {
+        this.id = id;
         this.teamName = teamName;
         this.userList = [];
         this.queueList = [];
