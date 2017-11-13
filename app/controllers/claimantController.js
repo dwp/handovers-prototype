@@ -1,5 +1,4 @@
-const Claimant = require('../models/claimant');
-const claimantUtils = require('../utils/claimantUtils');
+const sIDU = require('../utils/setInitialDataUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Claimant Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -7,8 +6,8 @@ const claimantUtils = require('../utils/claimantUtils');
 
 function claimantPage(req, res) {
 
-    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
-    var claimant = req.session.claimant ? req.session.claimant : claimants[0];
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let claimant = req.session.claimant ? req.session.claimant : claimants[0];
 
     res.render('claimant', claimant);
 }
@@ -20,15 +19,15 @@ function claimantFindPage(req, res) {
 
 function claimantFindPageAction(req, res) {
 
-    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
-    var inputNino = req.body.nino;
-    var claimant = {};
-    var claimantFound = 0;
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let inputNino = req.body.nino;
+    let claimant = {};
+    let claimantFound = 0;
 
     if (inputNino === '') {
         console.log('Nino not input');
     } else {
-        for (var i=0; i < claimants.length; i++) {
+        for (let i=0; i < claimants.length; i++) {
             if (claimants[i].nino === inputNino) {
                 claimant = claimants[i];
                 claimantFound = 1;
@@ -49,7 +48,7 @@ function claimantFindPageAction(req, res) {
 
 function claimantEditPage(req, res) {
 
-    var claimant = {};
+    let claimant = {};
     claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
     res.render('claimant-edit', claimant)
 
@@ -57,18 +56,20 @@ function claimantEditPage(req, res) {
 
 function claimantEditPageAction(req, res) {
 
-    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
-    var nino = req.body['nino'];
-    var firstName = req.body['firstName'];
-    var lastName = req.body['lastName'];
-    var dob = req.body['dob'];
-    var telNum = req.body['telNum'];
-    var mobile = req.body['mobile'];
-    var postcode = req.body['postcode'];
-    var welshSpeaker = req.body['welsh-speaker'];
-    var claimant = new Claimant(firstName, lastName, dob, nino, telNum, mobile, postcode, welshSpeaker);
-    claimants.push(claimant);
-    req.session.claimant = claimant;
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let newClaimant = new Object();
+
+    newClaimant.firstName = req.body['firstName'];
+    newClaimant.lastName = req.body['lastName'];
+    newClaimant.dob = req.body['dob'];
+    newClaimant.nino = req.body['nino'];
+    newClaimant.telNum = req.body['telNum'];
+    newClaimant.mobile = req.body['mobile'];
+    newClaimant.postcode = req.body['postcode'];
+    newClaimant.welshSpeaker = req.body['welsh-speaker'];
+
+    claimants.push(newClaimant);
+    req.session.claimant = newClaimant;
     req.session.claimants = claimants;
 
     res.redirect('/claimant/view');

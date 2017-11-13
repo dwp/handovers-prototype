@@ -1,6 +1,6 @@
-const Handover = require('../models/handover');
 const handoverUtils = require('../utils/handoverUtils');
 const claimantUtils = require('../utils/claimantUtils');
+const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -10,13 +10,12 @@ const dateUtils = require('../utils/dateUtils');
 
 function viewHandoverPage(req, res) {
 
-    var initialHandoversData = handoverUtils.setInitialHandoversData();
-    var handoversList = req.session.handovers ? req.session.handovers : initialHandoversData.initialHandovers;
-    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
-    var claimant = req.session.claimant ? claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.session.claimant.nino) :
+    let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let claimant = req.session.claimant ? claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.session.claimant.nino) :
                                           claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
-    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
-    var textVersions = handoverUtils.getHandoverDetails(handover);
+    let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
+    let textVersions = handoverUtils.getHandoverDetails(handover);
 
     req.session.claimant = claimant;
     req.session.handovers = handoversList;
@@ -34,9 +33,9 @@ function viewHandoverPage(req, res) {
 
 function viewHandoverPageAction(req, res) {
 
-    var handover = req.session.handover;
-    var claimantNino = req.session.claimant && req.session.claimant.nino || console.log("No claimant in session, or no nino in claimant");
-    var handoverClaimant = req.session.claimant;
+    let handover = req.session.handover;
+    let claimantNino = req.session.claimant && req.session.claimant.nino || console.log("No claimant in session, or no nino in claimant");
+    let handoverClaimant = req.session.claimant;
 
     req.session.claimant = handoverClaimant;
     req.session.handover = handover;
@@ -46,15 +45,15 @@ function viewHandoverPageAction(req, res) {
 }
 
 function createHandoverPage(req, res) {
-    var editOrCreate = 'create';
-    var initialData = handoverUtils.setInitialHandoversData();
-    var benefitsList = initialData.initialBenefits;
-    var handoverTypesList = initialData.initialHandoverTypes;
-    var handoverReasonsList = initialData.initialHandoverReasons;
-    var handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
-    var handover = {};
-    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
-    var claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+    let editOrCreate = 'create';
+    let initialData = sIDU.setInitialBenefitsAndHandoversData();
+    let benefitsList = initialData.initialBenefits;
+    let handoverTypesList = initialData.initialHandoverTypes;
+    let handoverReasonsList = initialData.initialHandoverReasons;
+    let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
+    let handover = {};
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
 
     req.session.claimant = claimant;
     req.session.handovers = handovers;
@@ -73,48 +72,55 @@ function createHandoverPage(req, res) {
 
 function createHandoverPageAction(req, res) {
 
-    var newHandoversList;
-    var newHandover;
-    var handoversList = req.session.handovers ? req.session.handovers : handoverUtils.setInitialHandoversData();
-    var benefitId = req.body['benefit'];
-    var handoverTypeId = req.body['handover-type'];
-    var handoverReasonId = req.body['handover-reason'];
-    var handoverPriority = req.body['handover-priority'];
-    var handoverNote = req.body['handover-note'];
-    var handoverAttachment = req.body['handover-attachment'];
-    var handoverStaffId = '40001001';
-    var handoverOwningOfficeId = "1";
-    var dateAndTimeRaised = new Date();
-    var targetDateAndTime = new Date();
-    var callback = "1";
-    var claimant = req.session.claimant;
-    var newId = handoversList.length + 1;
+    let newHandover = new Object();
+    let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
+    let newHandoversList = handoversList;
+    let handoverNote = req.body['handover-note'];
+    let handoverAttachment = req.body['handover-attachment'];
+    let claimant = req.session.claimant;
+    let newId = handoversList.length + 1;
 
-    if (callback === '1') {
-        targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
+    newHandover.id = newId;
+    newHandover.nino = claimant.nino;
+    newHandover.staffId = '40001001';
+    newHandover.owningOfficeId = '1';
+    newHandover.benefitId = req.body['benefit'];
+    newHandover.typeId = req.body['handover-type'];;
+    newHandover.reasonId = req.body['handover-reason'];
+    newHandover.callback = '1';
+    newHandover.priority = req.body['handover-priority'];
+    newHandover.dateAndTimeRaised = new Date();
+    newHandover.targetDateAndTime = new Date();
+    newHandover.notes = [];
+    newHandover.attachments = [];
+
+    if (newHandover.callback === '1') {
+        newHandover.targetDateAndTime.setHours(newHandover.dateAndTimeRaised.getHours() + 3);
     }
 
-    newHandover = new Handover(newId, claimant.nino, handoverStaffId, handoverOwningOfficeId, benefitId, handoverTypeId, handoverReasonId, dateAndTimeRaised, targetDateAndTime, callback, handoverPriority);
+    newHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(newHandover.dateAndTimeRaised);
+    newHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(newHandover.targetDateAndTime);
 
     if (handoverNote === "" || handoverNote === null) {
         console.log("No new handover note added");
     } else {
-        newHandover.addNote(newHandover.notes.length, handoverStaffId, handoverNote);
+        let newHandoverNote = new Object();
+        newHandoverNote.id = '1';
+        newHandoverNote.handoverId = newHandover.id;
+        newHandoverNote.dateNoteAdded = newHandover.dateAndTimeRaised;
+        newHandoverNote.userWhoAddedNote = newHandover.staffId;
+        newHandoverNote.noteContent = handoverNote;
+        newHandover.notes.push(newHandoverNote);
     }
 
     if (handoverAttachment === "" || handoverAttachment === null) {
         console.log("No new attachment added");
     } else {
-        newHandover.addAttachment(handoverAttachment);
+        newHandover.attachments.push(handoverAttachment);
     }
 
-    newHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(dateAndTimeRaised);
-    newHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(targetDateAndTime);
-
-
-    req.session.handover = newHandover;
-    newHandoversList = handoversList;
     newHandoversList.push(newHandover);
+    req.session.handover = newHandover;
     req.session.handovers = newHandoversList;
     req.session.claimant = claimant;
 
@@ -124,15 +130,15 @@ function createHandoverPageAction(req, res) {
 
 function editHandoverPage(req, res) {
 
-    var editOrCreate = 'edit';
-    var initialData = handoverUtils.setInitialHandoversData();
-    var benefitsList = initialData.initialBenefits;
-    var handoverTypesList = initialData.initialHandoverTypes;
-    var handoverReasonsList = initialData.initialHandoverReasons;
-    var handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
-    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
-    var claimants = req.session.claimants ? req.session.claimants : claimantUtils.setInitialClaimantsData();
-    var claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+    let editOrCreate = 'edit';
+    let initialData = sIDU.setInitialBenefitsAndHandoversData();
+    let benefitsList = initialData.initialBenefits;
+    let handoverTypesList = initialData.initialHandoverTypes;
+    let handoverReasonsList = initialData.initialHandoverReasons;
+    let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
+    let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
 
     req.session.claimant = claimant;
     req.session.handover = handover;
@@ -151,39 +157,59 @@ function editHandoverPage(req, res) {
 
 function editHandoverPageAction(req, res) {
 
-    var handoversList = req.session.handovers ? req.session.handovers : handoverUtils.setInitialHandoversData();
-    var handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
-    var benefitId = req.body['benefit'];
-    var handoverTypeId = req.body['handover-type'];
-    var handoverReasonId = req.body['handover-reason'];
-    var handoverPriority = req.body['handover-priority'];
-    var handoverNote = req.body['handover-note'];
-    var handoverAttachment = req.body['handover-attachment'];
-    var dateAndTimeRaised = new Date(handover.dateAndTimeRaised);
-    var targetDateAndTime = new Date(handover.dateAndTimeRaised);
-    var callback = "1";
-    var claimant = req.session.claimant;
-    var index = findPositionOfHandoverInArray(handover.id, handoversList);
+    let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
+    let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
+    let editedHandover = new Object();
+    let handoverNote = req.body['handover-note'];
+    let handoverAttachment = req.body['handover-attachment'];
+    let dateAndTimeRaised = new Date(handover.dateAndTimeRaised);
+    let targetDateAndTime = new Date(handover.targetDateAndTime);
+    let callback = "1";
+    let claimant = req.session.claimant;
+    let index = handoverUtils.findPositionOfHandoverInArray(handover.id, handoversList);
 
     if (callback === '1') {
         targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
     }
 
-    var editedHandover = new Handover(handover.id, claimant.nino, handover.staffId, handover.owningOfficeId, benefitId, handoverTypeId, handoverReasonId, dateAndTimeRaised, targetDateAndTime, callback, handoverPriority);
+    editedHandover.id = handover.id
+    editedHandover.nino = claimant.nino;
+    editedHandover.staffId = handover.staffId;
+    editedHandover.owningOfficeId = handover.owningOfficeId;
+    editedHandover.benefitId = req.body['benefit'];
+    editedHandover.typeId = req.body['handover-type'];;
+    editedHandover.reasonId = req.body['handover-reason'];
+    editedHandover.callback = '1';
+    editedHandover.priority = req.body['handover-priority'];
+    editedHandover.dateAndTimeRaised = dateAndTimeRaised;
+    editedHandover.targetDateAndTime = targetDateAndTime;
     editedHandover.notes = handover.notes;
+    editedHandover.attachments = [];
+
+    if (editedHandover.callback === '1') {
+        editedHandover.targetDateAndTime.setHours(editedHandover.dateAndTimeRaised.getHours() + 3);
+    }
+
     editedHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(dateAndTimeRaised);
     editedHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(targetDateAndTime);
+
 
     if (handoverNote === "" || handoverNote === null) {
         console.log("No new handover note added");
     } else {
-        editedHandover.addNote(handover.notes.length + 1, "40001001", handoverNote);
+        let editedHandoverNote = new Object();
+        editedHandoverNote.id = '1';
+        editedHandoverNote.handoverId = handover.id;
+        editedHandoverNote.dateNoteAdded = new Date();
+        editedHandoverNote.userWhoAddedNote = editedHandover.staffId;
+        editedHandoverNote.noteContent = handoverNote;
+        editedHandover.notes.unshift(editedHandoverNote);
     }
 
     if (handoverAttachment === "" || handoverAttachment === null) {
         console.log("No new attachment added");
     } else {
-        editedHandover.addAttachment(handoverAttachment);
+        editedHandover.attachments.push(handoverAttachment);
     }
 
     handoversList[index] = editedHandover;
@@ -196,21 +222,7 @@ function editHandoverPageAction(req, res) {
 
 }
 
-function findPositionOfHandoverInArray(inputQueryId, handoversList) {
-    var positionOfApptInArray;
-    var handoversArray = handoversList;
-    var arrLength = handoversArray.length;
-    var queryId = parseInt(inputQueryId);
 
-    for (var i = 0; i < arrLength; i++) {
-
-        if (handoversArray[i].id === queryId) {
-            positionOfApptInArray = i;
-        }
-    }
-
-    return positionOfApptInArray;
-}
 
 module.exports.viewHandoverPage = viewHandoverPage;
 module.exports.viewHandoverPageAction = viewHandoverPageAction;

@@ -4,37 +4,37 @@
     {
       "id": "1",
       "officeName": "Barnsley",
-      "officeType" : "1",
+      "officeTypeId" : "1",
       "postcode": "S71 3AA"
     },
     {
       "id": "2",
       "officeName": "Sheffield South West",
-      "officeType" : "1",
+      "officeTypeId" : "1",
       "postcode": "S13 7XX"
     },
     {
       "id": "3",
       "officeName": "York",
-      "officeType" : "1",
+      "officeTypeId" : "1",
       "postcode": "YO3 5GF"
     },
     {
       "id": "4",
       "officeName": "Manchester South",
-      "officeType" : "2",
+      "officeTypeId" : "2",
       "postcode": "M13 6RS"
     },
     {
       "id": "5",
       "officeName": "Rotherham",
-      "officeType" : "2",
+      "officeTypeId" : "2",
       "postcode": "S16 8RD"
     },
     {
       "id": "6",
       "officeName": "York",
-      "officeType" : "1",
+      "officeTypeId" : "1",
       "postcode": "YO5 4BN"
     }
   ],
