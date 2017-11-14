@@ -14,16 +14,31 @@
 
             <div class="form-group">
                 <div class="grid-row">
-                    <div class="column-full">
-                        <div class="form-group">
-                            <legend class="form-label-bold">National insurance number</legend>
-                            <div>
-                                <p>{{ claimant.nino }}</p>
-                            </div>
+                    <div class="column-half">
+                        <legend class="form-label-bold">National insurance number</legend>
+                        <div>
+                            <p>{{ claimant.nino }}</p>
                         </div>
                     </div>
+                    <div class="column-quarter">
+                        <legend class="form-label-bold">Select office</legend>
+                        <select class="select form-control" name="office" id="office">
+                            <option value="">Select</option>
+                            {% for office in officesList %}
+                                <option value="{{ office.id }}" {{ 'selected' if officeDetails.id === office.id else ''}}>{{ office.officeName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="column-quarter">
+                        <legend class="form-label-bold">Select office type</legend>
+                            <select class="select form-control" name="office-type" id="office-type">
+                                <option value="">Select</option>
+                                {% for offType in officeTypes %}
+                                    <option value="{{ offType.id }}" {{ 'selected' if officeDetails.officeTypeId === offType.id else ''}}>{{ offType.officeType }}</option>
+                                {% endfor %}
+                            </select>
+                    </div>
                 </div>
-            <div class="form-group">
                 <div class="grid-row">
                     <div class="column-half">
                         <legend class="form-label-bold">Select a benefit</legend>

@@ -176,7 +176,7 @@ function setInitialOfficeTypesData() {
     let initialOfficeTypes = [];
     for (let i = 0; i < officeTypesList.length; i++) {
         let officeType = new Object();
-        officeType.id = officeTypesList[i].id;
+        officeType.id = parseInt(officeTypesList[i].id);
         officeType.officeType = officeTypesList[i].officeType;
         initialOfficeTypes.push(officeType);
     }
@@ -189,9 +189,9 @@ function setInitialOfficesData() {
     let initialOffices = [];
     for (let i = 0; i < officesList.length; i++) {
         let office = new Object();
-        office.id = officesList[i].id;
+        office.id = parseInt(officesList[i].id);
         office.officeName = officesList[i].officeName;
-        office.officeTypeId = officesList[i].officeTypeId;
+        office.officeTypeId = parseInt(officesList[i].officeTypeId);
         office.postcode = officesList[i].postcode;
         initialOffices.push(office);
     }
@@ -283,6 +283,8 @@ module.exports.setInitialBenefitsData = setInitialBenefitsData;
 module.exports.setInitialBenefitsAndHandoversData = setInitialBenefitsAndHandoversData;
 module.exports.setInitialOfficeTypesAndOfficesData = setInitialOfficeTypesAndOfficesData;
 module.exports.setInitialTeamsQueuesAndUsersData = setInitialTeamsQueuesAndUsersData;
+module.exports.setInitialOfficesData = setInitialOfficesData;
+module.exports.setInitialOfficeTypesData = setInitialOfficeTypesData;
 module.exports.setInitialTeamsData = setInitialTeamsData;
 module.exports.setInitialQueuesData = setInitialQueuesData;
 module.exports.setInitialUsersData = setInitialUsersData;

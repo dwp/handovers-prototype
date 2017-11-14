@@ -46,6 +46,10 @@
     {
       "id": "2",
       "officeType": "Benefit Centre"
+    },
+    {
+      "id": "3",
+      "officeType": "Contact Centre"
     }
   ]
 }
