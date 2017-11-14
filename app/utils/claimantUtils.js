@@ -1,8 +1,6 @@
-const sIDU = require('../utils/setInitialDataUtils');
-
 function getClaimantByNinoFromListOfClaimants(claimantsList, nino) {
 
-    var claimants = claimantsList ? claimantsList : sIDU.setInitialClaimantsData();
+    var claimants = claimantsList;
     var inputNino = nino || "AA123456B";
     var foundClaimant = {};
 

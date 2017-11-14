@@ -3,6 +3,7 @@ const officeUtils = require('../utils/officeUtils');
 const claimantUtils = require('../utils/claimantUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
+const commonUtils = require('../utils/commonUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Handover Controllers
@@ -21,7 +22,7 @@ function viewHandoverPage(req, res) {
     let officeId = handover.owningOfficeId || "3";
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
     let officeTypes = sIDU.setInitialOfficeTypesData();
-    let officeTypesIndex = officeUtils.findPositionOfOfficeTypeInArray(officeDetails.officeTypeId, officeTypes);
+    let officeTypesIndex = commonUtils.findPositionOfObjectInArray(officeDetails.officeTypeId, officeTypes);
     let officeTypeId = officeTypes[officeTypesIndex].id;
     let officeTypeName = officeTypes[officeTypesIndex].officeType;
     let officeType = {
@@ -164,7 +165,7 @@ function editHandoverPage(req, res) {
     let officeId = handover.owningOfficeId || "3";
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
     let officeTypes = sIDU.setInitialOfficeTypesData();
-    let officeTypesIndex = officeUtils.findPositionOfOfficeTypeInArray(officeDetails.officeTypeId, officeTypes);
+    let officeTypesIndex = commonUtils.findPositionOfObjectInArray(officeDetails.officeTypeId, officeTypes);
     let officeTypeId = officeTypes[officeTypesIndex].id;
     let officeTypeName = officeTypes[officeTypesIndex].officeType;
     let officeType = {
@@ -203,9 +204,8 @@ function editHandoverPageAction(req, res) {
     let callback = "1";
     let claimant = req.session.claimant;
     let officeTypes = sIDU.setInitialOfficeTypesData();
-    let handoverIndex = handoverUtils.findPositionOfHandoverInArray(handover.id, handoversList);
-    let officeTypeIndex = officeUtils.findPositionOfOfficeTypeInArray(handover.officeTypeId, officeTypes);
-    let officeType = officeTypes[officeTypeIndex].officeType;
+    let handoverIndex = commonUtils.findPositionOfObjectInArray(handover.id, handoversList);
+    let officeTypeIndex = commonUtils.findPositionOfObjectInArray(handover.officeTypeId, officeTypes);
 
     if (callback === '1') {
         targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
@@ -214,7 +214,7 @@ function editHandoverPageAction(req, res) {
     editedHandover.id = handover.id
     editedHandover.nino = claimant.nino;
     editedHandover.staffId = handover.staffId;
-    editedHandover.owningOfficeId = handover.owningOfficeId;
+    editedHandover.owningOfficeId = req.body['office'];
     editedHandover.benefitId = req.body['benefit'];
     editedHandover.typeId = req.body['handover-type'];;
     editedHandover.reasonId = req.body['handover-reason'];

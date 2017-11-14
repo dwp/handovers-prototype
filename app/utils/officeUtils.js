@@ -1,5 +1,3 @@
-
-
 function getOfficeByIdFromListOfOffices(officesList, id) {
 
     let offices = officesList;
@@ -22,22 +20,5 @@ function getOfficeByIdFromListOfOffices(officesList, id) {
     return foundOffice;
 }
 
-function findPositionOfOfficeTypeInArray(officeTypeId, officeTypesList) {
-
-        let positionInArray;
-        let officeTypes = officeTypesList;
-        let arrLength = officeTypes.length;
-        let queryId = parseInt(officeTypeId);
-
-
-        for (let i = 0; i < arrLength; i++) {
-            if (parseInt(officeTypes[i].id) === queryId) {
-                positionInArray = i;
-            }
-        }
-
-        return positionInArray;
-    }
 
 module.exports.getOfficeByIdFromListOfOffices = getOfficeByIdFromListOfOffices;
-module.exports.findPositionOfOfficeTypeInArray = findPositionOfOfficeTypeInArray;

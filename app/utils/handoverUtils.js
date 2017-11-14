@@ -72,22 +72,6 @@ function getHandoverDetails(handover) {
 
 }
 
-function findPositionOfHandoverInArray(inputQueryId, handoversList) {
-    let positionOfApptInArray;
-    let handoversArray = handoversList;
-    let arrLength = handoversArray.length;
-    let queryId = parseInt(inputQueryId);
-
-    for (let i = 0; i < arrLength; i++) {
-
-        if (handoversArray[i].id === queryId) {
-            positionOfApptInArray = i;
-        }
-    }
-
-    return positionOfApptInArray;
-}
-
 module.exports.getHandoverByIdFromListOfHandovers = getHandoverByIdFromListOfHandovers;
 module.exports.getHandoverDetails = getHandoverDetails;
-module.exports.findPositionOfHandoverInArray = findPositionOfHandoverInArray;
+
