@@ -12,6 +12,8 @@ const commonUtils = require('../utils/commonUtils');
 
 function viewHandoverPage(req, res) {
 
+    let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
+    let user = req.session.user ? req.session.user : users[0];
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData().initialHandovers;
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let claimant = req.session.claimant ? claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.session.claimant.nino) :
@@ -19,7 +21,7 @@ function viewHandoverPage(req, res) {
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
     let textVersions = handoverUtils.getHandoverDetails(handover);
     let officesList = sIDU.setInitialOfficesData();
-    let officeId = handover.owningOfficeId || "3";
+    let officeId = handover.raisedOnBehalfOfOfficeId || "3";
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
     let officeTypes = sIDU.setInitialOfficeTypesData();
     let officeTypesIndex = commonUtils.findPositionOfObjectInArray(officeDetails.officeTypeId, officeTypes);
@@ -29,6 +31,10 @@ function viewHandoverPage(req, res) {
         id : officeTypeId,
         officeType : officeTypeName
     }
+
+    user.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, user.owningOfficeId);
+    let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
+    user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
     req.session.claimant = claimant;
     req.session.handovers = handoversList;
@@ -43,7 +49,8 @@ function viewHandoverPage(req, res) {
         officeTypes : officeTypes,
         officeType : officeType,
         claimant : claimant,
-        handover : handover
+        handover : handover,
+        user : user,
     });
 
 }
@@ -64,6 +71,8 @@ function viewHandoverPageAction(req, res) {
 function createHandoverPage(req, res) {
     let editOrCreate = 'create';
     let initialData = sIDU.setInitialBenefitsAndHandoversData();
+    let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
+    let user = req.session.user ? req.session.user : users[0];
     let benefitsList = initialData.initialBenefits;
     let handoverTypesList = initialData.initialHandoverTypes;
     let handoverReasonsList = initialData.initialHandoverReasons;
@@ -72,8 +81,12 @@ function createHandoverPage(req, res) {
     let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
     let officesList = sIDU.setInitialOfficesData();
     let officeTypes = sIDU.setInitialOfficeTypesData();
-    let officeId = 3;  // Change to let officeId = user.owningOfficeId || "3" once got user details in prototype
+    let officeId = 3;  // Change to let officeId = handover.raisedOnBehalfOfOfficeId || "3" once got different offices sorted
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
+
+    user.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, user.owningOfficeId);
+    let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
+    user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
     req.session.claimant = claimant;
     req.session.handovers = handovers;
@@ -84,6 +97,7 @@ function createHandoverPage(req, res) {
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
         claimant : claimant,
+        user : user,
         officeDetails : officeDetails,
         officesList : officesList,
         officeTypes : officeTypes,
@@ -105,7 +119,7 @@ function createHandoverPageAction(req, res) {
     newHandover.id = newId;
     newHandover.nino = claimant.nino;
     newHandover.staffId = '40001001';
-    newHandover.owningOfficeId = req.body['office-id'];
+    newHandover.raisedOnBehalfOfOfficeId = req.body['office-id'];
     newHandover.benefitId = req.body['benefit'];
     newHandover.typeId = req.body['handover-type'];;
     newHandover.reasonId = req.body['handover-reason'];
@@ -154,6 +168,8 @@ function editHandoverPage(req, res) {
 
     let editOrCreate = 'edit';
     let initialData = sIDU.setInitialBenefitsAndHandoversData();
+    let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
+    let user = req.session.user ? req.session.user : users[0];
     let benefitsList = initialData.initialBenefits;
     let handoverTypesList = initialData.initialHandoverTypes;
     let handoverReasonsList = initialData.initialHandoverReasons;
@@ -162,7 +178,7 @@ function editHandoverPage(req, res) {
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
     let officesList = sIDU.setInitialOfficesData();
-    let officeId = handover.owningOfficeId || "3";
+    let officeId = handover.raisedOnBehalfOfOfficeId || "3";
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
     let officeTypes = sIDU.setInitialOfficeTypesData();
     let officeTypesIndex = commonUtils.findPositionOfObjectInArray(officeDetails.officeTypeId, officeTypes);
@@ -172,6 +188,9 @@ function editHandoverPage(req, res) {
         officeTypeId : officeTypeId,
         officeTypeName : officeTypeName
     }
+    user.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, user.owningOfficeId);
+    let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
+    user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
     req.session.claimant = claimant;
     req.session.handover = handover;
@@ -184,6 +203,7 @@ function editHandoverPage(req, res) {
         handReasonsList : handoverReasonsList,
         claimant : claimant,
         handover : handover,
+        user: user,
         officesList : officesList,
         officeDetails : officeDetails,
         officeType : officeType,

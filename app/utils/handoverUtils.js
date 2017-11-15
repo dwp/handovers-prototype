@@ -14,7 +14,7 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
                 "id" : handover.id,
                 "nino" : handover.nino,
                 "staffId" : handover.staffId,
-                "owningOfficeId" : handover.owningOfficeId,
+                "raisedOnBehalfOfOfficeId" : handover.raisedOnBehalfOfOfficeId,
                 "benefitId" : handover.benefitId,
                 "typeId" : handover.typeId,
                 "reasonId" : handover.reasonId,

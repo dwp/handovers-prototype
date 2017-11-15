@@ -111,7 +111,7 @@ function setInitialHandoversData() {
         handover.id = handoversList[i].id;
         handover.nino = handoversList[i].nino;
         handover.staffId = handoversList[i].staffId;
-        handover.owningOfficeId = handoversList[i].owningOfficeId;
+        handover.raisedOnBehalfOfOfficeId = handoversList[i].raisedOnBehalfOfOfficeId;
         handover.benefitId = handoversList[i].benefitId;
         handover.typeId = handoversList[i].typeId;
         handover.reasonId = handoversList[i].reasonId;
@@ -271,7 +271,7 @@ function setInitialUsersData() {
         user.lastName = usersList[i].lastName;
         user.staffId = usersList[i].staffId;
         user.telNum = usersList[i].telNum;
-        user.officeId = usersList[i].officeId;
+        user.owningOfficeId = usersList[i].owningOfficeId;
         initialUsers.push(user);
     }
     return initialUsers;

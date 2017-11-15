@@ -15,77 +15,74 @@
                         </div>
                     </div>
                     <div class="column-half">
-                        <legend class="form-label-bold">Office name and type</legend>
+                        <legend class="form-label-bold">Owning Jobcentre</legend>
                         <div>
-                            <p>{{ officeDetails.officeName }} {{ officeType.officeType }}</p>
+                            <p>{{ officeDetails.officeName }}</p>
                         </div>
                     </div>
                 </div>
-                    <div class="grid-row">
-                        <div class="column-half">
-                            <legend class="form-label-bold">Benefit</legend>
-                            <p>{{ benefitName }}</p>
+                <div class="grid-row">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Benefit</legend>
+                        <p>{{ benefitName }}</p>
+                    </div>
+                    <div class="column-half">
+                        <legend class="form-label-bold">Handover raised by:</legend>
+                        <div>
+                            <p>{{ user.firstName }} {{ user.lastName }} in {{ user.officeDetails.officeName }} {{ user.officeDetails.officeType}}</p>
                         </div>
+                    </div>
+                </div>
+                <div class="grid-row">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Handover type</legend>
+                        <p>{{ handoverType }}</p>
+                    </div>
 
-                        <div class="column-half">
-                            <legend class="form-label-bold">Date and time raised</legend>
-                            <p>Date: {{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
-                                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</p>
-                        </div>
-
+                    <div class="column-half">
+                        <legend class="form-label-bold">Date and time raised</legend>
+                        <p>Date: {{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
+                            &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</p>
                     </div>
-                    <br>
-                    <div class="grid-row">
-                        <div class="column-half">
-                            <legend class="form-label-bold">Handover type</legend>
-                            <p>{{ handoverType }}</p>
-                        </div>
-                        <div class="column-half">
-                            <legend class="form-label-bold">Target callback time</legend>
-                            {% if handover.priority === "Non-callback" %}
-                                <p>No target date and time for this priority</p>
-                            {% else %}
-                                <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
-                                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
-                            {% endif %}
-                        </div>
-
+                </div>
+                <div class="grid-row">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Handover reason</legend>
+                        <p>{{ handoverReason }}</p>
                     </div>
-                    <br>
-                    <div class="grid-row">
-                        <div class="column-half">
-                            <legend class="form-label-bold">Handover reason</legend>
-                            <p>{{ handoverReason }}</p>
-                        </div>
-                        <div class="column-half">
-                            <!--<legend class="form-label-bold">Attachments</legend>-->
-                            <!--<p>A list of attachments will be shown here</p>-->
-                        </div>
+                    <div class="column-half">
+                        <legend class="form-label-bold">Target callback time</legend>
+                        {% if handover.priority === "Non-callback" %}
+                        <p>No target date and time for this priority</p>
+                        {% else %}
+                        <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
+                            &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
+                        {% endif %}
                     </div>
-                    <br>
-                    <div class="grid-row">
-                        <div class="column-half">
-                            <legend class="form-label-bold">Priority</legend>
-                            <p>{{ handover.priority }}</p>
-                        </div>
-                        <div class="column-half">
-                            <legend class="form-label-bold">Notes</legend>
-                                {% if handover.notes %}
-                                    {% for note in handover.notes %}
-                                        <p>{{ note.noteContent }}</p>
-                                        <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(added by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }})</p>
-                                        <br>
-                                    {% endfor %}
-                                {% else %}
-                                    <p>There are no notes for this handover yet</p>
-                                {% endif %}
-                        </div>
+                </div>
+                <div class="grid-row">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Priority</legend>
+                        <p>{{ handover.priority }}</p>
                     </div>
-                    <br>
+                </div>
+                <div class="grid-row">
+                    <div class="column-full">
+                        <legend class="form-label-bold">Notes</legend>
+                        {% if handover.notes %}
+                            {% for note in handover.notes %}
+                                <p>{{ note.noteContent }}</p>
+                                <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(added by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }})</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>There are no notes for this handover yet</p>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="button" value="Edit">
                 </div>
+            </div>
         </form>
     </div>
 </main>

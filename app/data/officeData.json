@@ -34,8 +34,20 @@
     {
       "id": "6",
       "officeName": "York",
-      "officeTypeId" : "1",
+      "officeTypeId" : "2",
       "postcode": "YO5 4BN"
+    },
+    {
+      "id": "7",
+      "officeName": "Stockport",
+      "officeTypeId" : "1",
+      "postcode": "MN3 1FG"
+    },
+    {
+      "id": "8",
+      "officeName": "Halifax",
+      "officeTypeId" : "1",
+      "postcode": "HA5 3DN"
     }
   ],
   "officeTypes" : [
