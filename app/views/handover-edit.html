@@ -120,8 +120,8 @@
                         <legend class="form-label-bold">Callback required ?</legend>
                         <select class="select form-control" name="callback-req" id="callback-req">
                             <option value="">Select</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
+                            <option value="Yes" {{ 'selected' if handover.callback === "Yes" else ''}}>Yes</option>
+                            <option value="No" {{ 'selected' if handover.callback === "No" else ''}}>No</option>
                         </select>
                     </div>
                 </div>
