@@ -15,7 +15,9 @@ function getClaimantByNinoFromListOfClaimants(claimantsList, nino) {
                 "telNum" : claimant.telNum,
                 "postcode" : claimant.postcode,
                 "mobile" : claimant.mobile,
-                "welshSpeaker": claimant.welshSpeaker
+                "welshSpeaker" : claimant.welshSpeaker,
+                "approvedRepName" : claimant.approvedRepName,
+                "approvedRepContact" : claimant.approvedRepContact
               }
         }
     }

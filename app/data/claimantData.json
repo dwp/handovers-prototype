@@ -9,7 +9,9 @@
       "mobile": "07000 123456",
       "postcode": "S75 3RB",
       "claimantOfficeId" : "1",
-      "welshSpeaker": "Yes"
+      "welshSpeaker": "Yes",
+      "approvedRepName" : "Angela Brown",
+      "approvedRepContact" : "Contact on 012324 567891"
     },
     {"firstName": "Christine",
       "lastName": "Dixon",
@@ -19,7 +21,9 @@
       "mobile": "07000 987654",
       "postcode": "S17 3JX",
       "claimantOfficeId" : "2",
-      "welshSpeaker": "No"
+      "welshSpeaker": "No",
+      "approvedRepName" : "",
+      "approvedRepContact" : ""
     },
     {"firstName": "Eddie",
       "lastName": "Frost",
@@ -29,7 +33,9 @@
       "mobile": "07000 135791",
       "postcode": "YO1 1AA",
       "claimantOfficeId" : "3",
-      "welshSpeaker": "Yes"
+      "welshSpeaker": "Yes",
+      "approvedRepName" : "",
+      "approvedRepContact" : ""
     },
     {"firstName": "Grace",
       "lastName": "Harris",
@@ -39,7 +45,9 @@
       "mobile": "07000 246802",
       "postcode": "HA3 4DF",
       "claimantOfficeId" : "8",
-      "welshSpeaker": "No"
+      "welshSpeaker": "No",
+      "approvedRepName" : "",
+      "approvedRepContact" : ""
     },
     {"firstName": "Ian",
       "lastName": "Jackson",
@@ -49,7 +57,9 @@
       "mobile": "07000 468024",
       "postcode": "MN4 3HK",
       "claimantOfficeId" : "7",
-      "welshSpeaker": "Yes"
+      "welshSpeaker": "Yes",
+      "approvedRepName" : "",
+      "approvedRepContact" : ""
     }]
 
 }
