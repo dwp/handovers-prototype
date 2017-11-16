@@ -8,6 +8,7 @@
       "telNum": "01134 567890",
       "mobile": "07000 123456",
       "postcode": "S75 3RB",
+      "claimantOfficeId" : "1",
       "welshSpeaker": "Yes"
     },
     {"firstName": "Christine",
@@ -17,6 +18,7 @@
       "telNum": "01134 678901",
       "mobile": "07000 987654",
       "postcode": "S17 3JX",
+      "claimantOfficeId" : "2",
       "welshSpeaker": "No"
     },
     {"firstName": "Eddie",
@@ -25,7 +27,8 @@
       "nino": "AA234567B",
       "telNum": "01132 789012",
       "mobile": "07000 135791",
-      "postcode": "SW1 1AA",
+      "postcode": "YO1 1AA",
+      "claimantOfficeId" : "3",
       "welshSpeaker": "Yes"
     },
     {"firstName": "Grace",
@@ -35,6 +38,7 @@
       "telNum": "01135 890123",
       "mobile": "07000 246802",
       "postcode": "HA3 4DF",
+      "claimantOfficeId" : "8",
       "welshSpeaker": "No"
     },
     {"firstName": "Ian",
@@ -44,6 +48,7 @@
       "telNum": "01136 901234",
       "mobile": "07000 468024",
       "postcode": "MN4 3HK",
+      "claimantOfficeId" : "7",
       "welshSpeaker": "Yes"
     }]
 

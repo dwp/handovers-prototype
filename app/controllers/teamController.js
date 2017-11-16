@@ -24,8 +24,8 @@ function teamUserAddPage (req, res) {
     let availableUsersList = userUtils.getListOfAvailableUsers(team, fullUsersList);
 
     teamAndAvailableUsersList = {
-        "team" : team,
-        "availableUsers" : availableUsersList
+        team : team,
+        availableUsers : availableUsersList
     };
 
     req.session.teamAndAvailableUsersList = teamAndAvailableUsersList;
@@ -79,8 +79,8 @@ function teamQueueAddPage (req, res) {
 
 
     teamAndAvailableQueuesList = {
-        "team" : team,
-        "availableQueues" : availableQueuesList
+        team : team,
+        availableQueues : availableQueuesList
     };
 
     req.session.teamAndAvailableQueuesList = teamAndAvailableQueuesList;

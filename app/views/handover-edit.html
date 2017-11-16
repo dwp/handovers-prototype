@@ -14,16 +14,63 @@
 
             <div class="form-group">
                 <div class="grid-row">
-                    <div class="column-full">
-                        <div class="form-group">
-                            <legend class="form-label-bold">National insurance number</legend>
-                            <div>
-                                <p>{{ claimant.nino }}</p>
-                            </div>
+                    <div class="column-half">
+                        <legend class="form-label-bold">National insurance number</legend>
+                        <div>
+                            <p>{{ claimant.nino }}</p>
+                        </div>
+                    </div>
+                    <div class="column-half">
+                        <legend class="form-label-bold">Claimant's Jobcentre</legend>
+                        <div>
+                            <p>{{ officeDetails.officeName }}</p>
                         </div>
                     </div>
                 </div>
-            <div class="form-group">
+                <br>
+                <div class="grid-row">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Handover raised by:</legend>
+                        <div>
+                            <p>{{ user.firstName }} {{ user.lastName }} in {{ user.officeDetails.officeName }} {{ user.officeDetails.officeType}}</p>
+                        </div>
+                    </div>
+                    {% if editOrCreate === 'create' %}
+                    <div class="column-half">
+                    </div>
+                    {% else %}
+                    <div class="column-half">
+                        <legend class="form-label-bold">Date and time raised</legend>
+                        <p>Date: {{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
+                            &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="grid-row">
+                    <div class="column-half">
+                        <div>
+                            <p></p>
+                        </div>
+                    </div>
+                        {% if editOrCreate === 'create' %}
+                        <div class="column-half">
+                        </div>
+                        {% else %}
+                        <div class="column-half">
+                            <legend class="form-label-bold">Target callback time</legend>
+                            {% if handover.priority === "Non-callback" %}
+                            <p>No target date and time for this priority</p>
+                            {% else %}
+                            <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+
                 <div class="grid-row">
                     <div class="column-half">
                         <legend class="form-label-bold">Select a benefit</legend>
@@ -34,16 +81,16 @@
                             {% endfor %}
                         </select>
                     </div>
-                    {% if editOrCreate === 'create' %}
-                        <div class="column-half">
-                        </div>
-                    {% else %}
-                        <div class="column-half">
-                            <legend class="form-label-bold">Date and time raised</legend>
-                            <p>Date: {{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
-                                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</p>
-                        </div>
-                    {% endif %}
+                    <div class="column-half">
+                        <legend class="form-label-bold">Select a benefit sub-type</legend>
+                        <select class="select form-control" name="benefit-sub" id="benefit-sub">
+                            <option value="">Select</option>
+                            <option value="Sub-type 1">Sub-type 1</option>
+                            <option value="Sub-type 2">Sub-type 2</option>
+                            <option value="Sub-type 3">Sub-type 3</option>
+                            <option value="Sub-type 4">Sub-type 4</option>
+                        </select>
+                    </div>
                 </div>
                 <br>
                 <div class="grid-row">
@@ -56,23 +103,6 @@
                             {% endfor %}
                         </select>
                     </div>
-                    {% if editOrCreate === 'create' %}
-                        <div class="column-half">
-                        </div>
-                    {% else %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Target callback time</legend>
-                        {% if handover.priority === "Non-callback" %}
-                            <p>No target date and time for this priority</p>
-                        {% else %}
-                        <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
-                            &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                </div>
-                <br>
-                <div class="grid-row">
                     <div class="column-half">
                         <legend class="form-label-bold">Select a handover reason</legend>
                         <select class="select form-control" name="handover-reason" id="handover-reason">
@@ -82,24 +112,22 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="column-half">
-                        <!--<legend class="form-label-bold">Attachments</legend>-->
-                        <!--<input type="text" class="form-control" id="handover-attachment" name="handover-attachment" value="Add attachment">-->
-                    </div>
+
                 </div>
                 <br>
                 <div class="grid-row">
                     <div class="column-half">
-                        <legend class="form-label-bold">Select a priority</legend>
-                        <select class="select form-control" name="handover-priority" id="handover-priority">
+                        <legend class="form-label-bold">Callback required ?</legend>
+                        <select class="select form-control" name="callback-req" id="callback-req">
                             <option value="">Select</option>
-                            <option value="Standard callback" {{ 'selected' if  handover.priority === 'Standard callback' else ''}}>Standard callback</option>
-                            <option value="Non-callback" {{ 'selected' if  handover.priority === 'Non-callback' else ''}}>Non-callback</option>
-                            <option value="Escalation" {{ 'selected' if  handover.priority === 'Escalation' else ''}}>Escalation</option>
-                            <option value="Priority duplicate" {{ 'selected' if  handover.priority === 'Priority duplicate' else ''}}>Priority duplicate</option>
+                            <option value="Yes" {{ 'selected' if handover.callback === "Yes" else ''}}>Yes</option>
+                            <option value="No" {{ 'selected' if handover.callback === "No" else ''}}>No</option>
                         </select>
                     </div>
-                    <div class="column-half">
+                </div>
+                <br>
+                <div class="grid-row">
+                    <div class="column-full">
                         <legend class="form-label-bold">Notes</legend>
                         {% if editOrCreate === 'edit' %}
                             {% if handover.notes %}
@@ -112,7 +140,8 @@
                                 <p>There are no notes for this handover yet</p>
                             {% endif %}
                         {% endif %}
-                        <input class="form-control" type="text" id="handover-note" name="handover-note">
+                        <legend class="form-label-bold">Add a note</legend>
+                        <textarea class="form-control" id="handover-note" name="handover-note"></textarea>
                     </div>
                 </div>
                 <br>

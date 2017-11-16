@@ -3,18 +3,18 @@ const sIDU = require('../utils/setInitialDataUtils');
 
 function getHandoverByIdFromListOfHandovers(handoversList, id) {
 
-    var handovers = handoversList;
-    var inputId = id || "1";
-    var foundHandover = {};
+    let handovers = handoversList;
+    let inputId = id || "1";
+    let foundHandover = {};
 
-    for (var i=0; i < handovers.length; i++) {
+    for (let i=0; i < handovers.length; i++) {
         if (handovers[i].id === inputId) {
-            var handover = handovers[i];
+            let handover = handovers[i];
             foundHandover = {
                 "id" : handover.id,
                 "nino" : handover.nino,
                 "staffId" : handover.staffId,
-                "owningOfficeId" : handover.owningOfficeId,
+                "raisedOnBehalfOfOfficeId" : handover.raisedOnBehalfOfOfficeId,
                 "benefitId" : handover.benefitId,
                 "typeId" : handover.typeId,
                 "reasonId" : handover.reasonId,
@@ -34,30 +34,30 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
 
 function getHandoverDetails(handover) {
 
-    var textVersions = {};
-    var initialHandoversData = sIDU.setInitialBenefitsAndHandoversData();
-    var benefitsList = initialHandoversData.initialBenefits;
-    var handoverTypesList = initialHandoversData.initialHandoverTypes;
-    var handoverReasonsList = initialHandoversData.initialHandoverReasons;
+    let textVersions = {};
+    let initialHandoversData = sIDU.setInitialBenefitsAndHandoversData();
+    let benefitsList = initialHandoversData.initialBenefits;
+    let handoverTypesList = initialHandoversData.initialHandoverTypes;
+    let handoverReasonsList = initialHandoversData.initialHandoverReasons;
 
-    var benefitName;
-    var handoverType;
-    var handoverReason;
+    let benefitName;
+    let handoverType;
+    let handoverReason;
 
 
-    for (var i=0; i < benefitsList.length; i++) {
+    for (let i=0; i < benefitsList.length; i++) {
         if (handover.benefitId === benefitsList[i].id) {
             benefitName = benefitsList[i].benefitName;
         }
     }
 
-    for (var i=0; i < handoverTypesList.length; i++) {
+    for (let i=0; i < handoverTypesList.length; i++) {
         if (handover.typeId === handoverTypesList[i].id) {
             handoverType = handoverTypesList[i].handoverType;
         }
     }
 
-    for (var i=0; i < handoverReasonsList.length; i++) {
+    for (let i=0; i < handoverReasonsList.length; i++) {
         if (handover.reasonId === handoverReasonsList[i].id) {
             handoverReason = handoverReasonsList[i].handoverReason;
         }
@@ -72,22 +72,6 @@ function getHandoverDetails(handover) {
 
 }
 
-function findPositionOfHandoverInArray(inputQueryId, handoversList) {
-    let positionOfApptInArray;
-    let handoversArray = handoversList;
-    let arrLength = handoversArray.length;
-    let queryId = parseInt(inputQueryId);
-
-    for (let i = 0; i < arrLength; i++) {
-
-        if (handoversArray[i].id === queryId) {
-            positionOfApptInArray = i;
-        }
-    }
-
-    return positionOfApptInArray;
-}
-
 module.exports.getHandoverByIdFromListOfHandovers = getHandoverByIdFromListOfHandovers;
 module.exports.getHandoverDetails = getHandoverDetails;
-module.exports.findPositionOfHandoverInArray = findPositionOfHandoverInArray;
+

@@ -54,61 +54,55 @@
       "id" : "1",
       "nino": "AA123456B",
       "staffId": "40001001",
-      "owningOfficeId": "3",
       "benefitId": "1",
       "typeId": "2",
       "reasonId": "3",
-      "callback" : "1",
+      "callback" : "Yes",
       "priority" : "Standard callback"
     },{
       "id" : "2",
       "nino": "AA123456B",
       "staffId": "40001001",
-      "owningOfficeId": "3",
       "benefitId": "2",
       "typeId": "3",
       "reasonId": "4",
-      "callback" : "0",
+      "callback" : "No",
       "priority" : "Priority duplicate"
     },{
       "id" : "3",
       "nino": "ZZ123456A",
       "staffId": "40001002",
-      "owningOfficeId": "1",
       "benefitId": "4",
       "typeId": "4",
       "reasonId": "5",
-      "callback" : "0",
+      "callback" : "Yes",
       "priority" : "Non-callback"
     },{
      "id" : "4",
       "nino": "AA345678B",
       "staffId": "40001003",
-      "owningOfficeId": "3",
       "benefitId": "1",
       "typeId": "2",
       "reasonId": "3",
-      "callback": "1",
+      "callback": "Yes",
       "priority" : "Standard callback"
     },{
       "id" : "5",
       "nino": "AA345678B",
       "staffId": "40001003",
-      "owningOfficeId": "3",
       "benefitId": "1",
       "typeId": "2",
       "reasonId": "3",
-      "callback" : "0",
+      "callback" : "No",
       "priority" : "Standard callback"
     },{
       "id" : "6",
       "nino": "ZZ234567A",
       "staffId": "40001004",
-      "owningOfficeId": "3",
-      "benefitId": "4",
+      "benefitId": "5",
       "typeId": "5",
       "reasonId": "6",
-      "callback" : "0",
+      "callback" : "No",
       "priority" : "Escalation"
     }],
   "handoverNotes" : [{

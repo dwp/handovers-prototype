@@ -39,37 +39,68 @@
         "firstName": "Alex",
         "lastName": "Black",
         "staffId": "40001000",
-        "telNum": "01234 567890"
+        "telNum": "01234 567890",
+        "owningOfficeId" : "1"
       },
       {
         "firstName": "Callum",
         "lastName": "Dalton",
         "staffId": "40001001",
-        "telNum": "02345 678901"
+        "telNum": "02345 678901",
+        "owningOfficeId" : "1"
       },
       {
         "firstName": "Ellie",
         "lastName": "Fuller",
         "staffId": "40001002",
-        "telNum": "03456 789012"
+        "telNum": "03456 789012",
+        "owningOfficeId" : "1"
       },
       {
         "firstName": "Grant",
         "lastName": "Hopper",
         "staffId": "40001003",
-        "telNum": "04567 890123"
+        "telNum": "04567 890123",
+        "owningOfficeId" : "1"
       },
       {
         "firstName": "Imogen",
         "lastName": "Johnson",
         "staffId": "40001004",
-        "telNum": "05678 901234"
+        "telNum": "05678 901234",
+        "owningOfficeId" : "1"
       },
       {
         "firstName": "Kevin",
         "lastName": "Lambeth",
         "staffId": "40001005",
-        "telNum": "06789 123456"
+        "telNum": "06789 123456",
+        "owningOfficeId" : "1"
+      },
+      {
+        "firstName": "Mabel",
+        "lastName": "Newton",
+        "staffId": "40001006",
+        "telNum": "06789 123456",
+        "owningOfficeId" : "2"
+      },{
+        "firstName": "Olive",
+        "lastName": "Potter",
+        "staffId": "40001007",
+        "telNum": "06123 444555",
+        "owningOfficeId" : "2"
+      },{
+        "firstName": "Quentin",
+        "lastName": "Redruth",
+        "staffId": "40001008",
+        "telNum": "07123 666777",
+        "owningOfficeId" : "2"
+      },{
+        "firstName": "Steven",
+        "lastName": "Tumnus",
+        "staffId": "40001009",
+        "telNum": "07234 222333",
+        "owningOfficeId" : "3"
       }
     ],
     "queues": [
