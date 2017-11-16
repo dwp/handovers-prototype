@@ -15,40 +15,32 @@
                         </div>
                     </div>
                     <div class="column-half">
-                        <legend class="form-label-bold">Owning Jobcentre</legend>
+                        <legend class="form-label-bold">Claimant's Jobcentre</legend>
                         <div>
                             <p>{{ officeDetails.officeName }}</p>
                         </div>
                     </div>
                 </div>
+                <br>
                 <div class="grid-row">
-                    <div class="column-half">
-                        <legend class="form-label-bold">Benefit</legend>
-                        <p>{{ benefitName }}</p>
-                    </div>
                     <div class="column-half">
                         <legend class="form-label-bold">Handover raised by:</legend>
                         <div>
                             <p>{{ user.firstName }} {{ user.lastName }} in {{ user.officeDetails.officeName }} {{ user.officeDetails.officeType}}</p>
                         </div>
                     </div>
-                </div>
-                <div class="grid-row">
-                    <div class="column-half">
-                        <legend class="form-label-bold">Handover type</legend>
-                        <p>{{ handoverType }}</p>
-                    </div>
-
                     <div class="column-half">
                         <legend class="form-label-bold">Date and time raised</legend>
                         <p>Date: {{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
                             &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</p>
                     </div>
                 </div>
+
                 <div class="grid-row">
                     <div class="column-half">
-                        <legend class="form-label-bold">Handover reason</legend>
-                        <p>{{ handoverReason }}</p>
+                        <div>
+                            <p></p>
+                        </div>
                     </div>
                     <div class="column-half">
                         <legend class="form-label-bold">Target callback time</legend>
@@ -60,12 +52,47 @@
                         {% endif %}
                     </div>
                 </div>
+                <br>
+
                 <div class="grid-row">
                     <div class="column-half">
-                        <legend class="form-label-bold">Priority</legend>
-                        <p>{{ handover.priority }}</p>
+                        <legend class="form-label-bold">Benefit</legend>
+                        <p>{{ benefitName }}</p>
+                    </div>
+                    <div class="column-half">
+                        {% if benefitName === "Social Fund [SF]" %}
+                        <legend class="form-label-bold">Benefit sub-type</legend>
+                        <p>Social Fund Type 1</p>
+                        {% else %}
+                        <p></p>
+                        {% endif %}
                     </div>
                 </div>
+
+                <div class="grid-row">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Handover type</legend>
+                        <p>{{ handoverType }}</p>
+                    </div>
+
+                    <div class="column-half">
+                        <legend class="form-label-bold">Handover reason</legend>
+                        <p>{{ handoverReason }}</p>
+                    </div>
+                </div>
+                <div class="grid-row">
+                    <div class="column-half">
+                    </div>
+                    <div class="column-half">
+                    </div>
+                </div>
+                <div class="grid-row">
+                    <div class="column-half">
+                        <legend class="form-label-bold">Callback required ?</legend>
+                        <p>{{ handover.callback }}</p>
+                    </div>
+                </div>
+                <br>
                 <div class="grid-row">
                     <div class="column-full">
                         <legend class="form-label-bold">Notes</legend>

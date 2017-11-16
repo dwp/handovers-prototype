@@ -41,6 +41,8 @@ function viewHandoverPage(req, res) {
     req.session.handover = handover;
     req.session.officeDetails = officeDetails;
 
+    console.log("Benefit name = ", textVersions.benefitName);
+
     res.render('handover', {
         benefitName : textVersions.benefitName,
         handoverType : textVersions.handoverType,
