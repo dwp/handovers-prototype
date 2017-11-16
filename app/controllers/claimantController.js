@@ -67,7 +67,8 @@ function claimantEditPageAction(req, res) {
     newClaimant.mobile = req.body['mobile'];
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
-
+    newClaimant.approvedRepName = req.body['rep-name'];
+    newClaimant.approvedRepContact = req.body['rep-contact'];
     claimants.push(newClaimant);
     req.session.claimant = newClaimant;
     req.session.claimants = claimants;

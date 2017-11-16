@@ -86,6 +86,31 @@
                 </div>
             </div>
 
+            {% if approvedRepName === "" %}
+            <div>
+            </div>
+            {% else %}
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Approved representative name</legend>
+                        <div>
+                            <p>{{ approvedRepName }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Approved representative contact details</legend>
+                        <div>
+                            <p>{{ approvedRepContact }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+
             <div class="grid-row">
                 <div class="column-half">
                     <div class="form-group">

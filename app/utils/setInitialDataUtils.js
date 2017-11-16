@@ -26,6 +26,8 @@ function setInitialClaimantsData() {
         claimant.mobile = claimantsList[i].mobile;
         claimant.postcode = claimantsList[i].postcode;
         claimant.welshSpeaker = claimantsList[i].welshSpeaker;
+        claimant.approvedRepName = claimantsList[i].approvedRepName;
+        claimant.approvedRepContact = claimantsList[i].approvedRepContact;
         initialClaimants.push(claimant);
     }
     return initialClaimants;
