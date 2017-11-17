@@ -18,8 +18,6 @@ function teamUserAddPage (req, res) {
     let initialTeams = sIDU.setInitialTeamsData();
     let initialUsers = sIDU.setInitialUsersData();
     let initialTeam = initialTeams[0];
-    initialTeam.userList.push(initialUsers[0]);
-    initialTeam.userList.push(initialUsers[1]);
     let team = req.session.team ? req.session.team : initialTeam;
 
     // Get list of users not already members of this team, and so available to be selected
@@ -75,8 +73,6 @@ function teamQueueAddPage (req, res) {
     let initialTeams = sIDU.setInitialTeamsData();
     let initialQueues = sIDU.setInitialQueuesData();
     let initialTeam = initialTeams[0];
-    initialTeam.queueList.push(initialQueues[0]);
-    initialTeam.queueList.push(initialQueues[1]);
     let team = req.session.team ? req.session.team : initialTeam;
 
     // Get list of users not already members of this team, and so available to be selected
