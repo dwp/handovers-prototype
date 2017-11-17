@@ -136,7 +136,7 @@ function createHandoverPageAction(req, res) {
     newHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(newHandover.targetDateAndTime);
 
     if (handoverNote === "" || handoverNote === null) {
-        console.log("No new handover note added");
+        // Do nothing
     } else {
         let newHandoverNote = new Object();
         newHandoverNote.id = '1';
@@ -241,7 +241,7 @@ function editHandoverPageAction(req, res) {
 
 
     if (handoverNote === "" || handoverNote === null) {
-        console.log("No new handover note added");
+        // Do nothing
     } else {
         let editedHandoverNote = new Object();
         editedHandoverNote.id = '1';

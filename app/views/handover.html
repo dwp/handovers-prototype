@@ -44,7 +44,7 @@
                     </div>
                     <div class="column-half">
                         <legend class="form-label-bold">Target callback time</legend>
-                        {% if handover.priority === "Non-callback" %}
+                        {% if handover.callback === "No" %}
                         <p>No target date and time for this priority</p>
                         {% else %}
                         <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}

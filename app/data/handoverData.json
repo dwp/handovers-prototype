@@ -58,7 +58,9 @@
       "typeId": "2",
       "reasonId": "3",
       "callback" : "Yes",
-      "priority" : "Standard callback"
+      "priority" : "Standard callback",
+      "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
+      "targetDateAndTime" : "2017-11-17T15:57:39.379Z"
     },{
       "id" : "2",
       "nino": "AA123456B",
@@ -67,7 +69,9 @@
       "typeId": "3",
       "reasonId": "4",
       "callback" : "No",
-      "priority" : "Priority duplicate"
+      "priority" : "Priority duplicate",
+      "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
+      "targetDateAndTime" : "2017-11-17T12:57:39.379Z"
     },{
       "id" : "3",
       "nino": "ZZ123456A",
@@ -76,7 +80,9 @@
       "typeId": "4",
       "reasonId": "5",
       "callback" : "Yes",
-      "priority" : "Non-callback"
+      "priority" : "Non-callback",
+      "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
+      "targetDateAndTime" : "2017-11-17T15:57:39.379Z"
     },{
      "id" : "4",
       "nino": "AA345678B",
@@ -85,7 +91,9 @@
       "typeId": "2",
       "reasonId": "3",
       "callback": "Yes",
-      "priority" : "Standard callback"
+      "priority" : "Standard callback",
+      "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
+      "targetDateAndTime" : "2017-11-17T15:57:39.379Z"
     },{
       "id" : "5",
       "nino": "AA345678B",
@@ -94,7 +102,9 @@
       "typeId": "2",
       "reasonId": "3",
       "callback" : "No",
-      "priority" : "Standard callback"
+      "priority" : "Standard callback",
+      "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
+      "targetDateAndTime" : "2017-11-17T12:57:39.379Z"
     },{
       "id" : "6",
       "nino": "ZZ234567A",
@@ -103,7 +113,9 @@
       "typeId": "5",
       "reasonId": "6",
       "callback" : "No",
-      "priority" : "Escalation"
+      "priority" : "Escalation",
+      "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
+      "targetDateAndTime" : "2017-11-17T12:57:39.379Z"
     }],
   "handoverNotes" : [{
       "id" : "3",

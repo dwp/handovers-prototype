@@ -6,7 +6,14 @@ function formatDateAndTimeForDisplay(date) {
     var displayMonth = getMonthForDisplay(inputDate.getMonth());
     var displayYear = inputDate.getFullYear();
     var displayHours = inputDate.getHours();
-    var displayMins = inputDate.getMinutes();
+    var mins = inputDate.getMinutes();
+    let displayMins;
+    if (mins < 10) {
+        displayMins = "0" + mins;
+    } else {
+        displayMins = mins;
+    }
+
     var dateAndTimeForDisplay = {
         "day"  : displayDay,
         "month": displayMonth,
