@@ -15,38 +15,37 @@ const queueUtils = require('../utils/queueUtils');
 function teamUserAddPage (req, res) {
 
     let teamAndAvailableUsersList;
-    let initialTeamsQueuesAndUsersData = sIDU.setInitialTeamsQueuesAndUsersData();
-    let initialTeams = initialTeamsQueuesAndUsersData.initialTeams;
-    let fullUsersList = sIDU.setInitialUsersData();
-    let team = req.session.team ? req.session.team : initialTeams[0];
+    let initialTeams = sIDU.setInitialTeamsData();
+    let initialUsers = sIDU.setInitialUsersData();
+    let initialTeam = initialTeams[0];
+    let team = req.session.team ? req.session.team : initialTeam;
 
     // Get list of users not already members of this team, and so available to be selected
-    let availableUsersList = userUtils.getListOfAvailableUsers(team, fullUsersList);
+    let availableUsersList = userUtils.getListOfAvailableUsers(team, initialUsers);
 
     teamAndAvailableUsersList = {
         team : team,
         availableUsers : availableUsersList
     };
 
-    req.session.teamAndAvailableUsersList = teamAndAvailableUsersList;
-
+    req.session.team = team;
     res.render('team-edit-users', teamAndAvailableUsersList);
 
 }
 
 function teamUserAddPageAction (req, res) {
 
-    let teamAndAvailableUsersList = req.session.teamAndAvailableUsersList ? req.session.teamAndAvailableUsersList : console.log("Nothing in teamAndAvailableUsersList session object");
-    let team = teamAndAvailableUsersList.team;
-    let newTeam = new Object();
+    let team = req.session.team;
     let selectedUserStaffId = req.body['selected-user'];
-    let availableUsersList = teamAndAvailableUsersList.availableUsers;
+    let initialUsers = sIDU.setInitialUsersData();
+    let availableUsersList = userUtils.getListOfAvailableUsers(team, initialUsers);
     let userToAddToTeam = availableUsersList.find(findSelectedUserByStaffId);
+    let newTeam = {}
 
     if(userToAddToTeam === false) {
         console.log('User not found in list');
     } else {
-        newTeam.id = team.id
+        newTeam.id = team.id;
         newTeam.teamName = team.teamName;
         newTeam.userList = team.userList;
         newTeam.queueList = team.queueList;
@@ -54,11 +53,12 @@ function teamUserAddPageAction (req, res) {
         newTeam.endDate = team.endDate;
         newTeam.userList.push(userToAddToTeam);
     }
+
     req.session.team = newTeam;
     res.redirect('/team/user/add');
 
-    function findSelectedUserByStaffId(listOfUsers) {
-        return listOfUsers.staffId === selectedUserStaffId;
+    function findSelectedUserByStaffId(availableUsersList) {
+        return availableUsersList.staffId === selectedUserStaffId;
     }
 }
 
@@ -70,39 +70,37 @@ function teamUserAddPageAction (req, res) {
 function teamQueueAddPage (req, res) {
 
     let teamAndAvailableQueuesList;
-    let initialData = sIDU.setInitialTeamsQueuesAndUsersData();
-    let fullQueuesList = initialData.initialQueues;
-    let team = req.session.team ? req.session.team : initialData.initialTeams[0];
+    let initialTeams = sIDU.setInitialTeamsData();
+    let initialQueues = sIDU.setInitialQueuesData();
+    let initialTeam = initialTeams[0];
+    let team = req.session.team ? req.session.team : initialTeam;
 
-    // Get list of queues not already possessed by this team, and so available to be selected
-    let availableQueuesList = queueUtils.getListOfAvailableQueues(team, fullQueuesList);
-
+    // Get list of users not already members of this team, and so available to be selected
+    let availableQueuesList = queueUtils.getListOfAvailableQueues(team, initialQueues);
 
     teamAndAvailableQueuesList = {
         team : team,
         availableQueues : availableQueuesList
     };
 
-    req.session.teamAndAvailableQueuesList = teamAndAvailableQueuesList;
-
+    req.session.team = team;
     res.render('team-edit-queues', teamAndAvailableQueuesList);
 
 }
 
 function teamQueueAddPageAction (req, res) {
 
-    let teamAndAvailableQueuesList = req.session.teamAndAvailableQueuesList ? req.session.teamAndAvailableQueuesList : console.log("Nothing in teamAndAvailableQueuesList session object");
-    let team = teamAndAvailableQueuesList.team;
-    let newTeam = new Object();
+    let team = req.session.team;
     let selectedQueueId = req.body['selected-queue'];
-    let availableQueuesList = teamAndAvailableQueuesList.availableQueues;
+    let initialQueues = sIDU.setInitialQueuesData();
+    let availableQueuesList = queueUtils.getListOfAvailableQueues(team, initialQueues);
     let queueToAddToTeam = availableQueuesList.find(findSelectedQueueByQueueId);
-
+    let newTeam = {}
 
     if(queueToAddToTeam === false) {
-        console.log('User not found in list');
+        console.log('Queue not found in list');
     } else {
-        newTeam.id = team.id
+        newTeam.id = team.id;
         newTeam.teamName = team.teamName;
         newTeam.userList = team.userList;
         newTeam.queueList = team.queueList;

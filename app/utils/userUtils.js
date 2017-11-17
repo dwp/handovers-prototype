@@ -1,7 +1,7 @@
-function getListOfAvailableUsers(team, fullUserList) {
+function getListOfAvailableUsers(team, allUsersList) {
 
     let availableUsers = [];
-    let allUsers = fullUserList;
+    let allUsers = allUsersList;
 
     for (let i=0; i < allUsers.length; i++) {
         if (checkIfUserAlreadyInTeam(allUsers[i], team) === false) {

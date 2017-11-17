@@ -1,7 +1,7 @@
-function getListOfAvailableQueues(team, fullQueueList) {
+function getListOfAvailableQueues(team, allQueuesList) {
 
     var availableQueues = [];
-    var allQueues = fullQueueList;
+    var allQueues = allQueuesList;
 
     for (var i=0; i < allQueues.length; i++) {
         if (checkIfQueueAlreadyInTeam(allQueues[i], team) === false) {

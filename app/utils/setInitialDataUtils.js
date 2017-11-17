@@ -203,29 +203,8 @@ function setInitialOfficesData() {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Teams, Queues, and Users Data Setup
 /*
-/*         Set up initial data for teams, queues, and users, and return in an object containing three arrays
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
-
-function setInitialTeamsQueuesAndUsersData() {
-    let initialTeamsQueuesAndUsersData;
-    let initialTeams = setInitialTeamsData();
-    let initialQueues = setInitialQueuesData();
-    let initialUsers = setInitialUsersData();
-    initialTeams[0].userList.push(initialUsers[0]);
-    initialTeams[0].userList.push(initialUsers[1]);
-    initialTeams[0].queueList.push(initialQueues[0]);
-    initialTeams[0].queueList.push(initialQueues[1]);
-
-    initialTeamsQueuesAndUsersData = {
-        "initialTeams" : initialTeams,
-        "initialUsers" : initialUsers,
-        "initialQueues" : initialQueues
-    }
-
-    return initialTeamsQueuesAndUsersData;
-
-}
 
 // Set up initial teams data and return in an array
 function setInitialTeamsData() {
@@ -284,7 +263,7 @@ module.exports.setInitialClaimantsData = setInitialClaimantsData;
 module.exports.setInitialBenefitsData = setInitialBenefitsData;
 module.exports.setInitialBenefitsAndHandoversData = setInitialBenefitsAndHandoversData;
 module.exports.setInitialOfficeTypesAndOfficesData = setInitialOfficeTypesAndOfficesData;
-module.exports.setInitialTeamsQueuesAndUsersData = setInitialTeamsQueuesAndUsersData;
+//module.exports.setInitialTeamsQueuesAndUsersData = setInitialTeamsQueuesAndUsersData;
 module.exports.setInitialOfficesData = setInitialOfficesData;
 module.exports.setInitialOfficeTypesData = setInitialOfficeTypesData;
 module.exports.setInitialTeamsData = setInitialTeamsData;

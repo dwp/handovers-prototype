@@ -4,8 +4,34 @@
       {
         "id" : "1",
         "teamName": "Red",
-        "userList": [],
-        "queueList": [],
+        "userList": [
+          {
+            "firstName": "Alex",
+            "lastName": "Black",
+            "staffId": "40001000",
+            "telNum": "01234 567890",
+            "owningOfficeId" : "1"
+          },
+          {
+            "firstName": "Callum",
+            "lastName": "Dalton",
+            "staffId": "40001001",
+            "telNum": "02345 678901",
+            "owningOfficeId" : "1"
+          }
+        ],
+        "queueList": [
+          {
+          "id": "1",
+          "name": "ESA New Claims",
+          "description": "Can raise, record, and notify customer of result of new ESA claim"
+          },
+          {
+            "id": "2",
+            "name": "IS New Claims",
+            "description": "Can raise, record, and notify customer of result of new IS claim"
+          }
+        ],
         "startDate": "20 Sep 2016",
         "endDate": ""
       },
