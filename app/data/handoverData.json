@@ -110,6 +110,7 @@
       "nino": "ZZ234567A",
       "staffId": "40001004",
       "benefitId": "5",
+      "benSubType" : "Social Fund Type 2",
       "typeId": "5",
       "reasonId": "6",
       "callback" : "No",

@@ -74,21 +74,21 @@
                 <div class="grid-row">
                     <div class="column-half">
                         <legend class="form-label-bold">Select a benefit</legend>
-                        <select class="select form-control" name="benefit" id="benefit">
-                            <option value="">Select</option>
+                        <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
+                            <option value="" id="benSelect">Select</option>
                             {% for benefit in benList %}
-                                <option value="{{ benefit.id }}" {{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
+                                <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="column-half">
+                    <div class="column-half" id="benSubTypeDiv" style="display:none;">
                         <legend class="form-label-bold">Select a benefit sub-type</legend>
                         <select class="select form-control" name="benefit-sub" id="benefit-sub">
                             <option value="">Select</option>
-                            <option value="Sub-type 1">Sub-type 1</option>
-                            <option value="Sub-type 2">Sub-type 2</option>
-                            <option value="Sub-type 3">Sub-type 3</option>
-                            <option value="Sub-type 4">Sub-type 4</option>
+                            <option value="Social Fund Type 1">Social Fund Type 1</option>
+                            <option value="Social Fund Type 2">Social Fund Type 2</option>
+                            <option value="Social Fund Type 3">Social Fund Type 3</option>
+                            <option value="Social Fund Type 4">Social Fund Type 4</option>
                         </select>
                     </div>
                 </div>
@@ -152,6 +152,8 @@
         </form>
     </div>
 </main>
+
+<script src="/public/javascripts/handovers.js"></script>
 
 <script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
 

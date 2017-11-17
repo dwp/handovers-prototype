@@ -116,6 +116,7 @@ function setInitialHandoversData() {
         handover.staffId = handoversList[i].staffId;
         handover.raisedOnBehalfOfOfficeId = handoversList[i].raisedOnBehalfOfOfficeId;
         handover.benefitId = handoversList[i].benefitId;
+        handover.benSubType = handoversList[i].benSubType;
         handover.typeId = handoversList[i].typeId;
         handover.reasonId = handoversList[i].reasonId;
         handover.callback = handoversList[i].callback;
