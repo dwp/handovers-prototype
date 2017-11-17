@@ -10,6 +10,7 @@
       "postcode": "S75 3RB",
       "claimantOfficeId" : "1",
       "welshSpeaker": "Yes",
+      "language" : "",
       "approvedRepName" : "Angela Brown",
       "approvedRepContact" : "Contact on 012324 567891"
     },
@@ -22,6 +23,7 @@
       "postcode": "S17 3JX",
       "claimantOfficeId" : "2",
       "welshSpeaker": "No",
+      "language" : "",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -34,6 +36,7 @@
       "postcode": "YO1 1AA",
       "claimantOfficeId" : "3",
       "welshSpeaker": "Yes",
+      "language" : "",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -46,6 +49,7 @@
       "postcode": "HA3 4DF",
       "claimantOfficeId" : "8",
       "welshSpeaker": "No",
+      "language" : "",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -58,6 +62,7 @@
       "postcode": "MN4 3HK",
       "claimantOfficeId" : "7",
       "welshSpeaker": "Yes",
+      "language" : "",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     }]

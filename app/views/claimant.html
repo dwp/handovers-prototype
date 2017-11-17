@@ -80,8 +80,22 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Welsh speaker ?</legend>
                         <div>
-                            <p>{{ welshSpeaker}}</p>
+                            <p>{{ welshSpeaker }}</p>
                         </div>
+                    </div>
+                </div>
+                <div class="column-half">
+                    <div class="form-group">
+                        <legend class="form-label-bold">Language requiring translator</legend>
+                        {% if language === "" %}
+                            <div>
+                                <p>Not applicable</p>
+                            </div>
+                        {% else %}
+                        <div>
+                            <p>{{ language }}</p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
