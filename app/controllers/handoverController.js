@@ -120,6 +120,12 @@ function createHandoverPageAction(req, res) {
     newHandover.staffId = '40001001';
     newHandover.raisedOnBehalfOfOfficeId = req.body['office-id'];
     newHandover.benefitId = req.body['benefit'];
+
+    if (newHandover.benefitId === "5") {
+        newHandover.benSubType = req.body['benefit-sub'];
+    } else {
+        newHandover.benSubType = null;
+    }
     newHandover.typeId = req.body['handover-type'];;
     newHandover.reasonId = req.body['handover-reason'];
     newHandover.callback = req.body['callback-req'];
@@ -224,6 +230,13 @@ function editHandoverPageAction(req, res) {
     editedHandover.staffId = handover.staffId;
     editedHandover.owningOfficeId = req.body['office'];
     editedHandover.benefitId = req.body['benefit'];
+
+    if (editedHandover.benefitId === "5") {
+        editedHandover.benSubType = req.body['benefit-sub'];
+    } else {
+        editedHandover.benSubType = null;
+    }
+
     editedHandover.typeId = req.body['handover-type'];;
     editedHandover.reasonId = req.body['handover-reason'];
     editedHandover.callback = callback;
