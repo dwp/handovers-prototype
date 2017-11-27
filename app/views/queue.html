@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main id="content" role="main">
+    <div class="main-content">
+        {% if queueType === "office" %}
+            <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
+        {% else %}
+            <h1 class="heading-large">Handovers queue - Adam Black</h1>
+        {% endif %}
+
+        <div class="grid-row">
+            <div class="column-full">
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">NI number</th>
+                        <th scope="col">Benefit type</th>
+                        <th scope="col">Handover type</th>
+                        <th scope="col">Handover reason</th>
+                        <th scope="col">Date/time raised</th>
+                        <th scope="col">Callback reqd?</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for handover in handoversList %}
+                    <tr>
+                        <td>{{handover.nino}}</td>
+                        <td>{{handover.benefitName}}</td>
+                        <td>{{handover.handoverType}}</td>
+                        <td>{{handover.handoverReason}}</td>
+                        <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
+                        <td>{{handover.callback}}</td>
+                        <td>{{handoverUpdateLink(handover)}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
+
+{% endblock %}
+
+{% macro handoverUpdateLink(handover) %}
+{% set queryString = '?id=' + handover.id %}
+<a href="/handover/view{{queryString}}">View/Update</a>
+{% endmacro %}

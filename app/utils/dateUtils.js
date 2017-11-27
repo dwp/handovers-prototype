@@ -2,6 +2,8 @@
 function formatDateAndTimeForDisplay(date) {
 
     var inputDate = date;
+    console.log('inputDate looks like: ', inputDate);
+    console.log('typeOf date is: ', typeof inputDate);
     var displayDay = inputDate.getDate();
     var displayMonth = getMonthForDisplay(inputDate.getMonth());
     var displayYear = inputDate.getFullYear();

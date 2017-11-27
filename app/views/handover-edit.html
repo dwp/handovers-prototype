@@ -85,10 +85,10 @@
                         <legend class="form-label-bold">Select a benefit sub-type</legend>
                         <select class="select form-control" name="benefit-sub" id="benefit-sub">
                             <option value="">Select</option>
-                            <option value="Social Fund Type 1">Social Fund Type 1</option>
-                            <option value="Social Fund Type 2">Social Fund Type 2</option>
-                            <option value="Social Fund Type 3">Social Fund Type 3</option>
-                            <option value="Social Fund Type 4">Social Fund Type 4</option>
+                            <option value="Social Fund Type 1" {{ 'selected' if handover.benSubType === 'Social Fund Type 1' else ''}}>Social Fund Type 1</option>
+                            <option value="Social Fund Type 2" {{ 'selected' if handover.benSubType === 'Social Fund Type 2' else ''}}>Social Fund Type 2</option>
+                            <option value="Social Fund Type 3" {{ 'selected' if handover.benSubType === 'Social Fund Type 3' else ''}}>Social Fund Type 3</option>
+                            <option value="Social Fund Type 4" {{ 'selected' if handover.benSubType === 'Social Fund Type 4' else ''}}>Social Fund Type 4</option>
                         </select>
                     </div>
                 </div>
@@ -157,4 +157,4 @@
 
 <script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
 
-{% endblock %}}
+{% endblock %}

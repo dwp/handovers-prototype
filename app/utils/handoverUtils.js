@@ -5,7 +5,7 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
 
     let handovers = handoversList;
     let inputId = id || "1";
-    let foundHandover = {};
+    let foundHandover;
 
     for (let i=0; i < handovers.length; i++) {
         if (handovers[i].id === inputId) {
