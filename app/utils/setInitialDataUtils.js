@@ -23,8 +23,8 @@ function setInitialClaimantsData() {
         claimant.lastName = claimantsList[i].lastName;
         claimant.dob = claimantsList[i].dob;
         claimant.nino = claimantsList[i].nino;
-        claimant.telNum = claimantsList[i].telNum;
-        claimant.mobile = claimantsList[i].mobile;
+        claimant.preferredContactNumber = claimantsList[i].preferredContactNumber;
+        claimant.emailAddress = claimantsList[i].emailAddress;
         claimant.postcode = claimantsList[i].postcode;
         claimant.claimantOfficeId = claimantsList[i].claimantOfficeId;
         claimant.welshSpeaker = claimantsList[i].welshSpeaker;
