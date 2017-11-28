@@ -8,25 +8,7 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
     let foundHandover;
 
     for (let i=0; i < handovers.length; i++) {
-        if (handovers[i].id === inputId) {
-            // let handover = handovers[i];
-            // foundHandover = {
-            //     "id" : handover.id,
-            //     "nino" : handover.nino,
-            //     "staffId" : handover.staffId,
-            //     "raisedOnBehalfOfOfficeId" : handover.raisedOnBehalfOfOfficeId,
-            //     "benefitId" : handover.benefitId,
-            //     "benSubType" : handover.benSubType,
-            //     "typeId" : handover.typeId,
-            //     "reasonId" : handover.reasonId,
-            //     "dateAndTimeRaised" : handover.dateAndTimeRaised,
-            //     "dateAndTimeRaisedForDisplay" : dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised),
-            //     "targetDateAndTime" : handover.targetDateAndTime,
-            //     "targetDateAndTimeForDisplay" : dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime),
-            //     "callback" : handover.callback,
-            //     "priority" : handover.priority,
-            //     "notes" : handover.notes
-            // }
+        if (handovers[i].id == inputId) {
             foundHandover = handovers[i];
         }
     }
@@ -45,7 +27,6 @@ function getHandoverDetails(handover) {
     let benefitName;
     let handoverType;
     let handoverReason;
-
 
     for (let i=0; i < benefitsList.length; i++) {
         if (handover.benefitId === benefitsList[i].id) {
