@@ -3,6 +3,7 @@ const claimantData = require('../data/claimantData.json');
 const handoverData = require('../data/handoverData.json');
 const officeData = require('../data/officeData.json');
 const teamData = require('../data/teamData.json');
+const dateUtils = require('../utils/dateUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Claimants Data Setup
@@ -25,6 +26,7 @@ function setInitialClaimantsData() {
         claimant.telNum = claimantsList[i].telNum;
         claimant.mobile = claimantsList[i].mobile;
         claimant.postcode = claimantsList[i].postcode;
+        claimant.claimantOfficeId = claimantsList[i].claimantOfficeId;
         claimant.welshSpeaker = claimantsList[i].welshSpeaker;
         claimant.language = claimantsList[i].language;
         claimant.approvedRepName = claimantsList[i].approvedRepName;
@@ -121,12 +123,17 @@ function setInitialHandoversData() {
         handover.reasonId = handoversList[i].reasonId;
         handover.callback = handoversList[i].callback;
         handover.priority = handoversList[i].priority;
+        handover.status = handoversList[i].status;
         handover.dateAndTimeRaised = new Date();
         handover.targetDateAndTime = new Date();
 
         if (handover.callback === '1') {
             handover.targetDateAndTime.setHours(handover.targetDateAndTime.getHours() + 3);
         }
+
+        handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+        handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+
         initialHandovers.push(handover);
     }
 

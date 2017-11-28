@@ -15,13 +15,24 @@ function viewHandoverPage(req, res) {
     let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
     let user = req.session.user ? req.session.user : users[0];
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData().initialHandovers;
-    let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
+
+    let handover;
+    if (req.query.id === null) {
+        handover = req.session.handover ? req.session.handover : handoversList[0];
+    } else {
+        handover = handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
+    }
     let handoverTextDetails = handoverUtils.getHandoverDetails(handover);
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let claimant = req.session.claimant ? claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.session.claimant.nino) :
-                                          claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+    let claimant;
+    if (req.query.nino === null) {
+        claimant= req.session.claimant ? req.session.claimant : claimants[0];
+    } else {
+        claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+    }
+
     let officesList = sIDU.setInitialOfficesData();
-    let officeId = handover.raisedOnBehalfOfOfficeId || "3";
+    let officeId = claimant.claimantOfficeId || "3";
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
     let officeTypes = sIDU.setInitialOfficeTypesData();
     let officeTypesIndex = commonUtils.findPositionOfObjectInArray(officeDetails.officeTypeId, officeTypes);
@@ -130,6 +141,7 @@ function createHandoverPageAction(req, res) {
     newHandover.reasonId = req.body['handover-reason'];
     newHandover.callback = req.body['callback-req'];
     newHandover.priority = req.body['handover-priority'];
+    newHandover.status = "Not allocated";
     newHandover.dateAndTimeRaised = new Date();
     newHandover.targetDateAndTime = new Date();
     newHandover.notes = [];
@@ -241,6 +253,8 @@ function editHandoverPageAction(req, res) {
     editedHandover.reasonId = req.body['handover-reason'];
     editedHandover.callback = callback;
     editedHandover.priority = req.body['handover-priority'];
+    editedHandover.status = handover.status;
+    // editedHandover.status = req.body['handover-status'];
     editedHandover.dateAndTimeRaised = dateAndTimeRaised;
     editedHandover.targetDateAndTime = targetDateAndTime;
     editedHandover.notes = handover.notes;

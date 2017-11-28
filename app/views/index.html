@@ -3,6 +3,7 @@
 {% block content %}
 
 <main id="content" role="main">
+<div class="main-content">
   <div class="grid-row">
     <div class="column-full">
       <h1 class="heading-xlarge">
@@ -30,16 +31,18 @@
 
     {{ sprintLinks( 'Handovers Pages', groupLinksScreens) }}
 
+
     {% set groupLinksScreens = [{
-    workTitle : 'Teams',
+    workTitle : 'Queues',
     links: [{
-    link : '/team/user/add', title : 'Add user to team'
-    }, {
-    link : '/team/queue/add', title : 'Add queue to team'
+    link : '/queue/view?queueType=office', title : 'View office queue'
+    },{
+    link : '/queue/view?queueType=agent', title : 'View my queue'
     }]
     }] %}
 
     {{ sprintLinks( '', groupLinksScreens) }}
+
 
     {% set groupLinksScreens = [{
     workTitle : 'Handovers',
@@ -54,7 +57,20 @@
 
     {{ sprintLinks( '', groupLinksScreens) }}
 
+
+    {% set groupLinksScreens = [{
+    workTitle : 'Teams',
+    links: [{
+    link : '/team/user/add', title : 'Add user to team'
+    }, {
+    link : '/team/queue/add', title : 'Add skills queue to team'
+    }]
+    }] %}
+
+    {{ sprintLinks( '', groupLinksScreens) }}
+
   </div>
+</div>
 
 </main>
 

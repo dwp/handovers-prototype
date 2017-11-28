@@ -85,10 +85,10 @@
                         <legend class="form-label-bold">Select a benefit sub-type</legend>
                         <select class="select form-control" name="benefit-sub" id="benefit-sub">
                             <option value="">Select</option>
-                            <option value="Social Fund Type 1">Social Fund Type 1</option>
-                            <option value="Social Fund Type 2">Social Fund Type 2</option>
-                            <option value="Social Fund Type 3">Social Fund Type 3</option>
-                            <option value="Social Fund Type 4">Social Fund Type 4</option>
+                            <option value="Social Fund Type 1" {{ 'selected' if handover.benSubType === 'Social Fund Type 1' else ''}}>Social Fund Type 1</option>
+                            <option value="Social Fund Type 2" {{ 'selected' if handover.benSubType === 'Social Fund Type 2' else ''}}>Social Fund Type 2</option>
+                            <option value="Social Fund Type 3" {{ 'selected' if handover.benSubType === 'Social Fund Type 3' else ''}}>Social Fund Type 3</option>
+                            <option value="Social Fund Type 4" {{ 'selected' if handover.benSubType === 'Social Fund Type 4' else ''}}>Social Fund Type 4</option>
                         </select>
                     </div>
                 </div>
@@ -104,6 +104,17 @@
                         </select>
                     </div>
                     <div class="column-half">
+                        <legend class="form-label-bold">Callback required ?</legend>
+                        <select class="select form-control" name="callback-req" id="callback-req">
+                            <option value="">Select</option>
+                            <option value="Yes" {{ 'selected' if handover.callback === "Yes" else ''}}>Yes</option>
+                            <option value="No" {{ 'selected' if handover.callback === "No" else ''}}>No</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="grid-row">
+                    <div class="column-half">
                         <legend class="form-label-bold">Select a handover reason</legend>
                         <select class="select form-control" name="handover-reason" id="handover-reason">
                             <option value="">Select</option>
@@ -112,16 +123,15 @@
                             {% endfor %}
                         </select>
                     </div>
-
-                </div>
-                <br>
-                <div class="grid-row">
                     <div class="column-half">
-                        <legend class="form-label-bold">Callback required ?</legend>
-                        <select class="select form-control" name="callback-req" id="callback-req">
+                        <legend class="form-label-bold">Status</legend>
+                        <select class="select form-control" name="handover-status" id=handover-status">
                             <option value="">Select</option>
-                            <option value="Yes" {{ 'selected' if handover.callback === "Yes" else ''}}>Yes</option>
-                            <option value="No" {{ 'selected' if handover.callback === "No" else ''}}>No</option>
+                            <option value="Not allocated" {{ 'selected' if handover.status === "Not allocated" else ''}}>Not allocated</option>
+                            <option value="In progress" {{ 'selected' if handover.status === "In progress" else ''}}>In progress</option>
+                            <option value="Paused" {{ 'selected' if handover.status === "Paused" else ''}}>Paused</option>
+                            <option value="Done" {{ 'selected' if handover.status === "Done" else ''}}>Done</option>
+                            <option value="Withdrawn" {{ 'selected' if handover.status === "Withdrawn" else ''}}>Withdrawn</option>
                         </select>
                     </div>
                 </div>
@@ -145,9 +155,9 @@
                     </div>
                 </div>
                 <br>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="button" value="Submit">
+                <div class="form-group">
+                    <input type="submit" class="button" value="Submit">
+                </div>
             </div>
         </form>
     </div>
@@ -157,4 +167,4 @@
 
 <script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
 
-{% endblock %}}
+{% endblock %}
