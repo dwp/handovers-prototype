@@ -63,8 +63,8 @@ function claimantEditPageAction(req, res) {
     newClaimant.lastName = req.body['lastName'];
     newClaimant.dob = req.body['dob'];
     newClaimant.nino = req.body['nino'];
-    newClaimant.telNum = req.body['telNum'];
-    newClaimant.mobile = req.body['mobile'];
+    newClaimant.preferredContactNumber = req.body['prefContNum'];
+    newClaimant.emailAddress = req.body['emailAddr'];
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
     newClaimant.language = req.body['language'];

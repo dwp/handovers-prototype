@@ -62,17 +62,17 @@
                 <div class="grid-row">
                     <div class="column-half">
                         <div class="form-group">
-                            <legend class="form-label-bold">Telephone number</legend>
+                            <legend class="form-label-bold">Preferred contact number</legend>
                             <div>
-                                <input type="text" class="form-control" id="telNum" name="telNum">
+                                <input type="text" class="form-control" id="prefContNum" name="prefContNum">
                             </div>
                         </div>
                     </div>
                     <div class="column-half">
                         <div class="form-group">
-                            <legend class="form-label-bold">Mobile</legend>
+                            <legend class="form-label-bold">Email address</legend>
                             <div>
-                                <input type="text" class="form-control" id="mobile" name="mobile">
+                                <input type="text" class="form-control" id="emailAddr" name="emailAddr">
                             </div>
                         </div>
                     </div>
@@ -82,12 +82,13 @@
                     <div class="column-half">
                         <div class="form-group">
                             <legend class="form-label-bold">Welsh speaker ?</legend>
-                            <p class="form-hint">Yes or No</p>
-                            <div>
-                                <input type="text" class="form-control" id="welsh-speaker" name="welsh-speaker">
-                            </div>
+                            <select class="select form-control" name="welsh-speaker" id="welsh-speaker" >
+                                <option value="No" {{ 'selected' if handover.welshSpeaker === "No" else ''}}>No</option>
+                                <option value="Yes" {{ 'selected' if handover.welshSpeaker=== "Yes" else ''}}>Yes</option>
+                            </select>
                         </div>
                     </div>
+
                     <div class="column-half">
                         <div class="form-group">
                             <legend class="form-label-bold">Language requiring translator</legend>
