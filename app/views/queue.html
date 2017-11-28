@@ -7,7 +7,7 @@
         {% if queueType === "office" %}
             <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
         {% else %}
-            <h1 class="heading-large">Handovers queue - Adam Black</h1>
+            <h1 class="heading-large">Handovers queue - Alex Black</h1>
         {% endif %}
 
         <div class="grid-row">
@@ -21,6 +21,7 @@
                         <th scope="col">Handover reason</th>
                         <th scope="col">Date/time raised</th>
                         <th scope="col">Callback reqd?</th>
+                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -33,6 +34,7 @@
                         <td>{{handover.handoverReason}}</td>
                         <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
                         <td>{{handover.callback}}</td>
+                        <td>{{handover.status}}</td>
                         <td>{{handoverUpdateLink(handover)}}</td>
                     </tr>
                     {% endfor %}
@@ -48,6 +50,6 @@
 {% endblock %}
 
 {% macro handoverUpdateLink(handover) %}
-{% set queryString = '?id=' + handover.id %}
+{% set queryString = '?id=' + handover.id + '&nino=' + handover.nino %}
 <a href="/handover/view{{queryString}}">View/Update</a>
 {% endmacro %}

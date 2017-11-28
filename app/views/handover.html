@@ -11,7 +11,7 @@
                     <div class="column-half">
                         <legend class="form-label-bold">National insurance number</legend>
                         <div>
-                            <p>{{ claimant.nino }}</p>
+                            <p>{{ handover.nino }}</p>
                         </div>
                     </div>
                     <div class="column-half">
@@ -91,6 +91,10 @@
                         <legend class="form-label-bold">Callback required ?</legend>
                         <p>{{ handover.callback }}</p>
                     </div>
+                    <div class="column-half">
+                        <legend class="form-label-bold">Status</legend>
+                        <p>{{ handover.status }}</p>
+                    </div>
                 </div>
                 <br>
                 <div class="grid-row">
@@ -110,7 +114,7 @@
                     <input type="submit" class="button" value="Edit">
                     <br>
                     <br>
-                    <a href="../queue/view">Go to my queue</a>
+                    <a href="../queue/view?queueType=agent">Go to my queue</a>
                 </div>
             </div>
         </form>

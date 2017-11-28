@@ -9,24 +9,25 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
 
     for (let i=0; i < handovers.length; i++) {
         if (handovers[i].id === inputId) {
-            let handover = handovers[i];
-            foundHandover = {
-                "id" : handover.id,
-                "nino" : handover.nino,
-                "staffId" : handover.staffId,
-                "raisedOnBehalfOfOfficeId" : handover.raisedOnBehalfOfOfficeId,
-                "benefitId" : handover.benefitId,
-                "benSubType" : handover.benSubType,
-                "typeId" : handover.typeId,
-                "reasonId" : handover.reasonId,
-                "dateAndTimeRaised" : handover.dateAndTimeRaised,
-                "dateAndTimeRaisedForDisplay" : dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised),
-                "targetDateAndTime" : handover.targetDateAndTime,
-                "targetDateAndTimeForDisplay" : dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime),
-                "callback" : handover.callback,
-                "priority" : handover.priority,
-                "notes" : handover.notes
-            }
+            // let handover = handovers[i];
+            // foundHandover = {
+            //     "id" : handover.id,
+            //     "nino" : handover.nino,
+            //     "staffId" : handover.staffId,
+            //     "raisedOnBehalfOfOfficeId" : handover.raisedOnBehalfOfOfficeId,
+            //     "benefitId" : handover.benefitId,
+            //     "benSubType" : handover.benSubType,
+            //     "typeId" : handover.typeId,
+            //     "reasonId" : handover.reasonId,
+            //     "dateAndTimeRaised" : handover.dateAndTimeRaised,
+            //     "dateAndTimeRaisedForDisplay" : dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised),
+            //     "targetDateAndTime" : handover.targetDateAndTime,
+            //     "targetDateAndTimeForDisplay" : dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime),
+            //     "callback" : handover.callback,
+            //     "priority" : handover.priority,
+            //     "notes" : handover.notes
+            // }
+            foundHandover = handovers[i];
         }
     }
 
