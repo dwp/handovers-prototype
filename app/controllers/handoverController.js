@@ -301,7 +301,7 @@ function editHandoverPageAction(req, res) {
     editedHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(targetDateAndTime);
 
     if (handoverNote === "" || handoverNote === null) {
-        // Do nothing
+        newHandoverNotes = handover.notes;
     } else {
         editedHandoverNote.handoverId = handover.id;
         editedHandoverNote.dateNoteAdded = editedDate;
@@ -315,9 +315,8 @@ function editHandoverPageAction(req, res) {
             newHandoverNotes = handover.notes;
             newHandoverNotes.unshift(editedHandoverNote);
         }
-        editedHandover.notes = newHandoverNotes;
-
     }
+    editedHandover.notes = newHandoverNotes;
 
     handoversList[handoverIndex] = editedHandover;
 
