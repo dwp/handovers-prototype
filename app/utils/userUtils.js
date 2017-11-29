@@ -32,7 +32,7 @@ function getUserByStaffIdFromListOfUsers(listOfUsers, staffId) {
     let userFound = false;
 
     for (let i=0; i < listLength; i++) {
-        if (userList[i].staffId === staffId) {
+        if (userList[i].staffId == staffId) {
             userFound = true;
             user.staffId = userList[i].staffId;
             user.firstName = userList[i].firstName;

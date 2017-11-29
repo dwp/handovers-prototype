@@ -1,7 +1,7 @@
 
 function formatDateAndTimeForDisplay(date) {
 
-    var inputDate = date;
+    var inputDate = new Date(date);
     var displayDay = inputDate.getDate();
     var displayMonth = getMonthForDisplay(inputDate.getMonth());
     var displayYear = inputDate.getFullYear();
