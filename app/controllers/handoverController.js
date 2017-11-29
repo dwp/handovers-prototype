@@ -1,6 +1,7 @@
 const handoverUtils = require('../utils/handoverUtils');
 const officeUtils = require('../utils/officeUtils');
 const claimantUtils = require('../utils/claimantUtils');
+const userUtils = require('../utils/userUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
 const commonUtils = require('../utils/commonUtils');
@@ -15,13 +16,15 @@ function viewHandoverPage(req, res) {
     let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
     let user = req.session.user ? req.session.user : users[0];
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData().initialHandovers;
-
     let handover;
+    let handoverNotes = [];
+
     if (req.query.id === null) {
         handover = req.session.handover ? req.session.handover : handoversList[0];
     } else {
         handover = handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
     }
+
     let handoverTextDetails = handoverUtils.getHandoverDetails(handover);
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let claimant;
@@ -30,7 +33,6 @@ function viewHandoverPage(req, res) {
     } else {
         claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
     }
-
     let officesList = sIDU.setInitialOfficesData();
     let officeId = claimant.claimantOfficeId || "3";
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
@@ -42,11 +44,24 @@ function viewHandoverPage(req, res) {
         id : officeTypeId,
         officeType : officeTypeName
     }
-
     user.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, user.owningOfficeId);
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
     user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
+    if (handover.notes === null) {
+        handoverNotes = null;
+    } else {
+        let handNoteLen = handover.notes.length;
+        for (let i=0; i < handNoteLen; i++) {
+            let handoverNote = {
+                id: handover.notes[i].id,
+                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
+                userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
+                noteContent: handover.notes[i].noteContent
+            }
+            handoverNotes.push(handoverNote);
+        }
+    }
     req.session.claimant = claimant;
     req.session.handovers = handoversList;
     req.session.handover = handover;
@@ -56,6 +71,7 @@ function viewHandoverPage(req, res) {
         benefitName : handoverTextDetails.benefitName,
         handoverType : handoverTextDetails.handoverType,
         handoverReason : handoverTextDetails.handoverReason,
+        handoverNotes : handoverNotes,
         officeDetails : officeDetails,
         officeTypes : officeTypes,
         officeType : officeType,
@@ -121,6 +137,7 @@ function createHandoverPageAction(req, res) {
 
     let newHandover = new Object();
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
+    let newDate = new Date();
     let newHandoversList = handoversList;
     let handoverNote = req.body['handover-note'];
     let claimant = req.session.claimant;
@@ -142,8 +159,8 @@ function createHandoverPageAction(req, res) {
     newHandover.callback = req.body['callback-req'];
     newHandover.priority = req.body['handover-priority'];
     newHandover.status = "Not allocated";
-    newHandover.dateAndTimeRaised = new Date();
-    newHandover.targetDateAndTime = new Date();
+    newHandover.dateAndTimeRaised = newDate;
+    newHandover.targetDateAndTime = newDate;
     newHandover.notes = [];
 
     if (newHandover.callback === 'Yes') {
@@ -159,7 +176,7 @@ function createHandoverPageAction(req, res) {
         let newHandoverNote = new Object();
         newHandoverNote.id = '1';
         newHandoverNote.handoverId = newHandover.id;
-        newHandoverNote.dateNoteAdded = newHandover.dateAndTimeRaised;
+        newHandoverNote.dateNoteAdded = newDate;
         newHandoverNote.userWhoAddedNote = newHandover.staffId;
         newHandoverNote.noteContent = handoverNote;
         newHandover.notes.push(newHandoverNote);
@@ -185,6 +202,7 @@ function editHandoverPage(req, res) {
     let handoverReasonsList = initialData.initialHandoverReasons;
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
+    let handoverNotes = [];
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
     let officesList = sIDU.setInitialOfficesData();
@@ -202,6 +220,19 @@ function editHandoverPage(req, res) {
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
     user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
+    if (handover.notes === null) {
+        handoverNotes = null
+    } else {
+        for (let i=0; i < handover.notes.length; i++) {
+            let handoverNote = {
+                id: handover.notes[i].id,
+                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
+                userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
+                noteContent: handover.notes[i].noteContent
+            }
+            handoverNotes.push(handoverNote);
+        }
+    }
     req.session.claimant = claimant;
     req.session.handover = handover;
     req.session.handovers = handovers;
@@ -211,6 +242,7 @@ function editHandoverPage(req, res) {
         benList : benefitsList,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
+        handoverNotes : handoverNotes,
         claimant : claimant,
         handover : handover,
         user: user,
@@ -227,12 +259,15 @@ function editHandoverPageAction(req, res) {
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
     let editedHandover = new Object();
+    let newHandoverNotes = [];
     let handoverNote = req.body['handover-note'];
+    let editedHandoverNote = new Object();
     let dateAndTimeRaised = new Date(handover.dateAndTimeRaised);
     let targetDateAndTime = new Date(handover.targetDateAndTime);
     let claimant = req.session.claimant;
     let handoverIndex = commonUtils.findPositionOfObjectInArray(handover.id, handoversList);
     let callback = req.body['callback-req'];
+    let editedDate = new Date();
     if (callback === 'Yes') {
         targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
     }
@@ -257,7 +292,6 @@ function editHandoverPageAction(req, res) {
     // editedHandover.status = req.body['handover-status'];
     editedHandover.dateAndTimeRaised = dateAndTimeRaised;
     editedHandover.targetDateAndTime = targetDateAndTime;
-    editedHandover.notes = handover.notes;
 
     if (editedHandover.callback === 'Yes') {
         editedHandover.targetDateAndTime.setHours(editedHandover.dateAndTimeRaised.getHours() + 3);
@@ -266,17 +300,23 @@ function editHandoverPageAction(req, res) {
     editedHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(dateAndTimeRaised);
     editedHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(targetDateAndTime);
 
-
     if (handoverNote === "" || handoverNote === null) {
         // Do nothing
     } else {
-        let editedHandoverNote = new Object();
-        editedHandoverNote.id = '1';
         editedHandoverNote.handoverId = handover.id;
-        editedHandoverNote.dateNoteAdded = new Date();
+        editedHandoverNote.dateNoteAdded = editedDate;
         editedHandoverNote.userWhoAddedNote = editedHandover.staffId;
         editedHandoverNote.noteContent = handoverNote;
-        editedHandover.notes.unshift(editedHandoverNote);
+        if (handover.notes === null) {
+            editedHandoverNote.id = "1";
+            newHandoverNotes.push(editedHandoverNote);
+        } else {
+            editedHandoverNote.id = handover.notes.length + 1;
+            newHandoverNotes = handover.notes;
+            newHandoverNotes.unshift(editedHandoverNote);
+        }
+        editedHandover.notes = newHandoverNotes;
+
     }
 
     handoversList[handoverIndex] = editedHandover;
@@ -285,7 +325,7 @@ function editHandoverPageAction(req, res) {
     req.session.handover = editedHandover;
     req.session.claimant = claimant;
 
-    res.redirect('/handover/view');
+    res.redirect('/handover/view?id=' + editedHandover.id);
 
 }
 

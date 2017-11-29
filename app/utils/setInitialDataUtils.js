@@ -126,6 +126,7 @@ function setInitialHandoversData() {
         handover.status = handoversList[i].status;
         handover.dateAndTimeRaised = new Date();
         handover.targetDateAndTime = new Date();
+        handover.notes = null;
 
         if (handover.callback === '1') {
             handover.targetDateAndTime.setHours(handover.targetDateAndTime.getHours() + 3);
@@ -152,8 +153,8 @@ function setInitialHandoverNotesData() {
         let handoverNote = new Object();
         handoverNote.id = handoverNotesList[i].id;
         handoverNote.handoverId = handoverNotesList[i].handoverId;
-        handoverNote.dateNoteAdded = handoverNotesList[i].dateNoteAdded;
-        handoverNote.userWhoAddedNote = handoverNotesList[i].userWhoAddedNote;
+        handoverNote.dateNoteAdded = new Date(handoverNotesList[i].dateNoteAdded);
+        handoverNote.userWhoAddedNote = parseInt(handoverNotesList[i].userWhoAddedNote);
         handoverNote.noteContent = handoverNotesList[i].noteContent;
         initialHandoverNotes.unshift(handoverNote);
     }

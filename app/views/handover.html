@@ -100,10 +100,13 @@
                 <div class="grid-row">
                     <div class="column-full">
                         <legend class="form-label-bold">Notes</legend>
-                        {% if handover.notes %}
-                            {% for note in handover.notes %}
+                        {% if handoverNotes %}
+                            {% for note in handoverNotes %}
                                 <p>{{ note.noteContent }}</p>
-                                <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(added by {{ note.userWhoAddedNote }} on {{ note.dateNoteAdded }})</p>
+                                <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    (added by {{ note.userWhoAddedNote.firstName }} {{ note.userWhoAddedNote.lastName }}
+                                      on {{ note.dateNoteAdded.day }} {{ note.dateNoteAdded.month }} {{ note.dateNoteAdded.year }}
+                                      at {{ note.dateNoteAdded.hours }}:{{ note.dateNoteAdded.mins }})</p>
                             {% endfor %}
                         {% else %}
                             <p>There are no notes for this handover yet</p>
