@@ -289,8 +289,7 @@ function editHandoverPageAction(req, res) {
     editedHandover.reasonId = req.body['handover-reason'];
     editedHandover.callback = callback;
     editedHandover.priority = req.body['handover-priority'];
-    editedHandover.status = handover.status;
-    // editedHandover.status = req.body['handover-status'];
+    editedHandover.status = req.body['handover-status'];
     editedHandover.dateAndTimeRaised = dateAndTimeRaised;
     editedHandover.targetDateAndTime = targetDateAndTime;
 
