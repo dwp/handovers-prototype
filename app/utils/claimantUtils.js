@@ -15,6 +15,7 @@ function getClaimantByNinoFromListOfClaimants(claimantsList, nino) {
                 "preferredContactNumber" : claimant.preferredContactNumber,
                 "emailAddress" : claimant.emailAddress,
                 "postcode" : claimant.postcode,
+                "claimantOfficeId" : claimant.claimantOfficeId,
                 "welshSpeaker" : claimant.welshSpeaker,
                 "language" : claimant.language,
                 "approvedRepName" : claimant.approvedRepName,
