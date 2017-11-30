@@ -94,15 +94,19 @@
                 </div>
                 <div class="column-half">
                     <div class="form-group">
-                        <legend class="form-label-bold">Language requiring translator</legend>
-                        {% if claimant.language === "" %}
+                        <legend class="form-label-bold">Translator reqd ?</legend>
+                        {% if claimant.translator === "No" %}
                             <div>
-                                <p>Not applicable</p>
+                                <p>No</p>
                             </div>
                         {% else %}
-                        <div>
-                            <p>{{ claimant.language }}</p>
-                        </div>
+                            <div>
+                                <p>Yes</p>
+                            </div>
+                            <div>
+                                <legend class="form-label-bold">Language</legend>
+                                <p>{{ claimant.language }}</p>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
