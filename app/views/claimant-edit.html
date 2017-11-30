@@ -82,19 +82,36 @@
                     <div class="column-half">
                         <div class="form-group">
                             <legend class="form-label-bold">Welsh speaker ?</legend>
-                            <select class="select form-control" name="welsh-speaker" id="welsh-speaker" >
-                                <option value="No" {{ 'selected' if handover.welshSpeaker === "No" else ''}}>No</option>
-                                <option value="Yes" {{ 'selected' if handover.welshSpeaker=== "Yes" else ''}}>Yes</option>
-                            </select>
+                            <fieldset class="inline">
+                                <div class="multiple-choice">
+                                    <input id="welshSpeaker_no" type="radio" name="welsh-speaker" value="No" checked="checked">
+                                    <label for="welshSpeaker_no">No</label>
+                                </div>
+                                <div class="multiple-choice">
+                                    <input id="welshSpeaker_yes" type="radio" name="welsh-speaker" value="Yes">
+                                    <label for="welshSpeaker_yes">Yes</label>
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
 
                     <div class="column-half">
                         <div class="form-group">
-                            <legend class="form-label-bold">Language requiring translator</legend>
-                            <div>
-                                <input type="text" class="form-control" id="language" name="language">
-                            </div>
+                            <legend class="form-label-bold">Translator reqd ?</legend>
+                            <fieldset class="inline">
+                                <div class="multiple-choice">
+                                    <input id="translator_no" type="radio" name="translator" value="No" checked="checked">
+                                    <label for="translator_no">No</label>
+                                </div>
+                                <div class="multiple-choice" data-target="language">
+                                    <input id="translator_yes" type="radio" name="translator" value="Yes">
+                                    <label for="translator_yes">Yes</label>
+                                </div>
+                                <div class="panel panel-border-narrow js-hidden" id="language">
+                                    <label class="form-label-bold" for="language">Language</label>
+                                    <input class="form-control" name="language" type="text" id="language">
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
                 </div>
@@ -119,12 +136,12 @@
                 </div>
 
                 <div class="grid-row">
-                    <div class="column-third">
+                    <div class="column-half">
                         <div class="form-group">
                             <input type="submit" class="button" value="Submit">
                         </div>
                     </div>
-                    <div class="column-third">
+                    <div class="column-half>
                         <div class="form-group">
                             <a href="/index">Back to index page</a>
                         </div>

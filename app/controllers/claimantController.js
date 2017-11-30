@@ -74,6 +74,7 @@ function claimantEditPageAction(req, res) {
     newClaimant.emailAddress = req.body['emailAddr'];
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
+    newClaimant.translator = req.body['translator'];
     newClaimant.language = req.body['language'];
     newClaimant.approvedRepName = req.body['rep-name'];
     newClaimant.approvedRepContact = req.body['rep-contact'];

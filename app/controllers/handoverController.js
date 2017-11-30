@@ -13,17 +13,17 @@ const commonUtils = require('../utils/commonUtils');
 
 function viewHandoverPage(req, res) {
 
+    let officesList = sIDU.setInitialOfficesData();
     let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
     let user = req.session.user ? req.session.user : users[0];
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData().initialHandovers;
     let handover;
-    let handoverNotes = [];
-    let officesList = sIDU.setInitialOfficesData();
     if (req.query.id === null) {
         handover = req.session.handover ? req.session.handover : handoversList[0];
     } else {
         handover = handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
     }
+    let handoverNotes = [];
     let handoverTextDetails = handoverUtils.getHandoverDetails(handover);
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, handover.nino);
@@ -38,6 +38,7 @@ function viewHandoverPage(req, res) {
         id : officeTypeId,
         officeType : officeTypeName
     }
+
     user.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, user.owningOfficeId);
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
     user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
