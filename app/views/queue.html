@@ -50,6 +50,6 @@
 {% endblock %}
 
 {% macro handoverUpdateLink(handover) %}
-{% set queryString = '?id=' + handover.id + '&nino=' + handover.nino %}
+{% set queryString = '?id=' + handover.id %}
 <a href="/handover/view{{queryString}}">View/Update</a>
 {% endmacro %}

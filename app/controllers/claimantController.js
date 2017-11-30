@@ -1,4 +1,5 @@
 const sIDU = require('../utils/setInitialDataUtils');
+const officeUtils = require('../utils/officeUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Claimant Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -8,8 +9,13 @@ function claimantPage(req, res) {
 
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let claimant = req.session.claimant ? req.session.claimant : claimants[0];
+    let officesList = sIDU.setInitialOfficesData();
+    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
 
-    res.render('claimant', claimant);
+    res.render('claimant', {
+        claimant : claimant,
+        claimantOfficeDetails : claimantOfficeDetails
+    });
 }
 
 function claimantFindPage(req, res) {
@@ -50,6 +56,7 @@ function claimantEditPage(req, res) {
 
     let claimant = {};
     claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
+    // When this is used for edit claimant as well as create claimant, need to get correct claimant, and to get the claimant's office details (like in view claimant)
     res.render('claimant-edit', claimant)
 
 }
