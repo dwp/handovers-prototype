@@ -72,28 +72,48 @@
                 <br>
 
                 <div class="grid-row">
-                    <div class="column-half">
-                        <legend class="form-label-bold">Select a benefit</legend>
-                        <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
-                            <option value="" id="benSelect">Select</option>
-                            {% for benefit in benList %}
-                                <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="column-half" id="benSubTypeDiv" style="display:none;">
-                        <legend class="form-label-bold">Select a benefit sub-type</legend>
-                        <select class="select form-control" name="benefit-sub" id="benefit-sub">
-                            <option value="">Select</option>
-                            <option value="Social Fund Type 1" {{ 'selected' if handover.benSubType === 'Social Fund Type 1' else ''}}>Social Fund Type 1</option>
-                            <option value="Social Fund Type 2" {{ 'selected' if handover.benSubType === 'Social Fund Type 2' else ''}}>Social Fund Type 2</option>
-                            <option value="Social Fund Type 3" {{ 'selected' if handover.benSubType === 'Social Fund Type 3' else ''}}>Social Fund Type 3</option>
-                            <option value="Social Fund Type 4" {{ 'selected' if handover.benSubType === 'Social Fund Type 4' else ''}}>Social Fund Type 4</option>
-                        </select>
-                    </div>
+                    {% if editOrCreate === 'create' %}
+                        <div class="column-half">
+                            <legend class="form-label-bold">Select a benefit</legend>
+                            <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
+                                <option value="" id="benSelect">Select</option>
+                                {% for benefit in benList %}
+                                    <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% else %}
+                        <div class="column-half">
+                            <legend class="form-label-bold">Benefit</legend>
+                            <p>{{ benefitName }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% if editOrCreate === 'create' %}
+                        <div class="column-half" id="benSubTypeDiv" style="display:none;">
+                            <legend class="form-label-bold">Select a benefit sub-type</legend>
+                            <select class="select form-control" name="benefit-sub" id="benefit-sub">
+                                <option value="">Select</option>
+                                <option value="Social Fund Type 1" {{ 'selected' if handover.benSubType === 'Social Fund Type 1' else ''}}>Social Fund Type 1</option>
+                                <option value="Social Fund Type 2" {{ 'selected' if handover.benSubType === 'Social Fund Type 2' else ''}}>Social Fund Type 2</option>
+                                <option value="Social Fund Type 3" {{ 'selected' if handover.benSubType === 'Social Fund Type 3' else ''}}>Social Fund Type 3</option>
+                                <option value="Social Fund Type 4" {{ 'selected' if handover.benSubType === 'Social Fund Type 4' else ''}}>Social Fund Type 4</option>
+                            </select>
+                        </div>
+                    {% else %}
+                        <div class="column-half">
+                            {% if benefitName === "Social Fund [SF]" %}
+                            <legend class="form-label-bold">Benefit sub-type</legend>
+                            <p>{{ handover.benSubType }}</p>
+                            {% else %}
+                            <p></p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
                 <br>
                 <div class="grid-row">
+                    {% if editOrCreate === 'create' %}
                     <div class="column-half">
                         <legend class="form-label-bold">Select a handover type</legend>
                         <select class="select form-control" name="handover-type" id="handover-type">
@@ -103,17 +123,14 @@
                             {% endfor %}
                         </select>
                     </div>
+                    {% else %}
                     <div class="column-half">
-                        <legend class="form-label-bold">Callback required ?</legend>
-                        <select class="select form-control" name="callback-req" id="callback-req">
-                            <option value="">Select</option>
-                            <option value="Yes" {{ 'selected' if handover.callback === "Yes" else ''}}>Yes</option>
-                            <option value="No" {{ 'selected' if handover.callback === "No" else ''}}>No</option>
-                        </select>
+                        <legend class="form-label-bold">Handover type</legend>
+                        <p>{{ handoverType }}</p>
                     </div>
-                </div>
-                <br>
-                <div class="grid-row">
+                    {% endif %}
+
+                    {% if editOrCreate === 'create' %}
                     <div class="column-half">
                         <legend class="form-label-bold">Select a handover reason</legend>
                         <select class="select form-control" name="handover-reason" id="handover-reason">
@@ -123,35 +140,64 @@
                             {% endfor %}
                         </select>
                     </div>
-                    {% if editOrCreate === "edit" %}
+                    {% else %}
                     <div class="column-half">
-                        <legend class="form-label-bold">Status</legend>
-                        <p>Current status is {{ handover.status }}</p>
-                        {% if handover.status === "Withdrawn" %}
-                            <p>Status cannot be changed</p>
-                        {% else %}
-                        <select class="select form-control" name="handover-status" id=handover-status">
-                            {% if handover.status === "Not allocated" %}
-                                <option value="Not allocated" {{ 'selected' if handover.status === "Not allocated" else ''}}>Not allocated</option>
-                            {% endif %}
-                            {% if handover.status === "Not allocated" or handover.status === "Paused" or handover.status === "In progress" %}
-                                <option value="In progress" {{ 'selected' if handover.status === "In progress" else ''}}>In progress</option>
-                            {% endif %}
-                            {% if handover.status === "In progress" or handover.status === "Paused" %}
-                                <option value="Paused" {{ 'selected' if handover.status === "Paused" else ''}}>Paused</option>
-                            {% endif %}
-                            {% if handover.status === "In progress" or handover.status === "Paused" or handover.status === "Done" %}
-                                <option value="Done" {{ 'selected' if handover.status === "Done" else ''}}>Done</option>
-                            {% endif %}
-                            {% if handover.status === "Not allocated" or handover.status === "In progress" or handover.status === "Paused" %}
-                                <option value="Withdrawn" {{ 'selected' if handover.status === "Withdrawn" else ''}}>Withdrawn</option>
-                            {% endif %}
-                        {% endif %}
-                        </select>
+                        <legend class="form-label-bold">Handover reason</legend>
+                        <p>{{ handoverReason }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <br>
+                <div class="grid-row">
+                    {% if handover.status === 'Withdrawn' or handover.status === 'Done' %}
+                    <div class="column-half">
+                        <legend class="form-label-bold">Callback required ?</legend>
+                        <p>{{ handover.callback }}</p>
+                        <p>Cannot be changed as handover status is {{ handover.status }}</p>
                     </div>
                     {% else %}
                     <div class="column-half">
+                        <legend class="form-label-bold">Callback required ?</legend>
+                        <select class="select form-control" name="callback-req" id="callback-req">
+                            <option value="">Select</option>
+                            <option value="Yes" {{ 'selected' if handover.callback === "Yes" else ''}}>Yes</option>
+                            <option value="No" {{ 'selected' if handover.callback === "No" else ''}}>No</option>
+                        </select>
                     </div>
+                    {% endif %}
+
+                    {% if editOrCreate === "edit" %}
+                        <div class="column-half">
+                            <legend class="form-label-bold">Status</legend>
+                            {% if handover.status === "Withdrawn" %}
+                                <p>Cannot be changed as current status is 'Withdrawn'</p>
+                            {% else %}
+                                {% if handover.status === "Done" %}
+                                    <p>Cannot be changed as current status is 'Done'</p>
+                                {% else %}
+                                    <select class="select form-control" name="handover-status" id=handover-status">
+                                    {% if handover.status === "Not allocated" %}
+                                        <option value="Not allocated" {{ 'selected' if handover.status === "Not allocated" else ''}}>Not allocated</option>
+                                    {% endif %}
+                                    {% if handover.status === "Not allocated" or handover.status === "Paused" or handover.status === "In progress" %}
+                                        <option value="In progress" {{ 'selected' if handover.status === "In progress" else ''}}>In progress</option>
+                                    {% endif %}
+                                    {% if handover.status === "In progress" or handover.status === "Paused" %}
+                                        <option value="Paused" {{ 'selected' if handover.status === "Paused" else ''}}>Paused</option>
+                                    {% endif %}
+                                    {% if handover.status === "In progress" or handover.status === "Paused" or handover.status === "Done" %}
+                                        <option value="Done" {{ 'selected' if handover.status === "Done" else ''}}>Done</option>
+                                    {% endif %}
+                                    {% if handover.status === "Not allocated" or handover.status === "In progress" or handover.status === "Paused" %}
+                                        <option value="Withdrawn" {{ 'selected' if handover.status === "Withdrawn" else ''}}>Withdrawn</option>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                            </select>
+                        </div>
+                    {% else %}
+                        <div class="column-half">
+                        </div>
                     {% endif %}
                 </div>
                 <br>

@@ -201,6 +201,7 @@ function editHandoverPage(req, res) {
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
     let handoverNotes = [];
+    let handoverTextDetails = handoverUtils.getHandoverDetails(handover);
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let officesList = sIDU.setInitialOfficesData();
     let officeId = handover.raisedOnBehalfOfOfficeId || "3";
@@ -241,6 +242,9 @@ function editHandoverPage(req, res) {
 
     res.render('handover-edit', {
         benList : benefitsList,
+        benefitName : handoverTextDetails.benefitName,
+        handoverType : handoverTextDetails.handoverType,
+        handoverReason : handoverTextDetails.handoverReason,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
         handoverNotes : handoverNotes,
@@ -278,19 +282,19 @@ function editHandoverPageAction(req, res) {
     editedHandover.nino = handover.nino;
     editedHandover.staffId = handover.staffId;
     editedHandover.owningOfficeId = req.body['office'];
-    editedHandover.benefitId = req.body['benefit'];
+
+    editedHandover.benefitId = req.body['benefit'] || handover.benefitId;
 
     if (editedHandover.benefitId === "5") {
-        editedHandover.benSubType = req.body['benefit-sub'];
+        editedHandover.benSubType = req.body['benefit-sub'] || handover.benSubType;
     } else {
         editedHandover.benSubType = null;
     }
 
-    editedHandover.typeId = req.body['handover-type'];;
-    editedHandover.reasonId = req.body['handover-reason'];
-    editedHandover.callback = callback;
-    editedHandover.priority = req.body['handover-priority'];
-    editedHandover.status = req.body['handover-status'];
+    editedHandover.typeId = req.body['handover-type'] || handover.typeId;
+    editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
+    editedHandover.callback = callback || handover.callback;
+    editedHandover.status = req.body['handover-status'] || handover.status;
     editedHandover.dateAndTimeRaised = dateAndTimeRaised;
     editedHandover.targetDateAndTime = targetDateAndTime;
 
