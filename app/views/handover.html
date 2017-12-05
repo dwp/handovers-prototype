@@ -113,14 +113,23 @@
                         {% endif %}
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <input type="submit" class="button" value="Edit">
-                    <br>
-                    <br>
-                    <a href="../queue/view?queueType=agent">Go to my queue</a>
-                    <br>
-                    <br>
-                    <a href="../queue/view?queueType=office">Go to office queue</a>
+                    <div class="grid-row">
+                        <input type="submit" class="button" value="Edit handover">
+                    </div>
+                </div>
+
+                <div class="grid-row">
+                    <div class="column-third">
+                        <a href="../claimant/edit?nino={{claimant.nino}}">Edit claimant</a>
+                    </div>
+                    <div class="column-third">
+                        <a href="../queue/view?queueType=agent">Go to my queue</a>
+                    </div>
+                    <div class="column-third">
+                        <a href="../queue/view?queueType=office">Go to office queue</a>
+                    </div>
                 </div>
             </div>
         </form>
