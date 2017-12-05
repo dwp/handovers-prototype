@@ -124,13 +124,13 @@ function claimantEditPageAction(req, res) {
     let claimant = req.session.claimant;
     let editedClaimant = new Object();
 
-    editedClaimant.firstName = req.body['firstName'] || claimant.firstName;
-    editedClaimant.lastName = req.body['lastName'] || claimant.lastName;
-    editedClaimant.dob = req.body['dob'] || claimant.dob;
+    editedClaimant.firstName = req.body['firstName'];
+    editedClaimant.lastName = req.body['lastName'];
+    editedClaimant.dob = req.body['dob'];
     editedClaimant.nino = claimant.nino;
-    editedClaimant.preferredContactNumber = req.body['prefContNum'] || claimant.preferredContactNumber;
-    editedClaimant.emailAddress = req.body['emailAddr'] || claimant.emailAddress;
-    editedClaimant.postcode = req.body['postcode'] || claimant.postcode;
+    editedClaimant.preferredContactNumber = req.body['prefContNum'];
+    editedClaimant.emailAddress = req.body['emailAddr'];
+    editedClaimant.postcode = req.body['postcode'];
     editedClaimant.welshSpeaker = req.body['welsh-speaker'];
     editedClaimant.translator = req.body['translator'];
     if (editedClaimant.translator == 'No') {
@@ -138,8 +138,8 @@ function claimantEditPageAction(req, res) {
     } else {
         editedClaimant.language = req.body['language'];
     }
-    editedClaimant.approvedRepName = req.body['rep-name'] || claimant.approvedRepName;
-    editedClaimant.approvedRepContact = req.body['rep-contact'] || claimant.approvedRepContact;
+    editedClaimant.approvedRepName = req.body['rep-name'];
+    editedClaimant.approvedRepContact = req.body['rep-contact'];
     claimants.push(editedClaimant);
     req.session.claimant = editedClaimant;
     req.session.claimants = claimants;
