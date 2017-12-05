@@ -1,11 +1,18 @@
 const sIDU = require('../utils/setInitialDataUtils');
 const officeUtils = require('../utils/officeUtils');
+const claimantUtils = require('../utils/claimantUtils');
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Claimant Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-function claimantPage(req, res) {
+function claimantFindPage(req, res) {
+
+    res.render('claimant-find');
+}
+
+function claimantViewPage(req, res) {
 
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let claimant = req.session.claimant ? req.session.claimant : claimants[0];
@@ -16,11 +23,6 @@ function claimantPage(req, res) {
         claimant : claimant,
         claimantOfficeDetails : claimantOfficeDetails
     });
-}
-
-function claimantFindPage(req, res) {
-
-    res.render('claimant-find');
 }
 
 function claimantFindPageAction(req, res) {
@@ -52,16 +54,17 @@ function claimantFindPageAction(req, res) {
 
 }
 
-function claimantEditPage(req, res) {
+function claimantCreatePage(req, res) {
 
+    let editOrCreate = 'create';
     let claimant = {};
     claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
-    // When this is used for edit claimant as well as create claimant, need to get correct claimant, and to get the claimant's office details (like in view claimant)
-    res.render('claimant-edit', claimant)
-
+    res.render('claimant-edit', { claimant : claimant,
+                                  editOrCreate : editOrCreate}
+    );
 }
 
-function claimantEditPageAction(req, res) {
+function claimantCreatePageAction(req, res) {
 
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let newClaimant = new Object();
@@ -82,12 +85,59 @@ function claimantEditPageAction(req, res) {
     req.session.claimant = newClaimant;
     req.session.claimants = claimants;
 
-    res.redirect('/claimant/view');
+    res.redirect('/claimant/view', editOrCreate);
 
 }
 
-module.exports.claimantPage = claimantPage;
+function claimantEditPage(req, res) {
+
+    let editOrCreate = 'edit';
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : claimants[0].nino;
+    let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
+    let officesList = sIDU.setInitialOfficesData();
+    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
+
+    req.session.claimant = claimant;
+
+    res.render('claimant-edit', { claimant : claimant,
+                                  claimantOfficeDetails : claimantOfficeDetails,
+                                  editOrCreate : editOrCreate}
+    );
+
+}
+
+function claimantEditPageAction(req, res) {
+
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let claimant = req.session.claimant;
+    let editedClaimant = new Object();
+
+    editedClaimant.firstName = req.body['firstName'] || claimant.firstName;
+    editedClaimant.lastName = req.body['lastName'] || claimant.lastName;
+    editedClaimant.dob = req.body['dob'] || claimant.dob;
+    editedClaimant.nino = claimant.nino;
+    editedClaimant.preferredContactNumber = req.body['prefContNum'] || claimant.preferredContactNumber;
+    editedClaimant.emailAddress = req.body['emailAddr'] || claimant.emailAddress;
+    editedClaimant.postcode = req.body['postcode'] || claimant.postcode;
+    editedClaimant.welshSpeaker = req.body['welsh-speaker'];
+    editedClaimant.translator = req.body['translator'];
+    editedClaimant.language = req.body['language'] || claimant.language;
+    editedClaimant.approvedRepName = req.body['rep-name'] || claimant.approvedRepName;
+    editedClaimant.approvedRepContact = req.body['rep-contact'] || claimant.approvedRepContact;
+    claimants.push(editedClaimant);
+    req.session.claimant = editedClaimant;
+    req.session.claimants = claimants;
+
+    res.redirect('/claimant/view', editOrCreate);
+
+
+}
+
 module.exports.claimantFindPage = claimantFindPage;
+module.exports.claimantViewPage = claimantViewPage;
 module.exports.claimantFindPageAction = claimantFindPageAction;
+module.exports.claimantCreatePage = claimantCreatePage;
+module.exports.claimantCreatePageAction = claimantCreatePageAction;
 module.exports.claimantEditPage = claimantEditPage;
 module.exports.claimantEditPageAction = claimantEditPageAction;

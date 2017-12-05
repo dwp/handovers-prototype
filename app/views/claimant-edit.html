@@ -4,17 +4,21 @@
 
 <main id="content" role="main">
     <div class="main-content">
-        <h1 class="heading-large">Create new claimant</h1>
-        <br>
-        <form action="/claimant/edit" method="POST" class="form">
+        {% if editOrCreate === 'edit' %}
+            <h1 class="heading-large">Edit claimant details for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
+            <form action="/claimant/edit" method="POST" class="form">
+        {% else %}
+            <h1 class="heading-large">Create new claimant</h1>
+            <form action="/handover/create" method="POST" class="form">
+        {% endif %}
             <div class="form-group">
                 <div class="grid-row">
                     <div class="column-half">
                         <div class="form-group">
                             <div>
                                 <legend class="form-label-bold">National insurance number</legend>
-                                <input type="hidden" id="nino" name="nino" value="{{ nino }}">
-                                <p>{{ nino }}</p>
+                                <input type="hidden" id="nino" name="nino" value="{{ claimant.nino }}">
+                                <p>{{ claimant.nino }}</p>
                             </div>
                         </div>
                     </div>
@@ -25,7 +29,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">First name</legend>
                             <div>
-                                <input type="text" class="form-control" id="firstName" name="firstName">
+                                <input type="text" class="form-control" id="firstName" name="firstName" value="{{ claimant.firstName }}">
                             </div>
                         </div>
                     </div>
@@ -33,7 +37,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">Last name</legend>
                             <div>
-                                <input type="text" class="form-control" id="lastName" name="lastName">
+                                <input type="text" class="form-control" id="lastName" name="lastName" value="{{ claimant.lastName }}">
                             </div>
                         </div>
                     </div>
@@ -45,7 +49,7 @@
                             <legend class="form-label-bold">Date of birth</legend>
                             <div>
                                 <p class="form-hint">e.g. 20 January 2018</p>
-                                <input type="text" class="form-control" id="dob" name="dob">
+                                <input type="text" class="form-control" id="dob" name="dob" value="{{ claimant.dob }}">
                             </div>
                         </div>
                     </div>
@@ -53,7 +57,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">Postcode</legend>
                             <div>
-                                <input type="text" class="form-control" id="postcode" name="postcode">
+                                <input type="text" class="form-control" id="postcode" name="postcode" value="{{ claimant.postcode }}">
                             </div>
                         </div>
                     </div>
@@ -64,7 +68,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">Preferred contact number</legend>
                             <div>
-                                <input type="text" class="form-control" id="prefContNum" name="prefContNum">
+                                <input type="text" class="form-control" id="prefContNum" name="prefContNum" value="{{ claimant.preferredContactNumber }}">
                             </div>
                         </div>
                     </div>
@@ -72,7 +76,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">Email address</legend>
                             <div>
-                                <input type="text" class="form-control" id="emailAddr" name="emailAddr">
+                                <input type="text" class="form-control" id="emailAddr" name="emailAddr" value="{{ claimant.emailAddress }}">
                             </div>
                         </div>
                     </div>
@@ -84,11 +88,15 @@
                             <legend class="form-label-bold">Welsh speaker ?</legend>
                             <fieldset class="inline">
                                 <div class="multiple-choice">
-                                    <input id="welshSpeaker_no" type="radio" name="welsh-speaker" value="No" checked="checked">
+                                    <input id="welshSpeaker_no" type="radio" name="welsh-speaker" value="No" {% if claimant.welshSpeaker === 'No' %}
+                                                                                                                checked="checked"
+                                                                                                             {% endif %}>
                                     <label for="welshSpeaker_no">No</label>
                                 </div>
                                 <div class="multiple-choice">
-                                    <input id="welshSpeaker_yes" type="radio" name="welsh-speaker" value="Yes">
+                                    <input id="welshSpeaker_yes" type="radio" name="welsh-speaker" value="Yes" {% if claimant.welshSpeaker === 'Yes' %}
+                                                                                                                  checked="checked"
+                                                                                                               {% endif %}>
                                     <label for="welshSpeaker_yes">Yes</label>
                                 </div>
                             </fieldset>
@@ -100,23 +108,48 @@
                             <legend class="form-label-bold">Translator reqd ?</legend>
                             <fieldset class="inline">
                                 <div class="multiple-choice">
-                                    <input id="translator_no" type="radio" name="translator" value="No" checked="checked">
-                                    <label for="translator_no">No</label>
+                                    <input id="translator-no" type="radio" name="translator" value="No" {% if claimant.translator === 'No' %}
+                                                                                                            checked="checked"
+                                                                                                        {% endif %}>
+                                    <label for="translator-no">No</label>
                                 </div>
                                 <div class="multiple-choice" data-target="language">
-                                    <input id="translator_yes" type="radio" name="translator" value="Yes">
-                                    <label for="translator_yes">Yes</label>
+                                    <input id="translator-yes" type="radio" name="translator" value="Yes" {% if claimant.translator === 'Yes' %}
+                                                                                                             checked="checked"
+                                                                                                          {% endif %}>
+                                    <label for="translator-yes">Yes</label>
                                 </div>
                                 <div class="panel panel-border-narrow js-hidden" id="language">
                                     <label class="form-label-bold" for="language">Language</label>
-                                    <input class="form-control" name="language" type="text" id="language">
+                                    <input class="form-control" name="language" type="text">
                                 </div>
                             </fieldset>
                         </div>
                     </div>
                 </div>
 
+
                 <div class="grid-row">
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Does the customer have an approved representative ?</legend>
+                            <fieldset class="inline">
+                                <div class="multiple-choice">
+                                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No">
+                                    <label for="approved-rep-no">No</label>
+                                </div>
+                                <div class="multiple-choice" data-target="approved-rep-group">
+                                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes">
+                                    <label for="approved-rep-yes">Yes</label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="column-half">
+                    </div>
+                </div>
+
+                <div class="grid-row js-hidden" id="approved-rep-group" >
                     <div class="column-half">
                         <div class="form-group">
                             <legend class="form-label-bold">Approved representative name</legend>

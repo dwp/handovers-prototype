@@ -5,7 +5,7 @@ function getClaimantByNinoFromListOfClaimants(claimantsList, nino) {
     var foundClaimant = {};
 
     for (var i=0; i < claimants.length; i++) {
-        if (claimants[i].nino === inputNino) {
+        if (claimants[i].nino == inputNino) {
             var claimant = claimants[i];
               foundClaimant = {
                 "nino" : claimant.nino,
