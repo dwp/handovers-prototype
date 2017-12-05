@@ -13,7 +13,7 @@
       "translator" : "No",
       "language" : "",
       "approvedRepName" : "Angela Brown",
-      "approvedRepContact" : "Contact on 012324 567891"
+      "approvedRepContact" : "Please contact on 01234 567891"
     },
     {"firstName": "Christine",
       "lastName": "Dixon",
@@ -66,7 +66,8 @@
       "postcode": "MN4 3HK",
       "claimantOfficeId" : "7",
       "welshSpeaker": "Yes",
-      "language" : "",
+      "translator" : "Yes",
+      "language" : "German",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     }]

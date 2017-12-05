@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="panel panel-border-narrow js-hidden" id="language">
                                     <label class="form-label-bold" for="language">Language</label>
-                                    <input class="form-control" name="language" type="text">
+                                    <input class="form-control" name="language" type="text" value="{{ claimant.language }}">
                                 </div>
                             </fieldset>
                         </div>
@@ -135,11 +135,11 @@
                             <legend class="form-label-bold">Does the customer have an approved representative ?</legend>
                             <fieldset class="inline">
                                 <div class="multiple-choice">
-                                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No">
+                                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No" {% if approvedRep === 0 %} checked="checked" {% endif %}>
                                     <label for="approved-rep-no">No</label>
                                 </div>
                                 <div class="multiple-choice" data-target="approved-rep-group">
-                                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes">
+                                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" {% if approvedRep === 1 %} checked="checked" {% endif %}>
                                     <label for="approved-rep-yes">Yes</label>
                                 </div>
                             </fieldset>
@@ -154,7 +154,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">Approved representative name</legend>
                             <div>
-                                <input type="text" class="form-control" id="rep-name" name="rep-name">
+                                <input type="text" class="form-control" id="rep-name" name="rep-name" value="{{ claimant.approvedRepName }}">
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">Approved representative contact details</legend>
                             <div>
-                                <input type="text" class="form-control" id="rep-contact" name="rep-contact">
+                                <input type="text" class="form-control" id="rep-contact" name="rep-contact" value="{{ claimant.approvedRepContact }}">
                             </div>
                         </div>
                     </div>

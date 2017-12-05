@@ -78,14 +78,18 @@ function claimantCreatePageAction(req, res) {
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
     newClaimant.translator = req.body['translator'];
-    newClaimant.language = req.body['language'];
+    if (newClaimant.translator == 'No') {
+        newClaimant.language = '';
+    } else {
+        newClaimant.language = req.body['language'];
+    }
     newClaimant.approvedRepName = req.body['rep-name'];
     newClaimant.approvedRepContact = req.body['rep-contact'];
     claimants.push(newClaimant);
     req.session.claimant = newClaimant;
     req.session.claimants = claimants;
 
-    res.redirect('/claimant/view', editOrCreate);
+    res.redirect('/claimant/view');
 
 }
 
@@ -97,12 +101,19 @@ function claimantEditPage(req, res) {
     let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
     let officesList = sIDU.setInitialOfficesData();
     let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
+    let approvedRep;
+    if (claimant.approvedRepName === "" || claimant.approvedRepName === null || !claimant.approvedRepName) {
+        approvedRep = 0;
+    } else {
+        approvedRep = 1;
+    }
 
     req.session.claimant = claimant;
 
     res.render('claimant-edit', { claimant : claimant,
                                   claimantOfficeDetails : claimantOfficeDetails,
-                                  editOrCreate : editOrCreate}
+                                  editOrCreate : editOrCreate,
+                                    approvedRep : approvedRep }
     );
 
 }
@@ -122,14 +133,18 @@ function claimantEditPageAction(req, res) {
     editedClaimant.postcode = req.body['postcode'] || claimant.postcode;
     editedClaimant.welshSpeaker = req.body['welsh-speaker'];
     editedClaimant.translator = req.body['translator'];
-    editedClaimant.language = req.body['language'] || claimant.language;
+    if (editedClaimant.translator == 'No') {
+        editedClaimant.language = '';
+    } else {
+        editedClaimant.language = req.body['language'];
+    }
     editedClaimant.approvedRepName = req.body['rep-name'] || claimant.approvedRepName;
     editedClaimant.approvedRepContact = req.body['rep-contact'] || claimant.approvedRepContact;
     claimants.push(editedClaimant);
     req.session.claimant = editedClaimant;
     req.session.claimants = claimants;
 
-    res.redirect('/claimant/view', editOrCreate);
+    res.redirect('/claimant/view');
 
 
 }
