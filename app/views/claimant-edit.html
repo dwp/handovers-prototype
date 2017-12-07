@@ -22,6 +22,16 @@
                             </div>
                         </div>
                     </div>
+                    {% if editOrCreate === 'edit' %}
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Home jobcentre</legend>
+                            <div>
+                                <p>{{ claimantOfficeDetails.officeName }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
 
                 <div class="grid-row">

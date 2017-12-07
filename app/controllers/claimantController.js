@@ -113,7 +113,7 @@ function claimantEditPage(req, res) {
     res.render('claimant-edit', { claimant : claimant,
                                   claimantOfficeDetails : claimantOfficeDetails,
                                   editOrCreate : editOrCreate,
-                                    approvedRep : approvedRep }
+                                  approvedRep : approvedRep }
     );
 
 }
