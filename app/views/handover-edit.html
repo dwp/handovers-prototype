@@ -149,23 +149,10 @@
                 </div>
                 <br>
                 <div class="grid-row">
-                    {% if handover.status === 'Withdrawn' or handover.status === 'Done' %}
                     <div class="column-half">
                         <legend class="form-label-bold">Callback required ?</legend>
                         <p>{{ handover.callback }}</p>
-                        <p>Cannot be changed as handover status is {{ handover.status }}</p>
                     </div>
-                    {% else %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Callback required ?</legend>
-                        <select class="select form-control" name="callback-req" id="callback-req">
-                            <option value="">Select</option>
-                            <option value="Yes" {{ 'selected' if handover.callback === "Yes" else ''}}>Yes</option>
-                            <option value="No" {{ 'selected' if handover.callback === "No" else ''}}>No</option>
-                        </select>
-                    </div>
-                    {% endif %}
-
                     {% if editOrCreate === "edit" %}
                         <div class="column-half">
                             <legend class="form-label-bold">Status</legend>
@@ -226,7 +213,7 @@
                         <legend class="form-label-bold">Did this update result from customer contact ?</legend>
                         <fieldset class="inline">
                             <div class="multiple-choice">
-                                <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No">
+                                <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
                                 <label for="handover-contact-no">No</label>
                             </div>
                             <div class="multiple-choice">
