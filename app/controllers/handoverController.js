@@ -277,11 +277,7 @@ function editHandoverPageAction(req, res) {
     let targetDateAndTime = new Date(handover.targetDateAndTime);
     let claimant = req.session.claimant;
     let handoverIndex = commonUtils.findPositionOfObjectInArray(handover.id, handoversList);
-    let callback = req.body['callback-req'];
     let editedDate = new Date();
-    if (callback === 'Yes') {
-        targetDateAndTime.setHours(targetDateAndTime.getHours() + 3);
-    }
 
     editedHandover.id = handover.id
     editedHandover.nino = handover.nino;
@@ -298,15 +294,10 @@ function editHandoverPageAction(req, res) {
 
     editedHandover.typeId = req.body['handover-type'] || handover.typeId;
     editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
-    editedHandover.callback = callback || handover.callback;
+    editedHandover.callback = handover.callback;
     editedHandover.status = req.body['handover-status'] || handover.status;
     editedHandover.dateAndTimeRaised = dateAndTimeRaised;
     editedHandover.targetDateAndTime = targetDateAndTime;
-
-    if (editedHandover.callback === 'Yes') {
-        editedHandover.targetDateAndTime.setHours(editedHandover.dateAndTimeRaised.getHours() + 3);
-    }
-
     editedHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(dateAndTimeRaised);
     editedHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(targetDateAndTime);
 
