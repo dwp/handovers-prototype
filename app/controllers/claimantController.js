@@ -59,8 +59,11 @@ function claimantCreatePage(req, res) {
     let editOrCreate = 'create';
     let claimant = {};
     claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
+    let officesList = sIDU.setInitialOfficesData();
     res.render('claimant-edit', { claimant : claimant,
-                                  editOrCreate : editOrCreate}
+                                  editOrCreate : editOrCreate,
+                                  officesList : officesList
+        }
     );
 }
 
@@ -74,6 +77,7 @@ function claimantCreatePageAction(req, res) {
     newClaimant.dob = req.body['dob'];
     newClaimant.nino = req.body['nino'];
     newClaimant.preferredContactNumber = req.body['prefContNum'];
+    newClaimant.claimantOfficeId = req.body['claimant-office'];
     newClaimant.emailAddress = req.body['emailAddr'];
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
@@ -113,7 +117,8 @@ function claimantEditPage(req, res) {
     res.render('claimant-edit', { claimant : claimant,
                                   claimantOfficeDetails : claimantOfficeDetails,
                                   editOrCreate : editOrCreate,
-                                    approvedRep : approvedRep }
+                                  approvedRep : approvedRep
+        }
     );
 
 }
