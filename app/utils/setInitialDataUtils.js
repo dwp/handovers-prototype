@@ -156,6 +156,7 @@ function setInitialHandoverNotesData() {
         handoverNote.handoverId = handoverNotesList[i].handoverId;
         handoverNote.dateNoteAdded = new Date(handoverNotesList[i].dateNoteAdded);
         handoverNote.userWhoAddedNote = parseInt(handoverNotesList[i].userWhoAddedNote);
+        handoverNote.updateResultedFromCustomerContactIndicator = handoverNotesList[i].updateResultedFromCustomerContactIndicator;
         handoverNote.noteContent = handoverNotesList[i].noteContent;
         initialHandoverNotes.unshift(handoverNote);
     }

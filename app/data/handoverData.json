@@ -129,18 +129,21 @@
       "handoverId" : "1",
       "dateNoteAdded": "2017-10-31T12:57:39.379Z",
       "userWhoAddedNote" : "40001001",
+      "updateResultedFromCustomerContactIndicator" : "Yes",
       "noteContent": "Claimant called for progress update as had not heard from own office since calling on 17th October"
     }, {
       "id": "2",
       "handoverId": "1",
       "dateNoteAdded": "2017-10-24T12:57:39.379Z",
       "userWhoAddedNote": "40001002",
+      "updateResultedFromCustomerContactIndicator" : "No",
       "noteContent": "Claimant called and asked to be called on his mobile telephone number"
     }, {
       "id" : "1",
       "handoverId" : "1",
       "dateNoteAdded": "2017-10-17T12:57:39.379Z",
       "userWhoAddedNote" : "40001000",
+      "updateResultedFromCustomerContactIndicator" : "Yes",
       "noteContent" : "Claimant could not contact own office"
     }
   ]
