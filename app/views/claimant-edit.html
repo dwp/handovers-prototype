@@ -9,7 +9,7 @@
             <form action="/claimant/edit" method="POST" class="form">
         {% else %}
             <h1 class="heading-large">Create new claimant</h1>
-            <form action="/handover/create" method="POST" class="form">
+            <form action="/claimant/create" method="POST" class="form">
         {% endif %}
             <div class="form-group">
                 <div class="grid-row">
@@ -29,6 +29,20 @@
                             <div>
                                 <p>{{ claimantOfficeDetails.officeName }}</p>
                             </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="column-half">
+                        <div class="form-group">
+                            <legend class="form-label-bold">Home jobcentre</legend>
+                            <select class="select form-control" name="claimant-office" id="claimant-office">
+                                <option value="">Select</option>
+                                {% for office in officesList %}
+                                    {% if office.officeTypeId === 1 %}
+                                        <option value="{{ office.id }}">{{ office.officeName }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     {% endif %}
