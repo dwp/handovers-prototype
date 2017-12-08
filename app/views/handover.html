@@ -103,6 +103,9 @@
                         {% if handoverNotes %}
                             {% for note in handoverNotes %}
                                 <p>{{ note.noteContent }}</p>
+                                {% if note.updateResultedFromCustomerContactIndicator === 'Yes' %}
+                                    <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Update resulted from contact with customer</p>
+                                {% endif %}
                                 <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                     (added by {{ note.userWhoAddedNote.firstName }} {{ note.userWhoAddedNote.lastName }}
                                       on {{ note.dateNoteAdded.day }} {{ note.dateNoteAdded.month }} {{ note.dateNoteAdded.year }}
@@ -113,7 +116,6 @@
                         {% endif %}
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="grid-row">
                         <input type="submit" class="button" value="Edit handover">

@@ -52,6 +52,7 @@ function viewHandoverPage(req, res) {
                 id: handover.notes[i].id,
                 dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
                 userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
+                updateResultedFromCustomerContactIndicator: handover.notes[i].updateResultedFromCustomerContactIndicator,
                 noteContent: handover.notes[i].noteContent
             }
             handoverNotes.push(handoverNote);
@@ -138,6 +139,7 @@ function createHandoverPageAction(req, res) {
     let newDate = new Date();
     let newHandoversList = handoversList;
     let handoverNote = req.body['handover-note'];
+    let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
     let claimant = req.session.claimant;
     let newId = handoversList.length + 1;
 
@@ -176,6 +178,7 @@ function createHandoverPageAction(req, res) {
         newHandoverNote.handoverId = newHandover.id;
         newHandoverNote.dateNoteAdded = newDate;
         newHandoverNote.userWhoAddedNote = newHandover.staffId;
+        newHandoverNote.updateResultedFromCustomerContactIndicator = updateResultedFromCustomerContactIndicator;
         newHandoverNote.noteContent = handoverNote;
         newHandover.notes.push(newHandoverNote);
     }
@@ -230,6 +233,7 @@ function editHandoverPage(req, res) {
                 id: handover.notes[i].id,
                 dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
                 userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
+                updateResultedFromCustomerContactIndicator: handover.notes[i].updateResultedFromCustomerContactIndicator,
                 noteContent: handover.notes[i].noteContent
             }
             handoverNotes.push(handoverNote);
@@ -268,6 +272,7 @@ function editHandoverPageAction(req, res) {
     let newHandoverNotes = [];
     let handoverNote = req.body['handover-note'];
     let editedHandoverNote = new Object();
+    let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
     let dateAndTimeRaised = new Date(handover.dateAndTimeRaised);
     let targetDateAndTime = new Date(handover.targetDateAndTime);
     let claimant = req.session.claimant;
@@ -311,6 +316,7 @@ function editHandoverPageAction(req, res) {
         editedHandoverNote.handoverId = handover.id;
         editedHandoverNote.dateNoteAdded = editedDate;
         editedHandoverNote.userWhoAddedNote = editedHandover.staffId;
+        editedHandoverNote.updateResultedFromCustomerContactIndicator = updateResultedFromCustomerContactIndicator;
         editedHandoverNote.noteContent = handoverNote;
         if (handover.notes === null) {
             editedHandoverNote.id = "1";
