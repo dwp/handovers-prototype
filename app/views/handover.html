@@ -4,6 +4,9 @@
 
 <main id="content" role="main">
     <div class="main-content">
+        {% if message %}
+            {% include "includes/message-banner.html" %}
+        {% endif %}
         <h1 class="heading-large">View handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
         <form action="/handover/view" method="POST" class="form">
             <div class="form-group">

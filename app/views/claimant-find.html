@@ -3,6 +3,9 @@
 {% block content %}
 <main id="content" role="main">
     <div class="main-content">
+        {% if message %}
+            {% include "includes/message-banner.html" %}
+        {% endif %}
         <div class="grid-row">
             <div class="column-full">
                 <div class="search-box-container">

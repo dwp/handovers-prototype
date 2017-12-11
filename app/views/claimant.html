@@ -4,6 +4,11 @@
 
 <main id="content" role="main">
     <div class="main-content">
+
+        {% if message %}
+            {% include "includes/message-banner.html" %}
+        {% endif %}
+
         <h1 class="heading-large">View claimant details for {{ firstName }} {{ lastName }}</h1>
         <br>
         <div>
