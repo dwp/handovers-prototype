@@ -144,9 +144,18 @@ function claimantCreatePageAction(req, res) {
     } else {
         newClaimant.language = req.body['language'];
     }
-    newClaimant.approvedRepName = req.body['rep-name'];
-    newClaimant.approvedRepContact = req.body['rep-contact'];
-
+    newClaimant.approvedRep = req.body['approved-rep'];
+    if (newClaimant.approvedRep === "Yes") {
+        if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
+            messagesOut.push("Enter both name and contact details for approved representative, or select 'No'");
+        } else {
+            newClaimant.approvedRepName = req.body['rep-name'];
+            newClaimant.approvedRepContact = req.body['rep-contact'];
+        }
+    } else {
+        newClaimant.approvedRepName = "";
+        newClaimant.approvedRepContact = "";
+    }
     if (messagesOut.length === 0) {
         newClaimant.dob = new Date(year + '-' + month + '-' + day);
         req.session.claimant = newClaimant;
@@ -184,18 +193,12 @@ function claimantEditPage(req, res) {
     }
     let officesList = sIDU.setInitialOfficesData();
     let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
-    let approvedRep;
-    if (claimant.approvedRepName === "" || claimant.approvedRepName === null || !claimant.approvedRepName) {
-        approvedRep = 0;
-    } else {
-        approvedRep = 1;
-    }
+
     req.session.claimant = claimant;
 
     res.render('claimant-edit', { claimant : claimant,
                                   claimantOfficeDetails : claimantOfficeDetails,
                                   editOrCreate : editOrCreate,
-                                  approvedRep : approvedRep,
                                   messages : messagesIn,
                                   messagesLength : messagesIn.length
 
@@ -251,9 +254,19 @@ function claimantEditPageAction(req, res) {
     } else {
         editedClaimant.language = req.body['language'];
     }
-    editedClaimant.approvedRepName = req.body['rep-name'];
-    editedClaimant.approvedRepContact = req.body['rep-contact'];
 
+    editedClaimant.approvedRep = req.body['approved-rep'];
+    if (editedClaimant.approvedRep === "Yes") {
+        if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
+            messagesOut.push("Enter both name and contact details for approved representative, or select 'No'");
+        } else {
+            editedClaimant.approvedRepName = req.body['rep-name'];
+            editedClaimant.approvedRepContact = req.body['rep-contact'];
+        }
+    } else {
+        editedClaimant.approvedRepName = "";
+        editedClaimant.approvedRepContact = "";
+    }
     req.session.claimants = claimants;
 
     if (messagesOut.length === 0) {

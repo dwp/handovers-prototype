@@ -45,7 +45,7 @@
                                 <option value="">Select</option>
                                 {% for office in officesList %}
                                     {% if office.officeTypeId === 1 %}
-                                        <option value="{{ office.id }}">{{ office.officeName }}</option>
+                                        <option value="{{ office.id }}" {{ 'selected' if claimant.claimantOfficeId == office.id else ''}}>{{ office.officeName }}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
@@ -175,11 +175,11 @@
                             <legend class="form-label-bold">Does the customer have an approved representative ?</legend>
                             <fieldset class="inline">
                                 <div class="multiple-choice">
-                                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No" {% if approvedRep === 0 or editOrCreate === 'create' %} checked="checked" {% endif %}>
+                                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No" {% if claimant.approvedRep === "No" or editOrCreate === 'create' %} checked="checked" {% endif %}>
                                     <label for="approved-rep-no">No</label>
                                 </div>
                                 <div class="multiple-choice" data-target="approved-rep-group">
-                                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" {% if approvedRep === 1 %} checked="checked" {% endif %}>
+                                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" {% if claimant.approvedRep === "Yes" %} checked="checked" {% endif %}>
                                     <label for="approved-rep-yes">Yes</label>
                                 </div>
                             </fieldset>

@@ -12,6 +12,7 @@
       "welshSpeaker": "Yes",
       "translator" : "No",
       "language" : "",
+      "approvedRep" : "Yes",
       "approvedRepName" : "Angela Brown",
       "approvedRepContact" : "Please contact on 01234 567891"
     },
@@ -26,6 +27,7 @@
       "welshSpeaker": "No",
       "translator" : "No",
       "language" : "",
+      "approvedRep" : "No",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -40,6 +42,7 @@
       "welshSpeaker": "Yes",
       "translator" : "No",
       "language" : "",
+      "approvedRep" : "No",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -54,6 +57,7 @@
       "welshSpeaker": "No",
       "translator" : "Yes",
       "language" : "Polish",
+      "approvedRep" : "No",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -68,6 +72,7 @@
       "welshSpeaker": "Yes",
       "translator" : "Yes",
       "language" : "German",
+      "approvedRep" : "No",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     }]
