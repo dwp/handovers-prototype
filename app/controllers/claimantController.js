@@ -118,6 +118,12 @@ function claimantCreatePageAction(req, res) {
         newClaimant.lastName = req.body['lastName'];
     }
 
+    if (req.body['postcode'] === "") {
+        messagesOut.push("Postcode must be entered");
+    } else {
+        newClaimant.postcode = req.body['postcode'];
+    }
+
     if (!day || day < 1 || day > 31) {
         messagesOut.push("Day of birth must be from 1 to 31");
     }
@@ -232,6 +238,11 @@ function claimantEditPageAction(req, res) {
         editedClaimant.lastName = req.body['lastName'];
     }
 
+    if (req.body['postcode'] === "") {
+        messagesOut.push("Postcode must be entered");
+    } else {
+        editedClaimant.postcode = req.body['postcode'];
+    }
     if (!day || day < 1 || day > 31) {
         messagesOut.push("Day of birth must be from 1 to 31");
     }
