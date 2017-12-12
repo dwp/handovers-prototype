@@ -19,6 +19,7 @@ function getClaimantByNinoFromListOfClaimants(claimantsList, nino) {
                 "welshSpeaker" : claimant.welshSpeaker,
                 "translator" : claimant.translator,
                 "language" : claimant.language,
+                "approvedRep" : claimant.approvedRep,
                 "approvedRepName" : claimant.approvedRepName,
                 "approvedRepContact" : claimant.approvedRepContact
               }

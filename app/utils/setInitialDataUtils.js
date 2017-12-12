@@ -31,6 +31,7 @@ function setInitialClaimantsData() {
         claimant.welshSpeaker = claimantsList[i].welshSpeaker;
         claimant.language = claimantsList[i].language;
         claimant.translator = claimantsList[i].translator;
+        claimant.approvedRep = claimantsList[i].approvedRep;
         claimant.approvedRepName = claimantsList[i].approvedRepName;
         claimant.approvedRepContact = claimantsList[i].approvedRepContact;
         initialClaimants.push(claimant);

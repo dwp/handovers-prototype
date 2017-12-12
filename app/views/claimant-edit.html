@@ -45,7 +45,7 @@
                                 <option value="">Select</option>
                                 {% for office in officesList %}
                                     {% if office.officeTypeId === 1 %}
-                                        <option value="{{ office.id }}">{{ office.officeName }}</option>
+                                        <option value="{{ office.id }}" {{ 'selected' if claimant.claimantOfficeId == office.id else ''}}>{{ office.officeName }}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
@@ -96,7 +96,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">Postcode</legend>
                             <div>
-                                <input type="text" class="form-control" id="postcode" name="postcode" value="{{ claimant.postcode }}">
+                                <input type="text" class="form-control" id="postcode" name="postcode" pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}" value="{{ claimant.postcode }}">
                             </div>
                         </div>
                     </div>
@@ -106,8 +106,9 @@
                     <div class="column-half">
                         <div class="form-group">
                             <legend class="form-label-bold">Preferred contact number</legend>
+                            <p class="form-hint">Enter 0-9 and spaces only</p>
                             <div>
-                                <input type="text" class="form-control" id="prefContNum" name="prefContNum" value="{{ claimant.preferredContactNumber }}">
+                                <input type="text" class="form-control" id="prefContNum" name="prefContNum" pattern="[0-9 ]*" value="{{ claimant.preferredContactNumber }}">
                             </div>
                         </div>
                     </div>
@@ -115,7 +116,7 @@
                         <div class="form-group">
                             <legend class="form-label-bold">Email address</legend>
                             <div>
-                                <input type="text" class="form-control" id="emailAddr" name="emailAddr" value="{{ claimant.emailAddress }}">
+                                <input type="email" class="form-control" id="emailAddr" name="emailAddr" value="{{ claimant.emailAddress }}">
                             </div>
                         </div>
                     </div>
@@ -174,11 +175,11 @@
                             <legend class="form-label-bold">Does the customer have an approved representative ?</legend>
                             <fieldset class="inline">
                                 <div class="multiple-choice">
-                                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No" {% if approvedRep === 0 or editOrCreate === 'create' %} checked="checked" {% endif %}>
+                                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No" {% if claimant.approvedRep === "No" or editOrCreate === 'create' %} checked="checked" {% endif %}>
                                     <label for="approved-rep-no">No</label>
                                 </div>
                                 <div class="multiple-choice" data-target="approved-rep-group">
-                                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" {% if approvedRep === 1 %} checked="checked" {% endif %}>
+                                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" {% if claimant.approvedRep === "Yes" %} checked="checked" {% endif %}>
                                     <label for="approved-rep-yes">Yes</label>
                                 </div>
                             </fieldset>
