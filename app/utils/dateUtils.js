@@ -1,12 +1,13 @@
 
 function formatDateAndTimeForDisplay(date) {
 
-    var inputDate = new Date(date);
-    var displayDay = inputDate.getDate();
-    var displayMonth = getMonthForDisplay(inputDate.getMonth());
-    var displayYear = inputDate.getFullYear();
-    var displayHours = inputDate.getHours();
-    var mins = inputDate.getMinutes();
+    let inputDate = new Date(date);
+    let displayDay = inputDate.getDate();
+    let displayMonth = getMonthForDisplay(inputDate.getMonth());
+    let displayNumericMonth = getNumericMonth(inputDate.getMonth());
+    let displayYear = inputDate.getFullYear();
+    let displayHours = inputDate.getHours();
+    let mins = inputDate.getMinutes();
     let displayMins;
     if (mins < 10) {
         displayMins = "0" + mins;
@@ -14,9 +15,10 @@ function formatDateAndTimeForDisplay(date) {
         displayMins = mins;
     }
 
-    var dateAndTimeForDisplay = {
+    let dateAndTimeForDisplay = {
         "day"  : displayDay,
         "month": displayMonth,
+        "numericMonth" : displayNumericMonth,
         "year" : displayYear,
         "hours": displayHours,
         "mins" : displayMins
@@ -26,7 +28,7 @@ function formatDateAndTimeForDisplay(date) {
 }
 
 function getNumericMonth(monthIn) {
-    var monthOut = new Array()
+    let monthOut = new Array()
     monthOut[0] = '01';
     monthOut[1] = '02';
     monthOut[2] = '03';
@@ -64,3 +66,5 @@ function getMonthForDisplay(monthIn) {
 }
 
 module.exports.formatDateAndTimeForDisplay = formatDateAndTimeForDisplay;
+module.exports.getNumericMonth = getNumericMonth;
+module.exports.getMonthForDisplay = getMonthForDisplay;

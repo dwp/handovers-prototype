@@ -5,7 +5,9 @@
 <main id="content" role="main">
     <div class="main-content">
 
-        {% if message %}
+        {% if messagesLength === 0 %}
+            <p></p>
+        {% else %}
             {% include "includes/message-banner.html" %}
         {% endif %}
 
@@ -55,7 +57,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Date of birth</legend>
                         <div>
-                            <p>{{ claimant.dob }}</p>
+                            <p>{{ claimant.birthDay }} {{ claimant.birthMonth }} {{ claimant.birthYear }}</p>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,9 @@
 <div class="grid-row">
     <div class="column-full">
         <div class="panel panel-border-wide alert-default">
-            <p>Message goes here</p>
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
         </div>
     </div>
 </div>

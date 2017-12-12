@@ -1,6 +1,7 @@
 const sIDU = require('../utils/setInitialDataUtils');
 const officeUtils = require('../utils/officeUtils');
 const claimantUtils = require('../utils/claimantUtils');
+const dateUtils = require('../utils/dateUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Claimant Controllers
@@ -10,19 +11,6 @@ const claimantUtils = require('../utils/claimantUtils');
 function claimantFindPage(req, res) {
 
     res.render('claimant-find');
-}
-
-function claimantViewPage(req, res) {
-
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let claimant = req.session.claimant ? req.session.claimant : claimants[0];
-    let officesList = sIDU.setInitialOfficesData();
-    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
-
-    res.render('claimant', {
-        claimant : claimant,
-        claimantOfficeDetails : claimantOfficeDetails
-    });
 }
 
 function claimantFindPageAction(req, res) {
@@ -54,15 +42,55 @@ function claimantFindPageAction(req, res) {
 
 }
 
+function claimantViewPage(req, res) {
+
+    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let messagesIn = req.session.messages ? req.session.messages : [];
+    let claimant;
+    let sessionClaimant;
+    if (messagesIn.length === 0) {
+        sessionClaimant = req.session.claimant ? req.session.claimant : claimants[0];
+        let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : sessionClaimant.nino;
+        claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
+        let displayDate = dateUtils.formatDateAndTimeForDisplay(claimant.dob);
+        claimant.birthDay = parseInt(displayDate.day);
+        claimant.birthMonth = displayDate.month;
+        claimant.birthYear = parseInt(displayDate.year);
+    } else {
+        if(req.session.editedClaimant) {
+            claimant = req.session.editedClaimant;
+        } else {
+            claimant = req.session.newClaimant;
+        }
+    }
+
+    let officesList = sIDU.setInitialOfficesData();
+    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
+    res.render('claimant', {
+        claimant : claimant,
+        claimantOfficeDetails : claimantOfficeDetails,
+        messages : messagesIn,
+        messagesLength : messagesIn.length
+    });
+}
+
 function claimantCreatePage(req, res) {
 
     let editOrCreate = 'create';
     let claimant = {};
-    claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
+    let messagesIn = req.session.messages ? req.session.messages : [];
+    if (req.session.newClaimant) {
+        claimant = req.session.newClaimant;
+    } else {
+        claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
+    }
     let officesList = sIDU.setInitialOfficesData();
+
     res.render('claimant-edit', { claimant : claimant,
                                   editOrCreate : editOrCreate,
-                                  officesList : officesList
+                                  officesList : officesList,
+                                  messages : messagesIn,
+                                  messagesLength : messagesIn.length
         }
     );
 }
@@ -71,13 +99,32 @@ function claimantCreatePageAction(req, res) {
 
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let newClaimant = new Object();
+    let year = req.body['birthYear'];
+    let month = req.body['birthMonth'];
+    let day = req.body['birthDay'];
+    let messagesOut = [];
+    let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+
+    if (!day || day < 1 || day > 31) {
+        messagesOut.push("Day of birth must be from 1 to 31");
+    }
+    if (!month || month < 1 || month > 12) {
+        messagesOut.push("Month of birth must be from 1 to 12");
+    }
+    if (!year || year < 1900 || year > currentYear) {
+        messagesOut.push("Year of birth must be from 1900 to " + currentYear);
+    }
 
     newClaimant.firstName = req.body['firstName'];
     newClaimant.lastName = req.body['lastName'];
-    newClaimant.dob = req.body['dob'];
     newClaimant.nino = req.body['nino'];
     newClaimant.preferredContactNumber = req.body['prefContNum'];
-    newClaimant.claimantOfficeId = req.body['claimant-office'];
+    if (req.body['claimant-office'] === ""){
+        messagesOut.push("Home jobcentre must be selected from dropdown list");
+    } else {
+        newClaimant.claimantOfficeId = req.body['claimant-office'];
+    }
     newClaimant.emailAddress = req.body['emailAddr'];
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
@@ -89,20 +136,42 @@ function claimantCreatePageAction(req, res) {
     }
     newClaimant.approvedRepName = req.body['rep-name'];
     newClaimant.approvedRepContact = req.body['rep-contact'];
-    claimants.push(newClaimant);
-    req.session.claimant = newClaimant;
-    req.session.claimants = claimants;
 
-    res.redirect('/claimant/view');
-
+    if (messagesOut.length === 0) {
+        newClaimant.dob = new Date(year + '-' + month + '-' + day);
+        req.session.claimant = newClaimant;
+        claimants.push(newClaimant);
+        req.session.claimants = claimants;
+        req.session.messages = [];
+        res.redirect('/claimant/view');
+    } else {
+        newClaimant.birthDay = day;
+        newClaimant.birthMonth = month;
+        newClaimant.birthYear = year;
+        req.session.newClaimant = newClaimant;
+        req.session.messages = messagesOut;
+        res.redirect('/claimant/create');
+    }
 }
 
 function claimantEditPage(req, res) {
 
     let editOrCreate = 'edit';
+    let messagesIn = req.session.messages ? req.session.messages : [];
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : claimants[0].nino;
-    let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
+    let sessionClaimant = {};
+    let claimant;
+    if (messagesIn.length === 0) {
+        sessionClaimant = req.session.claimant ? req.session.claimant : claimants[0];
+        let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : sessionClaimant.nino;
+        claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
+        let displayDate = dateUtils.formatDateAndTimeForDisplay(claimant.dob);
+        claimant.birthDay = parseInt(displayDate.day);
+        claimant.birthMonth = displayDate.numericMonth;
+        claimant.birthYear = parseInt(displayDate.year);
+    } else {
+        claimant = req.session.editedClaimant;
+    }
     let officesList = sIDU.setInitialOfficesData();
     let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
     let approvedRep;
@@ -111,13 +180,15 @@ function claimantEditPage(req, res) {
     } else {
         approvedRep = 1;
     }
-
     req.session.claimant = claimant;
 
     res.render('claimant-edit', { claimant : claimant,
                                   claimantOfficeDetails : claimantOfficeDetails,
                                   editOrCreate : editOrCreate,
-                                  approvedRep : approvedRep
+                                  approvedRep : approvedRep,
+                                  messages : messagesIn,
+                                  messagesLength : messagesIn.length
+
         }
     );
 
@@ -129,10 +200,27 @@ function claimantEditPageAction(req, res) {
     let claimant = req.session.claimant;
     let editedClaimant = new Object();
 
+    let year = req.body['birthYear'];
+    let month = req.body['birthMonth'];
+    let day = req.body['birthDay'];
+    let messagesOut = [];
+    let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+
+    if (!day || day < 1 || day > 31) {
+        messagesOut.push("Day of birth must be from 1 to 31");
+    }
+    if (!month || month < 1 || month > 12) {
+        messagesOut.push("Month of birth must be from 1 to 12");
+    }
+    if (!year || year < 1900 || year > currentYear) {
+        messagesOut.push("Year of birth must be from 1900 to " + currentYear);
+    }
+
     editedClaimant.firstName = req.body['firstName'];
     editedClaimant.lastName = req.body['lastName'];
-    editedClaimant.dob = req.body['dob'];
     editedClaimant.nino = claimant.nino;
+    editedClaimant.claimantOfficeId = req.body['claimant-office'];
     editedClaimant.preferredContactNumber = req.body['prefContNum'];
     editedClaimant.emailAddress = req.body['emailAddr'];
     editedClaimant.postcode = req.body['postcode'];
@@ -145,18 +233,29 @@ function claimantEditPageAction(req, res) {
     }
     editedClaimant.approvedRepName = req.body['rep-name'];
     editedClaimant.approvedRepContact = req.body['rep-contact'];
-    claimants.push(editedClaimant);
-    req.session.claimant = editedClaimant;
+
     req.session.claimants = claimants;
 
-    res.redirect('/claimant/view');
-
-
+    if (messagesOut.length === 0) {
+        editedClaimant.dob = new Date(year + '-' + month + '-' + day);
+        req.session.claimant = editedClaimant;
+        claimants.push(editedClaimant);
+        req.session.claimants = claimants;
+        req.session.messages = messagesOut;
+        res.redirect('/claimant/view');
+    } else {
+        editedClaimant.birthDay = day;
+        editedClaimant.birthMonth = month;
+        editedClaimant.birthYear = year;
+        req.session.editedClaimant = editedClaimant;
+        req.session.messages = messagesOut;
+        res.redirect('/claimant/edit');
+    }
 }
 
 module.exports.claimantFindPage = claimantFindPage;
-module.exports.claimantViewPage = claimantViewPage;
 module.exports.claimantFindPageAction = claimantFindPageAction;
+module.exports.claimantViewPage = claimantViewPage;
 module.exports.claimantCreatePage = claimantCreatePage;
 module.exports.claimantCreatePageAction = claimantCreatePageAction;
 module.exports.claimantEditPage = claimantEditPage;

@@ -19,9 +19,10 @@ function setInitialClaimantsData() {
     let initialClaimants = [];
     for (let i=0; i < claimantsList.length; i++) {
         let claimant = new Object();
+        let dob = new Date(claimantsList[i].dob);
         claimant.firstName = claimantsList[i].firstName;
         claimant.lastName = claimantsList[i].lastName;
-        claimant.dob = claimantsList[i].dob;
+        claimant.dob = dob;
         claimant.nino = claimantsList[i].nino;
         claimant.preferredContactNumber = claimantsList[i].preferredContactNumber;
         claimant.emailAddress = claimantsList[i].emailAddress;
