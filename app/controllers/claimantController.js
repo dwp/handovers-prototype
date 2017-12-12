@@ -116,8 +116,18 @@ function claimantCreatePageAction(req, res) {
         messagesOut.push("Year of birth must be from 1900 to " + currentYear);
     }
 
-    newClaimant.firstName = req.body['firstName'];
-    newClaimant.lastName = req.body['lastName'];
+    if (req.body['firstName'] === "") {
+        messagesOut.push("First name must be entered");
+    } else {
+        newClaimant.firstName = req.body['firstName'];
+    }
+
+    if (req.body['lastName'] === "") {
+        messagesOut.push("Last name must be entered");
+    } else {
+        newClaimant.lastName = req.body['lastName'];
+    }
+
     newClaimant.nino = req.body['nino'];
     newClaimant.preferredContactNumber = req.body['prefContNum'];
     if (req.body['claimant-office'] === ""){
