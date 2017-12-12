@@ -54,10 +54,14 @@ function claimantViewPage(req, res) {
         claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
         let displayDate = dateUtils.formatDateAndTimeForDisplay(claimant.dob);
         claimant.birthDay = parseInt(displayDate.day);
-        claimant.birthMonth = displayDate.numericMonth;
+        claimant.birthMonth = displayDate.month;
         claimant.birthYear = parseInt(displayDate.year);
     } else {
-        claimant = req.session.editedClaimant;
+        if(req.session.editedClaimant) {
+            claimant = req.session.editedClaimant;
+        } else {
+            claimant = req.session.newClaimant;
+        }
     }
 
     let officesList = sIDU.setInitialOfficesData();
@@ -73,10 +77,15 @@ function claimantViewPage(req, res) {
 function claimantCreatePage(req, res) {
 
     let editOrCreate = 'create';
-    let claimant = req.session.newClaimant ? req.session.newClaimant : {};
+    let claimant = {};
     let messagesIn = req.session.messages ? req.session.messages : [];
-    claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
+    if (req.session.newClaimant) {
+        claimant = req.session.newClaimant;
+    } else {
+        claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
+    }
     let officesList = sIDU.setInitialOfficesData();
+
     res.render('claimant-edit', { claimant : claimant,
                                   editOrCreate : editOrCreate,
                                   officesList : officesList,
@@ -111,7 +120,11 @@ function claimantCreatePageAction(req, res) {
     newClaimant.lastName = req.body['lastName'];
     newClaimant.nino = req.body['nino'];
     newClaimant.preferredContactNumber = req.body['prefContNum'];
-    newClaimant.claimantOfficeId = req.body['claimant-office'];
+    if (req.body['claimant-office'] === ""){
+        messagesOut.push("Home jobcentre must be selected from dropdown list");
+    } else {
+        newClaimant.claimantOfficeId = req.body['claimant-office'];
+    }
     newClaimant.emailAddress = req.body['emailAddr'];
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
@@ -129,6 +142,7 @@ function claimantCreatePageAction(req, res) {
         req.session.claimant = newClaimant;
         claimants.push(newClaimant);
         req.session.claimants = claimants;
+        req.session.messages = [];
         res.redirect('/claimant/view');
     } else {
         newClaimant.birthDay = day;
@@ -206,6 +220,7 @@ function claimantEditPageAction(req, res) {
     editedClaimant.firstName = req.body['firstName'];
     editedClaimant.lastName = req.body['lastName'];
     editedClaimant.nino = claimant.nino;
+    editedClaimant.claimantOfficeId = req.body['claimant-office'];
     editedClaimant.preferredContactNumber = req.body['prefContNum'];
     editedClaimant.emailAddress = req.body['emailAddr'];
     editedClaimant.postcode = req.body['postcode'];
@@ -224,7 +239,6 @@ function claimantEditPageAction(req, res) {
     if (messagesOut.length === 0) {
         editedClaimant.dob = new Date(year + '-' + month + '-' + day);
         req.session.claimant = editedClaimant;
-        // req.session.editedClaimant = {};
         claimants.push(editedClaimant);
         req.session.claimants = claimants;
         req.session.messages = messagesOut;
