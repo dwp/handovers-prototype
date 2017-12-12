@@ -4,7 +4,9 @@
 
 <main id="content" role="main">
     <div class="main-content">
-        {% if messages %}
+        {% if messagesLength === 0 %}
+            <p></p>
+        {% else %}
             {% include "includes/message-banner.html" %}
         {% endif %}
         {% if editOrCreate === 'edit' %}
