@@ -106,16 +106,6 @@ function claimantCreatePageAction(req, res) {
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
-    if (!day || day < 1 || day > 31) {
-        messagesOut.push("Day of birth must be from 1 to 31");
-    }
-    if (!month || month < 1 || month > 12) {
-        messagesOut.push("Month of birth must be from 1 to 12");
-    }
-    if (!year || year < 1900 || year > currentYear) {
-        messagesOut.push("Year of birth must be from 1900 to " + currentYear);
-    }
-
     if (req.body['firstName'] === "") {
         messagesOut.push("First name must be entered");
     } else {
@@ -126,6 +116,16 @@ function claimantCreatePageAction(req, res) {
         messagesOut.push("Last name must be entered");
     } else {
         newClaimant.lastName = req.body['lastName'];
+    }
+
+    if (!day || day < 1 || day > 31) {
+        messagesOut.push("Day of birth must be from 1 to 31");
+    }
+    if (!month || month < 1 || month > 12) {
+        messagesOut.push("Month of birth must be from 1 to 12");
+    }
+    if (!year || year < 1900 || year > currentYear) {
+        messagesOut.push("Year of birth must be from 1900 to " + currentYear);
     }
 
     newClaimant.nino = req.body['nino'];
@@ -217,16 +217,6 @@ function claimantEditPageAction(req, res) {
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
-    if (!day || day < 1 || day > 31) {
-        messagesOut.push("Day of birth must be from 1 to 31");
-    }
-    if (!month || month < 1 || month > 12) {
-        messagesOut.push("Month of birth must be from 1 to 12");
-    }
-    if (!year || year < 1900 || year > currentYear) {
-        messagesOut.push("Year of birth must be from 1900 to " + currentYear);
-    }
-
     if (req.body['firstName'] === "") {
         messagesOut.push("First name must be entered");
     } else {
@@ -237,6 +227,16 @@ function claimantEditPageAction(req, res) {
         messagesOut.push("Last name must be entered");
     } else {
         editedClaimant.lastName = req.body['lastName'];
+    }
+
+    if (!day || day < 1 || day > 31) {
+        messagesOut.push("Day of birth must be from 1 to 31");
+    }
+    if (!month || month < 1 || month > 12) {
+        messagesOut.push("Month of birth must be from 1 to 12");
+    }
+    if (!year || year < 1900 || year > currentYear) {
+        messagesOut.push("Year of birth must be from 1900 to " + currentYear);
     }
 
     editedClaimant.nino = claimant.nino;
