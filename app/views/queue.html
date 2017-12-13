@@ -25,6 +25,9 @@
                         <th scope="col">Date/time raised</th>
                         <th scope="col">Callback reqd?</th>
                         <th scope="col">Status</th>
+                        {% if queueType === "office" %}
+                            <th scope="col">Being progressed by</th>
+                        {% endif %}
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -38,6 +41,9 @@
                         <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
                         <td>{{handover.callback}}</td>
                         <td>{{handover.status}}</td>
+                        {% if queueType === "office" %}
+                            <td>{{ handover.inQueueOfStaffId}}</td>
+                        {% endif %}
                         <td>{{handoverUpdateLink(handover)}}</td>
                     </tr>
                     {% endfor %}
