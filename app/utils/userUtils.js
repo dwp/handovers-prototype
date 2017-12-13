@@ -43,7 +43,7 @@ function getUserByStaffIdFromListOfUsers(listOfUsers, staffId) {
     }
 
     if (userFound === false) {
-        console.log("User with staff id: " + staffId + " was not found in the provided list of users");
+        console.log("In userUtils: User with staff id: " + staffId + " was not found");
     } else {
         return user;
     }

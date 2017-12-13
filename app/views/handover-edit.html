@@ -32,15 +32,24 @@
                 </div>
                 <br>
                 <div class="grid-row">
-                    <div class="column-half">
-                        <legend class="form-label-bold">Handover raised by:</legend>
-                        <div>
-                            <p>{{ user.firstName }} {{ user.lastName }} in {{ user.officeDetails.officeName }} {{ user.officeDetails.officeType}}</p>
+                    {% if editOrCreate === 'edit' %}
+                        <div class="column-half">
+                            <legend class="form-label-bold">Handover raised by:</legend>
+                            <div>
+                                <p>{{ userWhoRaisedHandover.firstName }} {{ userWhoRaisedHandover.lastName }} in {{ userWhoRaisedHandover.officeDetails.officeName }} {{ userWhoRaisedHandover.officeDetails.officeType}}</p>
+                            </div>
                         </div>
-                    </div>
+                    {% else %}
+                        <div class="column-half">
+                            <legend class="form-label-bold">Handover raised by:</legend>
+                            <div>
+                                <p>{{ user.firstName }} {{ user.lastName }} in {{ user.officeDetails.officeName }} {{ user.officeDetails.officeType}}</p>
+                            </div>
+                        </div>
+                    {% endif %}
                     {% if editOrCreate === 'create' %}
-                    <div class="column-half">
-                    </div>
+                        <div class="column-half">
+                        </div>
                     {% else %}
                     <div class="column-half">
                         <legend class="form-label-bold">Date and time raised</legend>
@@ -152,10 +161,26 @@
                 </div>
                 <br>
                 <div class="grid-row">
+                    {% if editOrCreate === 'edit' %}
                     <div class="column-half">
                         <legend class="form-label-bold">Callback required ?</legend>
                         <p>{{ handover.callback }}</p>
                     </div>
+                    {% else %}
+                    <div class="column-half">
+                        <legend class="form-label-bold">Callback required ?</legend>
+                        <fieldset class="inline">
+                            <div class="multiple-choice">
+                                <input id="handover-callback-no" type="radio" name="handover-callback" value="No" checked="checked">
+                                <label for="handover-callback-no">No</label>
+                            </div>
+                            <div class="multiple-choice">
+                                <input id="handover-callback-yes" type="radio" name="handover-callback" value="Yes">
+                                <label for="handover-callback-yes">Yes</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    {% endif %}
                     {% if editOrCreate === "edit" %}
                         <div class="column-half">
                             <legend class="form-label-bold">Status</legend>

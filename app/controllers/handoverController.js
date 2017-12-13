@@ -39,9 +39,10 @@ function viewHandoverPage(req, res) {
         officeType : officeTypeName
     }
 
-    user.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, user.owningOfficeId);
-    let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
-    user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
+    let userWhoRaisedHandover = userUtils.getUserByStaffIdFromListOfUsers(users, handover.raisedByStaffId);
+    userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
+    let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
+    userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
     if (handover.notes === null) {
         handoverNotes = null;
@@ -74,6 +75,7 @@ function viewHandoverPage(req, res) {
         officeType : officeType,
         claimant : claimant,
         handover : handover,
+        userWhoRaisedHandover : userWhoRaisedHandover,
         user : user,
     });
 
@@ -136,6 +138,7 @@ function createHandoverPageAction(req, res) {
 
     let newHandover = new Object();
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
+    let users = sIDU.setInitialUsersData();
     let newDate = new Date();
     let newHandoversList = handoversList;
     let handoverNote = req.body['handover-note'];
@@ -145,8 +148,10 @@ function createHandoverPageAction(req, res) {
 
     newHandover.id = newId;
     newHandover.nino = claimant.nino;
-    newHandover.staffId = '40001001';
-    newHandover.raisedOnBehalfOfOfficeId = req.body['office-id'];
+    newHandover.raisedByStaffId = '40001001';
+
+    let user = userUtils.getUserByStaffIdFromListOfUsers(users, newHandover.raisedByStaffId);
+    newHandover.raisedOnBehalfOfOfficeId = user.owningOfficeId;
     newHandover.benefitId = req.body['benefit'];
 
     if (newHandover.benefitId === "5") {
@@ -156,7 +161,7 @@ function createHandoverPageAction(req, res) {
     }
     newHandover.typeId = req.body['handover-type'];;
     newHandover.reasonId = req.body['handover-reason'];
-    newHandover.callback = req.body['callback-req'];
+    newHandover.callback = req.body['handover-callback'];
     newHandover.priority = req.body['handover-priority'];
     newHandover.status = "Not allocated";
     newHandover.dateAndTimeRaised = newDate;
@@ -177,7 +182,7 @@ function createHandoverPageAction(req, res) {
         newHandoverNote.id = '1';
         newHandoverNote.handoverId = newHandover.id;
         newHandoverNote.dateNoteAdded = newDate;
-        newHandoverNote.userWhoAddedNote = newHandover.staffId;
+        newHandoverNote.userWhoAddedNote = newHandover.raisedByStaffId;
         newHandoverNote.updateResultedFromCustomerContactIndicator = updateResultedFromCustomerContactIndicator;
         newHandoverNote.noteContent = handoverNote;
         newHandover.notes.push(newHandoverNote);
@@ -219,11 +224,12 @@ function editHandoverPage(req, res) {
     }
 
     let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, handover.nino);
-    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
+    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId)
 
-    user.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, user.owningOfficeId);
-    let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
-    user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
+    let userWhoRaisedHandover = userUtils.getUserByStaffIdFromListOfUsers(users, handover.raisedByStaffId);
+    userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
+    let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
+    userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
     if (handover.notes === null) {
         handoverNotes = null
@@ -254,6 +260,7 @@ function editHandoverPage(req, res) {
         handoverNotes : handoverNotes,
         claimant : claimant,
         handover : handover,
+        userWhoRaisedHandover : userWhoRaisedHandover,
         user: user,
         officesList : officesList,
         officeDetails : officeDetails,
@@ -266,6 +273,8 @@ function editHandoverPage(req, res) {
 
 function editHandoverPageAction(req, res) {
 
+    let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
+    let user = req.session.user ? req.session.user : users[0];
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
     let editedHandover = new Object();
@@ -281,8 +290,8 @@ function editHandoverPageAction(req, res) {
 
     editedHandover.id = handover.id
     editedHandover.nino = handover.nino;
-    editedHandover.staffId = handover.staffId;
-    editedHandover.owningOfficeId = req.body['office'];
+    editedHandover.raisedByStaffId = handover.raisedByStaffId;
+    editedHandover.raisedOnBehalfOfOfficeId = handover.raisedOnBehalfOfOfficeId;
 
     editedHandover.benefitId = req.body['benefit'] || handover.benefitId;
 
@@ -306,7 +315,7 @@ function editHandoverPageAction(req, res) {
     } else {
         editedHandoverNote.handoverId = handover.id;
         editedHandoverNote.dateNoteAdded = editedDate;
-        editedHandoverNote.userWhoAddedNote = editedHandover.staffId;
+        editedHandoverNote.userWhoAddedNote = user.staffId;
         editedHandoverNote.updateResultedFromCustomerContactIndicator = updateResultedFromCustomerContactIndicator;
         editedHandoverNote.noteContent = handoverNote;
         if (handover.notes === null) {
