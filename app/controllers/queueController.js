@@ -10,7 +10,9 @@ function viewQueuePage(req, res) {
     let handovers = req.session.handovers ? req.session.handovers : bensHands.initialHandovers;
     let length = handovers.length;
     let handoversList = [];
-    let queueType = req.query.queueType ? req.query.queueType : 'office';
+    let queueAgent = req.query.agentId ? req.query.agentId : '40001003';
+    let queueType = req.query.agentId ? 'agent' : 'office';
+
 
     for (let i=0; i < length; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
@@ -29,7 +31,7 @@ function viewQueuePage(req, res) {
         // Until sorted data item for staff this item is allocated to, just put first three in list of handovers in 'my queue' if queueType = agent
 
         if (queueType === 'agent') {
-            if (i < 3) {
+            if (handover.inQueueOfStaffId === queueAgent) {
                 handoversList.push(handover);
             }
         } else {

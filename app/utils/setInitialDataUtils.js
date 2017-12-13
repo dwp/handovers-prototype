@@ -126,6 +126,7 @@ function setInitialHandoversData() {
         handover.reasonId = handoversList[i].reasonId;
         handover.callback = handoversList[i].callback;
         handover.priority = handoversList[i].priority;
+        handover.inQueueOfStaffId = handoversList[i].inQueueOfStaffId;
         handover.status = handoversList[i].status;
         handover.dateAndTimeRaised = new Date();
         handover.targetDateAndTime = new Date();

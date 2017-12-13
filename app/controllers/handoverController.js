@@ -164,6 +164,7 @@ function createHandoverPageAction(req, res) {
     newHandover.callback = req.body['handover-callback'];
     newHandover.priority = req.body['handover-priority'];
     newHandover.status = "Not allocated";
+    newHandover.inQueueOfStaffId = "";
     newHandover.dateAndTimeRaised = newDate;
     newHandover.targetDateAndTime = newDate;
     newHandover.notes = [];

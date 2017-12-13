@@ -60,6 +60,7 @@
       "reasonId": "3",
       "callback" : "Yes",
       "priority" : "Standard callback",
+      "inQueueOfStaffId" : "40001004",
       "status" : "Paused",
       "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
       "targetDateAndTime" : "2017-11-17T15:57:39.379Z"
@@ -73,6 +74,7 @@
       "reasonId": "4",
       "callback" : "No",
       "priority" : "Priority duplicate",
+      "inQueueOfStaffId" : "40001004",
       "status" : "In progress",
       "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
       "targetDateAndTime" : "2017-11-17T12:57:39.379Z"
@@ -86,6 +88,7 @@
       "reasonId": "5",
       "callback" : "Yes",
       "priority" : "Non-callback",
+      "inQueueOfStaffId" : "40001003",
       "status" : "In progress",
       "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
       "targetDateAndTime" : "2017-11-17T15:57:39.379Z"
@@ -99,6 +102,7 @@
       "reasonId": "3",
       "callback": "Yes",
       "priority" : "Standard callback",
+      "inQueueOfStaffId" : "",
       "status" : "Not allocated",
       "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
       "targetDateAndTime" : "2017-11-17T15:57:39.379Z"
@@ -112,6 +116,7 @@
       "reasonId": "3",
       "callback" : "No",
       "priority" : "Standard callback",
+      "inQueueOfStaffId" : "40001004",
       "status" : "Done",
       "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
       "targetDateAndTime" : "2017-11-17T12:57:39.379Z"
@@ -127,6 +132,7 @@
       "callback" : "No",
       "priority" : "Escalation",
       "status" : "Withdrawn",
+      "inQueueOfStaffId" : "40001003",
       "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
       "targetDateAndTime" : "2017-11-17T12:57:39.379Z"
     }],
