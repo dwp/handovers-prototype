@@ -128,11 +128,12 @@ function setInitialHandoversData() {
         handover.priority = handoversList[i].priority;
         handover.inQueueOfStaffId = handoversList[i].inQueueOfStaffId;
         handover.status = handoversList[i].status;
-        handover.dateAndTimeRaised = new Date();
-        handover.targetDateAndTime = new Date();
+        let dateAndTimeRaised = new Date(handoversList[i].dateAndTimeRaised);
+        handover.dateAndTimeRaised = dateAndTimeRaised;
+        handover.targetDateAndTime = new Date(dateAndTimeRaised);
         handover.notes = null;
 
-        if (handover.callback === '1') {
+        if (handover.callback === 'Yes') {
             handover.targetDateAndTime.setHours(handover.targetDateAndTime.getHours() + 3);
         }
 

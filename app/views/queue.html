@@ -10,7 +10,7 @@
         {% if queueType === "office" %}
             <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
         {% else %}
-            <h1 class="heading-large">Handovers queue - Alex Black</h1>
+            <h1 class="heading-large">Handovers queue - {{ queueAgent }}</h1>
         {% endif %}
 
         <div class="grid-row">
@@ -51,6 +51,22 @@
                 </table>
             </div>
         </div>
+        <br>
+        {% if queueType === "agent" %}
+        <div class="grid-row">
+            <div class="column-full">
+                <form action="/queue/getNextQueueItem" method="POST" class="form">
+                    <div class="form-group">
+                        <input type="submit" class="button" value="Fetch next work item">
+                    </div>
+                </form>
+                <br>
+                <div>
+                    <a href="../queue/view?queueType=office">Go to office queue</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </main>
 
