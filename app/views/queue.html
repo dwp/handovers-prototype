@@ -10,7 +10,7 @@
         {% if queueType === "office" %}
             <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
         {% else %}
-            <h1 class="heading-large">Handovers queue - {{ queueAgent }}</h1>
+            <h1 class="heading-large">Handovers queue - {{ queueUser.firstName }} {{ queueUser.lastName }}</h1>
         {% endif %}
 
         <div class="grid-row">
