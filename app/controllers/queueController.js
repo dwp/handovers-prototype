@@ -41,8 +41,33 @@ function viewQueuePage(req, res) {
 
     res.render('queue', {
         handoversList : handoversList,
-        queueType : queueType
+        queueType : queueType,
+        queueAgent : queueAgent
     });
 }
 
+function getNextQueueItem(req, res) {
+
+    let bensHands = sIDU.setInitialBenefitsAndHandoversData();
+    let handovers = req.session.handovers ? req.session.handovers : bensHands.initialHandovers;
+    let length = handovers.length;
+    let gotFirstUnallocatedItem = 0;
+    let newHandoversList = [];
+
+    for (let i=0; i < length; i++) {
+        if (gotFirstUnallocatedItem === 0) {
+            if (handovers[i].status === "Not allocated") {
+                handovers[i].inQueueOfStaffId = "40001004";
+                gotFirstUnallocatedItem = 1;
+            }
+        }
+        newHandoversList.push(handovers[i]);
+    }
+
+    req.session.handovers = newHandoversList;
+
+    res.redirect('/queue/view?agentId=40001004');
+
+}
 module.exports.viewQueuePage = viewQueuePage;
+module.exports.getNextQueueItem = getNextQueueItem;
