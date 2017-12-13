@@ -118,7 +118,7 @@ function setInitialHandoversData() {
         let handover = new Object();
         handover.id = handoversList[i].id;
         handover.nino = handoversList[i].nino;
-        handover.staffId = handoversList[i].staffId;
+        handover.raisedByStaffId = handoversList[i].raisedByStaffId;
         handover.raisedOnBehalfOfOfficeId = handoversList[i].raisedOnBehalfOfOfficeId;
         handover.benefitId = handoversList[i].benefitId;
         handover.benSubType = handoversList[i].benSubType;
