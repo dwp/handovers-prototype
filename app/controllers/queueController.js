@@ -3,6 +3,7 @@ const queueUtils = require('../utils/queueUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
 const commonUtils = require('../utils/commonUtils');
+const userUtils = require('../utils/userUtils');
 
 function viewQueuePage(req, res) {
 
@@ -12,7 +13,8 @@ function viewQueuePage(req, res) {
     let handoversList = [];
     let queueAgent = req.query.agentId ? req.query.agentId : '40001003';
     let queueType = req.query.agentId ? 'agent' : 'office';
-
+    let users = sIDU.setInitialUsersData();
+    let queueUser = userUtils.getUserByStaffIdFromListOfUsers(users, queueAgent);
 
     for (let i=0; i < length; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
@@ -42,7 +44,7 @@ function viewQueuePage(req, res) {
     res.render('queue', {
         handoversList : handoversList,
         queueType : queueType,
-        queueAgent : queueAgent
+        queueUser : queueUser
     });
 }
 
@@ -58,6 +60,7 @@ function getNextQueueItem(req, res) {
         if (gotFirstUnallocatedItem === 0) {
             if (handovers[i].status === "Not allocated") {
                 handovers[i].inQueueOfStaffId = "40001004";
+                handovers[i].status = "In progress";
                 gotFirstUnallocatedItem = 1;
             }
         }
