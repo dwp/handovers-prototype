@@ -46,11 +46,11 @@ function claimantViewPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let messagesIn = req.session.messages ? req.session.messages : [];
+    let errorsIn = req.session.errors ? req.session.errors : [];
     let claimant;
     let sessionClaimant;
 
-    if (messagesIn.length === 0) {
+    if (errorsIn.length === 0) {
         sessionClaimant = req.session.claimant ? req.session.claimant : claimants[0];
         let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : sessionClaimant.nino;
         claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
@@ -71,8 +71,8 @@ function claimantViewPage(req, res) {
     res.render('claimant', {
         claimant : claimant,
         claimantOfficeDetails : claimantOfficeDetails,
-        messages : messagesIn,
-        messagesLength : messagesIn.length
+        errors : errorsIn,
+        errorsLength : errorsIn.length
     });
 }
 
@@ -81,18 +81,19 @@ function claimantCreatePage(req, res) {
     let editOrCreate = 'create';
     let officesList = sIDU.setInitialOfficesData();
     let claimant = {};
-    let messagesIn = req.session.messages ? req.session.messages : [];
+    let errorsIn = req.session.errors ? req.session.errors : [];
     if (req.session.newClaimant) {
         claimant = req.session.newClaimant;
     } else {
         claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
     }
 
+
     res.render('claimant-edit', { claimant : claimant,
                                   editOrCreate : editOrCreate,
                                   officesList : officesList,
-                                  messages : messagesIn,
-                                  messagesLength : messagesIn.length
+                                  errors : errorsIn,
+                                  errorsLength : errorsIn.length
         }
     );
 }
@@ -104,42 +105,49 @@ function claimantCreatePageAction(req, res) {
     let year = req.body['birthYear'];
     let month = req.body['birthMonth'];
     let day = req.body['birthDay'];
-    let messagesOut = [];
+    let errorsOut = [];
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
     if (req.body['firstName'] === "") {
-        messagesOut.push("First name must be entered");
+        errorsOut.push({message : "First name must be entered",
+                          field : "firstName"});
     } else {
         newClaimant.firstName = req.body['firstName'];
     }
 
     if (req.body['lastName'] === "") {
-        messagesOut.push("Last name must be entered");
+        errorsOut.push({message : "Last name must be entered",
+                          field : "lastName"});
     } else {
         newClaimant.lastName = req.body['lastName'];
     }
 
     if (req.body['postcode'] === "") {
-        messagesOut.push("Postcode must be entered");
+        errorsOut.push({message : "Postcode must be entered",
+                          field : "postcode"});
     } else {
         newClaimant.postcode = req.body['postcode'];
     }
 
     if (!day || day < 1 || day > 31) {
-        messagesOut.push("Day of birth must be from 1 to 31");
+        errorsOut.push({message : "Day of birth must be from 1 to 31",
+                          field : "birthDay"});
     }
 
     if (!month || month < 1 || month > 12) {
-        messagesOut.push("Month of birth must be from 1 to 12");
+        errorsOut.push({message : "Month of birth must be from 1 to 12",
+                          field : "birthMonth"});
     }
 
     if (!year || year < 1900 || year > currentYear) {
-        messagesOut.push("Year of birth must be from 1900 to " + currentYear);
+        errorsOut.push({message : ("Year of birth must be between 1900 and " + currentYear),
+                          field : "birthYear"});
     }
 
     if (req.body['claimant-office'] === ""){
-        messagesOut.push("Home jobcentre must be selected from dropdown list");
+        errorsOut.push({message : "Home jobcentre must be selected from dropdown list",
+                          field : "claimant-office"});
     } else {
         newClaimant.claimantOfficeId = req.body['claimant-office'];
     }
@@ -162,14 +170,14 @@ function claimantCreatePageAction(req, res) {
         newClaimant.approvedRepName = req.body['rep-name'];
         newClaimant.approvedRepContact = req.body['rep-contact'];
         if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-            messagesOut.push("Enter both name and contact details for approved representative, or select 'No'");
+            errorsOut.push("Enter both name and contact details for approved representative, or select 'No'");
         }
     } else {
         newClaimant.approvedRepName = "";
         newClaimant.approvedRepContact = "";
     }
 
-    if (messagesOut.length === 0) {
+    if (errorsOut.length === 0) {
         newClaimant.dob = new Date(year + '-' + month + '-' + day);
         req.session.claimant = newClaimant;
         claimants.push(newClaimant);
@@ -181,7 +189,7 @@ function claimantCreatePageAction(req, res) {
         newClaimant.birthMonth = month;
         newClaimant.birthYear = year;
         req.session.newClaimant = newClaimant;
-        req.session.messages = messagesOut;
+        req.session.errors = errorsOut;
         res.redirect('/claimant/create');
     }
 }
@@ -190,11 +198,11 @@ function claimantEditPage(req, res) {
 
     let editOrCreate = 'edit';
     let officesList = sIDU.setInitialOfficesData();
-    let messagesIn = req.session.messages ? req.session.messages : [];
+    let errorsIn = req.session.errors ? req.session.errors : [];
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let sessionClaimant = {};
     let claimant;
-    if (messagesIn.length === 0) {
+    if (errorsIn.length === 0) {
         sessionClaimant = req.session.claimant ? req.session.claimant : claimants[0];
         let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : sessionClaimant.nino;
         claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
@@ -213,8 +221,8 @@ function claimantEditPage(req, res) {
     res.render('claimant-edit', { claimant : claimant,
                                   claimantOfficeDetails : claimantOfficeDetails,
                                   editOrCreate : editOrCreate,
-                                  messages : messagesIn,
-                                  messagesLength : messagesIn.length
+                                  errors : errorsIn,
+                                  errorsLength : errorsIn.length
 
         }
     );
@@ -229,38 +237,44 @@ function claimantEditPageAction(req, res) {
     let year = req.body['birthYear'];
     let month = req.body['birthMonth'];
     let day = req.body['birthDay'];
-    let messagesOut = [];
+    let errorsOut = [];
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
     if (req.body['firstName'] === "") {
-        messagesOut.push("First name must be entered");
+        errorsOut.push({message : "First name must be entered",
+            field : "firstName"});
     } else {
         editedClaimant.firstName = req.body['firstName'];
     }
 
     if (req.body['lastName'] === "") {
-        messagesOut.push("Last name must be entered");
+        errorsOut.push({message : "Last name must be entered",
+            field : "lastName"});
     } else {
         editedClaimant.lastName = req.body['lastName'];
     }
 
     if (req.body['postcode'] === "") {
-        messagesOut.push("Postcode must be entered");
+        errorsOut.push({message : "Postcode must be entered",
+            field : "postcode"});
     } else {
         editedClaimant.postcode = req.body['postcode'];
     }
 
     if (!day || day < 1 || day > 31) {
-        messagesOut.push("Day of birth must be from 1 to 31");
+        errorsOut.push({message : "Day of birth must be from 1 to 31",
+            field : "birthDay"});
     }
 
     if (!month || month < 1 || month > 12) {
-        messagesOut.push("Month of birth must be from 1 to 12");
+        errorsOut.push({message : "Month of birth must be from 1 to 12",
+            field : "birthMonth"});
     }
 
     if (!year || year < 1900 || year > currentYear) {
-        messagesOut.push("Year of birth must be from 1900 to " + currentYear);
+        errorsOut.push({message : ("Year of birth must be between 1900 and " + currentYear),
+            field : "birthYear"});
     }
 
     editedClaimant.nino = claimant.nino;
@@ -282,19 +296,19 @@ function claimantEditPageAction(req, res) {
         editedClaimant.approvedRepName = req.body['rep-name'];
         editedClaimant.approvedRepContact = req.body['rep-contact'];
         if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-            messagesOut.push("Enter both name and contact details for approved representative, or select 'No'");
+            errorsOut.push("Enter both name and contact details for approved representative, or select 'No'");
         }
     } else {
         editedClaimant.approvedRepName = "";
         editedClaimant.approvedRepContact = "";
     }
 
-    if (messagesOut.length === 0) {
+    if (errorsOut.length === 0) {
         editedClaimant.dob = new Date(year + '-' + month + '-' + day);
         req.session.claimant = editedClaimant;
         claimants.push(editedClaimant);
         req.session.claimants = claimants;
-        req.session.messages = messagesOut;
+        req.session.errors = errorsOut;
         res.redirect('/claimant/view');
     } else {
         editedClaimant.birthDay = day;
@@ -302,7 +316,7 @@ function claimantEditPageAction(req, res) {
         editedClaimant.birthYear = year;
         req.session.editedClaimant = editedClaimant;
         req.session.claimants = claimants;
-        req.session.messages = messagesOut;
+        req.session.errors = errorsOut;
         res.redirect('/claimant/edit');
     }
 }
