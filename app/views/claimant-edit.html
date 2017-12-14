@@ -4,18 +4,15 @@
 
 <main id="content" role="main">
     <div class="main-content">
-        {% if messagesLength === 0 %}
-            <p></p>
-        {% else %}
-            {% include "includes/message-banner.html" %}
-        {% endif %}
         {% if editOrCreate === 'edit' %}
             <h1 class="heading-large">Edit claimant details for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
-            <form action="/claimant/edit" method="POST" class="form">
+            <form action="/claimant/edit?nino={{ claimant.nino }}" method="POST" class="form">
         {% else %}
             <h1 class="heading-large">Create new claimant</h1>
             <form action="/claimant/create" method="POST" class="form">
         {% endif %}
+        {% include "includes/message-banner.html" %}
+        {% include "includes/error-summary.html" %}
             <div class="form-group">
                 <div class="grid-row">
                     <div class="column-half">

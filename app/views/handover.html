@@ -4,9 +4,8 @@
 
 <main id="content" role="main">
     <div class="main-content">
-        {% if message %}
-            {% include "includes/message-banner.html" %}
-        {% endif %}
+        {% include "includes/error-summary.html" %}
+        {% include "includes/message-banner.html" %}
         <h1 class="heading-large">View handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
         {% if handover.status !== 'Not allocated' %}
             <p class="form-hint">(currently being handled by {{ handover.inQueueOfStaffId }})</p>
@@ -133,7 +132,7 @@
                         <a href="../claimant/edit?nino={{claimant.nino}}">Edit claimant</a>
                     </div>
                     <div class="column-third">
-                        <a href="../queue/view?queueType=agent">Go to my queue</a>
+                        <a href="../queue/view?agentId={{handover.inQueueOfStaffId}}">Go to my queue</a>
                     </div>
                     <div class="column-third">
                         <a href="../queue/view?queueType=office">Go to office queue</a>

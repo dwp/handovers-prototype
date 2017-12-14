@@ -1,3 +1,6 @@
+{% if messagesLength === 0 or messages === null %}
+<div></div>
+{% else %}
 <br>
 <div class="grid-row">
     <div class="column-full">
@@ -8,3 +11,4 @@
         </div>
     </div>
 </div>
+{% endif %}

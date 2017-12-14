@@ -4,9 +4,8 @@
 
 <main id="content" role="main">
     <div class="main-content">
-        {% if message %}
-            {% include "includes/message-banner.html" %}
-        {% endif %}
+        {% include "includes/error-summary.html" %}
+        {% include "includes/message-banner.html" %}
         {% if editOrCreate === 'edit' %}
             <h1 class="heading-large">Edit handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
             <form action="/handover/edit" method="POST" class="form">

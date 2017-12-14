@@ -4,13 +4,8 @@
 
 <main id="content" role="main">
     <div class="main-content">
-
-        {% if messagesLength === 0 %}
-            <p></p>
-        {% else %}
-            {% include "includes/message-banner.html" %}
-        {% endif %}
-
+        {% include "includes/error-summary.html" %}
+        {% include "includes/message-banner.html" %}
         <h1 class="heading-large">View claimant details for {{ firstName }} {{ lastName }}</h1>
         <br>
         <div>

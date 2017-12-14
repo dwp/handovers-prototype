@@ -3,9 +3,8 @@
 {% block content %}
 <main id="content" role="main">
     <div class="main-content">
-        {% if message %}
-            {% include "includes/message-banner.html" %}
-        {% endif %}
+        {% include "includes/error-summary.html" %}
+        {% include "includes/message-banner.html" %}
         <div class="grid-row">
             <div class="column-full">
                 <div class="search-box-container">
