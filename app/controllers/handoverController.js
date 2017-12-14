@@ -17,6 +17,7 @@ function viewHandoverPage(req, res) {
     let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
     let user = req.session.user ? req.session.user : users[0];
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData().initialHandovers;
+    let errorsIn = req.session.errors ? req.session.errors : [];
     let handover;
     if (req.query.id === null) {
         handover = req.session.handover ? req.session.handover : handoversList[0];
@@ -77,6 +78,8 @@ function viewHandoverPage(req, res) {
         handover : handover,
         userWhoRaisedHandover : userWhoRaisedHandover,
         user : user,
+        errors : errorsIn,
+        errorsLength : errorsIn.length
     });
 
 }
@@ -223,6 +226,7 @@ function editHandoverPage(req, res) {
         officeTypeId : officeTypeId,
         officeTypeName : officeTypeName
     }
+    let errorsIn = req.session.errors ? req.session.errors : [];
 
     let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, handover.nino);
     let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId)
@@ -268,7 +272,9 @@ function editHandoverPage(req, res) {
         claimantOfficeDetails : claimantOfficeDetails,
         officeType : officeType,
         officeTypes : officeTypes,
-        editOrCreate : editOrCreate
+        editOrCreate : editOrCreate,
+        errors : errorsIn,
+        errorsLength : errorsIn.length
     });
 }
 
@@ -279,6 +285,7 @@ function editHandoverPageAction(req, res) {
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
     let editedHandover = new Object();
+    let errorsOut = [];
     let newHandoverNotes = [];
     let handoverNote = req.body['handover-note'];
     let editedHandoverNote = new Object();
@@ -304,7 +311,7 @@ function editHandoverPageAction(req, res) {
 
     editedHandover.typeId = req.body['handover-type'] || handover.typeId;
     editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
-    editedHandover.callback = handover.callback;
+    editedHandover.callback = req.body['handover-callback'];
     editedHandover.status = req.body['handover-status'] || handover.status;
     editedHandover.dateAndTimeRaised = dateAndTimeRaised;
     editedHandover.targetDateAndTime = targetDateAndTime;
@@ -332,11 +339,12 @@ function editHandoverPageAction(req, res) {
 
     handoversList[handoverIndex] = editedHandover;
 
+    req.session.errors = errorsOut;
     req.session.handovers = handoversList;
     req.session.handover = editedHandover;
     req.session.claimant = claimant;
 
-    res.redirect('/handover/view?id=' + editedHandover.id);
+    res.redirect('/handover/edit?id=' + editedHandover.id);
 
 }
 

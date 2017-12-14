@@ -65,16 +65,16 @@
                         </div>
                     </div>
                         {% if editOrCreate === 'create' %}
-                        <div class="column-half">
-                        </div>
+                            <div class="column-half">
+                            </div>
                         {% else %}
                         <div class="column-half">
                             <legend class="form-label-bold">Target callback time</legend>
                             {% if handover.priority === "Non-callback" %}
-                            <p>No target date and time for this priority</p>
+                                <p>No target date and time for this priority</p>
                             {% else %}
-                            <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
-                                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
+                                <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
                             {% endif %}
                         </div>
                         {% endif %}
@@ -125,61 +125,63 @@
                 <br>
                 <div class="grid-row">
                     {% if editOrCreate === 'create' %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Select a handover type</legend>
-                        <select class="select form-control" name="handover-type" id="handover-type">
-                            <option value="">Select</option>
-                            {% for handoverType in handTypesList %}
-                            <option value="{{ handoverType.id }}" {{ 'selected' if handover.typeId === handoverType.id else ''}}>{{ handoverType.handoverType }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <div class="column-half">
+                            <legend class="form-label-bold">Select a handover type</legend>
+                            <select class="select form-control" name="handover-type" id="handover-type">
+                                <option value="">Select</option>
+                                {% for handoverType in handTypesList %}
+                                <option value="{{ handoverType.id }}" {{ 'selected' if handover.typeId === handoverType.id else ''}}>{{ handoverType.handoverType }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     {% else %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Handover type</legend>
-                        <p>{{ handoverType }}</p>
-                    </div>
+                        <div class="column-half">
+                            <legend class="form-label-bold">Handover type</legend>
+                            <p>{{ handoverType }}</p>
+                        </div>
                     {% endif %}
 
                     {% if editOrCreate === 'create' %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Select a handover reason</legend>
-                        <select class="select form-control" name="handover-reason" id="handover-reason">
-                            <option value="">Select</option>
-                            {% for handoverReason in handReasonsList %}
-                            <option value="{{ handoverReason.id }}" {{ 'selected' if  handover.reasonId === handoverReason.id else ''}}>{{ handoverReason.handoverReason }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <div class="column-half">
+                            <legend class="form-label-bold">Select a handover reason</legend>
+                            <select class="select form-control" name="handover-reason" id="handover-reason">
+                                <option value="">Select</option>
+                                {% for handoverReason in handReasonsList %}
+                                    <option value="{{ handoverReason.id }}" {{ 'selected' if  handover.reasonId === handoverReason.id else ''}}>{{ handoverReason.handoverReason }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     {% else %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Handover reason</legend>
-                        <p>{{ handoverReason }}</p>
-                    </div>
+                        <div class="column-half">
+                            <legend class="form-label-bold">Handover reason</legend>
+                            <p>{{ handoverReason }}</p>
+                        </div>
                     {% endif %}
                 </div>
                 <br>
+
                 <div class="grid-row">
-                    {% if editOrCreate === 'edit' %}
                     <div class="column-half">
                         <legend class="form-label-bold">Callback required ?</legend>
-                        <p>{{ handover.callback }}</p>
+                        {% if handover.callback === 'Yes' and editOrCreate === 'edit' %}
+                            <p>{{ handover.callback }}</p>
+                        {% else %}
+                            <fieldset class="inline">
+                                <div class="multiple-choice">
+                                    <input id="handover-callback-no" type="radio" name="handover-callback" value="No" {% if handover.callback === 'No' or editOrCreate === 'create' %}
+                                                                                                                        checked="checked"
+                                                                                                                        {% endif %}>
+                                    <label for="handover-callback-no">No</label>
+                                </div>
+                                <div class="multiple-choice">
+                                    <input id="handover-callback-yes" type="radio" name="handover-callback" value="Yes" {% if handover.callback === 'Yes' %}
+                                                                                                                        checked="checked"
+                                                                                                                        {% endif %}>
+                                    <label for="handover-callback-yes">Yes</label>
+                                </div>
+                            </fieldset>
+                        {% endif %}
                     </div>
-                    {% else %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Callback required ?</legend>
-                        <fieldset class="inline">
-                            <div class="multiple-choice">
-                                <input id="handover-callback-no" type="radio" name="handover-callback" value="No" checked="checked">
-                                <label for="handover-callback-no">No</label>
-                            </div>
-                            <div class="multiple-choice">
-                                <input id="handover-callback-yes" type="radio" name="handover-callback" value="Yes">
-                                <label for="handover-callback-yes">Yes</label>
-                            </div>
-                        </fieldset>
-                    </div>
-                    {% endif %}
                     {% if editOrCreate === "edit" %}
                         <div class="column-half">
                             <legend class="form-label-bold">Status</legend>
