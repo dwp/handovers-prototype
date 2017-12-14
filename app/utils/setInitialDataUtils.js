@@ -116,6 +116,7 @@ function setInitialHandoversData() {
     let initialHandovers = [];
     for (let i=0; i < handoversList.length; i++) {
         let handover = new Object();
+        let dateAndTimeRaised = new Date(handoversList[i].dateAndTimeRaised);
         handover.id = handoversList[i].id;
         handover.nino = handoversList[i].nino;
         handover.raisedByStaffId = handoversList[i].raisedByStaffId;
@@ -128,17 +129,13 @@ function setInitialHandoversData() {
         handover.priority = handoversList[i].priority;
         handover.inQueueOfStaffId = handoversList[i].inQueueOfStaffId;
         handover.status = handoversList[i].status;
-        let dateAndTimeRaised = new Date(handoversList[i].dateAndTimeRaised);
         handover.dateAndTimeRaised = dateAndTimeRaised;
-        handover.targetDateAndTime = new Date(dateAndTimeRaised);
         handover.notes = null;
 
         if (handover.callback === 'Yes') {
+            handover.targetDateAndTime = new Date(dateAndTimeRaised);
             handover.targetDateAndTime.setHours(handover.targetDateAndTime.getHours() + 3);
         }
-
-        handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
-        handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
 
         initialHandovers.push(handover);
     }

@@ -45,6 +45,9 @@ function viewHandoverPage(req, res) {
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
+    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+
     if (handover.notes === null) {
         handoverNotes = null;
     } else {
@@ -236,6 +239,9 @@ function editHandoverPage(req, res) {
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
 
+    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+
     if (handover.notes === null) {
         handoverNotes = null
     } else {
@@ -290,8 +296,6 @@ function editHandoverPageAction(req, res) {
     let handoverNote = req.body['handover-note'];
     let editedHandoverNote = new Object();
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
-    let dateAndTimeRaised = new Date(handover.dateAndTimeRaised);
-    let targetDateAndTime = new Date(handover.targetDateAndTime);
     let claimant = req.session.claimant;
     let handoverIndex = commonUtils.findPositionOfObjectInArray(handover.id, handoversList);
     let editedDate = new Date();
@@ -313,10 +317,14 @@ function editHandoverPageAction(req, res) {
     editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
     editedHandover.callback = req.body['handover-callback'];
     editedHandover.status = req.body['handover-status'] || handover.status;
-    editedHandover.dateAndTimeRaised = dateAndTimeRaised;
-    editedHandover.targetDateAndTime = targetDateAndTime;
-    editedHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(dateAndTimeRaised);
-    editedHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(targetDateAndTime);
+    editedHandover.dateAndTimeRaised = new Date(handover.dateAndTimeRaised);
+
+    if (editedHandover.callback === 'Yes') {
+        editedHandover.targetDateAndTime = new Date(handover.dateAndTimeRaised);
+        editedHandover.targetDateAndTime.setHours(editedHandover.dateAndTimeRaised.getHours() + 3);
+    } else {
+        editedHandover.targetDateAndTime = handover.targetDateAndTime;
+    }
 
     if (handoverNote === "" || handoverNote === null) {
         newHandoverNotes = handover.notes;
