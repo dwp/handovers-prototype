@@ -171,19 +171,21 @@ function claimantCreatePageAction(req, res) {
             newClaimant.approvedRepName = req.body['rep-name'];
             newClaimant.approvedRepContact = req.body['rep-contact'];
             if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-                let repField;
-                if (req.body['rep-name'] === "") {
-                    repField = 'rep-name';
-                } else {
-                    repField = 'rep-contact';
-                }
                 errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
-                                field : repField});
+                                field : ""});
+                if (req.body['rep-name'] === "") {
+                    errorsOut.push({message : "         .....name must be entered",
+                                    field : "rep-name"});
+                }
+                if (req.body['rep-contact'] === "") {
+                    errorsOut.push({message : "         .....contact details must be entered",
+                                    field : "rep-contact"});
+                }
             }
-        } else {
-            newClaimant.approvedRepName = "";
-            newClaimant.approvedRepContact = "";
-        }
+    } else {
+        newClaimant.approvedRepName = "";
+        newClaimant.approvedRepContact = "";
+    }
 
     if (errorsOut.length === 0) {
         newClaimant.dob = new Date(year + '-' + month + '-' + day);
@@ -302,18 +304,20 @@ function claimantEditPageAction(req, res) {
     editedClaimant.approvedRep = req.body['approved-rep'];
 
     if (editedClaimant.approvedRep === "Yes") {
-        editedClaimant.approvedRepName = req.body['rep-name'];
-        editedClaimant.approvedRepContact = req.body['rep-contact'];
-        if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-            let repField;
-            if (req.body['rep-name'] === "") {
-                repField = 'rep-name';
-            } else {
-                repField = 'rep-contact';
+            editedClaimant.approvedRepName = req.body['rep-name'];
+            editedClaimant.approvedRepContact = req.body['rep-contact'];
+            if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
+                errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
+                                field : ""});
+                if (req.body['rep-name'] === "") {
+                    errorsOut.push({message : "         .....name must be entered",
+                                    field : "rep-name"});
+                }
+                if (req.body['rep-contact'] === "") {
+                    errorsOut.push({message : "         .....contact details must be entered",
+                                    field : "rep-contact"});
+                }
             }
-            errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
-                            field : repField});
-        }
     } else {
         editedClaimant.approvedRepName = "";
         editedClaimant.approvedRepContact = "";
