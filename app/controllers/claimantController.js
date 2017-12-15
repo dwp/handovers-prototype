@@ -158,7 +158,6 @@ function claimantCreatePageAction(req, res) {
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
     newClaimant.translator = req.body['translator'];
-    newClaimant.approvedRep = req.body['approved-rep'];
 
     if (newClaimant.translator == 'No') {
         newClaimant.language = '';
@@ -166,16 +165,25 @@ function claimantCreatePageAction(req, res) {
         newClaimant.language = req.body['language'];
     }
 
+    newClaimant.approvedRep = req.body['approved-rep'];
+
     if (newClaimant.approvedRep === "Yes") {
-        newClaimant.approvedRepName = req.body['rep-name'];
-        newClaimant.approvedRepContact = req.body['rep-contact'];
-        if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-            errorsOut.push("Enter both name and contact details for approved representative, or select 'No'");
+            newClaimant.approvedRepName = req.body['rep-name'];
+            newClaimant.approvedRepContact = req.body['rep-contact'];
+            if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
+                let repField;
+                if (req.body['rep-name'] === "") {
+                    repField = 'rep-name';
+                } else {
+                    repField = 'rep-contact';
+                }
+                errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
+                                field : repField});
+            }
+        } else {
+            newClaimant.approvedRepName = "";
+            newClaimant.approvedRepContact = "";
         }
-    } else {
-        newClaimant.approvedRepName = "";
-        newClaimant.approvedRepContact = "";
-    }
 
     if (errorsOut.length === 0) {
         newClaimant.dob = new Date(year + '-' + month + '-' + day);
@@ -284,7 +292,6 @@ function claimantEditPageAction(req, res) {
     editedClaimant.postcode = req.body['postcode'];
     editedClaimant.welshSpeaker = req.body['welsh-speaker'];
     editedClaimant.translator = req.body['translator'];
-    editedClaimant.approvedRep = req.body['approved-rep'];
 
     if (editedClaimant.translator == 'No') {
         editedClaimant.language = '';
@@ -292,11 +299,20 @@ function claimantEditPageAction(req, res) {
         editedClaimant.language = req.body['language'];
     }
 
+    editedClaimant.approvedRep = req.body['approved-rep'];
+
     if (editedClaimant.approvedRep === "Yes") {
         editedClaimant.approvedRepName = req.body['rep-name'];
         editedClaimant.approvedRepContact = req.body['rep-contact'];
         if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-            errorsOut.push("Enter both name and contact details for approved representative, or select 'No'");
+            let repField;
+            if (req.body['rep-name'] === "") {
+                repField = 'rep-name';
+            } else {
+                repField = 'rep-contact';
+            }
+            errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
+                            field : repField});
         }
     } else {
         editedClaimant.approvedRepName = "";
