@@ -1,25 +1,50 @@
 {% if editOrCreate === 'edit' %}
-<div class="column-half">
-    <div class="form-group">
-        <legend class="form-label-bold">Home jobcentre</legend>
-        <div>
-            <p>{{ claimantOfficeDetails.officeName }}</p>
-            <input type="hidden" id="claimant-office" name="claimant-office" value="{{ claimant.claimantOfficeId }}">
+    <div class="column-half">
+        <div class="form-group">
+            <legend class="form-label-bold">Home jobcentre</legend>
+            <div>
+                <p>{{ claimantOfficeDetails.officeName }}</p>
+                <input type="hidden" id="claimant-office" name="claimant-office" value="{{ claimant.claimantOfficeId }}">
+            </div>
         </div>
     </div>
-</div>
 {% else %}
-<div class="column-half">
-    <div class="form-group">
-        <legend class="form-label-bold">Home jobcentre</legend>
-        <select class="select form-control" name="claimant-office" id="claimant-office">
-            <option value="">Select</option>
-            {% for office in officesList %}
-                {% if office.officeTypeId === 1 %}
-                    <option value="{{ office.id }}" {{ 'selected' if claimant.claimantOfficeId == office.id else ''}}>{{ office.officeName }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
+    <div class="column-half">
+        {% set errorFlag = 0 %}
+        {% for error in errors %}
+            {% if error.field === 'claimant-office' %}
+                {% set errorFlag = 1 %}
+            {% endif %}
+        {% endfor %}
+        {% if errorFlag === 1 %}
+            <div class="form-group form-group-error">
+                <label for="claimant-office" id="error-claimant-office">
+                    <span class="form-label-bold">Home jobcentre</span>
+                    <span class="error-message">Home jobcentre must be selected from dropdown list</span>
+                </label>
+                <select class="select form-control form-control-error" name="claimant-office" id="claimant-office">
+                    <option value="">Select</option>
+                    {% for office in officesList %}
+                        {% if office.officeTypeId === 1 %}
+                        <option value="{{ office.id }}" {{ 'selected' if claimant.claimantOfficeId == office.id else ''}}>{{ office.officeName }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        {% else %}
+            <div class="form-group">
+                <label for="claimant-office">
+                    <span class="form-label-bold">Home jobcentre</span>
+                </label>
+                <select class="select form-control" name="claimant-office" id="claimant-office">
+                    <option value="">Select</option>
+                    {% for office in officesList %}
+                        {% if office.officeTypeId === 1 %}
+                            <option value="{{ office.id }}" {{ 'selected' if claimant.claimantOfficeId == office.id else ''}}>{{ office.officeName }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
     </div>
-</div>
 {% endif %}
