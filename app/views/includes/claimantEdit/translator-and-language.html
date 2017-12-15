@@ -1,0 +1,23 @@
+<div class="column-half">
+    <div class="form-group">
+        <legend class="form-label-bold">Translator reqd ?</legend>
+        <fieldset class="inline">
+            <div class="multiple-choice">
+                <input id="translator-no" type="radio" name="translator" value="No" {% if claimant.translator === 'No' or editOrCreate === 'create' %}
+                checked="checked"
+                {% endif %}>
+                <label for="translator-no">No</label>
+            </div>
+            <div class="multiple-choice" data-target="language">
+                <input id="translator-yes" type="radio" name="translator" value="Yes" {% if claimant.translator === 'Yes' %}
+                checked="checked"
+                {% endif %}>
+                <label for="translator-yes">Yes</label>
+            </div>
+            <div class="panel panel-border-narrow js-hidden" id="language">
+                <label class="form-label-bold" for="language">Language</label>
+                <input class="form-control" name="language" type="text" value="{{ claimant.language }}">
+            </div>
+        </fieldset>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="column-half">
+    <div class="form-group">
+        <legend class="form-label-bold">Preferred contact number</legend>
+        <p class="form-hint">Enter 0-9 and spaces only</p>
+        <div>
+            <input type="text" class="form-control" id="prefContNum" name="prefContNum" pattern="[0-9 ]*" value="{{ claimant.preferredContactNumber }}">
+        </div>
+    </div>
+</div>
+<div class="column-half">
+    <div class="form-group">
+        <legend class="form-label-bold">Email address</legend>
+        <div>
+            <input type="email" class="form-control" id="emailAddr" name="emailAddr" value="{{ claimant.emailAddress }}">
+        </div>
+    </div>
+</div>

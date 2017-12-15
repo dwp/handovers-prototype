@@ -182,7 +182,7 @@ function claimantCreatePageAction(req, res) {
         req.session.claimant = newClaimant;
         claimants.push(newClaimant);
         req.session.claimants = claimants;
-        req.session.messages = [];
+        req.session.errors = [];
         res.redirect('/claimant/view');
     } else {
         newClaimant.birthDay = day;

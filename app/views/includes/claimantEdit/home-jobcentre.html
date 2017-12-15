@@ -1,0 +1,25 @@
+{% if editOrCreate === 'edit' %}
+<div class="column-half">
+    <div class="form-group">
+        <legend class="form-label-bold">Home jobcentre</legend>
+        <div>
+            <p>{{ claimantOfficeDetails.officeName }}</p>
+            <input type="hidden" id="claimant-office" name="claimant-office" value="{{ claimant.claimantOfficeId }}">
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="column-half">
+    <div class="form-group">
+        <legend class="form-label-bold">Home jobcentre</legend>
+        <select class="select form-control" name="claimant-office" id="claimant-office">
+            <option value="">Select</option>
+            {% for office in officesList %}
+                {% if office.officeTypeId === 1 %}
+                    <option value="{{ office.id }}" {{ 'selected' if claimant.claimantOfficeId == office.id else ''}}>{{ office.officeName }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+</div>
+{% endif %}

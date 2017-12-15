@@ -1,0 +1,24 @@
+<div class="column-half">
+    {% set errorFlag = 0 %}
+    {% for error in errors %}
+        {% if error.field === 'firstName' %}
+            {% set errorFlag = 1 %}
+        {% endif %}
+    {% endfor %}
+    {% if errorFlag === 1 %}
+    <div class="form-group form-group-error">
+        <label for="firstName" id="error-firstName">
+            <span class="form-label-bold">First name</span>
+            <span class="error-message">First name must be entered</span>
+        </label>
+        <input type="text" class="form-control form-control-error" id="firstName" name="firstName" value="{{ claimant.firstName }}">
+    </div>
+    {% else %}
+    <div class="form-group">
+        <label for="firstName">
+            <span class="form-label-bold">First name</span>
+        </label>
+        <input type="text" class="form-control" id="firstName" name="firstName" value="{{ claimant.firstName }}">
+    </div>
+    {% endif %}
+</div>

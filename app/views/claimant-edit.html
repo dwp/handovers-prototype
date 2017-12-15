@@ -15,196 +15,30 @@
         {% include "includes/error-summary.html" %}
             <div class="form-group">
                 <div class="grid-row">
-                    <div class="column-half">
-                        <div class="form-group">
-                            <div>
-                                <legend class="form-label-bold">National insurance number</legend>
-                                <input type="hidden" id="nino" name="nino" value="{{ claimant.nino }}">
-                                <p>{{ claimant.nino }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    {% if editOrCreate === 'edit' %}
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Home jobcentre</legend>
-                            <div>
-                                <p>{{ claimantOfficeDetails.officeName }}</p>
-                                <input type="hidden" id="claimant-office" name="claimant-office" value="{{ claimant.claimantOfficeId }}">
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Home jobcentre</legend>
-                            <select class="select form-control" name="claimant-office" id="claimant-office">
-                                <option value="">Select</option>
-                                {% for office in officesList %}
-                                    {% if office.officeTypeId === 1 %}
-                                        <option value="{{ office.id }}" {{ 'selected' if claimant.claimantOfficeId == office.id else ''}}>{{ office.officeName }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    {% endif %}
+                    {% include "includes/claimantEdit/nino.html" %}
+                    {% include "includes/claimantEdit/home-jobcentre.html" %}
                 </div>
 
                 <div class="grid-row">
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">First name</legend>
-                            <div>
-                                <input type="text" class="form-control" id="firstName" name="firstName" value="{{ claimant.firstName }}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Last name</legend>
-                            <div>
-                                <input type="text" class="form-control" id="lastName" name="lastName" value="{{ claimant.lastName }}">
-                            </div>
-                        </div>
-                    </div>
+                    {% include "includes/claimantEdit/first-name.html" %}
+                    {% include "includes/claimantEdit/last-name.html" %}
                 </div>
 
                 <div class="grid-row">
-                    <div class="column-half">
-                        <div class="form-group form-date" id="birth-date-group">
-                            <legend class="form-label-bold">Date of birth</legend>
-                            <p class="form-hint">For example, 01 09 2017</p>
-                            <div class="form-group form-group-day">
-                                <label for="birthDay">Day</label>
-                                <input type="text" class="form-control" id="birthDay" name="birthDay" pattern="[0-9]*" value="{{claimant.birthDay}}">
-                            </div>
-                            <div class="form-group form-group-month">
-                                <label for="birthMonth">Month</label>
-                                <input type="text" class="form-control" id="birthMonth" name="birthMonth" pattern="[0-9]*" value="{{claimant.birthMonth}}">
-                            </div>
-                            <div class="form-group form-group-year">
-                                <label for="birthYear">Year</label>
-                                <input type="text" class="form-control" id="birthYear" name="birthYear" pattern="[0-9]*" value="{{claimant.birthYear}}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Postcode</legend>
-                            <div>
-                                <input type="text" class="form-control" id="postcode" name="postcode" pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}" value="{{ claimant.postcode }}">
-                            </div>
-                        </div>
-                    </div>
+                    {% include "includes/claimantEdit/date-of-birth.html" %}
+                    {% include "includes/claimantEdit/postcode.html" %}
                 </div>
 
                 <div class="grid-row">
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Preferred contact number</legend>
-                            <p class="form-hint">Enter 0-9 and spaces only</p>
-                            <div>
-                                <input type="text" class="form-control" id="prefContNum" name="prefContNum" pattern="[0-9 ]*" value="{{ claimant.preferredContactNumber }}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Email address</legend>
-                            <div>
-                                <input type="email" class="form-control" id="emailAddr" name="emailAddr" value="{{ claimant.emailAddress }}">
-                            </div>
-                        </div>
-                    </div>
+                    {% include "includes/claimantEdit/contact-details.html" %}
                 </div>
 
                 <div class="grid-row">
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Welsh speaker ?</legend>
-                            <fieldset class="inline">
-                                <div class="multiple-choice">
-                                    <input id="welshSpeaker_no" type="radio" name="welsh-speaker" value="No" {% if claimant.welshSpeaker === 'No' or editOrCreate === 'create' %}
-                                                                                                                checked="checked"
-                                                                                                             {% endif %}>
-                                    <label for="welshSpeaker_no">No</label>
-                                </div>
-                                <div class="multiple-choice">
-                                    <input id="welshSpeaker_yes" type="radio" name="welsh-speaker" value="Yes" {% if claimant.welshSpeaker === 'Yes' %}
-                                                                                                                  checked="checked"
-                                                                                                               {% endif %}>
-                                    <label for="welshSpeaker_yes">Yes</label>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Translator reqd ?</legend>
-                            <fieldset class="inline">
-                                <div class="multiple-choice">
-                                    <input id="translator-no" type="radio" name="translator" value="No" {% if claimant.translator === 'No' or editOrCreate === 'create' %}
-                                                                                                            checked="checked"
-                                                                                                        {% endif %}>
-                                    <label for="translator-no">No</label>
-                                </div>
-                                <div class="multiple-choice" data-target="language">
-                                    <input id="translator-yes" type="radio" name="translator" value="Yes" {% if claimant.translator === 'Yes' %}
-                                                                                                             checked="checked"
-                                                                                                          {% endif %}>
-                                    <label for="translator-yes">Yes</label>
-                                </div>
-                                <div class="panel panel-border-narrow js-hidden" id="language">
-                                    <label class="form-label-bold" for="language">Language</label>
-                                    <input class="form-control" name="language" type="text" value="{{ claimant.language }}">
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
+                    {% include "includes/claimantEdit/welsh-speaker.html" %}
+                    {% include "includes/claimantEdit/translator-and-language.html" %}
                 </div>
 
-
-                <div class="grid-row">
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Does the customer have an approved representative ?</legend>
-                            <fieldset class="inline">
-                                <div class="multiple-choice">
-                                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No" {% if claimant.approvedRep === "No" or editOrCreate === 'create' %} checked="checked" {% endif %}>
-                                    <label for="approved-rep-no">No</label>
-                                </div>
-                                <div class="multiple-choice" data-target="approved-rep-group">
-                                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" {% if claimant.approvedRep === "Yes" %} checked="checked" {% endif %}>
-                                    <label for="approved-rep-yes">Yes</label>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="column-half">
-                    </div>
-                </div>
-
-                <div class="grid-row js-hidden" id="approved-rep-group" >
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Approved representative name</legend>
-                            <div>
-                                <input type="text" class="form-control" id="rep-name" name="rep-name" value="{{ claimant.approvedRepName }}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column-half">
-                        <div class="form-group">
-                            <legend class="form-label-bold">Approved representative contact details</legend>
-                            <p class="form-hint">Enter an email address or a telephone number</p>
-                            <div>
-                                <input type="text" class="form-control" id="rep-contact" name="rep-contact" value="{{ claimant.approvedRepContact }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% include "includes/claimantEdit/approved-rep.html" %}
 
                 <div class="grid-row">
                     <div class="column-half">
