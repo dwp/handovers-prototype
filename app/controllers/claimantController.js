@@ -158,20 +158,34 @@ function claimantCreatePageAction(req, res) {
     newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
     newClaimant.translator = req.body['translator'];
+
+    if (newClaimant.translator === "No") {
+            newClaimant.language = '';
+        } else {
+            newClaimant.language = req.body['language'];
+            if (req.body['language'] === "") {
+                errorsOut.push({message : "Enter a language , or select No for Translator reqd",
+                                field : 'language'});
+            }
+        }
+
     newClaimant.approvedRep = req.body['approved-rep'];
 
-    if (newClaimant.translator == 'No') {
-        newClaimant.language = '';
-    } else {
-        newClaimant.language = req.body['language'];
-    }
-
     if (newClaimant.approvedRep === "Yes") {
-        newClaimant.approvedRepName = req.body['rep-name'];
-        newClaimant.approvedRepContact = req.body['rep-contact'];
-        if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-            errorsOut.push("Enter both name and contact details for approved representative, or select 'No'");
-        }
+            newClaimant.approvedRepName = req.body['rep-name'];
+            newClaimant.approvedRepContact = req.body['rep-contact'];
+            if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
+                errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
+                                field : ""});
+                if (req.body['rep-name'] === "") {
+                    errorsOut.push({message : "         .....name must be entered",
+                                    field : "rep-name"});
+                }
+                if (req.body['rep-contact'] === "") {
+                    errorsOut.push({message : "         .....contact details must be entered",
+                                    field : "rep-contact"});
+                }
+            }
     } else {
         newClaimant.approvedRepName = "";
         newClaimant.approvedRepContact = "";
@@ -182,7 +196,7 @@ function claimantCreatePageAction(req, res) {
         req.session.claimant = newClaimant;
         claimants.push(newClaimant);
         req.session.claimants = claimants;
-        req.session.messages = [];
+        req.session.errors = [];
         res.redirect('/claimant/view');
     } else {
         newClaimant.birthDay = day;
@@ -284,20 +298,34 @@ function claimantEditPageAction(req, res) {
     editedClaimant.postcode = req.body['postcode'];
     editedClaimant.welshSpeaker = req.body['welsh-speaker'];
     editedClaimant.translator = req.body['translator'];
-    editedClaimant.approvedRep = req.body['approved-rep'];
 
-    if (editedClaimant.translator == 'No') {
+    if (editedClaimant.translator === "No") {
         editedClaimant.language = '';
     } else {
         editedClaimant.language = req.body['language'];
+        if (req.body['language'] === "") {
+            errorsOut.push({message : "Enter a language , or select No for Translator reqd",
+                            field : 'language'});
+        }
     }
 
+    editedClaimant.approvedRep = req.body['approved-rep'];
+
     if (editedClaimant.approvedRep === "Yes") {
-        editedClaimant.approvedRepName = req.body['rep-name'];
-        editedClaimant.approvedRepContact = req.body['rep-contact'];
-        if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-            errorsOut.push("Enter both name and contact details for approved representative, or select 'No'");
-        }
+            editedClaimant.approvedRepName = req.body['rep-name'];
+            editedClaimant.approvedRepContact = req.body['rep-contact'];
+            if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
+                errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
+                                field : ""});
+                if (req.body['rep-name'] === "") {
+                    errorsOut.push({message : "         .....name must be entered",
+                                    field : "rep-name"});
+                }
+                if (req.body['rep-contact'] === "") {
+                    errorsOut.push({message : "         .....contact details must be entered",
+                                    field : "rep-contact"});
+                }
+            }
     } else {
         editedClaimant.approvedRepName = "";
         editedClaimant.approvedRepContact = "";

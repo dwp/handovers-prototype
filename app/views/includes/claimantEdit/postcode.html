@@ -1,0 +1,24 @@
+<div class="column-half">
+    {% set errorFlag = 0 %}
+    {% for error in errors %}
+        {% if error.field === 'postcode' %}
+            {% set errorFlag = 1 %}
+        {% endif %}
+    {% endfor %}
+    {% if errorFlag === 1 %}
+    <div class="form-group form-group-error">
+        <label for="postcode" id="error-postcode">
+            <span class="form-label-bold">Postcode</span>
+            <span class="error-message">Postcode must be entered</span>
+        </label>
+        <input type="text" class="form-control form-control-error" id="postcode" name="postcode" pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}" value="{{ claimant.postcode }}">
+    </div>
+    {% else %}
+    <div class="form-group">
+        <label for="postcode">
+            <span class="form-label-bold">Postcode</span>
+        </label>
+        <input type="text" class="form-control" id="postcode" name="postcode" pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}" value="{{ claimant.postcode }}">
+    </div>
+    {% endif %}
+</div>
