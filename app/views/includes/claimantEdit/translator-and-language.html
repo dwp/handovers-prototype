@@ -8,15 +8,15 @@
                 {% endif %}>
                 <label for="translator-no">No</label>
             </div>
-            <div class="multiple-choice" data-target="language">
+            <div class="multiple-choice" data-target="language-gp">
                 <input id="translator-yes" type="radio" name="translator" value="Yes" {% if claimant.translator === 'Yes' %}
                 checked="checked"
                 {% endif %}>
                 <label for="translator-yes">Yes</label>
             </div>
-            <div class="panel panel-border-narrow js-hidden" id="language">
+            <div class="panel panel-border-narrow js-hidden" id="language-gp">
                 <label class="form-label-bold" for="language">Language</label>
-                <input class="form-control" name="language" type="text" value="{{ claimant.language }}">
+                <input class="form-control" id="language" name="language" type="text" value="{{ claimant.language }}">
             </div>
         </fieldset>
     </div>

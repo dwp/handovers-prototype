@@ -159,11 +159,15 @@ function claimantCreatePageAction(req, res) {
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
     newClaimant.translator = req.body['translator'];
 
-    if (newClaimant.translator == 'No') {
-        newClaimant.language = '';
-    } else {
-        newClaimant.language = req.body['language'];
-    }
+    if (newClaimant.translator === "No") {
+            newClaimant.language = '';
+        } else {
+            newClaimant.language = req.body['language'];
+            if (req.body['language'] === "") {
+                errorsOut.push({message : "Enter a language , or select No for Translator reqd",
+                                field : 'language'});
+            }
+        }
 
     newClaimant.approvedRep = req.body['approved-rep'];
 
@@ -295,10 +299,14 @@ function claimantEditPageAction(req, res) {
     editedClaimant.welshSpeaker = req.body['welsh-speaker'];
     editedClaimant.translator = req.body['translator'];
 
-    if (editedClaimant.translator == 'No') {
+    if (editedClaimant.translator === "No") {
         editedClaimant.language = '';
     } else {
         editedClaimant.language = req.body['language'];
+        if (req.body['language'] === "") {
+            errorsOut.push({message : "Enter a language , or select No for Translator reqd",
+                            field : 'language'});
+        }
     }
 
     editedClaimant.approvedRep = req.body['approved-rep'];
