@@ -14,10 +14,28 @@
                 {% endif %}>
                 <label for="translator-yes">Yes</label>
             </div>
-            <div class="panel panel-border-narrow js-hidden" id="language-gp">
-                <label class="form-label-bold" for="language">Language</label>
-                <input class="form-control" id="language" name="language" type="text" value="{{ claimant.language }}">
-            </div>
+            {% set errorFlag = 0 %}
+            {% for error in errors %}
+                {% if error.field === 'language' %}
+                    {% set errorFlag = 1 %}
+                {% endif %}
+            {% endfor %}
+            {% if errorFlag === 1 %}
+                <div class="form-group form-group-error js-hidden" id="language-gp">
+                    <label for="language" id="error-language">
+                        <span class="form-label-bold">Language</span>
+                        <span class="error-message">Language must be entered</span>
+                    </label>
+                    <input class="form-control form-control-error" id="language" name="language" type="text" value="{{ claimant.language }}">
+                </div>
+            {% else %}
+                <div class="panel panel-border-narrow js-hidden" id="language-gp">
+                    <label for="language">
+                        <span class="form-label-bold">Language</span>
+                    </label>
+                    <input class="form-control" id="language" name="language" type="text" value="{{ claimant.language }}">
+                </div>
+            {% endif %}
         </fieldset>
     </div>
 </div>
