@@ -132,7 +132,7 @@ function claimantCreatePageAction(req, res) {
 
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
         errorsOut.push({message : "Date of birth must be in valid format and within valid range",
-            field : ""});
+            field : "birth-date-group"});
         if (!day || day < 1 || day > 31) {
             errorsOut.push({message : "......day of birth must be from 1 to 31",
                 field : "birthDay"});
