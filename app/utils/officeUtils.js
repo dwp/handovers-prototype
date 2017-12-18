@@ -4,7 +4,6 @@ function getOfficeByIdFromListOfOffices(officesList, id) {
     let inputId = id || 1;
     let foundOffice = {};
 
-    console.log("")
     for (let i=0; i < offices.length; i++) {
         let officeId = offices[i].id;
         if (officeId == inputId) {
