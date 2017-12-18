@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 const handoverUtils = require('../utils/handoverUtils');
 const queueUtils = require('../utils/queueUtils');
 const sIDU = require('../utils/setInitialDataUtils');
@@ -15,6 +17,7 @@ function viewQueuePage(req, res) {
     let queueType = req.query.agentId ? 'agent' : 'office';
     let users = sIDU.setInitialUsersData();
     let queueUser = userUtils.getUserByStaffIdFromListOfUsers(users, queueAgent);
+    let sortedHandoversList;
 
     for (let i=0; i < length; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
@@ -41,8 +44,10 @@ function viewQueuePage(req, res) {
         }
     }
 
+    sortedHandoversList = _.sortBy(handoversList, ['dateAndTimeRaised']);
+
     res.render('queue', {
-        handoversList : handoversList,
+        handoversList : sortedHandoversList,
         queueType : queueType,
         queueUser : queueUser
     });
