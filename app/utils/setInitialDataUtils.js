@@ -121,6 +121,7 @@ function setInitialHandoversData() {
         handover.nino = handoversList[i].nino;
         handover.raisedByStaffId = handoversList[i].raisedByStaffId;
         handover.raisedOnBehalfOfOfficeId = handoversList[i].raisedOnBehalfOfOfficeId;
+        handover.routedToOfficeId = handoversList[i].routedToOfficeId;
         handover.benefitId = handoversList[i].benefitId;
         handover.benSubType = handoversList[i].benSubType;
         handover.typeId = handoversList[i].typeId;

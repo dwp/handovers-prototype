@@ -40,6 +40,8 @@ function viewHandoverPage(req, res) {
         officeType : officeTypeName
     }
 
+    let routedToOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.routedToOfficeId);
+
     let userWhoRaisedHandover = userUtils.getUserByStaffIdFromListOfUsers(users, handover.raisedByStaffId);
     userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
@@ -74,6 +76,7 @@ function viewHandoverPage(req, res) {
         handoverReason : handoverTextDetails.handoverReason,
         handoverNotes : handoverNotes,
         officeDetails : officeDetails,
+        routedToOfficeDetails : routedToOfficeDetails,
         claimantOfficeDetails : claimantOfficeDetails,
         officeTypes : officeTypes,
         officeType : officeType,
@@ -165,6 +168,10 @@ function createHandoverPageAction(req, res) {
     } else {
         newHandover.benSubType = null;
     }
+
+    // Set office the new handover is routed to this value on handover creation until/unless prototype changed to show some kind of routing rules
+    newHandover.routedToOfficeId = 4;
+
     newHandover.typeId = req.body['handover-type'];;
     newHandover.reasonId = req.body['handover-reason'];
     newHandover.callback = req.body['handover-callback'];
@@ -229,6 +236,9 @@ function editHandoverPage(req, res) {
         officeTypeId : officeTypeId,
         officeTypeName : officeTypeName
     }
+
+    let routedToOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.routedToOfficeId);
+
     let errorsIn = req.session.errors ? req.session.errors : [];
 
     let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, handover.nino);
@@ -269,6 +279,7 @@ function editHandoverPage(req, res) {
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
         handoverNotes : handoverNotes,
+        routedToOfficeDetails : routedToOfficeDetails,
         claimant : claimant,
         handover : handover,
         userWhoRaisedHandover : userWhoRaisedHandover,
