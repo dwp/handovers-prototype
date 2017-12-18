@@ -40,7 +40,7 @@ function viewHandoverPage(req, res) {
         officeType : officeTypeName
     }
 
-    let routedToOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.routedToOfficeId);
+    let receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
 
     let userWhoRaisedHandover = userUtils.getUserByStaffIdFromListOfUsers(users, handover.raisedByStaffId);
     userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
@@ -76,7 +76,7 @@ function viewHandoverPage(req, res) {
         handoverReason : handoverTextDetails.handoverReason,
         handoverNotes : handoverNotes,
         officeDetails : officeDetails,
-        routedToOfficeDetails : routedToOfficeDetails,
+        receivingOfficeDetails : receivingOfficeDetails,
         claimantOfficeDetails : claimantOfficeDetails,
         officeTypes : officeTypes,
         officeType : officeType,
@@ -170,7 +170,7 @@ function createHandoverPageAction(req, res) {
     }
 
     // Set office the new handover is routed to this value on handover creation until/unless prototype changed to show some kind of routing rules
-    newHandover.routedToOfficeId = 4;
+    newHandover.receivingOfficeId = 4;
 
     newHandover.typeId = req.body['handover-type'];;
     newHandover.reasonId = req.body['handover-reason'];
@@ -237,7 +237,7 @@ function editHandoverPage(req, res) {
         officeTypeName : officeTypeName
     }
 
-    let routedToOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.routedToOfficeId);
+    let receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
 
     let errorsIn = req.session.errors ? req.session.errors : [];
 
@@ -279,7 +279,7 @@ function editHandoverPage(req, res) {
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
         handoverNotes : handoverNotes,
-        routedToOfficeDetails : routedToOfficeDetails,
+        receivingOfficeDetails : receivingOfficeDetails,
         claimant : claimant,
         handover : handover,
         userWhoRaisedHandover : userWhoRaisedHandover,
@@ -315,6 +315,7 @@ function editHandoverPageAction(req, res) {
     editedHandover.nino = handover.nino;
     editedHandover.raisedByStaffId = handover.raisedByStaffId;
     editedHandover.raisedOnBehalfOfOfficeId = handover.raisedOnBehalfOfOfficeId;
+    editedHandover.receivingOfficeId = handover.receivingOfficeId;
 
     editedHandover.benefitId = req.body['benefit'] || handover.benefitId;
 
