@@ -1,18 +1,44 @@
 <div class="column-half">
-    <div class="form-group form-date" id="birth-date-group">
-        <legend class="form-label-bold">Date of birth</legend>
-        <p class="form-hint">For example, 01 09 2017</p>
-        <div class="form-group form-group-day">
-            <label for="birthDay">Day</label>
-            <input type="text" class="form-control" id="birthDay" name="birthDay" pattern="[0-9]*" value="{{claimant.birthDay}}">
+    {% set errorFlag = 0 %}
+    {% for error in errors %}
+        {% if error.field === 'birth-date-group' %}
+            {% set errorFlag = 1 %}
+        {% endif %}
+    {% endfor %}
+    {% if errorFlag === 1 %}
+        <div class="form-group form-date form-group-error" id="birth-date-group">
+            <legend class="form-label-bold">Date of birth</legend>
+            <p class="error-message">Date of birth must be in a valid format and within valid range</p>
+            <p class="form-hint">For example, 01 09 2017</p>
+            <div class="form-group form-group-day">
+                <label for="birthDay">Day</label>
+                <input type="text" class="form-control" id="birthDay" name="birthDay" pattern="[0-9]*" value="{{claimant.birthDay}}">
+            </div>
+            <div class="form-group form-group-month">
+                <label for="birthMonth">Month</label>
+                <input type="text" class="form-control" id="birthMonth" name="birthMonth" pattern="[0-9]*" value="{{claimant.birthMonth}}">
+            </div>
+            <div class="form-group form-group-year">
+                <label for="birthYear">Year</label>
+                <input type="text" class="form-control" id="birthYear" name="birthYear" pattern="[0-9]*" value="{{claimant.birthYear}}">
+            </div>
         </div>
-        <div class="form-group form-group-month">
-            <label for="birthMonth">Month</label>
-            <input type="text" class="form-control" id="birthMonth" name="birthMonth" pattern="[0-9]*" value="{{claimant.birthMonth}}">
+    {% else %}
+        <div class="form-group form-date" id="birth-date-group">
+            <legend class="form-label-bold">Date of birth</legend>
+            <p class="form-hint">For example, 01 09 2017</p>
+            <div class="form-group form-group-day">
+                <label for="birthDay">Day</label>
+                <input type="text" class="form-control" id="birthDay" name="birthDay" pattern="[0-9]*" value="{{claimant.birthDay}}">
+            </div>
+            <div class="form-group form-group-month">
+                <label for="birthMonth">Month</label>
+                <input type="text" class="form-control" id="birthMonth" name="birthMonth" pattern="[0-9]*" value="{{claimant.birthMonth}}">
+            </div>
+            <div class="form-group form-group-year">
+                <label for="birthYear">Year</label>
+                <input type="text" class="form-control" id="birthYear" name="birthYear" pattern="[0-9]*" value="{{claimant.birthYear}}">
+            </div>
         </div>
-        <div class="form-group form-group-year">
-            <label for="birthYear">Year</label>
-            <input type="text" class="form-control" id="birthYear" name="birthYear" pattern="[0-9]*" value="{{claimant.birthYear}}">
-        </div>
-    </div>
+    {% endif %}
 </div>

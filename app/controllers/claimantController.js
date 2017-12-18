@@ -109,6 +109,13 @@ function claimantCreatePageAction(req, res) {
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
+    if (req.body['claimant-office'] === ""){
+        errorsOut.push({message : "Home jobcentre must be selected from dropdown list",
+            field : "claimant-office"});
+    } else {
+        newClaimant.claimantOfficeId = req.body['claimant-office'];
+    }
+
     if (req.body['firstName'] === "") {
         errorsOut.push({message : "First name must be entered",
                           field : "firstName"});
@@ -123,33 +130,30 @@ function claimantCreatePageAction(req, res) {
         newClaimant.lastName = req.body['lastName'];
     }
 
+    if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
+        errorsOut.push({message : "Date of birth must be in valid format and within valid range",
+            field : "birth-date-group"});
+        if (!day || day < 1 || day > 31) {
+            errorsOut.push({message : "......day of birth must be from 1 to 31",
+                field : "birthDay"});
+        }
+
+        if (!month || month < 1 || month > 12) {
+            errorsOut.push({message : "......month of birth must be from 1 to 12",
+                field : "birthMonth"});
+        }
+
+        if (!year || year < 1900 || year > currentYear) {
+            errorsOut.push({message : ("......year of birth must be between 1900 and " + currentYear),
+                field : "birthYear"});
+        }
+    }
+
     if (req.body['postcode'] === "") {
         errorsOut.push({message : "Postcode must be entered",
-                          field : "postcode"});
+            field : "postcode"});
     } else {
         newClaimant.postcode = req.body['postcode'];
-    }
-
-    if (!day || day < 1 || day > 31) {
-        errorsOut.push({message : "Day of birth must be from 1 to 31",
-                          field : "birthDay"});
-    }
-
-    if (!month || month < 1 || month > 12) {
-        errorsOut.push({message : "Month of birth must be from 1 to 12",
-                          field : "birthMonth"});
-    }
-
-    if (!year || year < 1900 || year > currentYear) {
-        errorsOut.push({message : ("Year of birth must be between 1900 and " + currentYear),
-                          field : "birthYear"});
-    }
-
-    if (req.body['claimant-office'] === ""){
-        errorsOut.push({message : "Home jobcentre must be selected from dropdown list",
-                          field : "claimant-office"});
-    } else {
-        newClaimant.claimantOfficeId = req.body['claimant-office'];
     }
 
     newClaimant.nino = req.body['nino'];
@@ -269,26 +273,30 @@ function claimantEditPageAction(req, res) {
         editedClaimant.lastName = req.body['lastName'];
     }
 
+    if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
+        errorsOut.push({message : "Date of birth must be in a valid format and within valid range",
+                        field : "birth-date-group"});
+        if (!day || day < 1 || day > 31) {
+            errorsOut.push({message : "......day of birth must be from 1 to 31",
+                field : "birthDay"});
+        }
+
+        if (!month || month < 1 || month > 12) {
+            errorsOut.push({message : "......month of birth must be from 1 to 12",
+                field : "birthMonth"});
+        }
+
+        if (!year || year < 1900 || year > currentYear) {
+            errorsOut.push({message : ("......year of birth must be between 1900 and " + currentYear),
+                field : "birthYear"});
+        }
+    }
+
     if (req.body['postcode'] === "") {
         errorsOut.push({message : "Postcode must be entered",
             field : "postcode"});
     } else {
         editedClaimant.postcode = req.body['postcode'];
-    }
-
-    if (!day || day < 1 || day > 31) {
-        errorsOut.push({message : "Day of birth must be from 1 to 31",
-            field : "birthDay"});
-    }
-
-    if (!month || month < 1 || month > 12) {
-        errorsOut.push({message : "Month of birth must be from 1 to 12",
-            field : "birthMonth"});
-    }
-
-    if (!year || year < 1900 || year > currentYear) {
-        errorsOut.push({message : ("Year of birth must be between 1900 and " + currentYear),
-            field : "birthYear"});
     }
 
     editedClaimant.nino = claimant.nino;
@@ -318,11 +326,11 @@ function claimantEditPageAction(req, res) {
                 errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
                                 field : ""});
                 if (req.body['rep-name'] === "") {
-                    errorsOut.push({message : "         .....name must be entered",
+                    errorsOut.push({message : "......name must be entered",
                                     field : "rep-name"});
                 }
                 if (req.body['rep-contact'] === "") {
-                    errorsOut.push({message : "         .....contact details must be entered",
+                    errorsOut.push({message : "......contact details must be entered",
                                     field : "rep-contact"});
                 }
             }
