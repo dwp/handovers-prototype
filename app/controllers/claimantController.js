@@ -109,6 +109,13 @@ function claimantCreatePageAction(req, res) {
     let currentDate = new Date();
     let currentYear = currentDate.getFullYear();
 
+    if (req.body['claimant-office'] === ""){
+        errorsOut.push({message : "Home jobcentre must be selected from dropdown list",
+            field : "claimant-office"});
+    } else {
+        newClaimant.claimantOfficeId = req.body['claimant-office'];
+    }
+
     if (req.body['firstName'] === "") {
         errorsOut.push({message : "First name must be entered",
                           field : "firstName"});
@@ -121,13 +128,6 @@ function claimantCreatePageAction(req, res) {
                           field : "lastName"});
     } else {
         newClaimant.lastName = req.body['lastName'];
-    }
-
-    if (req.body['postcode'] === "") {
-        errorsOut.push({message : "Postcode must be entered",
-                          field : "postcode"});
-    } else {
-        newClaimant.postcode = req.body['postcode'];
     }
 
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
@@ -149,11 +149,11 @@ function claimantCreatePageAction(req, res) {
         }
     }
 
-    if (req.body['claimant-office'] === ""){
-        errorsOut.push({message : "Home jobcentre must be selected from dropdown list",
-                          field : "claimant-office"});
+    if (req.body['postcode'] === "") {
+        errorsOut.push({message : "Postcode must be entered",
+            field : "postcode"});
     } else {
-        newClaimant.claimantOfficeId = req.body['claimant-office'];
+        newClaimant.postcode = req.body['postcode'];
     }
 
     newClaimant.nino = req.body['nino'];
@@ -273,13 +273,6 @@ function claimantEditPageAction(req, res) {
         editedClaimant.lastName = req.body['lastName'];
     }
 
-    if (req.body['postcode'] === "") {
-        errorsOut.push({message : "Postcode must be entered",
-            field : "postcode"});
-    } else {
-        editedClaimant.postcode = req.body['postcode'];
-    }
-
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
         errorsOut.push({message : "Date of birth must be in a valid format and within valid range",
                         field : "birth-date-group"});
@@ -297,6 +290,13 @@ function claimantEditPageAction(req, res) {
             errorsOut.push({message : ("......year of birth must be between 1900 and " + currentYear),
                 field : "birthYear"});
         }
+    }
+
+    if (req.body['postcode'] === "") {
+        errorsOut.push({message : "Postcode must be entered",
+            field : "postcode"});
+    } else {
+        editedClaimant.postcode = req.body['postcode'];
     }
 
     editedClaimant.nino = claimant.nino;
