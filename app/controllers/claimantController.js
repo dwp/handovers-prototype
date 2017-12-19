@@ -19,7 +19,6 @@ function claimantFindPageAction(req, res) {
     let inputNino = req.body.nino;
     let claimant = {};
     let claimantFound = 0;
-
     if (inputNino === '') {
         console.log('Nino not input');
     } else {
@@ -30,16 +29,13 @@ function claimantFindPageAction(req, res) {
             }
         }
     }
-
     if (claimantFound === 0) {
         claimant.nino = inputNino;
         res.render('claimant_search_results', claimant);
     } else {
         req.session.claimant = claimant;
         res.redirect('/claimant/view');
-
     }
-
 }
 
 function claimantViewPage(req, res) {
@@ -48,12 +44,12 @@ function claimantViewPage(req, res) {
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let errorsIn = req.session.errors ? req.session.errors : [];
     let claimant;
-    let sessionClaimant;
-
     if (errorsIn.length === 0) {
-        sessionClaimant = req.session.claimant ? req.session.claimant : claimants[0];
-        let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : sessionClaimant.nino;
-        claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
+        if(req.query.nino) {
+            claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+        } else {
+            claimant = req.session.claimant ? req.session.claimant : claimants[0];
+        }
         let displayDate = dateUtils.formatDateAndTimeForDisplay(claimant.dob);
         claimant.birthDay = parseInt(displayDate.day);
         claimant.birthMonth = displayDate.month;
@@ -65,9 +61,7 @@ function claimantViewPage(req, res) {
             claimant = req.session.newClaimant;
         }
     }
-
     let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
-
     res.render('claimant', {
         claimant : claimant,
         claimantOfficeDetails : claimantOfficeDetails,
@@ -79,22 +73,27 @@ function claimantViewPage(req, res) {
 function claimantCreatePage(req, res) {
 
     let editOrCreate = 'create';
+    let errorsIn = req.session.errors ? req.session.errors : [];
     let officesList = sIDU.setInitialOfficesData();
     let claimant = {};
-    let errorsIn = req.session.errors ? req.session.errors : [];
+
+    //   If there is a newClaimant session object it is because there were errors in data input previously during
+    //   claimant create. It holds the previously-input data that has not been stored in the session claimant
+    //   object because it contains errors, but is needed to be re-displayed in the claimant create page.
+    //   If there is not a newClaimant session object, use the nino that was passed in with the url, or a default
+    //   if no nino was passed in.
+
     if (req.session.newClaimant) {
         claimant = req.session.newClaimant;
     } else {
         claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
     }
-
-
-    res.render('claimant-edit', { claimant : claimant,
-                                  editOrCreate : editOrCreate,
-                                  officesList : officesList,
-                                  errors : errorsIn,
-                                  errorsLength : errorsIn.length
-        }
+    res.render('claimant-edit', {claimant : claimant,
+                                 officesList : officesList,
+                                 editOrCreate : editOrCreate,
+                                 errors : errorsIn,
+                                 errorsLength : errorsIn.length
+                                }
     );
 }
 
@@ -105,96 +104,94 @@ function claimantCreatePageAction(req, res) {
     let year = req.body['birthYear'];
     let month = req.body['birthMonth'];
     let day = req.body['birthDay'];
+    let currentYear = new Date().getFullYear();
     let errorsOut = [];
-    let currentDate = new Date();
-    let currentYear = currentDate.getFullYear();
-
+    newClaimant.nino = req.body['nino'];
     if (req.body['claimant-office'] === ""){
-        errorsOut.push({message : "Home jobcentre must be selected from dropdown list",
+        errorsOut.push({
+            message : "Home jobcentre must be selected from dropdown list",
             field : "claimant-office"});
     } else {
         newClaimant.claimantOfficeId = req.body['claimant-office'];
     }
-
     if (req.body['firstName'] === "") {
-        errorsOut.push({message : "First name must be entered",
-                          field : "firstName"});
+        errorsOut.push({
+            message : "First name must be entered",
+            field : "firstName"});
     } else {
         newClaimant.firstName = req.body['firstName'];
     }
-
     if (req.body['lastName'] === "") {
-        errorsOut.push({message : "Last name must be entered",
-                          field : "lastName"});
+        errorsOut.push({
+            message : "Last name must be entered",
+            field : "lastName"});
     } else {
         newClaimant.lastName = req.body['lastName'];
     }
-
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
-        errorsOut.push({message : "Date of birth must be in valid format and within valid range",
+        errorsOut.push({
+            message : "Date of birth must be in valid format and within valid range",
             field : "birth-date-group"});
         if (!day || day < 1 || day > 31) {
-            errorsOut.push({message : "......day of birth must be from 1 to 31",
+            errorsOut.push({
+                message : "......day of birth must be from 1 to 31",
                 field : "birthDay"});
         }
-
         if (!month || month < 1 || month > 12) {
-            errorsOut.push({message : "......month of birth must be from 1 to 12",
+            errorsOut.push({
+                message : "......month of birth must be from 1 to 12",
                 field : "birthMonth"});
         }
-
         if (!year || year < 1900 || year > currentYear) {
-            errorsOut.push({message : ("......year of birth must be between 1900 and " + currentYear),
+            errorsOut.push({
+                message : ("......year of birth must be between 1900 and " + currentYear),
                 field : "birthYear"});
         }
     }
-
     if (req.body['postcode'] === "") {
-        errorsOut.push({message : "Postcode must be entered",
+        errorsOut.push({
+            message : "Postcode must be entered",
             field : "postcode"});
     } else {
         newClaimant.postcode = req.body['postcode'];
     }
-
-    newClaimant.nino = req.body['nino'];
     newClaimant.preferredContactNumber = req.body['prefContNum'];
     newClaimant.emailAddress = req.body['emailAddr'];
-    newClaimant.postcode = req.body['postcode'];
     newClaimant.welshSpeaker = req.body['welsh-speaker'];
     newClaimant.translator = req.body['translator'];
-
     if (newClaimant.translator === "No") {
             newClaimant.language = '';
         } else {
             newClaimant.language = req.body['language'];
             if (req.body['language'] === "") {
-                errorsOut.push({message : "Enter a language , or select No for Translator reqd",
-                                field : 'language'});
+                errorsOut.push({
+                    message : "Enter a language , or select No for Translator reqd",
+                    field : 'language'});
             }
         }
-
     newClaimant.approvedRep = req.body['approved-rep'];
-
     if (newClaimant.approvedRep === "Yes") {
             newClaimant.approvedRepName = req.body['rep-name'];
             newClaimant.approvedRepContact = req.body['rep-contact'];
             if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-                errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
-                                field : ""});
+                errorsOut.push({
+                    message : "Enter both name and contact details for approved representative, or select No",
+                    field : ""});
                 if (req.body['rep-name'] === "") {
-                    errorsOut.push({message : "         .....name must be entered",
-                                    field : "rep-name"});
+                    errorsOut.push({
+                        message : "         .....name must be entered",
+                        field : "rep-name"});
                 }
                 if (req.body['rep-contact'] === "") {
-                    errorsOut.push({message : "         .....contact details must be entered",
-                                    field : "rep-contact"});
+                    errorsOut.push({
+                        message : "         .....contact details must be entered",
+                        field : "rep-contact"});
                 }
             }
     } else {
         newClaimant.approvedRepName = "";
         newClaimant.approvedRepContact = "";
     }
-
     if (errorsOut.length === 0) {
         newClaimant.dob = new Date(year + '-' + month + '-' + day);
         req.session.claimant = newClaimant;
@@ -215,15 +212,16 @@ function claimantCreatePageAction(req, res) {
 function claimantEditPage(req, res) {
 
     let editOrCreate = 'edit';
-    let officesList = sIDU.setInitialOfficesData();
     let errorsIn = req.session.errors ? req.session.errors : [];
+    let officesList = sIDU.setInitialOfficesData();
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let sessionClaimant = {};
     let claimant;
     if (errorsIn.length === 0) {
-        sessionClaimant = req.session.claimant ? req.session.claimant : claimants[0];
-        let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : sessionClaimant.nino;
-        claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
+        if(req.query.nino) {
+            claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+        } else {
+            claimant = req.session.claimant ? req.session.claimant : claimants[0];
+        }
         let displayDate = dateUtils.formatDateAndTimeForDisplay(claimant.dob);
         claimant.birthDay = parseInt(displayDate.day);
         claimant.birthMonth = displayDate.numericMonth;
@@ -231,20 +229,15 @@ function claimantEditPage(req, res) {
     } else {
         claimant = req.session.editedClaimant;
     }
-
     let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
-
     req.session.claimant = claimant;
-
     res.render('claimant-edit', { claimant : claimant,
                                   claimantOfficeDetails : claimantOfficeDetails,
                                   editOrCreate : editOrCreate,
                                   errors : errorsIn,
                                   errorsLength : errorsIn.length
-
         }
     );
-
 }
 
 function claimantEditPageAction(req, res) {
@@ -256,89 +249,87 @@ function claimantEditPageAction(req, res) {
     let month = req.body['birthMonth'];
     let day = req.body['birthDay'];
     let errorsOut = [];
-    let currentDate = new Date();
-    let currentYear = currentDate.getFullYear();
-
+    let currentYear = new Date().getFullYear();
+    editedClaimant.nino = claimant.nino;
+    editedClaimant.claimantOfficeId = req.body['claimant-office'];
     if (req.body['firstName'] === "") {
-        errorsOut.push({message : "First name must be entered",
+        errorsOut.push({
+            message : "First name must be entered",
             field : "firstName"});
     } else {
         editedClaimant.firstName = req.body['firstName'];
     }
-
     if (req.body['lastName'] === "") {
-        errorsOut.push({message : "Last name must be entered",
+        errorsOut.push({
+            message : "Last name must be entered",
             field : "lastName"});
     } else {
         editedClaimant.lastName = req.body['lastName'];
     }
-
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
-        errorsOut.push({message : "Date of birth must be in a valid format and within valid range",
-                        field : "birth-date-group"});
+        errorsOut.push({
+            message : "Date of birth must be in a valid format and within valid range",
+            field : "birth-date-group"});
         if (!day || day < 1 || day > 31) {
-            errorsOut.push({message : "......day of birth must be from 1 to 31",
+            errorsOut.push({
+                message : "......day of birth must be from 1 to 31",
                 field : "birthDay"});
         }
-
         if (!month || month < 1 || month > 12) {
-            errorsOut.push({message : "......month of birth must be from 1 to 12",
+            errorsOut.push({
+                message : "......month of birth must be from 1 to 12",
                 field : "birthMonth"});
         }
-
         if (!year || year < 1900 || year > currentYear) {
-            errorsOut.push({message : ("......year of birth must be between 1900 and " + currentYear),
+            errorsOut.push({
+                message : ("......year of birth must be between 1900 and " + currentYear),
                 field : "birthYear"});
         }
     }
-
     if (req.body['postcode'] === "") {
-        errorsOut.push({message : "Postcode must be entered",
+        errorsOut.push({
+            message : "Postcode must be entered",
             field : "postcode"});
     } else {
         editedClaimant.postcode = req.body['postcode'];
     }
-
-    editedClaimant.nino = claimant.nino;
-    editedClaimant.claimantOfficeId = req.body['claimant-office'];
     editedClaimant.preferredContactNumber = req.body['prefContNum'];
     editedClaimant.emailAddress = req.body['emailAddr'];
-    editedClaimant.postcode = req.body['postcode'];
     editedClaimant.welshSpeaker = req.body['welsh-speaker'];
     editedClaimant.translator = req.body['translator'];
-
     if (editedClaimant.translator === "No") {
         editedClaimant.language = '';
     } else {
         editedClaimant.language = req.body['language'];
         if (req.body['language'] === "") {
-            errorsOut.push({message : "Enter a language , or select No for Translator reqd",
-                            field : 'language'});
+            errorsOut.push({
+                message : "Enter a language , or select No for Translator reqd",
+                field : 'language'});
         }
     }
-
     editedClaimant.approvedRep = req.body['approved-rep'];
-
     if (editedClaimant.approvedRep === "Yes") {
             editedClaimant.approvedRepName = req.body['rep-name'];
             editedClaimant.approvedRepContact = req.body['rep-contact'];
             if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-                errorsOut.push({message : "Enter both name and contact details for approved representative, or select No",
-                                field : ""});
+                errorsOut.push({
+                    message : "Enter both name and contact details for approved representative, or select No",
+                    field : ""});
                 if (req.body['rep-name'] === "") {
-                    errorsOut.push({message : "......name must be entered",
-                                    field : "rep-name"});
+                    errorsOut.push({
+                        message : "......name must be entered",
+                        field : "rep-name"});
                 }
                 if (req.body['rep-contact'] === "") {
-                    errorsOut.push({message : "......contact details must be entered",
-                                    field : "rep-contact"});
+                    errorsOut.push({
+                        message : "......contact details must be entered",
+                        field : "rep-contact"});
                 }
             }
     } else {
         editedClaimant.approvedRepName = "";
         editedClaimant.approvedRepContact = "";
     }
-
     if (errorsOut.length === 0) {
         editedClaimant.dob = new Date(year + '-' + month + '-' + day);
         req.session.claimant = editedClaimant;
@@ -351,7 +342,6 @@ function claimantEditPageAction(req, res) {
         editedClaimant.birthMonth = month;
         editedClaimant.birthYear = year;
         req.session.editedClaimant = editedClaimant;
-        req.session.claimants = claimants;
         req.session.errors = errorsOut;
         res.redirect('/claimant/edit');
     }

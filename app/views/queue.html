@@ -9,7 +9,7 @@
         {% if queueType === "office" %}
             <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
         {% else %}
-            <h1 class="heading-large">Handovers queue - {{ queueUser.firstName }} {{ queueUser.lastName }}</h1>
+            <h1 class="heading-large">Handovers queue - {{ queueAgent.firstName }} {{ queueAgent.lastName }}</h1>
         {% endif %}
 
         <div class="grid-row">
@@ -31,7 +31,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for handover in handoversList %}
+                    {% for handover in handoversQueueList %}
                     <tr>
                         <td>{{handover.nino}}</td>
                         <td>{{handover.benefitName}}</td>

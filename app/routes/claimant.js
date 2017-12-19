@@ -6,7 +6,6 @@ var claimant = require("../controllers/claimantController.js");
 module.exports = function(router) {
 
     // Claimants page routes
-    router.get('/claimant/find', claimant.claimantFindPage);
     router.get('/claimant/view', claimant.claimantViewPage);
     router.get('/claimant/find', claimant.claimantFindPage);
     router.post('/claimant/find', claimant.claimantFindPageAction);
