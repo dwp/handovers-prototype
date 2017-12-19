@@ -276,6 +276,7 @@ function setInitialUsersData() {
 module.exports.setInitialClaimantsData = setInitialClaimantsData;
 module.exports.setInitialBenefitsData = setInitialBenefitsData;
 module.exports.setInitialBenefitsAndHandoversData = setInitialBenefitsAndHandoversData;
+module.exports.setInitialHandoversData = setInitialHandoversData;
 module.exports.setInitialOfficeTypesAndOfficesData = setInitialOfficeTypesAndOfficesData;
 //module.exports.setInitialTeamsQueuesAndUsersData = setInitialTeamsQueuesAndUsersData;
 module.exports.setInitialOfficesData = setInitialOfficesData;

@@ -1,5 +1,4 @@
-var _ = require('lodash');
-
+const _ = require('lodash');
 const handoverUtils = require('../utils/handoverUtils');
 const queueUtils = require('../utils/queueUtils');
 const sIDU = require('../utils/setInitialDataUtils');
@@ -9,71 +8,62 @@ const userUtils = require('../utils/userUtils');
 
 function viewQueuePage(req, res) {
 
-    let bensHands = sIDU.setInitialBenefitsAndHandoversData();
-    let handovers = req.session.handovers ? req.session.handovers : bensHands.initialHandovers;
-    let length = handovers.length;
-    let handoversList = [];
-    let queueAgent = req.query.agentId ? req.query.agentId : '40001003';
-    let queueType = req.query.agentId ? 'agent' : 'office';
     let users = sIDU.setInitialUsersData();
-    let queueUser = userUtils.getUserByStaffIdFromListOfUsers(users, queueAgent);
-    let sortedHandoversList;
-
-    for (let i=0; i < length; i++) {
+    let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
+    let handoversLength = handovers.length;
+    let queueType = req.query.agentId ? 'agent' : 'office';
+    let queueAgent = '';
+    if (queueType === 'agent') {
+        queueAgent = userUtils.getUserByStaffIdFromListOfUsers(users, (req.query.agentId ? req.query.agentId : '40001003'));
+    }
+    let handoversQueueList = [];
+    let sortedHandoversQueueList;
+    for (let i=0; i < handoversLength; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
         let textDetails = handoverUtils.getHandoverDetails(handover);
-        let benefitName = textDetails.benefitName;
-        let handoverType = textDetails.handoverType;
-        let handoverReason = textDetails.handoverReason;
         let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
         let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTimeForDisplay);
-        handover.benefitName = benefitName;
-        handover.handoverType = handoverType;
-        handover.handoverReason = handoverReason;
+        handover.benefitName = textDetails.benefitName;
+        handover.handoverType = textDetails.handoverType;
+        handover.handoverReason = textDetails.handoverReason;
         handover.dateRaised = (dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month + " " + dateAndTimeRaisedForDisplay.year);
         handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
         handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
         handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
-
         if (queueType === 'agent') {
-            if (handover.inQueueOfStaffId === queueAgent) {
-                handoversList.push(handover);
+            if (handover.inQueueOfStaffId === queueAgent.staffId) {
+                handoversQueueList.push(handover);
             }
         } else {
-            handoversList.push(handover);
+            handoversQueueList.push(handover);
         }
     }
-
-    sortedHandoversList = _.sortBy(handoversList, ['dateAndTimeRaised']);
-
+    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['dateAndTimeRaised']);
     res.render('queue', {
-        handoversList : sortedHandoversList,
+        handoversQueueList : sortedHandoversQueueList,
         queueType : queueType,
-        queueUser : queueUser
+        queueAgent : queueAgent
     });
 }
 
 function getNextQueueItem(req, res) {
 
-    let bensHands = sIDU.setInitialBenefitsAndHandoversData();
-    let handovers = req.session.handovers ? req.session.handovers : bensHands.initialHandovers;
-    let length = handovers.length;
+    let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
+    let sortedHandovers = _.sortBy(handovers, ['dateAndTimeRaised']);
+    let sortedHandoversLength = sortedHandovers.length;
     let gotFirstUnallocatedItem = 0;
-    let newHandoversList = [];
-
-    for (let i=0; i < length; i++) {
+    let newHandoversQueueList = [];
+    for (let i=0; i < sortedHandoversLength; i++) {
         if (gotFirstUnallocatedItem === 0) {
-            if (handovers[i].status === "Not allocated") {
-                handovers[i].inQueueOfStaffId = "40001004";
-                handovers[i].status = "In progress";
+            if (sortedHandovers[i].status === "Not allocated") {
+                sortedHandovers[i].inQueueOfStaffId = "40001004";
+                sortedHandovers[i].status = "In progress";
                 gotFirstUnallocatedItem = 1;
             }
         }
-        newHandoversList.push(handovers[i]);
+        newHandoversQueueList.push(sortedHandovers[i]);
     }
-
-    req.session.handovers = newHandoversList;
-
+    req.session.handovers = newHandoversQueueList;
     res.redirect('/queue/view?agentId=40001004');
 
 }
