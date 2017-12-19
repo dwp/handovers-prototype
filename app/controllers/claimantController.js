@@ -48,12 +48,13 @@ function claimantViewPage(req, res) {
     let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
     let errorsIn = req.session.errors ? req.session.errors : [];
     let claimant;
-    let sessionClaimant;
 
     if (errorsIn.length === 0) {
-        sessionClaimant = req.session.claimant ? req.session.claimant : claimants[0];
-        let ninoOfClaimantToEdit = req.query.nino ? req.query.nino : sessionClaimant.nino;
-        claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, ninoOfClaimantToEdit);
+        if(req.query.nino) {
+            claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+        } else {
+            claimant = req.session.claimant ? req.session.claimant : claimants[0];
+        }
         let displayDate = dateUtils.formatDateAndTimeForDisplay(claimant.dob);
         claimant.birthDay = parseInt(displayDate.day);
         claimant.birthMonth = displayDate.month;
