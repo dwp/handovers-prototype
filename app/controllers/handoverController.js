@@ -43,7 +43,7 @@ function viewHandoverPage(req, res) {
         inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
     }
     if (handover.notes === null) {
-        handoverNotes = null;
+        handoverNotes = [];
     } else {
         let handNoteLen = handover.notes.length;
         for (let i=0; i < handNoteLen; i++) {
@@ -165,8 +165,6 @@ function createHandoverPageAction(req, res) {
     if (handoverNote === "" || handoverNote === null) {
         // Do nothing
     } else {
-
-
         let newHandoverNote = new Object();
         newHandoverNote.id = '1';
         newHandoverNote.handoverId = newHandover.id;
