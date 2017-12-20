@@ -84,7 +84,22 @@
                     {% endif %}
                     </div>
                 </div>
-                <br>
+
+                {% if editOrCreate === 'create' %}
+                <div>
+                </div>
+                {% else %}
+                    {% if handover.inQueueOfStaffId !== "" %}
+                    <div class="grid-row">
+                        <div class="column-half">
+                            <legend class="form-label-bold">Agent progressing handover</legend>
+                            <p>{{ inQueueOfStaffDetails.firstName }} {{ inQueueOfStaffDetails.lastName }}</p>
+                        </div>
+                        <div class="column-half">
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endif %}
 
                 <div class="grid-row">
                     {% if editOrCreate === 'create' %}

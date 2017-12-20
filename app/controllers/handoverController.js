@@ -38,8 +38,12 @@ function viewHandoverPage(req, res) {
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
     handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
     handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+    let inQueueOfStaffDetails;
+    if (handover.inQueueOfStaffId !== "") {
+        inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
+    }
     if (handover.notes === null) {
-        handoverNotes = null;
+        handoverNotes = [];
     } else {
         let handNoteLen = handover.notes.length;
         for (let i=0; i < handNoteLen; i++) {
@@ -64,6 +68,7 @@ function viewHandoverPage(req, res) {
         handoverNotes : handoverNotes,
         handoverNotesLength : handoverNotes.length,
         receivingOfficeDetails : receivingOfficeDetails,
+        inQueueOfStaffDetails : inQueueOfStaffDetails,
         claimantOfficeDetails : claimantOfficeDetails,
         claimant : claimant,
         handover : handover,
@@ -160,8 +165,6 @@ function createHandoverPageAction(req, res) {
     if (handoverNote === "" || handoverNote === null) {
         // Do nothing
     } else {
-
-
         let newHandoverNote = new Object();
         newHandoverNote.id = '1';
         newHandoverNote.handoverId = newHandover.id;
@@ -201,8 +204,12 @@ function editHandoverPage(req, res) {
     let errorsIn = req.session.errors ? req.session.errors : [];
     handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
     handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+    let inQueueOfStaffDetails;
+    if (handover.inQueueOfStaffId !== "") {
+        inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
+    }
     if (handover.notes === null) {
-        handoverNotes = null
+        handoverNotes = [];
     } else {
         for (let i=0; i < handover.notes.length; i++) {
             let handoverNote = {
@@ -226,6 +233,7 @@ function editHandoverPage(req, res) {
         handoverNotes : handoverNotes,
         handoverNotesLength : handoverNotes.length,
         receivingOfficeDetails : receivingOfficeDetails,
+        inQueueOfStaffDetails : inQueueOfStaffDetails,
         claimant : claimant,
         handover : handover,
         userWhoRaisedHandover : userWhoRaisedHandover,
