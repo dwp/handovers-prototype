@@ -225,7 +225,7 @@
                     <div class="column-full">
                         <legend class="form-label-bold">Notes</legend>
                         {% if editOrCreate === 'edit' %}
-                            {% if handoverNotes %}
+                            {% if handoverNotesLength !== 0 %}
                                 {% for note in handoverNotes %}
                                     <p>{{ note.noteContent }}</p>
                                     {% if note.updateResultedFromCustomerContactIndicator === 'Yes' %}
