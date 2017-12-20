@@ -78,8 +78,6 @@ function viewHandoverPageAction(req, res) {
 
     let handover = req.session.handover;
     let claimantNino = req.session.claimant && req.session.claimant.nino || console.log("No claimant in session, or no nino in claimant");
-    let handoverClaimant = req.session.claimant;
-    req.session.claimant = handoverClaimant;
     req.session.handover = handover;
     res.redirect('/handover/edit?nino=' + claimantNino);
 
