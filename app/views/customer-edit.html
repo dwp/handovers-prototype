@@ -5,40 +5,40 @@
 <main id="content" role="main">
     <div class="main-content">
         {% if editOrCreate === 'edit' %}
-            <h1 class="heading-large">Edit claimant details for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
-            <form action="/claimant/edit?nino={{ claimant.nino }}" method="POST" class="form">
+            <h1 class="heading-large">Edit customer details for {{ customer.firstName }} {{ customer.lastName }}</h1>
+            <form action="/customer/edit?nino={{ customer.nino }}" method="POST" class="form">
         {% else %}
-            <h1 class="heading-large">Create new claimant</h1>
-            <form action="/claimant/create" method="POST" class="form">
+            <h1 class="heading-large">Create new customer</h1>
+            <form action="/customer/create" method="POST" class="form">
         {% endif %}
         {% include "includes/message-banner.html" %}
         {% include "includes/error-summary.html" %}
             <div class="form-group">
                 <div class="grid-row">
-                    {% include "includes/claimantEdit/nino.html" %}
-                    {% include "includes/claimantEdit/home-jobcentre.html" %}
+                    {% include "includes/customerEdit/nino.html" %}
+                    {% include "includes/customerEdit/home-jobcentre.html" %}
                 </div>
 
                 <div class="grid-row">
-                    {% include "includes/claimantEdit/first-name.html" %}
-                    {% include "includes/claimantEdit/last-name.html" %}
+                    {% include "includes/customerEdit/first-name.html" %}
+                    {% include "includes/customerEdit/last-name.html" %}
                 </div>
 
                 <div class="grid-row">
-                    {% include "includes/claimantEdit/date-of-birth.html" %}
-                    {% include "includes/claimantEdit/postcode.html" %}
+                    {% include "includes/customerEdit/date-of-birth.html" %}
+                    {% include "includes/customerEdit/postcode.html" %}
                 </div>
 
                 <div class="grid-row">
-                    {% include "includes/claimantEdit/contact-details.html" %}
+                    {% include "includes/customerEdit/contact-details.html" %}
                 </div>
 
                 <div class="grid-row">
-                    {% include "includes/claimantEdit/welsh-speaker.html" %}
-                    {% include "includes/claimantEdit/translator-and-language.html" %}
+                    {% include "includes/customerEdit/welsh-speaker.html" %}
+                    {% include "includes/customerEdit/translator-and-language.html" %}
                 </div>
 
-                {% include "includes/claimantEdit/approved-rep.html" %}
+                {% include "includes/customerEdit/approved-rep.html" %}
 
                 <div class="grid-row">
                     <div class="column-half">

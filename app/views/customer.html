@@ -6,7 +6,7 @@
     <div class="main-content">
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
-        <h1 class="heading-large">View claimant details for {{ firstName }} {{ lastName }}</h1>
+        <h1 class="heading-large">View customer details for {{ firstName }} {{ lastName }}</h1>
         <br>
         <div>
             <div class="grid-row">
@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">National insurance number</legend>
                         <div>
-                            <p>{{ claimant.nino }}</p>
+                            <p>{{ customer.nino }}</p>
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Home jobcentre</legend>
                         <div>
-                            <p>{{ claimantOfficeDetails.officeName }}</p>
+                            <p>{{ customerOfficeDetails.officeName }}</p>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">First name</legend>
                         <div>
-                            <p>{{ claimant.firstName }}</p>
+                            <p>{{ customer.firstName }}</p>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Last name</legend>
                         <div>
-                            <p>{{ claimant.lastName }}</p>
+                            <p>{{ customer.lastName }}</p>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Date of birth</legend>
                         <div>
-                            <p>{{ claimant.birthDay }} {{ claimant.birthMonth }} {{ claimant.birthYear }}</p>
+                            <p>{{ customer.birthDay }} {{ customer.birthMonth }} {{ customer.birthYear }}</p>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Postcode</legend>
                         <div>
-                            <p>{{ claimant.postcode }}</p>
+                            <p>{{ customer.postcode }}</p>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Preferred contact number</legend>
                         <div>
-                            <p>{{ claimant.preferredContactNumber }}</p>
+                            <p>{{ customer.preferredContactNumber }}</p>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Email address</legend>
                         <div>
-                            <p>{{ claimant.emailAddress }}</p>
+                            <p>{{ customer.emailAddress }}</p>
                         </div>
                     </div>
                 </div>
@@ -90,14 +90,14 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Welsh speaker ?</legend>
                         <div>
-                            <p>{{ claimant.welshSpeaker }}</p>
+                            <p>{{ customer.welshSpeaker }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="column-half">
                     <div class="form-group">
                         <legend class="form-label-bold">Translator reqd ?</legend>
-                        {% if claimant.translator === "No" %}
+                        {% if customer.translator === "No" %}
                             <div>
                                 <p>No</p>
                             </div>
@@ -107,14 +107,14 @@
                             </div>
                             <div>
                                 <legend class="form-label-bold">Language</legend>
-                                <p>{{ claimant.language }}</p>
+                                <p>{{ customer.language }}</p>
                             </div>
                         {% endif %}
                     </div>
                 </div>
             </div>
 
-            {% if claimant.approvedRepName === "" %}
+            {% if customer.approvedRepName === "" %}
             <div>
             </div>
             {% else %}
@@ -123,7 +123,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Approved representative name</legend>
                         <div>
-                            <p>{{ claimant.approvedRepName }}</p>
+                            <p>{{ customer.approvedRepName }}</p>
                         </div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
                     <div class="form-group">
                         <legend class="form-label-bold">Approved representative contact details</legend>
                         <div>
-                            <p>{{ claimant.approvedRepContact }}</p>
+                            <p>{{ customer.approvedRepContact }}</p>
                         </div>
                     </div>
                 </div>
@@ -142,12 +142,12 @@
             <div class="grid-row">
                 <div class="column-half">
                     <div class="form-group">
-                        <a href="/claimant/edit?nino={{ claimant.nino }}" class="button">Edit claimant</a>
+                        <a href="/customer/edit?nino={{ customer.nino }}" class="button">Edit customer</a>
                     </div>
                 </div>
                 <div class="column-half">
                     <div class="form-group">
-                        <a href="/handover/create?nino={{ claimant.nino }}" class="button">Create handover</a>
+                        <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>
                     </div>
                 </div>
             </div>

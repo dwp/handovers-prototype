@@ -1,6 +1,6 @@
 const handoverUtils = require('../utils/handoverUtils');
 const officeUtils = require('../utils/officeUtils');
-const claimantUtils = require('../utils/claimantUtils');
+const customerUtils = require('../utils/customerUtils');
 const userUtils = require('../utils/userUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
@@ -25,10 +25,10 @@ function viewHandoverPage(req, res) {
     }
     let handoverNotes = [];
     let handoverTextDetails = handoverUtils.getHandoverDetails(handover);
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, handover.nino);
-    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
-    let officeId = claimant.claimantOfficeId || "3";
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, handover.nino);
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    let officeId = customer.customerOfficeId || "3";
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
     let officeTypes = sIDU.setInitialOfficeTypesData();
     let receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
@@ -57,7 +57,7 @@ function viewHandoverPage(req, res) {
             handoverNotes.push(handoverNote);
         }
     }
-    req.session.claimant = claimant;
+    req.session.customer = customer;
     req.session.handovers = handoversList;
     req.session.handover = handover;
     req.session.officeDetails = officeDetails;
@@ -69,8 +69,8 @@ function viewHandoverPage(req, res) {
         handoverNotesLength : handoverNotes.length,
         receivingOfficeDetails : receivingOfficeDetails,
         inQueueOfStaffDetails : inQueueOfStaffDetails,
-        claimantOfficeDetails : claimantOfficeDetails,
-        claimant : claimant,
+        customerOfficeDetails : customerOfficeDetails,
+        customer : customer,
         handover : handover,
         userWhoRaisedHandover : userWhoRaisedHandover,
         errors : errorsIn,
@@ -82,9 +82,9 @@ function viewHandoverPage(req, res) {
 function viewHandoverPageAction(req, res) {
 
     let handover = req.session.handover;
-    let claimantNino = req.session.claimant && req.session.claimant.nino || console.log("No claimant in session, or no nino in claimant");
+    let customerNino = req.session.customer && req.session.customer.nino || console.log("No customer in session, or no nino in customer");
     req.session.handover = handover;
-    res.redirect('/handover/edit?nino=' + claimantNino);
+    res.redirect('/handover/edit?nino=' + customerNino);
 
 }
 
@@ -98,26 +98,26 @@ function createHandoverPage(req, res) {
     let handoverReasonsList = initialData.initialHandoverReasons;
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
     let officesList = sIDU.setInitialOfficesData();
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
-    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
     let officeTypes = sIDU.setInitialOfficeTypesData();
     let officeId = 3;  // Change to let officeId = handover.raisedOnBehalfOfOfficeId || "3" once got different offices sorted
     let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
     user.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, user.owningOfficeId);
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(user.officeDetails.officeTypeId, officeTypes);
     user.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
-    req.session.claimant = claimant;
+    req.session.customer = customer;
     req.session.handovers = handovers;
-    req.session.claimants = claimants;
+    req.session.customers = customers;
     res.render('handover-edit', {
         benList : benefitsList,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
-        claimant : claimant,
+        customer : customer,
         user : user,
         officeDetails : officeDetails,
-        claimantOfficeDetails : claimantOfficeDetails,
+        customerOfficeDetails : customerOfficeDetails,
         officesList : officesList,
         officeTypes : officeTypes,
         editOrCreate : editOrCreate
@@ -128,7 +128,7 @@ function createHandoverPage(req, res) {
 function createHandoverPageAction(req, res) {
 
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
-    let claimant = req.session.claimant;
+    let customer = req.session.customer;
     let users = sIDU.setInitialUsersData();
     let handoverNote = req.body['handover-note'];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
@@ -136,7 +136,7 @@ function createHandoverPageAction(req, res) {
     let newHandoversList = handoversList;
     let newId = handoversList.length + 1;
     newHandover.id = newId;
-    newHandover.nino = claimant.nino;
+    newHandover.nino = customer.nino;
     newHandover.raisedByStaffId = '40001001';
     let user = userUtils.getUserByStaffIdFromListOfUsers(users, newHandover.raisedByStaffId);
     newHandover.raisedOnBehalfOfOfficeId = user.owningOfficeId;
@@ -177,7 +177,7 @@ function createHandoverPageAction(req, res) {
     newHandoversList.push(newHandover);
     req.session.handover = newHandover;
     req.session.handovers = newHandoversList;
-    req.session.claimant = claimant;
+    req.session.customer = customer;
     res.redirect('/handover/view?id=' + newId);
 
 }
@@ -191,11 +191,11 @@ function editHandoverPage(req, res) {
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
     let handoverNotes = [];
     let handoverTextDetails = handoverUtils.getHandoverDetails(handover);
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, handover.nino);
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, handover.nino);
     let officesList = sIDU.setInitialOfficesData();
     let officeTypes = sIDU.setInitialOfficeTypesData();
-    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId)
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId)
     let receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
     let userWhoRaisedHandover = userUtils.getUserByStaffIdFromListOfUsers(users, handover.raisedByStaffId);
     userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
@@ -222,8 +222,8 @@ function editHandoverPage(req, res) {
             handoverNotes.push(handoverNote);
         }
     }
-    req.session.claimant = claimant;
-    req.session.claimants = claimants;
+    req.session.customer = customer;
+    req.session.customers = customers;
     req.session.handover = handover;
     req.session.handovers = handovers;
     res.render('handover-edit', {
@@ -234,10 +234,10 @@ function editHandoverPage(req, res) {
         handoverNotesLength : handoverNotes.length,
         receivingOfficeDetails : receivingOfficeDetails,
         inQueueOfStaffDetails : inQueueOfStaffDetails,
-        claimant : claimant,
+        customer : customer,
         handover : handover,
         userWhoRaisedHandover : userWhoRaisedHandover,
-        claimantOfficeDetails : claimantOfficeDetails,
+        customerOfficeDetails : customerOfficeDetails,
         editOrCreate : editOrCreate,
         errors : errorsIn,
         errorsLength : errorsIn.length
@@ -251,7 +251,7 @@ function editHandoverPageAction(req, res) {
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData();
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
     let handoverIndex = commonUtils.findPositionOfObjectInArray(handover.id, handoversList);
-    let claimant = req.session.claimant;
+    let customer = req.session.customer;
     let handoverNote = req.body['handover-note'];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
     let editedHandover = new Object();
@@ -302,7 +302,7 @@ function editHandoverPageAction(req, res) {
     req.session.errors = errorsOut;
     req.session.handovers = handoversList;
     req.session.handover = editedHandover;
-    req.session.claimant = claimant;
+    req.session.customer = customer;
     res.redirect('/handover/edit?id=' + editedHandover.id);
 
 }

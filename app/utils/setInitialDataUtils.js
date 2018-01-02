@@ -1,42 +1,42 @@
 const benefitsData = require('../data/benefitsData.json');
-const claimantData = require('../data/claimantData.json');
+const customerData = require('../data/customerData.json');
 const handoverData = require('../data/handoverData.json');
 const officeData = require('../data/officeData.json');
 const teamData = require('../data/teamData.json');
 const dateUtils = require('../utils/dateUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-/*                                        Claimants Data Setup
+/*                                        Customers Data Setup
 /*
-/*                Set up initial claimants data from json file, and return in an array
+/*                Set up initial customers data from json file, and return in an array
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
 
-function setInitialClaimantsData() {
+function setInitialCustomersData() {
 
-    let claimantsList = claimantData['claimants'];
-    let initialClaimants = [];
-    for (let i=0; i < claimantsList.length; i++) {
-        let claimant = new Object();
-        let dob = new Date(claimantsList[i].dob);
-        claimant.firstName = claimantsList[i].firstName;
-        claimant.lastName = claimantsList[i].lastName;
-        claimant.dob = dob;
-        claimant.nino = claimantsList[i].nino;
-        claimant.preferredContactNumber = claimantsList[i].preferredContactNumber;
-        claimant.emailAddress = claimantsList[i].emailAddress;
-        claimant.postcode = claimantsList[i].postcode;
-        claimant.claimantOfficeId = claimantsList[i].claimantOfficeId;
-        claimant.welshSpeaker = claimantsList[i].welshSpeaker;
-        claimant.language = claimantsList[i].language;
-        claimant.translator = claimantsList[i].translator;
-        claimant.approvedRep = claimantsList[i].approvedRep;
-        claimant.approvedRepName = claimantsList[i].approvedRepName;
-        claimant.approvedRepContact = claimantsList[i].approvedRepContact;
-        initialClaimants.push(claimant);
+    let customersList = customerData['customers'];
+    let initialCustomers = [];
+    for (let i=0; i < customersList.length; i++) {
+        let customer = new Object();
+        let dob = new Date(customersList[i].dob);
+        customer.firstName = customersList[i].firstName;
+        customer.lastName = customersList[i].lastName;
+        customer.dob = dob;
+        customer.nino = customersList[i].nino;
+        customer.preferredContactNumber = customersList[i].preferredContactNumber;
+        customer.emailAddress = customersList[i].emailAddress;
+        customer.postcode = customersList[i].postcode;
+        customer.customerOfficeId = customersList[i].customerOfficeId;
+        customer.welshSpeaker = customersList[i].welshSpeaker;
+        customer.language = customersList[i].language;
+        customer.translator = customersList[i].translator;
+        customer.approvedRep = customersList[i].approvedRep;
+        customer.approvedRepName = customersList[i].approvedRepName;
+        customer.approvedRepContact = customersList[i].approvedRepContact;
+        initialCustomers.push(customer);
     }
-    return initialClaimants;
+    return initialCustomers;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -273,7 +273,7 @@ function setInitialUsersData() {
 
 }
 
-module.exports.setInitialClaimantsData = setInitialClaimantsData;
+module.exports.setInitialCustomersData = setInitialCustomersData;
 module.exports.setInitialBenefitsData = setInitialBenefitsData;
 module.exports.setInitialBenefitsAndHandoversData = setInitialBenefitsAndHandoversData;
 module.exports.setInitialHandoversData = setInitialHandoversData;

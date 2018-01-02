@@ -1,94 +1,94 @@
 const sIDU = require('../utils/setInitialDataUtils');
 const officeUtils = require('../utils/officeUtils');
-const claimantUtils = require('../utils/claimantUtils');
+const customerUtils = require('../utils/customerUtils');
 const dateUtils = require('../utils/dateUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-/*                                        Claimant Controllers
+/*                                        Customer Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-function claimantFindPage(req, res) {
+function customerFindPage(req, res) {
 
-    res.render('claimant-find');
+    res.render('customer-find');
 }
 
-function claimantFindPageAction(req, res) {
+function customerFindPageAction(req, res) {
 
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let inputNino = req.body.nino;
-    let claimant = {};
-    let claimantFound = 0;
+    let customer = {};
+    let customerFound = 0;
     if (inputNino === '') {
         console.log('Nino not input');
     } else {
-        for (let i=0; i < claimants.length; i++) {
-            if (claimants[i].nino === inputNino) {
-                claimant = claimants[i];
-                claimantFound = 1;
+        for (let i=0; i < customers.length; i++) {
+            if (customers[i].nino === inputNino) {
+                customer = customers[i];
+                customerFound = 1;
             }
         }
     }
-    if (claimantFound === 0) {
-        claimant.nino = inputNino;
-        res.render('claimant_search_results', claimant);
+    if (customerFound === 0) {
+        customer.nino = inputNino;
+        res.render('customer_search_results', customer);
     } else {
-        req.session.claimant = claimant;
-        res.redirect('/claimant/view');
+        req.session.customer = customer;
+        res.redirect('/customer/view');
     }
 }
 
-function claimantViewPage(req, res) {
+function customerViewPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let errorsIn = req.session.errors ? req.session.errors : [];
-    let claimant;
+    let customer;
     if (errorsIn.length === 0) {
         if(req.query.nino) {
-            claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+            customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
         } else {
-            claimant = req.session.claimant ? req.session.claimant : claimants[0];
+            customer = req.session.customer ? req.session.customer : customers[0];
         }
-        let displayDate = dateUtils.formatDateAndTimeForDisplay(claimant.dob);
-        claimant.birthDay = parseInt(displayDate.day);
-        claimant.birthMonth = displayDate.month;
-        claimant.birthYear = parseInt(displayDate.year);
+        let displayDate = dateUtils.formatDateAndTimeForDisplay(customer.dob);
+        customer.birthDay = parseInt(displayDate.day);
+        customer.birthMonth = displayDate.month;
+        customer.birthYear = parseInt(displayDate.year);
     } else {
-        if(req.session.editedClaimant) {
-            claimant = req.session.editedClaimant;
+        if(req.session.editedCustomer) {
+            customer = req.session.editedCustomer;
         } else {
-            claimant = req.session.newClaimant;
+            customer = req.session.newCustomer;
         }
     }
-    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
-    res.render('claimant', {
-        claimant : claimant,
-        claimantOfficeDetails : claimantOfficeDetails,
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    res.render('customer', {
+        customer : customer,
+        customerOfficeDetails : customerOfficeDetails,
         errors : errorsIn,
         errorsLength : errorsIn.length
     });
 }
 
-function claimantCreatePage(req, res) {
+function customerCreatePage(req, res) {
 
     let editOrCreate = 'create';
     let errorsIn = req.session.errors ? req.session.errors : [];
     let officesList = sIDU.setInitialOfficesData();
-    let claimant = {};
+    let customer = {};
 
-    //   If there is a newClaimant session object it is because there were errors in data input previously during
-    //   claimant create. It holds the previously-input data that has not been stored in the session claimant
-    //   object because it contains errors, but is needed to be re-displayed in the claimant create page.
-    //   If there is not a newClaimant session object, use the nino that was passed in with the url, or a default
+    //   If there is a newCustomer session object it is because there were errors in data input previously during
+    //   customer create. It holds the previously-input data that has not been stored in the session customer
+    //   object because it contains errors, but is needed to be re-displayed in the customer create page.
+    //   If there is not a newCustomer session object, use the nino that was passed in with the url, or a default
     //   if no nino was passed in.
 
-    if (req.session.newClaimant) {
-        claimant = req.session.newClaimant;
+    if (req.session.newCustomer) {
+        customer = req.session.newCustomer;
     } else {
-        claimant.nino = req.query.nino ? req.query.nino : "AB987654C";
+        customer.nino = req.query.nino ? req.query.nino : "AB987654C";
     }
-    res.render('claimant-edit', {claimant : claimant,
+    res.render('customer-edit', {customer : customer,
                                  officesList : officesList,
                                  editOrCreate : editOrCreate,
                                  errors : errorsIn,
@@ -97,36 +97,36 @@ function claimantCreatePage(req, res) {
     );
 }
 
-function claimantCreatePageAction(req, res) {
+function customerCreatePageAction(req, res) {
 
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let newClaimant = new Object();
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let newCustomer = new Object();
     let year = req.body['birthYear'];
     let month = req.body['birthMonth'];
     let day = req.body['birthDay'];
     let currentYear = new Date().getFullYear();
     let errorsOut = [];
-    newClaimant.nino = req.body['nino'];
-    if (req.body['claimant-office'] === ""){
+    newCustomer.nino = req.body['nino'];
+    if (req.body['customer-office'] === ""){
         errorsOut.push({
             message : "Home jobcentre must be selected from dropdown list",
-            field : "claimant-office"});
+            field : "customer-office"});
     } else {
-        newClaimant.claimantOfficeId = req.body['claimant-office'];
+        newCustomer.customerOfficeId = req.body['customer-office'];
     }
     if (req.body['firstName'] === "") {
         errorsOut.push({
             message : "First name must be entered",
             field : "firstName"});
     } else {
-        newClaimant.firstName = req.body['firstName'];
+        newCustomer.firstName = req.body['firstName'];
     }
     if (req.body['lastName'] === "") {
         errorsOut.push({
             message : "Last name must be entered",
             field : "lastName"});
     } else {
-        newClaimant.lastName = req.body['lastName'];
+        newCustomer.lastName = req.body['lastName'];
     }
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
         errorsOut.push({
@@ -153,26 +153,26 @@ function claimantCreatePageAction(req, res) {
             message : "Postcode must be entered",
             field : "postcode"});
     } else {
-        newClaimant.postcode = req.body['postcode'];
+        newCustomer.postcode = req.body['postcode'];
     }
-    newClaimant.preferredContactNumber = req.body['prefContNum'];
-    newClaimant.emailAddress = req.body['emailAddr'];
-    newClaimant.welshSpeaker = req.body['welsh-speaker'];
-    newClaimant.translator = req.body['translator'];
-    if (newClaimant.translator === "No") {
-            newClaimant.language = '';
+    newCustomer.preferredContactNumber = req.body['prefContNum'];
+    newCustomer.emailAddress = req.body['emailAddr'];
+    newCustomer.welshSpeaker = req.body['welsh-speaker'];
+    newCustomer.translator = req.body['translator'];
+    if (newCustomer.translator === "No") {
+            newCustomer.language = '';
         } else {
-            newClaimant.language = req.body['language'];
+            newCustomer.language = req.body['language'];
             if (req.body['language'] === "") {
                 errorsOut.push({
                     message : "Enter a language , or select No for Translator reqd",
                     field : 'language'});
             }
         }
-    newClaimant.approvedRep = req.body['approved-rep'];
-    if (newClaimant.approvedRep === "Yes") {
-            newClaimant.approvedRepName = req.body['rep-name'];
-            newClaimant.approvedRepContact = req.body['rep-contact'];
+    newCustomer.approvedRep = req.body['approved-rep'];
+    if (newCustomer.approvedRep === "Yes") {
+            newCustomer.approvedRepName = req.body['rep-name'];
+            newCustomer.approvedRepContact = req.body['rep-contact'];
             if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
                 errorsOut.push({
                     message : "Enter both name and contact details for approved representative, or select No",
@@ -189,50 +189,50 @@ function claimantCreatePageAction(req, res) {
                 }
             }
     } else {
-        newClaimant.approvedRepName = "";
-        newClaimant.approvedRepContact = "";
+        newCustomer.approvedRepName = "";
+        newCustomer.approvedRepContact = "";
     }
     if (errorsOut.length === 0) {
-        newClaimant.dob = new Date(year + '-' + month + '-' + day);
-        req.session.claimant = newClaimant;
-        claimants.push(newClaimant);
-        req.session.claimants = claimants;
+        newCustomer.dob = new Date(year + '-' + month + '-' + day);
+        req.session.customer = newCustomer;
+        customers.push(newCustomer);
+        req.session.customers = customers;
         req.session.errors = [];
-        res.redirect('/claimant/view');
+        res.redirect('/customer/view');
     } else {
-        newClaimant.birthDay = day;
-        newClaimant.birthMonth = month;
-        newClaimant.birthYear = year;
-        req.session.newClaimant = newClaimant;
+        newCustomer.birthDay = day;
+        newCustomer.birthMonth = month;
+        newCustomer.birthYear = year;
+        req.session.newCustomer = newCustomer;
         req.session.errors = errorsOut;
-        res.redirect('/claimant/create');
+        res.redirect('/customer/create');
     }
 }
 
-function claimantEditPage(req, res) {
+function customerEditPage(req, res) {
 
     let editOrCreate = 'edit';
     let errorsIn = req.session.errors ? req.session.errors : [];
     let officesList = sIDU.setInitialOfficesData();
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let claimant;
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let customer;
     if (errorsIn.length === 0) {
         if(req.query.nino) {
-            claimant = claimantUtils.getClaimantByNinoFromListOfClaimants(claimants, req.query.nino);
+            customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
         } else {
-            claimant = req.session.claimant ? req.session.claimant : claimants[0];
+            customer = req.session.customer ? req.session.customer : customers[0];
         }
-        let displayDate = dateUtils.formatDateAndTimeForDisplay(claimant.dob);
-        claimant.birthDay = parseInt(displayDate.day);
-        claimant.birthMonth = displayDate.numericMonth;
-        claimant.birthYear = parseInt(displayDate.year);
+        let displayDate = dateUtils.formatDateAndTimeForDisplay(customer.dob);
+        customer.birthDay = parseInt(displayDate.day);
+        customer.birthMonth = displayDate.numericMonth;
+        customer.birthYear = parseInt(displayDate.year);
     } else {
-        claimant = req.session.editedClaimant;
+        customer = req.session.editedCustomer;
     }
-    let claimantOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, claimant.claimantOfficeId);
-    req.session.claimant = claimant;
-    res.render('claimant-edit', { claimant : claimant,
-                                  claimantOfficeDetails : claimantOfficeDetails,
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    req.session.customer = customer;
+    res.render('customer-edit', { customer : customer,
+                                  customerOfficeDetails : customerOfficeDetails,
                                   editOrCreate : editOrCreate,
                                   errors : errorsIn,
                                   errorsLength : errorsIn.length
@@ -240,31 +240,31 @@ function claimantEditPage(req, res) {
     );
 }
 
-function claimantEditPageAction(req, res) {
+function customerEditPageAction(req, res) {
 
-    let claimants = req.session.claimants ? req.session.claimants : sIDU.setInitialClaimantsData();
-    let claimant = req.session.claimant;
-    let editedClaimant = new Object();
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let customer = req.session.customer;
+    let editedCustomer = new Object();
     let year = req.body['birthYear'];
     let month = req.body['birthMonth'];
     let day = req.body['birthDay'];
     let errorsOut = [];
     let currentYear = new Date().getFullYear();
-    editedClaimant.nino = claimant.nino;
-    editedClaimant.claimantOfficeId = req.body['claimant-office'];
+    editedCustomer.nino = customer.nino;
+    editedCustomer.customerOfficeId = req.body['customer-office'];
     if (req.body['firstName'] === "") {
         errorsOut.push({
             message : "First name must be entered",
             field : "firstName"});
     } else {
-        editedClaimant.firstName = req.body['firstName'];
+        editedCustomer.firstName = req.body['firstName'];
     }
     if (req.body['lastName'] === "") {
         errorsOut.push({
             message : "Last name must be entered",
             field : "lastName"});
     } else {
-        editedClaimant.lastName = req.body['lastName'];
+        editedCustomer.lastName = req.body['lastName'];
     }
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
         errorsOut.push({
@@ -291,26 +291,26 @@ function claimantEditPageAction(req, res) {
             message : "Postcode must be entered",
             field : "postcode"});
     } else {
-        editedClaimant.postcode = req.body['postcode'];
+        editedCustomer.postcode = req.body['postcode'];
     }
-    editedClaimant.preferredContactNumber = req.body['prefContNum'];
-    editedClaimant.emailAddress = req.body['emailAddr'];
-    editedClaimant.welshSpeaker = req.body['welsh-speaker'];
-    editedClaimant.translator = req.body['translator'];
-    if (editedClaimant.translator === "No") {
-        editedClaimant.language = '';
+    editedCustomer.preferredContactNumber = req.body['prefContNum'];
+    editedCustomer.emailAddress = req.body['emailAddr'];
+    editedCustomer.welshSpeaker = req.body['welsh-speaker'];
+    editedCustomer.translator = req.body['translator'];
+    if (editedCustomer.translator === "No") {
+        editedCustomer.language = '';
     } else {
-        editedClaimant.language = req.body['language'];
+        editedCustomer.language = req.body['language'];
         if (req.body['language'] === "") {
             errorsOut.push({
                 message : "Enter a language , or select No for Translator reqd",
                 field : 'language'});
         }
     }
-    editedClaimant.approvedRep = req.body['approved-rep'];
-    if (editedClaimant.approvedRep === "Yes") {
-            editedClaimant.approvedRepName = req.body['rep-name'];
-            editedClaimant.approvedRepContact = req.body['rep-contact'];
+    editedCustomer.approvedRep = req.body['approved-rep'];
+    if (editedCustomer.approvedRep === "Yes") {
+            editedCustomer.approvedRepName = req.body['rep-name'];
+            editedCustomer.approvedRepContact = req.body['rep-contact'];
             if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
                 errorsOut.push({
                     message : "Enter both name and contact details for approved representative, or select No",
@@ -327,30 +327,30 @@ function claimantEditPageAction(req, res) {
                 }
             }
     } else {
-        editedClaimant.approvedRepName = "";
-        editedClaimant.approvedRepContact = "";
+        editedCustomer.approvedRepName = "";
+        editedCustomer.approvedRepContact = "";
     }
     if (errorsOut.length === 0) {
-        editedClaimant.dob = new Date(year + '-' + month + '-' + day);
-        req.session.claimant = editedClaimant;
-        claimants.push(editedClaimant);
-        req.session.claimants = claimants;
+        editedCustomer.dob = new Date(year + '-' + month + '-' + day);
+        req.session.customer = editedCustomer;
+        customers.push(editedCustomer);
+        req.session.customers = customers;
         req.session.errors = errorsOut;
-        res.redirect('/claimant/view');
+        res.redirect('/customer/view');
     } else {
-        editedClaimant.birthDay = day;
-        editedClaimant.birthMonth = month;
-        editedClaimant.birthYear = year;
-        req.session.editedClaimant = editedClaimant;
+        editedCustomer.birthDay = day;
+        editedCustomer.birthMonth = month;
+        editedCustomer.birthYear = year;
+        req.session.editedCustomer = editedCustomer;
         req.session.errors = errorsOut;
-        res.redirect('/claimant/edit');
+        res.redirect('/customer/edit');
     }
 }
 
-module.exports.claimantFindPage = claimantFindPage;
-module.exports.claimantFindPageAction = claimantFindPageAction;
-module.exports.claimantViewPage = claimantViewPage;
-module.exports.claimantCreatePage = claimantCreatePage;
-module.exports.claimantCreatePageAction = claimantCreatePageAction;
-module.exports.claimantEditPage = claimantEditPage;
-module.exports.claimantEditPageAction = claimantEditPageAction;
+module.exports.customerFindPage = customerFindPage;
+module.exports.customerFindPageAction = customerFindPageAction;
+module.exports.customerViewPage = customerViewPage;
+module.exports.customerCreatePage = customerCreatePage;
+module.exports.customerCreatePageAction = customerCreatePageAction;
+module.exports.customerEditPage = customerEditPage;
+module.exports.customerEditPageAction = customerEditPageAction;
