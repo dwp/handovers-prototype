@@ -1,0 +1,23 @@
+<div class="column-full summary-nav-wrapper">
+    <ul>
+
+        <li class="{% if currentHandoversPage === "claimants" %}selected{% endif %}">
+        <a id="edit_record" href="/claimant/find" class="menu-item ">Claimant</a>
+        </li>
+
+        <li class="{% if currentHandoversPage === "handovers" %}selected{% endif %}">
+        <a id="appointments" href="/handover/view?id=1" class="menu-item">Handover</a>
+        </li>
+
+        <li class="{% if currentClaimantPage === "queues" %}selected{% endif %}">
+        <a id="claim_active" href="/queue/view" class="menu-item">Queue</a>
+        </li>
+
+        <li class="{% if currentClaimantPage === "teams" %}selected{% endif %}">
+        <a id="selection_tool" href="/team/user/add" class="menu-item">Team</a>
+        </li>
+
+        <li
+
+    </ul>
+</div>
