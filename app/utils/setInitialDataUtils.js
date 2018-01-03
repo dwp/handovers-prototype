@@ -230,7 +230,7 @@ function setInitialTeamsData() {
         team.id = teamsList[i].id;
         team.teamName = teamsList[i].teamName;
         team.userList = teamsList[i].userList;
-        team.queueList = teamsList[i].queueList;
+        team.skillsetList = teamsList[i].skillsetList;
         team.startDate = teamsList[i].startDate;
         team.endDate = teamsList[i].endDate;
         initialTeams.push(team);
@@ -239,20 +239,20 @@ function setInitialTeamsData() {
     return initialTeams;
 }
 
-// Set up initial queues data and return in an array
-function setInitialQueuesData() {
-    let initialQueues = [];
-    let queuesList = teamData['queues'];
+// Set up initial skillsets data and return in an array
+function setInitialSkillsetsData() {
+    let initialSkillsets = [];
+    let skillsetsList = teamData['skillsets'];
 
-    for (let i=0; i < queuesList.length; i++) {
-        let queue = new Object();
-        queue.id = queuesList[i].id;
-        queue.name = queuesList[i].name;
-        queue.description = queuesList[i].description;
-        initialQueues.push(queue);
+    for (let i=0; i < skillsetsList.length; i++) {
+        let skillset = new Object();
+        skillset.id = skillsetsList[i].id;
+        skillset.name = skillsetsList[i].name;
+        skillset.description = skillsetsList[i].description;
+        initialSkillsets.push(skillset);
     }
 
-    return initialQueues;
+    return initialSkillsets;
 }
 
 // Set up initial users data and return in an array
@@ -278,9 +278,8 @@ module.exports.setInitialBenefitsData = setInitialBenefitsData;
 module.exports.setInitialBenefitsAndHandoversData = setInitialBenefitsAndHandoversData;
 module.exports.setInitialHandoversData = setInitialHandoversData;
 module.exports.setInitialOfficeTypesAndOfficesData = setInitialOfficeTypesAndOfficesData;
-//module.exports.setInitialTeamsQueuesAndUsersData = setInitialTeamsQueuesAndUsersData;
 module.exports.setInitialOfficesData = setInitialOfficesData;
 module.exports.setInitialOfficeTypesData = setInitialOfficeTypesData;
 module.exports.setInitialTeamsData = setInitialTeamsData;
-module.exports.setInitialQueuesData = setInitialQueuesData;
+module.exports.setInitialSkillsetsData = setInitialSkillsetsData;
 module.exports.setInitialUsersData = setInitialUsersData;

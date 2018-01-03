@@ -7,6 +7,6 @@ module.exports = function(router) {
 
     router.get('/team/user/add', team.teamUserAddPage);
     router.post('/team/user/add', team.teamUserAddPageAction);
-    router.get('/team/queue/add', team.teamQueueAddPage);
-    router.post('/team/queue/add', team.teamQueueAddPageAction);
+    router.get('/team/skillset/add', team.teamSkillsetAddPage);
+    router.post('/team/skillset/add', team.teamSkillsetAddPageAction);
 }
