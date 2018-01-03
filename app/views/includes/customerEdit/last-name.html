@@ -11,14 +11,14 @@
             <span class="form-label-bold">Last name</span>
             <span class="error-message">Last name must be entered</span>
         </label>
-        <input type="text" class="form-control form-control-error" id="lastName" name="lastName" value="{{ claimant.lastName }}">
+        <input type="text" class="form-control form-control-error" id="lastName" name="lastName" value="{{ customer.lastName }}">
     </div>
     {% else %}
     <div class="form-group">
         <label for="lastName">
             <span class="form-label-bold">Last name</span>
         </label>
-        <input type="text" class="form-control" id="lastName" name="lastName" value="{{ claimant.lastName }}">
+        <input type="text" class="form-control" id="lastName" name="lastName" value="{{ customer.lastName }}">
     </div>
     {% endif %}
 </div>

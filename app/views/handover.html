@@ -6,7 +6,7 @@
     <div class="main-content">
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
-        <h1 class="heading-large">View handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
+        <h1 class="heading-large">View handover for {{ customer.firstName }} {{ customer.lastName }}</h1>
         {% if handover.status !== 'Not allocated' %}
             <p class="form-hint">(currently being handled by {{ handover.inQueueOfStaffId }})</p>
         {% endif %}
@@ -20,9 +20,9 @@
                         </div>
                     </div>
                     <div class="column-half">
-                        <legend class="form-label-bold">Claimant's Jobcentre</legend>
+                        <legend class="form-label-bold">Customer's Jobcentre</legend>
                         <div>
-                            <p>{{ claimantOfficeDetails.officeName }}</p>
+                            <p>{{ customerOfficeDetails.officeName }}</p>
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
 
                 <div class="grid-row">
                     <div class="column-third">
-                        <a href="../claimant/edit?nino={{claimant.nino}}">Edit claimant</a>
+                        <a href="../customer/edit?nino={{customer.nino}}">Edit customer</a>
                     </div>
                     <div class="column-third">
                         <a href="../queue/view?agentId={{handover.inQueueOfStaffId}}">Go to my queue</a>
