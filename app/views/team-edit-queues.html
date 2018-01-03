@@ -4,9 +4,10 @@
 
 <main id="content" role="main">
     <div class="main-content">
+        {% include "includes/handovers_summary_nav.html" %}
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
-        <h1 class="heading-large">Add queues to {{ team.teamName }} team</h1>
+        <h1 class="heading-large">Add skillset to {{ team.teamName }} team</h1>
         <br>
         <form action="/team/queue/add" method="post" class="form" id="team-queue-add-form">
             <div class="form-group grid-row">
@@ -33,7 +34,7 @@
 
             <div class="form-group">
                 <fieldset class="inline">
-                    <legend class="form-label-bold">Select a queue to add to the {{ team.teamName }} team</legend>
+                    <legend class="form-label-bold">Select a skillset to add to the {{ team.teamName }} team</legend>
                     <select class="select form-control" name="selected-queue" id="selected-queue">
                         <option value="">Select</option>
                         {% for availableQueue in availableQueues %}
@@ -49,6 +50,9 @@
                 </div>
             </div>
         </form>
+        <div class="column-third">
+            <a href="/team_menu.html"/>Back to team menu</a>
+        </div>
     </div>
 </main>
 

@@ -60,14 +60,20 @@
     }] %}
 
     {{ sprintLinks( '', groupLinksScreens) }}
-
-
+  </div>
+  <div class="grid-row">
     {% set groupLinksScreens = [{
     workTitle : 'Teams',
     links: [{
+    link : '/team_menu.html', title : 'Team management menu'
+    },{
     link : '/team/user/add', title : 'Add user to team'
     },{
-    link : '/team/queue/add', title : 'Add skills queue to team'
+    link : '/team/queue/add', title : 'Add skillset to team'
+    },{
+    link : '', title : 'Create new team [ Function not yet available ]'
+    },{
+    link : '', title : 'Edit team details [ Function not yet available ]'
     }]
     }] %}
 
@@ -79,7 +85,6 @@
 </main>
 
 {% endblock %}
-
 
 {% macro sprintLinks(sprintName, sprintWorkInfo) %}
 <div class="column-third">
