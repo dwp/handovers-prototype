@@ -4,6 +4,7 @@
 
 <main id="content" role="main">
     <div class="main-content">
+        {% include "includes/handovers_summary_nav.html" %}
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
         <h1 class="heading-large">Add skillsets to {{ team.teamName }} team</h1>
@@ -49,6 +50,9 @@
                 </div>
             </div>
         </form>
+        <div class="column-third">
+            <a href="/team_menu.html"/>Back to team menu</a>
+        </div>
     </div>
 </main>
 

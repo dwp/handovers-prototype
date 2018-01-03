@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% include "includes/dummy_dcams_summary_nav.html" %}
+
 <main id="content" role="main">
 <div class="main-content">
   <div class="grid-row">
@@ -58,14 +60,20 @@
     }] %}
 
     {{ sprintLinks( '', groupLinksScreens) }}
-
-
+  </div>
+  <div class="grid-row">
     {% set groupLinksScreens = [{
     workTitle : 'Teams',
     links: [{
-    link : '/team/user/add', title : 'Add users to team'
+    link : '/team_menu.html', title : 'Team management menu'
+    },{
+    link : '/team/user/add', title : 'Add agents to team'
     },{
     link : '/team/skillset/add', title : 'Add skillsets to team'
+    },{
+    link : '', title : 'Create new team [ Function not yet available ]'
+    },{
+    link : '', title : 'Edit team details [ Function not yet available ]'
     }]
     }] %}
 
@@ -77,7 +85,6 @@
 </main>
 
 {% endblock %}
-
 
 {% macro sprintLinks(sprintName, sprintWorkInfo) %}
 <div class="column-third">

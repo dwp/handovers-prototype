@@ -4,6 +4,9 @@
 
 <main id="content" role="main">
     <div class="main-content">
+        {% include "includes/handovers_summary_nav.html" %}
+        {% include "includes/message-banner.html" %}
+        {% include "includes/error-summary.html" %}
         {% if editOrCreate === 'edit' %}
             <h1 class="heading-large">Edit customer details for {{ customer.firstName }} {{ customer.lastName }}</h1>
             <form action="/customer/edit?nino={{ customer.nino }}" method="POST" class="form">
@@ -11,8 +14,6 @@
             <h1 class="heading-large">Create new customer</h1>
             <form action="/customer/create" method="POST" class="form">
         {% endif %}
-        {% include "includes/message-banner.html" %}
-        {% include "includes/error-summary.html" %}
             <div class="form-group">
                 <div class="grid-row">
                     {% include "includes/customerEdit/nino.html" %}

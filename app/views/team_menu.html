@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main id="content" role="main">
+    <div class="main-content">
+        {% include "includes/handovers_summary_nav.html" %}
+        {% include "includes/message-banner.html" %}
+        {% include "includes/error-summary.html" %}
+        <h1 class="heading-large">Team management</h1>
+        <div class="form-group">
+            <h3 class="heading-medium">What do you want to do ?</h3>
+            <ul>
+
+                <li>
+                    <a id="team_create" href="" class="menu-item ">Create new team [ Function not yet available ]</a>
+                </li>
+
+                <li>
+                    <a id="team_edit" href="" class="menu-item">Edit team details [ Function not yet available ]</a>
+                </li>
+
+                <li>
+                    <a id="team_add_user" href="/team/user/add" class="menu-item">Add agents to team</a>
+                </li>
+
+                <li>
+                    <a id="team_add-skill" href="/team/skillset/add" class="menu-item">Add skillsets to team</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.0.min.js"></script>
+
+{% endblock %}

@@ -6,7 +6,10 @@
     <div class="main-content">
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
+        {% include "includes/handovers_summary_nav.html" %}
+
         <h1 class="heading-large">View handover for {{ customer.firstName }} {{ customer.lastName }}</h1>
+
         {% if handover.status !== 'Not allocated' %}
             <p class="form-hint">(currently being handled by {{ handover.inQueueOfStaffId }})</p>
         {% endif %}
