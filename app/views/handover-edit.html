@@ -7,10 +7,10 @@
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
         {% if editOrCreate === 'edit' %}
-            <h1 class="heading-large">Edit handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
+            <h1 class="heading-large">Edit handover for {{ customer.firstName }} {{ customer.lastName }}</h1>
             <form action="/handover/edit" method="POST" class="form">
         {% else %}
-            <h1 class="heading-large">Create handover for {{ claimant.firstName }} {{ claimant.lastName }}</h1>
+            <h1 class="heading-large">Create handover for {{ customer.firstName }} {{ customer.lastName }}</h1>
             <form action="/handover/create" method="POST" class="form">
         {% endif %}
 
@@ -19,13 +19,13 @@
                     <div class="column-half">
                         <legend class="form-label-bold">National insurance number</legend>
                         <div>
-                            <p>{{ claimant.nino }}</p>
+                            <p>{{ customer.nino }}</p>
                         </div>
                     </div>
                     <div class="column-half">
-                        <legend class="form-label-bold">Claimant's Jobcentre</legend>
+                        <legend class="form-label-bold">Customer's Jobcentre</legend>
                         <div>
-                            <p>{{ claimantOfficeDetails.officeName }}</p>
+                            <p>{{ customerOfficeDetails.officeName }}</p>
                         </div>
                     </div>
                 </div>

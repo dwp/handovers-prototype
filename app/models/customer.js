@@ -3,7 +3,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-class Claimant {
+class Customer {
     constructor(firstName, lastName, dob, nino, telNum, mobile, postcode, welshSpeaker) {
         this.nino = nino;
         this.firstName = firstName;
@@ -16,4 +16,4 @@ class Claimant {
     }
 }
 
-module.exports = Claimant;
+module.exports = Customer;

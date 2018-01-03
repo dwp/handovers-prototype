@@ -4,11 +4,11 @@
             <legend class="form-label-bold">Does the customer have an approved representative ?</legend>
             <fieldset class="inline">
                 <div class="multiple-choice">
-                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No" {% if claimant.approvedRep === "No" or editOrCreate === 'create' %} checked="checked" {% endif %}>
+                    <input id="approved-rep-no" type="radio" name="approved-rep" value="No" {% if customer.approvedRep === "No" or editOrCreate === 'create' %} checked="checked" {% endif %}>
                     <label for="approved-rep-no">No</label>
                 </div>
                 <div class="multiple-choice" data-target="approved-rep-group">
-                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" {% if claimant.approvedRep === "Yes" %} checked="checked" {% endif %}>
+                    <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" {% if customer.approvedRep === "Yes" %} checked="checked" {% endif %}>
                     <label for="approved-rep-yes">Yes</label>
                 </div>
             </fieldset>
@@ -33,7 +33,7 @@
                     <span class="error-message">Name must be entered</span>
                 </label>
                 <div>
-                    <input type="text" class="form-control form-control-error" id="rep-name" name="rep-name" value="{{ claimant.approvedRepName }}">
+                    <input type="text" class="form-control form-control-error" id="rep-name" name="rep-name" value="{{ customer.approvedRepName }}">
                 </div>
             </div>
         {% else %}
@@ -42,7 +42,7 @@
                     <span class="form-label-bold">Approved representative name</span>
                 </label>
                 <div>
-                    <input type="text" class="form-control" id="rep-name" name="rep-name" value="{{ claimant.approvedRepName }}">
+                    <input type="text" class="form-control" id="rep-name" name="rep-name" value="{{ customer.approvedRepName }}">
                 </div>
             </div>
         {% endif %}
@@ -63,7 +63,7 @@
             </label>
             <p class="form-hint">Enter an email address or a telephone number</p>
             <div>
-                <input type="text" class="form-control from-error-control" id="rep-contact" name="rep-contact" value="{{ claimant.approvedRepContact }}">
+                <input type="text" class="form-control from-error-control" id="rep-contact" name="rep-contact" value="{{ customer.approvedRepContact }}">
             </div>
         {% else %}
             <div class="form-group">
@@ -72,7 +72,7 @@
                 </label>
                 <p class="form-hint">Enter an email address or a telephone number</p>
                 <div>
-                    <input type="text" class="form-control" id="rep-contact" name="rep-contact" value="{{ claimant.approvedRepContact }}">
+                    <input type="text" class="form-control" id="rep-contact" name="rep-contact" value="{{ customer.approvedRepContact }}">
                 </div>
             </div>
         {% endif %}
