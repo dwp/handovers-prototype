@@ -1,6 +1,6 @@
 const sIDU = require('../utils/setInitialDataUtils');
 const userUtils = require('../utils/userUtils');
-const queueUtils = require('../utils/queueUtils');
+const skillsetUtils = require('../utils/skillsetUtils');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Team Controllers
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -43,7 +43,7 @@ function teamUserAddPageAction (req, res) {
         newTeam.id = team.id;
         newTeam.teamName = team.teamName;
         newTeam.userList = team.userList;
-        newTeam.queueList = team.queueList;
+        newTeam.skillsetList = team.skillsetList;
         newTeam.startDate = team.startDate;
         newTeam.endDate = team.endDate;
         newTeam.userList.push(userToAddToTeam);
@@ -61,51 +61,51 @@ function teamUserAddPageAction (req, res) {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
-function teamQueueAddPage (req, res) {
+function teamSkillsetAddPage (req, res) {
 
-    let teamAndAvailableQueuesList;
+    let teamAndAvailableSkillsetsList;
     let initialTeams = sIDU.setInitialTeamsData();
-    let initialQueues = sIDU.setInitialQueuesData();
+    let initialSkillsets = sIDU.setInitialSkillsetsData();
     let initialTeam = initialTeams[0];
     let team = req.session.team ? req.session.team : initialTeam;
-    // Get list of users not already members of this team, and so available to be selected
-    let availableQueuesList = queueUtils.getListOfAvailableQueues(team, initialQueues);
-    teamAndAvailableQueuesList = {
+    // Get list of skillsets not already assigned to this team, and so available to be selected
+    let availableSkillsetsList = skillsetUtils.getListOfAvailableSkillsets(team, initialSkillsets);
+    teamAndAvailableSkillsetsList = {
         team : team,
-        availableQueues : availableQueuesList
+        availableSkillsets : availableSkillsetsList
     };
     req.session.team = team;
-    res.render('team-edit-queues', teamAndAvailableQueuesList);
+    res.render('team-edit-skillsets', teamAndAvailableSkillsetsList);
 }
 
-function teamQueueAddPageAction (req, res) {
+function teamSkillsetAddPageAction (req, res) {
 
     let team = req.session.team;
-    let selectedQueueId = req.body['selected-queue'];
-    let initialQueues = sIDU.setInitialQueuesData();
-    let availableQueuesList = queueUtils.getListOfAvailableQueues(team, initialQueues);
-    let queueToAddToTeam = availableQueuesList.find(findSelectedQueueByQueueId);
+    let selectedSkillsetId = req.body['selected-skillset'];
+    let initialSkillsets = sIDU.setInitialSkillsetsData();
+    let availableSkillsetsList = skillsetUtils.getListOfAvailableSkillsets(team, initialSkillsets);
+    let skillsetToAddToTeam = availableSkillsetsList.find(findSelectedSkillsetBySkillsetId);
     let newTeam = {}
-    if(queueToAddToTeam === false) {
-        console.log('Queue not found in list');
+    if(skillsetToAddToTeam === false) {
+        console.log('Skillset not found in list');
     } else {
         newTeam.id = team.id;
         newTeam.teamName = team.teamName;
         newTeam.userList = team.userList;
-        newTeam.queueList = team.queueList;
+        newTeam.skillsetList = team.skillsetList;
         newTeam.startDate = team.startDate;
         newTeam.endDate = team.endDate;
-        newTeam.queueList.push(queueToAddToTeam);
+        newTeam.skillsetList.push(skillsetToAddToTeam);
     }
     req.session.team = newTeam;
-    res.redirect('/team/queue/add');
+    res.redirect('/team/skillset/add');
 
-    function findSelectedQueueByQueueId(listOfQueues) {
-        return listOfQueues.id === selectedQueueId;
+    function findSelectedSkillsetBySkillsetId(listOfSkillsets) {
+        return listOfSkillsets.id === selectedSkillsetId;
     }
 }
 
 module.exports.teamUserAddPage = teamUserAddPage;
 module.exports.teamUserAddPageAction = teamUserAddPageAction;
-module.exports.teamQueueAddPage = teamQueueAddPage;
-module.exports.teamQueueAddPageAction = teamQueueAddPageAction;
+module.exports.teamSkillsetAddPage = teamSkillsetAddPage;
+module.exports.teamSkillsetAddPageAction = teamSkillsetAddPageAction;

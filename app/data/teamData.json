@@ -20,7 +20,7 @@
             "owningOfficeId" : "1"
           }
         ],
-        "queueList": [
+        "skillsetList": [
           {
           "id": "1",
           "name": "ESA New Claims",
@@ -39,7 +39,7 @@
         "id" : "2",
         "teamName": "Blue",
         "userList": [],
-        "queueList": [],
+        "skillsetList": [],
         "startDate": "13 Aug 2016",
         "endDate": "20 Aug 2017"
       },
@@ -47,7 +47,7 @@
         "id" : "3",
         "teamName": "Green",
         "userList": [],
-        "queueList": [],
+        "skillsetList": [],
         "startDate": "12 Mar 2015",
         "endDate": ""
       },
@@ -55,7 +55,7 @@
         "id" : "4",
         "teamName": "Black",
         "userList": [],
-        "queueList": [],
+        "skillsetList": [],
         "startDate": "14 Feb 2017",
         "endDate": ""
       }
@@ -129,7 +129,7 @@
         "owningOfficeId" : "3"
       }
     ],
-    "queues": [
+    "skillsets": [
       {
         "id": "1",
         "name": "ESA New Claims",

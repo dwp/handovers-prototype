@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const handoverUtils = require('../utils/handoverUtils');
-const queueUtils = require('../utils/queueUtils');
+const queueUtils = require('../utils/skillsetUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
 const commonUtils = require('../utils/commonUtils');

@@ -8,7 +8,7 @@ class Team {
         this.id = id;
         this.teamName = teamName;
         this.userList = [];
-        this.queueList = [];
+        this.skillsetsList = [];
         this.startDate = teamStartDate;
         this.endDate = teamEndDate;
     }
@@ -21,12 +21,12 @@ class Team {
         this.userList = userList;
     }
 
-    addQueue(queue) {
-        this.queueList.push(queue);
+    addSkillset(skillset) {
+        this.skillsetsList.push(skillset);
     }
 
-    addQueueList(queueList) {
-        this.queueList = queueList;
+    addSkillsetList(skillsetList) {
+        this.skillsetsList = skillsetList;
     }
 }
 

@@ -8,15 +8,15 @@ class Office {
         this.id= id;
         this.officeName = officeName;
         this.officePostcode = officePostcode;
-        this.officeQueuesList = [];
+        this.officeSkillsetsList = [];
     }
 
-    addQueue(queue) {
-        this.officeQueuesList.push(queue);
+    addSkillset(skillset) {
+        this.officeSkillsetList.push(skillset);
     }
 
-    addQueuesList(queueList) {
-        this.officeQueuesList = queueList;
+    addSkillsetsList(skillsetsList) {
+        this.officeSkillsetsList = skillsetsList;
     }
 }
 
