@@ -9,3 +9,4 @@ function benCheck() {
         document.getElementById("benSubTypeDiv").style.display = "none";
     }
 }
+
