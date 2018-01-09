@@ -267,6 +267,7 @@ function setInitialUsersData() {
         user.staffId = usersList[i].staffId;
         user.telNum = usersList[i].telNum;
         user.owningOfficeId = usersList[i].owningOfficeId;
+        user.role = usersList[i].role;
         initialUsers.push(user);
     }
     return initialUsers;

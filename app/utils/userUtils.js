@@ -39,6 +39,7 @@ function getUserByStaffIdFromListOfUsers(listOfUsers, staffId) {
             user.lastName = userList[i].lastName;
             user.telNum = userList[i].telNum;
             user.owningOfficeId = userList[i].owningOfficeId;
+            user.role = userList[i].role;
         }
     }
 

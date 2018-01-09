@@ -7,50 +7,54 @@
         {% include "includes/handovers_summary_nav.html" %}
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
-        {% if queueType === "office" %}
+        {% if queueType === "office" and data.user.role == 1 %}
             <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
         {% else %}
             <h1 class="heading-large">Handovers queue - {{ queueAgent.firstName }} {{ queueAgent.lastName }}</h1>
         {% endif %}
 
-        <div class="grid-row">
-            <div class="column-full">
-                <table>
-                    <thead>
-                    <tr>
-                        <th scope="col"><span>NI number</span></th>
-                        <th scope="col"><span>Benefit type</span></th>
-                        <th scope="col"><span>Handover type</span></th>
-                        <th scope="col"><span>Handover reason</span></th>
-                        <th scope="col"><span>Date/time raised</span></th>
-                        <th scope="col"><span>Callback reqd?</span></th>
-                        <th scope="col"><span>Status</span></th>
-                        {% if queueType === "office" %}
-                        <th scope="col"><span>Being progressed by</span></th>
-                        {% endif %}
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for handover in handoversQueueList %}
-                    <tr>
-                        <td>{{handover.nino}}</td>
-                        <td>{{handover.benefitName}}</td>
-                        <td>{{handover.handoverType}}</td>
-                        <td>{{handover.handoverReason}}</td>
-                        <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
-                        <td>{{handover.callback}}</td>
-                        <td>{{handover.status}}</td>
-                        {% if queueType === "office" %}
-                            <td>{{ handover.inQueueOfStaffId}}</td>
-                        {% endif %}
-                        <td>{{handoverUpdateLink(handover)}}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+        {% if data.user.role == 0 %}
+            <p class="heading-medium">You do not have the role of supervisor. To see the full office queue, request supervisor role</p>
+        {% else %}
+            <div class="grid-row">
+                <div class="column-full">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th scope="col"><span>NI number</span></th>
+                            <th scope="col"><span>Benefit type</span></th>
+                            <th scope="col"><span>Handover type</span></th>
+                            <th scope="col"><span>Handover reason</span></th>
+                            <th scope="col"><span>Date/time raised</span></th>
+                            <th scope="col"><span>Callback reqd?</span></th>
+                            <th scope="col"><span>Status</span></th>
+                            {% if queueType === "office" %}
+                                <th scope="col"><span>Being progressed by</span></th>
+                            {% endif %}
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for handover in handoversQueueList %}
+                        <tr>
+                            <td>{{handover.nino}}</td>
+                            <td>{{handover.benefitName}}</td>
+                            <td>{{handover.handoverType}}</td>
+                            <td>{{handover.handoverReason}}</td>
+                            <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
+                            <td>{{handover.callback}}</td>
+                            <td>{{handover.status}}</td>
+                            {% if queueType === "office" %}
+                                <td>{{ handover.inQueueOfStaffId}}</td>
+                            {% endif %}
+                            <td>{{handoverUpdateLink(handover)}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        {% endif %}
         <br>
         {% if queueType === "agent" %}
         <div class="grid-row">
@@ -61,9 +65,12 @@
                     </div>
                 </form>
                 <br>
-                <div>
-                    <a href="../queue/view?queueType=office">Go to office queue</a>
-                </div>
+                <!--If user has a role of supervisor-->
+                {% if queueAgent.role === "1" %}
+                    <div>
+                        <a href="../queue/view?queueType=office">Go to office queue</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
         {% endif %}
