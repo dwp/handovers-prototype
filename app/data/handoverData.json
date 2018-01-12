@@ -166,7 +166,23 @@
       "dateAndTimeRaised" : "2017-11-24T12:58:39.379Z",
       "targetDateAndTime" : "2017-11-24T12:58:39.379Z"
     },{
-      "id" : "9",
+      "id": "9",
+      "nino": "ZZ234567A",
+      "raisedByStaffId": "40001001",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "7",
+      "benefitId": "1",
+      "benSubType": "",
+      "typeId": "2",
+      "reasonId": "3",
+      "callback": "Yes",
+      "priority": "Standard callback",
+      "inQueueOfStaffId": "40001005",
+      "status": "Paused",
+      "dateAndTimeRaised": "2017-11-30T12:58:39.379Z",
+      "targetDateAndTime": "2017-11-30T15:58:39.379Z"
+    },{
+      "id" : "10",
       "nino": "AA345678B",
       "raisedByStaffId": "40001004",
       "raisedOnBehalfOfOfficeId" : "1",

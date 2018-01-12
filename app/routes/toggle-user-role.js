@@ -1,12 +1,17 @@
-module.exports = function(router, users){
+module.exports = function(router, usersForRoleToggle){
   router.get('/toggle_user_role', function(req, res, next){
+    let fromIndexPage = !req.header('Referer').endsWith('/');
     if(req.session.user){
-      var indexOfUser = users.indexOf(users.find((user) => req.session.user.name === user.name));
-      var newIndex = ((indexOfUser + 1) % (users.length));
-      req.session.user = users[newIndex];
+      let indexOfUser = usersForRoleToggle.indexOf(usersForRoleToggle.find((user) => req.session.user.name === user.name));
+      let newIndex = ((indexOfUser + 1) % (usersForRoleToggle.length));
+      req.session.user = usersForRoleToggle[newIndex];
     } else {
-      req.session.user = users[1];
+      req.session.user = usersForRoleToggle[1];
     }
-    res.redirect('/queue/view?agentId=' + req.session.user.id);
+    if (fromIndexPage) {
+      res.redirect('/queue/view');
+    } else {
+      res.redirect('/queue/view?agentId=' + req.session.user.id);
+    }
   });
 }

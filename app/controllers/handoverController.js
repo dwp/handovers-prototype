@@ -91,7 +91,7 @@ function viewHandoverPageAction(req, res) {
 function createHandoverPage(req, res) {
     let editOrCreate = 'create';
     let initialData = sIDU.setInitialBenefitsAndHandoversData();
-    let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
+    let users = sIDU.setInitialUsersData();
     let user = req.session.user ? req.session.user : users[0];
     let benefitsList = initialData.initialBenefits;
     let handoverTypesList = initialData.initialHandoverTypes;
@@ -186,7 +186,7 @@ function editHandoverPage(req, res) {
 
     let editOrCreate = 'edit';
     let initialData = sIDU.setInitialBenefitsAndHandoversData();
-    let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
+    let users = sIDU.setInitialUsersData();
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
     let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
     let handoverNotes = [];
