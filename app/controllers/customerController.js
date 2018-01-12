@@ -15,26 +15,15 @@ function customerFindPage(req, res) {
 
 function customerFindPageAction(req, res) {
 
-    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let inputNino = req.body.nino;
     let customer = {};
-    let customerFound = 0;
-    if (inputNino === '') {
-        console.log('Nino not input');
-    } else {
-        for (let i=0; i < customers.length; i++) {
-            if (customers[i].nino === inputNino) {
-                customer = customers[i];
-                customerFound = 1;
-            }
-        }
-    }
-    if (customerFound === 0) {
+    let inputNino = req.body['nino'];
+    let customerSearch = findIfCustomerNinoAlreadyExists(req, inputNino);
+    if (customerSearch.customerFound == 0) {
         customer.nino = inputNino;
         res.render('customer_search_results', customer);
     } else {
         req.session.customer = customer;
-        res.redirect('/customer/view');
+        res.redirect('/customer/edit');
     }
 }
 
@@ -106,6 +95,20 @@ function customerCreatePageAction(req, res) {
     let day = req.body['birthDay'];
     let currentYear = new Date().getFullYear();
     let errorsOut = [];
+    let foundCustomer;
+    if (req.body['nino'] === "") {
+        errorsOut.push({
+            message : "National insurance number must be entered",
+            field : "nino"});
+    } else {
+        foundCustomer = findIfCustomerNinoAlreadyExists(req, req.body['nino']);
+        if (foundCustomer.customerFound == 1) {
+            errorsOut.push({
+                message: "National insurance number already exists",
+                field: "nino"
+            });
+        }
+    }
     newCustomer.nino = req.body['nino'];
     if (req.body['customer-office'] === ""){
         errorsOut.push({
@@ -198,7 +201,7 @@ function customerCreatePageAction(req, res) {
         customers.push(newCustomer);
         req.session.customers = customers;
         req.session.errors = [];
-        res.redirect('/customer/view');
+        res.redirect('/customer/edit');
     } else {
         newCustomer.birthDay = day;
         newCustomer.birthMonth = month;
@@ -250,7 +253,25 @@ function customerEditPageAction(req, res) {
     let day = req.body['birthDay'];
     let errorsOut = [];
     let currentYear = new Date().getFullYear();
-    editedCustomer.nino = customer.nino;
+    let foundCustomer;
+    if (req.body['nino'] === "") {
+        errorsOut.push({
+            message : "National insurance number must be entered",
+            field : "nino"});
+    } else {
+        foundCustomer = findIfCustomerNinoAlreadyExists(req, req.body['nino']);
+        if (foundCustomer.customerFound == 1) {
+            if (req.body['nino'] === customer.nino) {
+                console.log("Nino is for customer being edited");
+            } else {
+                errorsOut.push({
+                    message: "National insurance number already exists",
+                    field: "nino"
+                });
+            }
+        }
+    }
+    editedCustomer.nino = req.body['nino'];
     editedCustomer.customerOfficeId = req.body['customer-office'];
     if (req.body['firstName'] === "") {
         errorsOut.push({
@@ -336,6 +357,7 @@ function customerEditPageAction(req, res) {
         customers.push(editedCustomer);
         req.session.customers = customers;
         req.session.errors = errorsOut;
+        // res.redirect('/customer/summary'); When summary function available. Until then...
         res.redirect('/customer/view');
     } else {
         editedCustomer.birthDay = day;
@@ -345,6 +367,25 @@ function customerEditPageAction(req, res) {
         req.session.errors = errorsOut;
         res.redirect('/customer/edit');
     }
+}
+
+function findIfCustomerNinoAlreadyExists (req, nino) {
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let inputNino = nino;
+    let foundCustomer = {};
+    let customerFoundIndicator = 0;
+    if (inputNino === '') {
+        console.log('Nino not input');
+    } else {
+        for (let i=0; i < customers.length; i++) {
+            if (customers[i].nino === inputNino) {
+                foundCustomer = customers[i];
+                customerFoundIndicator = 1;
+            }
+        }
+    }
+
+    return { customer : foundCustomer, customerFound : customerFoundIndicator};
 }
 
 module.exports.customerFindPage = customerFindPage;

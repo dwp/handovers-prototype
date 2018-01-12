@@ -1,9 +1,24 @@
 <div class="column-half">
-    <div class="form-group">
-        <div>
-            <legend class="form-label-bold">National insurance number</legend>
-            <input type="hidden" id="nino" name="nino" value="{{ customer.nino }}">
-            <p>{{ customer.nino }}</p>
-        </div>
+    {% set errorFlag = 0 %}
+    {% for error in errors %}
+        {% if error.field === 'firstName' %}
+            {% set errorFlag = 1 %}
+        {% endif %}
+    {% endfor %}
+    {% if errorFlag === 1 %}
+    <div class="form-group form-group-error">
+        <label for="nino" id="error-nino">
+            <span class="form-label-bold">National insurance number</span>
+            <span class="error-message">Unique national insurance number must be entered</span>
+        </label>
+        <input type="text" class="form-control form-control-error" id="nino" name="nino" value="{{ customer.nino }}">
     </div>
+    {% else %}
+    <div class="form-group">
+        <label for="nino">
+            <span class="form-label-bold">National insurance number</span>
+        </label>
+        <input type="text" class="form-control" id="nino" name="nino" value="{{ customer.nino }}">
+    </div>
+    {% endif %}
 </div>
