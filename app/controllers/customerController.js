@@ -247,7 +247,7 @@ function customerEditPageAction(req, res) {
 
     let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let customer = req.session.customer;
-    let editedCustomer = new Object();
+    let editedCustomer = req.session.editedCustomer ? req.session.editedCustomer : new Object();
     let year = req.body['birthYear'];
     let month = req.body['birthMonth'];
     let day = req.body['birthDay'];
@@ -261,13 +261,15 @@ function customerEditPageAction(req, res) {
     } else {
         foundCustomer = findIfCustomerNinoAlreadyExists(req, req.body['nino']);
         if (foundCustomer.customerFound == 1) {
-            if (req.body['nino'] === customer.nino) {
-                console.log("Nino is for customer being edited");
-            } else {
-                errorsOut.push({
-                    message: "National insurance number already exists",
-                    field: "nino"
-                });
+            if (editedCustomer.nino !== undefined) {
+                if (req.body['nino'] === editedCustomer.nino) {
+                    console.log("Nino is for customer being edited");
+                } else {
+                    errorsOut.push({
+                        message: "National insurance number already exists",
+                        field: "nino"
+                    });
+                }
             }
         }
     }
@@ -358,7 +360,7 @@ function customerEditPageAction(req, res) {
         req.session.customers = customers;
         req.session.errors = errorsOut;
         // res.redirect('/customer/summary'); When summary function available. Until then...
-        res.redirect('/customer/view');
+        res.redirect('/customer/edit?nino=' + editedCustomer.nino);
     } else {
         editedCustomer.birthDay = day;
         editedCustomer.birthMonth = month;
