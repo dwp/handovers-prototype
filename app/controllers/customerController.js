@@ -254,25 +254,34 @@ function customerEditPageAction(req, res) {
     let errorsOut = [];
     let currentYear = new Date().getFullYear();
     let foundCustomer;
+
+    // If there is already an edited customer in the session (i.e. this customer was previously edited with errors)
+    //      - check if a nino has been entered - if not, push message that nino is required and move to next field
+    //      - nino is not empty; check if nino entered already exists in database - if not, allow nino and move to next field
+    //      - nino is not empty and is already in the database; check if nino has been altered back to the original nino
+    //              - if has been altered to original value, allow nino and move to next field
+    //              - if has not been altered to original value, output error about uniqueness of ninos and move to next field
+
     if (req.body['nino'] === "") {
         errorsOut.push({
             message : "National insurance number must be entered",
             field : "nino"});
     } else {
         foundCustomer = findIfCustomerNinoAlreadyExists(req, req.body['nino']);
-        if (foundCustomer.customerFound == 1) {
-            if (editedCustomer.nino !== undefined) {
-                if (req.body['nino'] === editedCustomer.nino) {
-                    console.log("Nino is for customer being edited");
-                } else {
-                    errorsOut.push({
-                        message: "National insurance number already exists",
-                        field: "nino"
-                    });
-                }
+        if (foundCustomer.customerFoundIndicator == 0) {
+            // Do nothing
+        } else {
+            if (req.body['nino'] === customer.nino) {
+                console.log("Nino is for customer being edited. No error");
+            } else {
+                errorsOut.push({
+                    message: "National insurance number already exists",
+                    field: "nino"
+                });
             }
         }
     }
+
     editedCustomer.nino = req.body['nino'];
     editedCustomer.customerOfficeId = req.body['customer-office'];
     if (req.body['firstName'] === "") {
@@ -355,7 +364,8 @@ function customerEditPageAction(req, res) {
     }
     if (errorsOut.length === 0) {
         editedCustomer.dob = new Date(year + '-' + month + '-' + day);
-        req.session.customer = editedCustomer;
+        req.session.customer = customer;
+        req.session.editedCustomer = {};
         customers.push(editedCustomer);
         req.session.customers = customers;
         req.session.errors = errorsOut;
@@ -366,6 +376,7 @@ function customerEditPageAction(req, res) {
         editedCustomer.birthMonth = month;
         editedCustomer.birthYear = year;
         req.session.editedCustomer = editedCustomer;
+        req.session.customer = customer;
         req.session.errors = errorsOut;
         res.redirect('/customer/edit');
     }
