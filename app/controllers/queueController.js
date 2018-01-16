@@ -11,13 +11,12 @@ function viewQueuePage(req, res) {
     let users = sIDU.setInitialUsersData();
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let handoversLength = handovers.length;
-    let queueType = req.query.agentId ? 'agent' : 'office';
-    let queueAgent = '';
-    if (queueType === 'agent') {
-        queueAgent = userUtils.getUserByStaffIdFromListOfUsers(users, (req.query.agentId ? req.query.agentId : '40001003'));
-    }
+    let queueType = req.query.queryType ? req.query.queryType : 'agent'
+    let queueAgentId = req.query.agentId ? req.query.agentId : req.session.user.id;
+    let queueAgent;
     let handoversQueueList = [];
     let sortedHandoversQueueList;
+    queueAgent = userUtils.getUserByStaffIdFromListOfUsers(users, queueAgentId);
     for (let i=0; i < handoversLength; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
         let textDetails = handoverUtils.getHandoverDetails(handover);

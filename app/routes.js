@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-var usersForRoleToggle = require('./usersForRoleToggle');
+var usersForRoleToggle = require('./usersForRoleToggle')();
 
 require('./routes/init')(router, usersForRoleToggle);
 require('./routes/index')(router);

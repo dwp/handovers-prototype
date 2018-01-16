@@ -8,13 +8,12 @@
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
 
-
             {% if queueType === "office" %}
                 <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
             {% else %}
                 <h1 class="heading-large">Handovers queue - {{ queueAgent.firstName }} {{ queueAgent.lastName }}</h1>
             {% endif %}
-            {% if queueType === "office" and data.user.role == 0 %}
+            {% if queueType === "office" and queueAgent.role == 0 %}
                 <h3 class="heading-medium">You cannot view the full office queue with your existing role. To see this view you need to request a different role.</h3>
             {% else %}
                 <div class="grid-row">

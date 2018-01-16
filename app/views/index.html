@@ -15,7 +15,6 @@
       <p>
         Allows prototyping of service to raise and process handovers
       </p>
-
     </div>
   </div>
 
@@ -39,9 +38,9 @@
     {% set groupLinksScreens = [{
     workTitle : 'Queues',
     links: [{
-    link : '/queue/view', title : 'View office queue'
+    link : '/queue/view?queueType=office', title : 'View office queue'
     },{
-    link : '/queue/view?agentId={{ data.user.id }}', title : 'View my queue'
+    link : '/queue/view?agentId=' + data.user.id, title : 'View my queue'
     }]
     }] %}
 
