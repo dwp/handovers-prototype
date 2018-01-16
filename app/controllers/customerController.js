@@ -154,12 +154,12 @@ function customerCreatePageAction(req, res) {
     let currentYear = new Date().getFullYear();
     let errorsOut = [];
     newCustomer.nino = req.body['nino'];
-    if (req.body['customer-office'] === ""){
+    if (req.body['postcode'] === "") {
         errorsOut.push({
-            message : "Home jobcentre must be selected from dropdown list",
-            field : "customer-office"});
+            message : "Postcode must be entered",
+            field : "postcode"});
     } else {
-        newCustomer.customerOfficeId = req.body['customer-office'];
+        newCustomer.postcode = req.body['postcode'];
     }
     if (req.body['firstName'] === "") {
         errorsOut.push({
@@ -174,6 +174,13 @@ function customerCreatePageAction(req, res) {
             field : "lastName"});
     } else {
         newCustomer.lastName = req.body['lastName'];
+    }
+    if (req.body['customer-office'] === ""){
+        errorsOut.push({
+            message : "Home jobcentre must be selected from dropdown list",
+            field : "customer-office"});
+    } else {
+        newCustomer.customerOfficeId = req.body['customer-office'];
     }
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
         errorsOut.push({
@@ -194,13 +201,6 @@ function customerCreatePageAction(req, res) {
                 message : ("......year of birth must be between 1900 and " + currentYear),
                 field : "birthYear"});
         }
-    }
-    if (req.body['postcode'] === "") {
-        errorsOut.push({
-            message : "Postcode must be entered",
-            field : "postcode"});
-    } else {
-        newCustomer.postcode = req.body['postcode'];
     }
     newCustomer.preferredContactNumber = req.body['prefContNum'];
     newCustomer.emailAddress = req.body['emailAddr'];
@@ -299,6 +299,13 @@ function customerEditPageAction(req, res) {
     let currentYear = new Date().getFullYear();
     editedCustomer.nino = customer.nino;
     editedCustomer.customerOfficeId = req.body['customer-office'];
+    if (req.body['postcode'] === "") {
+        errorsOut.push({
+            message : "Postcode must be entered",
+            field : "postcode"});
+    } else {
+        editedCustomer.postcode = req.body['postcode'];
+    }
     if (req.body['firstName'] === "") {
         errorsOut.push({
             message : "First name must be entered",
@@ -332,13 +339,6 @@ function customerEditPageAction(req, res) {
                 message : ("......year of birth must be between 1900 and " + currentYear),
                 field : "birthYear"});
         }
-    }
-    if (req.body['postcode'] === "") {
-        errorsOut.push({
-            message : "Postcode must be entered",
-            field : "postcode"});
-    } else {
-        editedCustomer.postcode = req.body['postcode'];
     }
     editedCustomer.preferredContactNumber = req.body['prefContNum'];
     editedCustomer.emailAddress = req.body['emailAddr'];
