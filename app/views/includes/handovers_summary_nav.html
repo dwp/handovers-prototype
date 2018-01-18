@@ -1,16 +1,19 @@
 <div class="column-full summary-nav-wrapper">
     <ul>
-
         <li class="{% if currentHandoversPage === 'customers' %}selected{% endif %}">
-        <a id="edit_record" href="/customer/find" class="menu-item ">Customer</a>
+            <a id="customer_find" href="/customer/find" class="menu-item ">Find Customer</a>
+        </li>
+
+        <li class="{% if currentHandoversPage === 'summary' %}selected{% endif %}">
+            <a id="customer_summary" href="/customer/summary" class="menu-item ">Customer Summary</a>
         </li>
 
         <li class="{% if currentClaimantPage === 'queues' %}selected{% endif %}">
-        <a id="claim_active" href="/queue/view?agentId={{ data.user.id }}" class="menu-item">Queue</a>
+            <a id="queue_view" href="/queue/view?agentId=40001004" class="menu-item">Queue</a>
         </li>
 
         <li class="{% if currentClaimantPage === 'teams' %}selected{% endif %}">
-        <a id="selection_tool" href="/team_menu.html" class="menu-item">Team</a>
+            <a id="team_menu" href="/team_menu.html" class="menu-item">Team</a>
         </li>
 
         <li

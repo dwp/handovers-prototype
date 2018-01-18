@@ -8,7 +8,7 @@
         {% include "includes/message-banner.html" %}
         {% include "includes/error-summary.html" %}
         {% if editOrCreate === 'edit' %}
-            <h1 class="heading-large">Edit customer details for {{ customer.firstName }} {{ customer.lastName }}</h1>
+            <h1 class="heading-large">Amend customer details for {{ customer.firstName }} {{ customer.lastName }}</h1>
             <form action="/customer/edit?nino={{ customer.nino }}" method="POST" class="form">
         {% else %}
             <h1 class="heading-large">Create new customer</h1>
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <div class="grid-row">
                         {% include "includes/customerEdit/nino.html" %}
-                        {% include "includes/customerEdit/home-jobcentre.html" %}
+                        {% include "includes/customerEdit/postcode.html" %}
                     </div>
 
                     <div class="grid-row">
@@ -27,7 +27,7 @@
 
                     <div class="grid-row">
                         {% include "includes/customerEdit/date-of-birth.html" %}
-                        {% include "includes/customerEdit/postcode.html" %}
+                        {% include "includes/customerEdit/home-jobcentre.html" %}
                     </div>
 
                     <div class="grid-row">
