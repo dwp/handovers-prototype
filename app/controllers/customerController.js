@@ -7,6 +7,11 @@ const Customer = require('../models/Customer.model');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customer Controllers
+/*
+/*    Throughout these controller functions, if all input data for an individual customer is valid then a Customer
+/*    object is created. If it is not valid then a generic object is created while errors are being handled. Once all
+/*    errors have been cleared, then a Customer object is created.
+/*
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 

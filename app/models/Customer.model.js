@@ -1,17 +1,9 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-/*                                        Not currently used
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*/
-
 class Customer {
     constructor(properties) {
         this.nino = properties.nino;
         this.firstName = properties.firstName;
         this.lastName = properties.lastName;
         this.dob = properties.dob;
-        this.birthDay = properties.birthDay;
-        this.birthMonth = properties.birthMonth;
-        this.birthYear = properties.birthYear;
         this.postcode = properties.postcode;
         this.customerOfficeId = properties.customerOfficeId;
         this.preferredContactNumber = properties.preferredContactNumber;
