@@ -3,7 +3,7 @@
   "customers": [{
       "firstName": "Adam",
       "lastName": "Brown",
-      "dob": "25 Jan 1982",
+      "dob": "1982-10-02",
       "nino": "AA123456B",
       "preferredContactNumber" : "01134 567890",
       "emailAddress" : "adam.brown@blah.com",
