@@ -184,6 +184,7 @@
                     <div class="column-half">
                         <legend class="form-label-bold">Callback required ?</legend>
                         {% if handover.callback === 'Yes' and editOrCreate === 'edit' %}
+                            <input class="hidden" id="handover-callback" name="handover-callback" value="{{ handover.callback }}">
                             <p>{{ handover.callback }}</p>
                         {% else %}
                             <fieldset class="inline">
@@ -208,8 +209,8 @@
                             {% if handover.status === "Withdrawn" %}
                                 <p>Cannot be changed as current status is 'Withdrawn'</p>
                             {% else %}
-                                {% if handover.status === "Done" %}
-                                    <p>Cannot be changed as current status is 'Done'</p>
+                                {% if handover.status === "Cleared" %}
+                                    <p>Cannot be changed as current status is 'Cleared'</p>
                                 {% else %}
                                     <select class="select form-control" name="handover-status" id=handover-status">
                                     {% if handover.status === "Not allocated" %}
@@ -221,8 +222,8 @@
                                     {% if handover.status === "In progress" or handover.status === "Paused" %}
                                         <option value="Paused" {{ 'selected' if handover.status === "Paused" else ''}}>Paused</option>
                                     {% endif %}
-                                    {% if handover.status === "In progress" or handover.status === "Paused" or handover.status === "Done" %}
-                                        <option value="Done" {{ 'selected' if handover.status === "Done" else ''}}>Done</option>
+                                    {% if handover.status === "In progress" or handover.status === "Paused" or handover.status === "Cleared" %}
+                                        <option value="Cleared" {{ 'selected' if handover.status === "Cleared" else ''}}>Cleared</option>
                                     {% endif %}
                                     {% if handover.status === "Not allocated" or handover.status === "In progress" or handover.status === "Paused" %}
                                         <option value="Withdrawn" {{ 'selected' if handover.status === "Withdrawn" else ''}}>Withdrawn</option>
