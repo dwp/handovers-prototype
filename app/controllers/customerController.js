@@ -3,6 +3,7 @@ const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
 const dateUtils = require('../utils/dateUtils');
 const handoverUtils = require('../utils/handoverUtils');
+const Customer = require('../models/Customer.model');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customer Controllers
@@ -18,6 +19,8 @@ function customerFindPageAction(req, res) {
 
     let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let inputNino = req.body.nino;
+    let foundCustomer;
+    let notFoundCustomer;
     let customer = {};
     let customerFound = 0;
     if (inputNino === '') {
@@ -25,16 +28,17 @@ function customerFindPageAction(req, res) {
     } else {
         for (let i=0; i < customers.length; i++) {
             if (customers[i].nino === inputNino) {
-                customer = customers[i];
+                foundCustomer = new Customer(customers[i]);
                 customerFound = 1;
             }
         }
     }
     if (customerFound === 0) {
         customer.nino = inputNino;
-        res.render('customer_search_results', customer);
+        notFoundCustomer = new Customer(customer);
+        res.render('customer_search_results', notFoundCustomer);
     } else {
-        req.session.customer = customer;
+        req.session.customer = foundCustomer;
         res.redirect('/customer/summary');
     }
 }

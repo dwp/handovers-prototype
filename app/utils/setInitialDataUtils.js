@@ -4,11 +4,12 @@ const handoverData = require('../data/handoverData.json');
 const officeData = require('../data/officeData.json');
 const teamData = require('../data/teamData.json');
 const dateUtils = require('../utils/dateUtils');
+const Customer = require('../models/Customer.model');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customers Data Setup
 /*
-/*                Set up initial customers data from json file, and return in an array
+/*                Set up initial customers data from json file, and return in an array of Customer objects
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
@@ -18,23 +19,11 @@ function setInitialCustomersData() {
     let customersList = customerData['customers'];
     let initialCustomers = [];
     for (let i=0; i < customersList.length; i++) {
-        let customer = new Object();
         let dob = new Date(customersList[i].dob);
-        customer.firstName = customersList[i].firstName;
-        customer.lastName = customersList[i].lastName;
+        let customer = customersList[i];
         customer.dob = dob;
-        customer.nino = customersList[i].nino;
-        customer.preferredContactNumber = customersList[i].preferredContactNumber;
-        customer.emailAddress = customersList[i].emailAddress;
-        customer.postcode = customersList[i].postcode;
-        customer.customerOfficeId = customersList[i].customerOfficeId;
-        customer.welshSpeaker = customersList[i].welshSpeaker;
-        customer.language = customersList[i].language;
-        customer.translator = customersList[i].translator;
-        customer.approvedRep = customersList[i].approvedRep;
-        customer.approvedRepName = customersList[i].approvedRepName;
-        customer.approvedRepContact = customersList[i].approvedRepContact;
-        initialCustomers.push(customer);
+        let initialCustomer = new Customer(customer)
+        initialCustomers.push(initialCustomer);
     }
     return initialCustomers;
 }
