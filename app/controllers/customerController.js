@@ -2,6 +2,7 @@ const sIDU = require('../utils/setInitialDataUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
 const dateUtils = require('../utils/dateUtils');
+const handoverUtils = require('../utils/handoverUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customer Controllers
@@ -23,7 +24,7 @@ function customerFindPageAction(req, res) {
         res.render('customer_search_results', customer);
     } else {
         req.session.customer = customer;
-        res.redirect('/customer/edit');
+        res.redirect('/customer/summary');
     }
 }
 
@@ -54,6 +55,52 @@ function customerViewPage(req, res) {
     res.render('customer', {
         customer : customer,
         customerOfficeDetails : customerOfficeDetails,
+        errors : errorsIn,
+        errorsLength : errorsIn.length
+    });
+}
+
+function customerSummaryPage(req, res) {
+
+    let officesList = sIDU.setInitialOfficesData();
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let errorsIn = req.session.errors ? req.session.errors : [];
+    let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
+    let customer;
+    let displayDate;
+    let handoversList = [];
+    if (errorsIn.length === 0) {
+        if(req.query.nino) {
+            customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
+        } else {
+            customer = req.session.customer ? req.session.customer : customers[0];
+        }
+
+    } else {
+        if(req.session.editedCustomer) {
+            customer = req.session.editedCustomer;
+        } else {
+            customer = req.session.newCustomer;
+        }
+    }
+    for (let i=0; i < handovers.length; i++) {
+        let handover = handovers[i];
+        if (handover.nino === customer.nino) {
+            let handoverTextDetails = handoverUtils.getHandoverDetails(handover);;
+            handover.handoverTextDetails = handoverTextDetails;
+            handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+            handoversList.push(handover);
+        }
+    }
+    displayDate = dateUtils.formatDateAndTimeForDisplay(customer.dob);
+    customer.birthDay = parseInt(displayDate.day);
+    customer.birthMonth = displayDate.month;
+    customer.birthYear = parseInt(displayDate.year);
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    res.render('customer-summary', {
+        customer : customer,
+        customerOfficeDetails : customerOfficeDetails,
+        handoversList : handoversList,
         errors : errorsIn,
         errorsLength : errorsIn.length
     });
@@ -110,12 +157,12 @@ function customerCreatePageAction(req, res) {
         }
     }
     newCustomer.nino = req.body['nino'];
-    if (req.body['customer-office'] === ""){
+    if (req.body['postcode'] === "") {
         errorsOut.push({
-            message : "Home jobcentre must be selected from dropdown list",
-            field : "customer-office"});
+            message : "Postcode must be entered",
+            field : "postcode"});
     } else {
-        newCustomer.customerOfficeId = req.body['customer-office'];
+        newCustomer.postcode = req.body['postcode'];
     }
     if (req.body['firstName'] === "") {
         errorsOut.push({
@@ -130,6 +177,13 @@ function customerCreatePageAction(req, res) {
             field : "lastName"});
     } else {
         newCustomer.lastName = req.body['lastName'];
+    }
+    if (req.body['customer-office'] === ""){
+        errorsOut.push({
+            message : "Home jobcentre must be selected from dropdown list",
+            field : "customer-office"});
+    } else {
+        newCustomer.customerOfficeId = req.body['customer-office'];
     }
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
         errorsOut.push({
@@ -150,13 +204,6 @@ function customerCreatePageAction(req, res) {
                 message : ("......year of birth must be between 1900 and " + currentYear),
                 field : "birthYear"});
         }
-    }
-    if (req.body['postcode'] === "") {
-        errorsOut.push({
-            message : "Postcode must be entered",
-            field : "postcode"});
-    } else {
-        newCustomer.postcode = req.body['postcode'];
     }
     newCustomer.preferredContactNumber = req.body['prefContNum'];
     newCustomer.emailAddress = req.body['emailAddr'];
@@ -201,7 +248,7 @@ function customerCreatePageAction(req, res) {
         customers.push(newCustomer);
         req.session.customers = customers;
         req.session.errors = [];
-        res.redirect('/customer/edit');
+        res.redirect('/customer/summary');
     } else {
         newCustomer.birthDay = day;
         newCustomer.birthMonth = month;
@@ -284,6 +331,13 @@ function customerEditPageAction(req, res) {
 
     editedCustomer.nino = req.body['nino'];
     editedCustomer.customerOfficeId = req.body['customer-office'];
+    if (req.body['postcode'] === "") {
+        errorsOut.push({
+            message : "Postcode must be entered",
+            field : "postcode"});
+    } else {
+        editedCustomer.postcode = req.body['postcode'];
+    }
     if (req.body['firstName'] === "") {
         errorsOut.push({
             message : "First name must be entered",
@@ -317,13 +371,6 @@ function customerEditPageAction(req, res) {
                 message : ("......year of birth must be between 1900 and " + currentYear),
                 field : "birthYear"});
         }
-    }
-    if (req.body['postcode'] === "") {
-        errorsOut.push({
-            message : "Postcode must be entered",
-            field : "postcode"});
-    } else {
-        editedCustomer.postcode = req.body['postcode'];
     }
     editedCustomer.preferredContactNumber = req.body['prefContNum'];
     editedCustomer.emailAddress = req.body['emailAddr'];
@@ -369,8 +416,7 @@ function customerEditPageAction(req, res) {
         customers.push(editedCustomer);
         req.session.customers = customers;
         req.session.errors = errorsOut;
-        // res.redirect('/customer/summary'); When summary function available. Until then...
-        res.redirect('/customer/edit?nino=' + editedCustomer.nino);
+        res.redirect('/customer/summary');
     } else {
         editedCustomer.birthDay = day;
         editedCustomer.birthMonth = month;
@@ -404,6 +450,7 @@ function findIfCustomerNinoAlreadyExists (req, nino) {
 module.exports.customerFindPage = customerFindPage;
 module.exports.customerFindPageAction = customerFindPageAction;
 module.exports.customerViewPage = customerViewPage;
+module.exports.customerSummaryPage = customerSummaryPage;
 module.exports.customerCreatePage = customerCreatePage;
 module.exports.customerCreatePageAction = customerCreatePageAction;
 module.exports.customerEditPage = customerEditPage;

@@ -184,6 +184,7 @@
                     <div class="column-half">
                         <legend class="form-label-bold">Callback required ?</legend>
                         {% if handover.callback === 'Yes' and editOrCreate === 'edit' %}
+                            <input class="hidden" id="handover-callback" name="handover-callback" value="{{ handover.callback }}">
                             <p>{{ handover.callback }}</p>
                         {% else %}
                             <fieldset class="inline">
@@ -208,8 +209,8 @@
                             {% if handover.status === "Withdrawn" %}
                                 <p>Cannot be changed as current status is 'Withdrawn'</p>
                             {% else %}
-                                {% if handover.status === "Done" %}
-                                    <p>Cannot be changed as current status is 'Done'</p>
+                                {% if handover.status === "Cleared" %}
+                                    <p>Cannot be changed as current status is 'Cleared'</p>
                                 {% else %}
                                     <select class="select form-control" name="handover-status" id=handover-status">
                                     {% if handover.status === "Not allocated" %}
@@ -221,8 +222,8 @@
                                     {% if handover.status === "In progress" or handover.status === "Paused" %}
                                         <option value="Paused" {{ 'selected' if handover.status === "Paused" else ''}}>Paused</option>
                                     {% endif %}
-                                    {% if handover.status === "In progress" or handover.status === "Paused" or handover.status === "Done" %}
-                                        <option value="Done" {{ 'selected' if handover.status === "Done" else ''}}>Done</option>
+                                    {% if handover.status === "In progress" or handover.status === "Paused" or handover.status === "Cleared" %}
+                                        <option value="Cleared" {{ 'selected' if handover.status === "Cleared" else ''}}>Cleared</option>
                                     {% endif %}
                                     {% if handover.status === "Not allocated" or handover.status === "In progress" or handover.status === "Paused" %}
                                         <option value="Withdrawn" {{ 'selected' if handover.status === "Withdrawn" else ''}}>Withdrawn</option>
@@ -240,36 +241,55 @@
                 <div class="grid-row">
                     <div class="column-full">
                         <legend class="form-label-bold">Notes</legend>
-                        {% if editOrCreate === 'edit' %}
-                            {% if handoverNotesLength !== 0 %}
-                                {% for note in handoverNotes %}
-                                    <p>{{ note.noteContent }}</p>
-                                    {% if note.updateResultedFromCustomerContactIndicator === 'Yes' %}
-                                        <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Update resulted from contact with customer</p>
-                                    {% endif %}
-                                    <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                        (added by {{ note.userWhoAddedNote.firstName }} {{ note.userWhoAddedNote.lastName }}
-                                        on {{ note.dateNoteAdded.day }} {{ note.dateNoteAdded.month }} {{ note.dateNoteAdded.year }}
-                                        at {{ note.dateNoteAdded.hours }}:{{ note.dateNoteAdded.mins }})</p>
-                                {% endfor %}
+                        <div class="panel panel-border-narrow">
+                            <legend class="form-label-bold">Add a note</legend>
+                            {% if editOrCreate === 'edit' %}
+                                <div class="panel panel-border-narrow">
+                                    <textarea class="form-control" id="handover-note" name="handover-note" rows="6"></textarea>
+                                    <br>
+                                        <legend class="form-label-bold">Did this update result from customer contact ?</legend>
+                                        <fieldset class="inline">
+                                            <div class="multiple-choice">
+                                                <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
+                                                <label for="handover-contact-no">No</label>
+                                            </div>
+                                            <div class="multiple-choice">
+                                                <input id="handover-contact-yes" type="radio" name="handover-contact-indicator" value="Yes">
+                                                <label for="handover-contact-yes">Yes</label>
+                                            </div>
+                                        </fieldset>
+                                </div>
                             {% else %}
-                                <p>There are no notes for this handover yet</p>
+                                <textarea class="form-control" id="handover-note" name="handover-note" rows="6"></textarea>
+                                <br>
+                                <legend class="form-label-bold">Did this update result from customer contact ?</legend>
+                                <fieldset class="inline">
+                                    <div class="multiple-choice">
+                                        <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
+                                        <label for="handover-contact-no">No</label>
+                                    </div>
+                                    <div class="multiple-choice">
+                                        <input id="handover-contact-yes" type="radio" name="handover-contact-indicator" value="Yes">
+                                        <label for="handover-contact-yes">Yes</label>
+                                    </div>
+                                </fieldset>
                             {% endif %}
-                        {% endif %}
-                        <legend class="form-label-bold">Add a note</legend>
-                        <textarea class="form-control" id="handover-note" name="handover-note"></textarea>
-                        <br>
-                        <legend class="form-label-bold">Did this update result from customer contact ?</legend>
-                        <fieldset class="inline">
-                            <div class="multiple-choice">
-                                <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
-                                <label for="handover-contact-no">No</label>
-                            </div>
-                            <div class="multiple-choice">
-                                <input id="handover-contact-yes" type="radio" name="handover-contact-indicator" value="Yes">
-                                <label for="handover-contact-yes">Yes</label>
-                            </div>
-                        </fieldset>
+                            <br>
+                            {% if editOrCreate === 'edit' %}
+                            <legend class="form-label-bold">Existing notes</legend>
+                                {% if handoverNotesLength !== 0 %}
+                                    {% for note in handoverNotes %}
+                                        <p>{{ note.noteContent }}</p>
+                                        <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                            (added by {{ note.userWhoAddedNote.firstName }} {{ note.userWhoAddedNote.lastName }}
+                                            on {{ note.dateNoteAdded.day }} {{ note.dateNoteAdded.month }} {{ note.dateNoteAdded.year }}
+                                            at {{ note.dateNoteAdded.hours }}:{{ note.dateNoteAdded.mins }})</p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>There are no notes for this handover yet</p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <br>
