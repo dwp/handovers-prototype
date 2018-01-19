@@ -5,8 +5,8 @@
 <main id="content" role="main">
     <div class="main-content">
         {% include "includes/handovers_summary_nav.html" %}
-        {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
+        {% include "includes/error-summary.html" %}
         {% if editOrCreate === 'edit' %}
             <h1 class="heading-large">Edit handover for {{ customer.firstName }} {{ customer.lastName }}</h1>
             <form action="/handover/edit" method="POST" class="form">
@@ -103,7 +103,6 @@
                 {% endif %}
 
                 <div class="grid-row">
-                    {% if editOrCreate === 'create' %}
                         <div class="column-half">
                             <legend class="form-label-bold">Select a benefit</legend>
                             <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
@@ -113,14 +112,6 @@
                                 {% endfor %}
                             </select>
                         </div>
-                    {% else %}
-                        <div class="column-half">
-                            <legend class="form-label-bold">Benefit</legend>
-                            <p>{{ benefitName }}</p>
-                        </div>
-                    {% endif %}
-
-                    {% if editOrCreate === 'create' %}
                         <div class="column-half" id="benSubTypeDiv" style="display:none;">
                             <legend class="form-label-bold">Select a benefit sub-type</legend>
                             <select class="select form-control" name="benefit-sub" id="benefit-sub">
@@ -131,37 +122,19 @@
                                 <option value="Social Fund Type 4" {{ 'selected' if handover.benSubType === 'Social Fund Type 4' else ''}}>Social Fund Type 4</option>
                             </select>
                         </div>
-                    {% else %}
-                        <div class="column-half">
-                            {% if benefitName === "Social Fund [SF]" %}
-                            <legend class="form-label-bold">Benefit sub-type</legend>
-                            <p>{{ handover.benSubType }}</p>
-                            {% else %}
-                            <p></p>
-                            {% endif %}
-                        </div>
-                    {% endif %}
                 </div>
                 <br>
                 <div class="grid-row">
-                    {% if editOrCreate === 'create' %}
                         <div class="column-half">
                             <legend class="form-label-bold">Select a handover type</legend>
                             <select class="select form-control" name="handover-type" id="handover-type">
                                 <option value="">Select</option>
                                 {% for handoverType in handTypesList %}
-                                <option value="{{ handoverType.id }}" {{ 'selected' if handover.typeId === handoverType.id else ''}}>{{ handoverType.handoverType }}</option>
+                                    <option value="{{ handoverType.id }}" {{ 'selected' if handover.typeId === handoverType.id else ''}}>{{ handoverType.handoverType }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                    {% else %}
-                        <div class="column-half">
-                            <legend class="form-label-bold">Handover type</legend>
-                            <p>{{ handoverType }}</p>
-                        </div>
-                    {% endif %}
 
-                    {% if editOrCreate === 'create' %}
                         <div class="column-half">
                             <legend class="form-label-bold">Select a handover reason</legend>
                             <select class="select form-control" name="handover-reason" id="handover-reason">
@@ -171,12 +144,6 @@
                                 {% endfor %}
                             </select>
                         </div>
-                    {% else %}
-                        <div class="column-half">
-                            <legend class="form-label-bold">Handover reason</legend>
-                            <p>{{ handoverReason }}</p>
-                        </div>
-                    {% endif %}
                 </div>
                 <br>
 

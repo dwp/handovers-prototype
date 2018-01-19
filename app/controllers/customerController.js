@@ -190,7 +190,7 @@ function customerEditPage(req, res) {
 function customerEditPageAction(req, res) {
 
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let customer = req.session.customer ? req.session.customer : customersList[0];
+    let customer;
     let editedCustomer = {};
     let validatedCustomer;
     editedCustomer.customerOfficeId = req.body['customer-office'];
