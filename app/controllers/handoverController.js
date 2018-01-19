@@ -182,7 +182,7 @@ function createHandoverPageAction(req, res) {
     req.session.handover = newHandover;
     req.session.handovers = newHandoversList;
     req.session.customer = customer;
-    res.redirect('/handover/view?id=' + newId);
+    res.redirect('/customer/summary?id=' + newHandover.nino);
 
 }
 
@@ -309,7 +309,7 @@ function editHandoverPageAction(req, res) {
     req.session.handovers = handoversList;
     req.session.handover = editedHandover;
     req.session.customer = customer;
-    res.redirect('/handover/edit?id=' + editedHandover.id);
+    res.redirect('/customer/summary?nino=' + editedHandover.nino);
 
 }
 

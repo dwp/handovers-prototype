@@ -121,6 +121,7 @@ function validateCustomer(req, inputCustomer) {
     }
 
     customer.preferredContactNumber = inputCustomer.preferredContactNumber;
+    customer.emailAddress = inputCustomer.emailAddress;
     customer.welshSpeaker = inputCustomer.welshSpeaker;
 
     validatedCustomer = {
