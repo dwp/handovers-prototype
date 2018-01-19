@@ -36,8 +36,10 @@ function viewHandoverPage(req, res) {
     userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
-    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
-    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+    let handoverDateRaisedAsDateObject = new Date (handover.dateAndTimeRaised);
+    let handoverTargetDateAndTimeAsDateObject = new Date(handover.targetDateAndTime);
+    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverDateRaisedAsDateObject);
+    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverTargetDateAndTimeAsDateObject);
     let inQueueOfStaffDetails;
     if (handover.inQueueOfStaffId !== "") {
         inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
@@ -49,7 +51,7 @@ function viewHandoverPage(req, res) {
         for (let i=0; i < handNoteLen; i++) {
             let handoverNote = {
                 id: handover.notes[i].id,
-                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
+                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(new Date(handover.notes[i].dateNoteAdded)),
                 userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
                 updateResultedFromCustomerContactIndicator: handover.notes[i].updateResultedFromCustomerContactIndicator,
                 noteContent: handover.notes[i].noteContent
@@ -160,8 +162,10 @@ function createHandoverPageAction(req, res) {
     if (newHandover.callback === 'Yes') {
         newHandover.targetDateAndTime.setHours(newHandover.dateAndTimeRaised.getHours() + 3);
     }
-    newHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(newHandover.dateAndTimeRaised);
-    newHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(newHandover.targetDateAndTime);
+    let handoverDateRaisedAsDateObject = new Date (newHandover.dateAndTimeRaised);
+    let handoverTargetDateAndTimeAsDateObject = new Date(newHandover.targetDateAndTime);
+    newHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverDateRaisedAsDateObject);
+    newHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverTargetDateAndTimeAsDateObject);
     if (handoverNote === "" || handoverNote === null) {
         // Do nothing
     } else {
@@ -202,8 +206,10 @@ function editHandoverPage(req, res) {
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
     let errorsIn = req.session.errors ? req.session.errors : [];
-    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
-    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+    let handoverDateRaisedAsDateObject = new Date (handover.dateAndTimeRaised);
+    let handoverTargetDateAndTimeAsDateObject = new Date(handover.targetDateAndTime);
+    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverDateRaisedAsDateObject);
+    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverTargetDateAndTimeAsDateObject);
     let inQueueOfStaffDetails;
     if (handover.inQueueOfStaffId !== "") {
         inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
@@ -214,7 +220,7 @@ function editHandoverPage(req, res) {
         for (let i=0; i < handover.notes.length; i++) {
             let handoverNote = {
                 id: handover.notes[i].id,
-                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
+                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(new Date(handover.notes[i].dateNoteAdded)),
                 userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
                 updateResultedFromCustomerContactIndicator: handover.notes[i].updateResultedFromCustomerContactIndicator,
                 noteContent: handover.notes[i].noteContent

@@ -77,7 +77,7 @@ function customerSummaryPage(req, res) {
         if (handover.nino === customer.nino) {
             let handoverTextDetails = handoverUtils.getHandoverDetails(handover);;
             handover.handoverTextDetails = handoverTextDetails;
-            handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+            handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(new Date(handover.dateAndTimeRaised));
             handoversList.push(handover);
         }
     }

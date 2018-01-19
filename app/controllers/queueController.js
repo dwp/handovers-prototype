@@ -21,8 +21,10 @@ function viewQueuePage(req, res) {
     for (let i=0; i < handoversLength; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
         let textDetails = handoverUtils.getHandoverDetails(handover);
-        let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
-        let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTimeForDisplay);
+        let handoverDateRaisedAsDateObject = new Date (handover.dateAndTimeRaised);
+        let handoverTargetDateAndTimeAsDateObject = new Date(handover.targetDateAndTime);
+        let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverDateRaisedAsDateObject);
+        let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverTargetDateAndTimeAsDateObject);
         handover.benefitName = textDetails.benefitName;
         handover.handoverType = textDetails.handoverType;
         handover.handoverReason = textDetails.handoverReason;

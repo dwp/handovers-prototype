@@ -13,7 +13,7 @@ class Customer {
         this.language = properties.language;
         this.approvedRep = properties.approvedRep;
         this.approvedRepName = properties.approvedRepName;
-        this.approvedRepContact = properties.approvedRepName;
+        this.approvedRepContact = properties.approvedRepContact;
     }
 }
 
