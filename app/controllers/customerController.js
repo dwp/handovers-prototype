@@ -1,9 +1,9 @@
+const Customer = require('../models/Customer.model');
 const sIDU = require('../utils/setInitialDataUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
 const dateUtils = require('../utils/dateUtils');
 const handoverUtils = require('../utils/handoverUtils');
-const Customer = require('../models/Customer.model');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customer Controllers
@@ -58,26 +58,30 @@ function customerSummaryPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let errorsIn = req.session.errors ? req.session.errors : [];
+    let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let customer;
     let handoversList = [];
-    if (errorsIn.length === 0) {
+    if (errors.length === 0) {
         if(req.query.nino) {
             customer = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, req.query.nino);
         } else {
             customer = req.session.customer ? req.session.customer : customersList[0];
         }
-
     } else {
         customer = req.session.invalidCustomer;
     }
     for (let i=0; i < handovers.length; i++) {
         let handover = handovers[i];
         if (handover.nino === customer.nino) {
-            let handoverTextDetails = handoverUtils.getHandoverDetails(handover);;
-            handover.handoverTextDetails = handoverTextDetails;
-            handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(new Date(handover.dateAndTimeRaised));
+            let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);;
+            handover.handoverDetails = handoverDetails;
+            handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+            handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+            handover.dateRaised = (handover.dateAndTimeRaisedForDisplay.day + " " + handover.dateAndTimeRaisedForDisplay.month + " " + handover.dateAndTimeRaisedForDisplay.year);
+            handover.timeRaised = (handover.dateAndTimeRaisedForDisplay.hours + ":" + handover.dateAndTimeRaisedForDisplay.mins);
+            handover.targetDate = (handover.targetDateAndTimeForDisplay.day + " " + handover.targetDateAndTimeForDisplay.month + " " + handover.targetDateAndTimeForDisplay.year);
+            handover.targetTime = (handover.targetDateAndTimeForDisplay.hours + ":" + handover.targetDateAndTimeForDisplay.mins);
             handoversList.push(handover);
         }
     }
@@ -90,8 +94,8 @@ function customerSummaryPage(req, res) {
         customer : customer,
         customerOfficeDetails : customerOfficeDetails,
         handoversList : handoversList,
-        errors : errorsIn,
-        errorsLength : errorsIn.length
+        errors : errors,
+        errorsLength : errors.length
     });
 }
 
@@ -137,7 +141,7 @@ function customerCreatePageAction(req, res) {
     newCustomer.day = parseInt(req.body['birthDay']);
     newCustomer.month = parseInt(req.body['birthMonth']);
     newCustomer.year = parseInt(req.body['birthYear']);
-    validatedCustomer = customerUtils.validateCustomer(req, newCustomer);
+    validatedCustomer = customerUtils.validateCustomer(newCustomer);
     if (validatedCustomer.errors.length === 0) {
         customer = new Customer(validatedCustomer.customer);
         req.session.customer = customer;
@@ -186,7 +190,7 @@ function customerEditPage(req, res) {
 function customerEditPageAction(req, res) {
 
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let customer;
+    let customer = req.session.customer ? req.session.customer : customersList[0];
     let editedCustomer = {};
     let validatedCustomer;
     editedCustomer.customerOfficeId = req.body['customer-office'];
@@ -203,12 +207,12 @@ function customerEditPageAction(req, res) {
     editedCustomer.approvedRep = req.body['approved-rep'];
     editedCustomer.approvedRepName = req.body['rep-name'];
     editedCustomer.approvedRepContact = req.body['rep-contact'];
-    editedCustomer.day = parseInt(req.body['birthDay']);
-    editedCustomer.month = parseInt(req.body['birthMonth']);
-    editedCustomer.year = parseInt(req.body['birthYear']);
-    validatedCustomer = customerUtils.validateCustomer(req, editedCustomer);
+    editedCustomer.birthDay = parseInt(req.body['birthDay']);
+    editedCustomer.birthMonth = parseInt(req.body['birthMonth']);
+    editedCustomer.birthYear = parseInt(req.body['birthYear']);
+    validatedCustomer = customerUtils.validateCustomer(editedCustomer);
     if (validatedCustomer.errors.length === 0) {
-        customer = new Customer(validatedCustomer.customer);
+        customer = validatedCustomer.customer;
         req.session.customer = customer;
         customersList.push(customer);
         req.session.customers = customersList;

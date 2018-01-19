@@ -1,10 +1,10 @@
 class HandoverNote {
-    constructor(id, handoverId, dateNoteAdded, userWhoAddedNote, noteContent) {
-        this.id = id;
-        this.handoverId = handoverId;
-        this.dateNoteAdded = dateNoteAdded;
-        this.userWhoAddedNote = userWhoAddedNote;
-        this.noteContent = noteContent;
+    constructor(properties) {
+        this.id = properties.id;
+        this.handoverId = properties.handoverId;
+        this.dateNoteAdded = properties.dateNoteAdded;
+        this.userWhoAddedNote = properties.userWhoAddedNote;
+        this.noteContent = properties.noteContent;
     }
 }
 

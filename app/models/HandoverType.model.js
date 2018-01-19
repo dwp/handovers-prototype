@@ -1,7 +1,7 @@
 class HandoverType {
-    constructor(id, handoverType) {
-        this.id = id
-        this.handoverType = handoverType;
+    constructor(properties) {
+        this.id = properties.id
+        this.handoverType = properties.handoverType;
 
     }
 }

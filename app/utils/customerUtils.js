@@ -17,11 +17,11 @@ function getCustomerByNinoFromListOfCustomers(customersList, nino) {
 
 }
 
-function validateCustomer(req, inputCustomer) {
+function validateCustomer(inputCustomer) {
 
-    let day = inputCustomer.day;
-    let month = inputCustomer.month;
-    let year = inputCustomer.year;
+    let day = inputCustomer.birthDay;
+    let month = inputCustomer.birthMonth;
+    let year = inputCustomer.birthYear;
     let currentYear = new Date().getFullYear();
     let customer = {};
     let validatedCustomer;
@@ -56,6 +56,9 @@ function validateCustomer(req, inputCustomer) {
     } else {
         customer.customerOfficeId = inputCustomer.customerOfficeId;
     }
+    customer.birthDay = day;
+    customer.birthMonth = month;
+    customer.birthYear= year;
     if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
         errors.push({
             message : "Date of birth must be in valid format and within valid range",
@@ -75,10 +78,6 @@ function validateCustomer(req, inputCustomer) {
                 message : ("......year of birth must be between 1900 and " + currentYear),
                 field : "birthYear"});
         }
-        customer.dob = '';
-        customer.birthDay = day;
-        customer.birthMonth = month;
-        customer.birthYear= year;
     } else {
         customer.dob = new Date(year + '-' + month + '-' + day);
     }
@@ -95,7 +94,7 @@ function validateCustomer(req, inputCustomer) {
             customer.language = inputCustomer.language;
         }
     }
-    customer.approvedRep= inputCustomer.approvedRep;
+    customer.approvedRep = inputCustomer.approvedRep;
     if (inputCustomer.approvedRep === "Yes") {
         if (inputCustomer.approvedRepName === "" || inputCustomer.approvedRepContact === "") {
             errors.push({
@@ -105,11 +104,15 @@ function validateCustomer(req, inputCustomer) {
                 errors.push({
                     message : "         .....name must be entered",
                     field : "rep-name"});
+            } else {
+                customer.approvedRepName = inputCustomer.approvedRepName;
             }
             if (inputCustomer.approvedRepContact === "") {
                 errors.push({
                     message : "         .....contact details must be entered",
                     field : "rep-contact"});
+            } else {
+                customer.approvedRepContact= inputCustomer.approvedRepContact;
             }
         } else {
             customer.approvedRepName = inputCustomer.approvedRepName;

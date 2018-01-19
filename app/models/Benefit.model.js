@@ -1,11 +1,8 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-/*                                        Not currently used
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*/
 class Benefit {
-    constructor(id, benefitName) {
-        this.id = id
-        this.benefitName = benefitName;
+    constructor(properties) {
+        this.id = properties.id
+        this.benefitName = properties.benefitName;
+        this.benefitSubTypes = properties.benefitSubTypes
 
     }
 }

@@ -216,7 +216,7 @@
                                     {% if handover.status === "Not allocated" %}
                                         <option value="Not allocated" {{ 'selected' if handover.status === "Not allocated" else ''}}>Not allocated</option>
                                     {% endif %}
-                                    {% if handover.status === "Not allocated" or handover.status === "Paused" or handover.status === "In progress" %}
+                                    {% if handover.status === "Paused" or handover.status === "In progress" %}
                                         <option value="In progress" {{ 'selected' if handover.status === "In progress" else ''}}>In progress</option>
                                     {% endif %}
                                     {% if handover.status === "In progress" or handover.status === "Paused" %}

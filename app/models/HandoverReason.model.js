@@ -1,7 +1,7 @@
 class HandoverReason {
-    constructor(id, handoverReason) {
-        this.id = id
-        this.handoverReason = handoverReason;
+    constructor(properties) {
+        this.id = properties.id
+        this.handoverReason = properties.handoverReason;
 
     }
 }

@@ -16,7 +16,7 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
     return foundHandover;
 }
 
-function getHandoverDetails(handover) {
+function getHandoverBenefitNameHandoverTypeAndHandoverReason(handover) {
 
     let textVersions = {};
     let initialHandoversData = sIDU.setInitialBenefitsAndHandoversData();
@@ -56,5 +56,5 @@ function getHandoverDetails(handover) {
 }
 
 module.exports.getHandoverByIdFromListOfHandovers = getHandoverByIdFromListOfHandovers;
-module.exports.getHandoverDetails = getHandoverDetails;
+module.exports.getHandoverBenefitNameHandoverTypeAndHandoverReason = getHandoverBenefitNameHandoverTypeAndHandoverReason;
 
