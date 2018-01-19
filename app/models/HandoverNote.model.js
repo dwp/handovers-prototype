@@ -1,8 +1,3 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-/*                                        Not currently used
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*/
-
 class HandoverNote {
     constructor(id, handoverId, dateNoteAdded, userWhoAddedNote, noteContent) {
         this.id = id;

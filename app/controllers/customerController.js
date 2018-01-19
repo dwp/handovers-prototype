@@ -134,6 +134,9 @@ function customerCreatePageAction(req, res) {
     newCustomer.approvedRep = req.body['approved-rep'];
     newCustomer.approvedRepName = req.body['rep-name'];
     newCustomer.approvedRepContact = req.body['rep-contact'];
+    newCustomer.day = parseInt(req.body['birthDay']);
+    newCustomer.month = parseInt(req.body['birthMonth']);
+    newCustomer.year = parseInt(req.body['birthYear']);
     validatedCustomer = customerUtils.validateCustomer(req, newCustomer);
     if (validatedCustomer.errors.length === 0) {
         customer = new Customer(validatedCustomer.customer);
@@ -200,6 +203,9 @@ function customerEditPageAction(req, res) {
     editedCustomer.approvedRep = req.body['approved-rep'];
     editedCustomer.approvedRepName = req.body['rep-name'];
     editedCustomer.approvedRepContact = req.body['rep-contact'];
+    editedCustomer.day = parseInt(req.body['birthDay']);
+    editedCustomer.month = parseInt(req.body['birthMonth']);
+    editedCustomer.year = parseInt(req.body['birthYear']);
     validatedCustomer = customerUtils.validateCustomer(req, editedCustomer);
     if (validatedCustomer.errors.length === 0) {
         customer = new Customer(validatedCustomer.customer);

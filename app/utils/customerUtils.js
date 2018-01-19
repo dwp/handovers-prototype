@@ -19,9 +19,9 @@ function getCustomerByNinoFromListOfCustomers(customersList, nino) {
 
 function validateCustomer(req, inputCustomer) {
 
-    let day = req.body['birthDay'];
-    let month = req.body['birthMonth'];
-    let year = req.body['birthYear'];
+    let day = inputCustomer.day;
+    let month = inputCustomer.month;
+    let year = inputCustomer.year;
     let currentYear = new Date().getFullYear();
     let customer = {};
     let validatedCustomer;
