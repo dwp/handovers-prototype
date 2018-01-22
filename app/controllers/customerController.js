@@ -58,6 +58,7 @@ function customerSummaryPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let messages = req.session.messages;
     let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let customer;
@@ -91,6 +92,7 @@ function customerSummaryPage(req, res) {
     customer.birthMonth = customerDobForDisplay.month;
     customer.birthYear = customerDobForDisplay.year;
     res.render('customer-summary', {
+        messages : messages,
         customer : customer,
         customerOfficeDetails : customerOfficeDetails,
         handoversList : handoversList,
@@ -125,6 +127,8 @@ function customerCreatePageAction(req, res) {
     let customer;
     let newCustomer = {};
     let validatedCustomer;
+    let message;
+    let messages = [];
     newCustomer.nino = req.body['nino'];
     newCustomer.postcode = req.body['postcode'];
     newCustomer.firstName = req.body['firstName'];
@@ -138,9 +142,9 @@ function customerCreatePageAction(req, res) {
     newCustomer.approvedRep = req.body['approved-rep'];
     newCustomer.approvedRepName = req.body['rep-name'];
     newCustomer.approvedRepContact = req.body['rep-contact'];
-    newCustomer.day = parseInt(req.body['birthDay']);
-    newCustomer.month = parseInt(req.body['birthMonth']);
-    newCustomer.year = parseInt(req.body['birthYear']);
+    newCustomer.birthDay = parseInt(req.body['birthDay']);
+    newCustomer.birthMonth = parseInt(req.body['birthMonth']);
+    newCustomer.birthYear = parseInt(req.body['birthYear']);
     validatedCustomer = customerUtils.validateCustomer(newCustomer);
     if (validatedCustomer.errors.length === 0) {
         customer = new Customer(validatedCustomer.customer);
@@ -149,10 +153,14 @@ function customerCreatePageAction(req, res) {
         req.session.customers = customersList;
         req.session.invalidCustomer = {};
         req.session.errors = [];
+        message = "Successfully created record for " + customer.nino + " : " + customer.firstName + " " + customer.lastName;
+        messages.push(message);
+        req.session.messages = messages;
         res.redirect('/customer/summary');
     } else {
         req.session.invalidCustomer = validatedCustomer.customer;
         req.session.errors = validatedCustomer.errors;
+        req.session.messages = [];
         res.redirect('/customer/create');
     }
 }
@@ -193,6 +201,8 @@ function customerEditPageAction(req, res) {
     let customer;
     let editedCustomer = {};
     let validatedCustomer;
+    let message;
+    let messages = [];
     editedCustomer.customerOfficeId = req.body['customer-office'];
     editedCustomer.nino = req.body['nino'];
     editedCustomer.postcode = req.body['postcode'];
@@ -218,10 +228,14 @@ function customerEditPageAction(req, res) {
         req.session.customers = customersList;
         req.session.invalidCustomer = {};
         req.session.errors = [];
+        message = "Successfully amended details for " + customer.nino + " : " + customer.firstName + " " + customer.lastName;
+        messages.push(message);
+        req.session.messages = messages;
         res.redirect('/customer/summary');
     } else {
         req.session.invalidCustomer = validatedCustomer.customer;
         req.session.errors = validatedCustomer.errors;
+        req.session.messages = [];
         res.redirect('/customer/edit');
     }
 }
