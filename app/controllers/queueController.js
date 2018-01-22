@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const handoverUtils = require('../utils/handoverUtils');
-const queueUtils = require('../utils/skillsetUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
 const commonUtils = require('../utils/commonUtils');
@@ -20,20 +19,18 @@ function viewQueuePage(req, res) {
     let sortedHandoversQueueList;
     for (let i=0; i < handoversLength; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
-        let textDetails = handoverUtils.getHandoverDetails(handover);
-        let handoverDateRaisedAsDateObject = new Date (handover.dateAndTimeRaised);
-        let handoverTargetDateAndTimeAsDateObject = new Date(handover.targetDateAndTime);
-        let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverDateRaisedAsDateObject);
-        let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverTargetDateAndTimeAsDateObject);
-        handover.benefitName = textDetails.benefitName;
-        handover.handoverType = textDetails.handoverType;
-        handover.handoverReason = textDetails.handoverReason;
+        let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
+        let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+        let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+        handover.benefitName = handoverDetails.benefitName;
+        handover.handoverType = handoverDetails.handoverType;
+        handover.handoverReason = handoverDetails.handoverReason;
         handover.dateRaised = (dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month + " " + dateAndTimeRaisedForDisplay.year);
         handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
         handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
         handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
         if (queueType === 'agent') {
-            if (handover.inQueueOfStaffId === queueAgent.staffId) {
+            if (handover.inQueueOfStaffId == queueAgent.staffId) {
                 handoversQueueList.push(handover);
             }
         } else {

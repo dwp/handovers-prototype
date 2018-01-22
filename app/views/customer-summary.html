@@ -81,10 +81,10 @@
                         <tbody>
                         {% for handover in handoversList %}
                         <tr>
-                            <td>{{handover.handoverTextDetails.benefitName}}</td>
-                            <td>{{handover.handoverTextDetails.handoverType}}</td>
-                            <td>{{handover.handoverTextDetails.handoverReason}}</td>
-                            <td>{{handover.dateAndTimeRaisedForDisplay.day}} {{handover.dateAndTimeRaisedForDisplay.month}} {{handover.dateAndTimeRaisedForDisplay.year}}</td>
+                            <td>{{handover.handoverDetails.benefitName}}</td>
+                            <td>{{handover.handoverDetails.handoverType}}</td>
+                            <td>{{handover.handoverDetails.handoverReason}}</td>
+                            <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
                             <td>{{handover.status}}</td>
                             <td>{{handoverUpdateLink(handover)}}</td>
                         </tr>

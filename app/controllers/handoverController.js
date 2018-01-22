@@ -1,8 +1,12 @@
+const Handover = require('../models/Handover.model');
+const HandoverNote = require('../models/HandoverNote.model');
+const HandoverType = require('../models/HandoverType.model');
+const HandoverReason = require('../models/HandoverReason.model');
+const sIDU = require('../utils/setInitialDataUtils');
 const handoverUtils = require('../utils/handoverUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
 const userUtils = require('../utils/userUtils');
-const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
 const commonUtils = require('../utils/commonUtils');
 
@@ -13,45 +17,31 @@ const commonUtils = require('../utils/commonUtils');
 
 function viewHandoverPage(req, res) {
 
-    let officesList = sIDU.setInitialOfficesData();
-    let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
+    let errors = req.session.errors ? req.session.errors : [];
+    let users = sIDU.setInitialUsersData();
+
+    // Get full details of the handover
     let handoversList = req.session.handovers ? req.session.handovers : sIDU.setInitialBenefitsAndHandoversData().initialHandovers;
-    let errorsIn = req.session.errors ? req.session.errors : [];
     let handover;
     if (req.query.id === null) {
         handover = req.session.handover ? req.session.handover : handoversList[0];
     } else {
         handover = handoverUtils.getHandoverByIdFromListOfHandovers(handoversList, req.query.id);
     }
+    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+    let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
+
+    //......including the notes
     let handoverNotes = [];
-    let handoverTextDetails = handoverUtils.getHandoverDetails(handover);
-    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, handover.nino);
-    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
-    let officeId = customer.customerOfficeId || "3";
-    let officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, officeId);
-    let officeTypes = sIDU.setInitialOfficeTypesData();
-    let receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
-    let userWhoRaisedHandover = userUtils.getUserByStaffIdFromListOfUsers(users, handover.raisedByStaffId);
-    userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
-    let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
-    userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
-    let handoverDateRaisedAsDateObject = new Date (handover.dateAndTimeRaised);
-    let handoverTargetDateAndTimeAsDateObject = new Date(handover.targetDateAndTime);
-    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverDateRaisedAsDateObject);
-    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverTargetDateAndTimeAsDateObject);
-    let inQueueOfStaffDetails;
-    if (handover.inQueueOfStaffId !== "") {
-        inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
-    }
     if (handover.notes === null) {
-        handoverNotes = [];
+    //     do nothing
     } else {
         let handNoteLen = handover.notes.length;
         for (let i=0; i < handNoteLen; i++) {
             let handoverNote = {
                 id: handover.notes[i].id,
-                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(new Date(handover.notes[i].dateNoteAdded)),
+                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
                 userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
                 updateResultedFromCustomerContactIndicator: handover.notes[i].updateResultedFromCustomerContactIndicator,
                 noteContent: handover.notes[i].noteContent
@@ -59,14 +49,35 @@ function viewHandoverPage(req, res) {
             handoverNotes.push(handoverNote);
         }
     }
+
+    // Get details of the customer this handover is for
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, handover.nino);
+
+    // Get customer office, receiving office, raising agent, and the raising agent's office, for the handover
+    let officesList = sIDU.setInitialOfficesData();
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    let officeTypes = sIDU.setInitialOfficeTypesData();
+    let receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
+    let agentWhoRaisedHandover = userUtils.getUserByStaffIdFromListOfUsers(users, handover.raisedByStaffId);
+    agentWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, agentWhoRaisedHandover.owningOfficeId);
+    let agentOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(agentWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
+    agentWhoRaisedHandover.officeDetails.officeType = officeTypes[agentOfficeTypeIndex].officeType;
+
+    // Get details of agent dealing with the handover if applicable
+    let inQueueOfStaffDetails;
+    if (handover.inQueueOfStaffId !== "") {
+        inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
+    }
+
     req.session.customer = customer;
     req.session.handovers = handoversList;
     req.session.handover = handover;
-    req.session.officeDetails = officeDetails;
+
     res.render('handover', {
-        benefitName : handoverTextDetails.benefitName,
-        handoverType : handoverTextDetails.handoverType,
-        handoverReason : handoverTextDetails.handoverReason,
+        benefitName : handoverDetails.benefitName,
+        handoverType : handoverDetails.handoverType,
+        handoverReason : handoverDetails.handoverReason,
         handoverNotes : handoverNotes,
         handoverNotesLength : handoverNotes.length,
         receivingOfficeDetails : receivingOfficeDetails,
@@ -74,9 +85,9 @@ function viewHandoverPage(req, res) {
         customerOfficeDetails : customerOfficeDetails,
         customer : customer,
         handover : handover,
-        userWhoRaisedHandover : userWhoRaisedHandover,
-        errors : errorsIn,
-        errorsLength : errorsIn.length
+        agentWhoRaisedHandover : agentWhoRaisedHandover,
+        errors : errors,
+        errorsLength : errors.length
     });
 
 }
@@ -91,7 +102,17 @@ function viewHandoverPageAction(req, res) {
 }
 
 function createHandoverPage(req, res) {
+
     let editOrCreate = 'create';
+    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
+    let handover = {};
+    let errors = req.session.errors ?req.session.errors : [];
+    if (errors.length !== 0) {
+        handover = req.session.invalidHandover;
+    } else {
+    //     Do nothing
+    }
     let initialData = sIDU.setInitialBenefitsAndHandoversData();
     let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
     let user = req.session.user ? req.session.user : users[0];
@@ -100,8 +121,6 @@ function createHandoverPage(req, res) {
     let handoverReasonsList = initialData.initialHandoverReasons;
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
     let officesList = sIDU.setInitialOfficesData();
-    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
     let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
     let officeTypes = sIDU.setInitialOfficeTypesData();
     let officeId = 3;  // Change to let officeId = handover.raisedOnBehalfOfOfficeId || "3" once got different offices sorted
@@ -113,6 +132,7 @@ function createHandoverPage(req, res) {
     req.session.handovers = handovers;
     req.session.customers = customers;
     res.render('handover-edit', {
+        handover : handover,
         benList : benefitsList,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
@@ -122,7 +142,9 @@ function createHandoverPage(req, res) {
         customerOfficeDetails : customerOfficeDetails,
         officesList : officesList,
         officeTypes : officeTypes,
-        editOrCreate : editOrCreate
+        editOrCreate : editOrCreate,
+        errors : errors,
+        errorsLength : errors.length
     });
 
 }
@@ -134,14 +156,16 @@ function createHandoverPageAction(req, res) {
     let users = sIDU.setInitialUsersData();
     let handoverNote = req.body['handover-note'];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
-    let newHandover = new Object();
+    let validatedHandover;
+    let newHandover = {};
+    let newHandoverNote = {};
     let newHandoversList = handoversList;
-    let newId = handoversList.length + 1;
-    newHandover.id = newId;
+    let handover;
+    newHandover.id = handoversList.length + 1;
     newHandover.nino = customer.nino;
     newHandover.raisedByStaffId = '40001001';
-    let user = userUtils.getUserByStaffIdFromListOfUsers(users, newHandover.raisedByStaffId);
-    newHandover.raisedOnBehalfOfOfficeId = user.owningOfficeId;
+    let agent = userUtils.getUserByStaffIdFromListOfUsers(users, newHandover.raisedByStaffId);
+    newHandover.raisedOnBehalfOfOfficeId = agent.owningOfficeId;
     newHandover.benefitId = req.body['benefit'];
     if (newHandover.benefitId === "5") {
         newHandover.benSubType = req.body['benefit-sub'];
@@ -158,43 +182,55 @@ function createHandoverPageAction(req, res) {
     newHandover.inQueueOfStaffId = "";
     newHandover.dateAndTimeRaised = new Date();
     newHandover.targetDateAndTime = new Date();
+    newHandover.targetDateAndTime.setHours(newHandover.dateAndTimeRaised.getHours() + 3);
     newHandover.notes = [];
-    if (newHandover.callback === 'Yes') {
-        newHandover.targetDateAndTime.setHours(newHandover.dateAndTimeRaised.getHours() + 3);
-    }
-    let handoverDateRaisedAsDateObject = new Date (newHandover.dateAndTimeRaised);
-    let handoverTargetDateAndTimeAsDateObject = new Date(newHandover.targetDateAndTime);
-    newHandover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverDateRaisedAsDateObject);
-    newHandover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverTargetDateAndTimeAsDateObject);
+    validatedHandover = handoverUtils.validateHandover(newHandover);
     if (handoverNote === "" || handoverNote === null) {
-        // Do nothing
+    //     Do nothing
     } else {
-        let newHandoverNote = new Object();
         newHandoverNote.id = '1';
         newHandoverNote.handoverId = newHandover.id;
         newHandoverNote.dateNoteAdded = new Date();
         newHandoverNote.userWhoAddedNote = newHandover.raisedByStaffId;
         newHandoverNote.updateResultedFromCustomerContactIndicator = updateResultedFromCustomerContactIndicator;
         newHandoverNote.noteContent = handoverNote;
-        newHandover.notes.push(newHandoverNote);
+        validatedHandover.handover.notes.push(new HandoverNote(newHandoverNote));
     }
-    newHandoversList.push(newHandover);
-    req.session.handover = newHandover;
-    req.session.handovers = newHandoversList;
-    req.session.customer = customer;
-    res.redirect('/customer/summary?id=' + newHandover.nino);
+    handover = new Handover(validatedHandover.handover);
+    if (validatedHandover.errors.length === 0) {
+        newHandoversList.push(handover);
+        req.session.handovers = newHandoversList;
+        req.session.handover = handover;
+        req.session.invalidHandover = {};
+        req.session.errors = [];
+        res.redirect('/customer/summary?nino=' + handover.nino);
+    } else {
+        req.session.invalidHandover = handover;
+        req.session.handover = {};
+        req.session.errors = validatedHandover.errors;
+        res.redirect('/handover/create?nino=' + validatedHandover.handover.nino);
+    }
 
 }
 
 function editHandoverPage(req, res) {
 
     let editOrCreate = 'edit';
+    let errors = req.session.errors ? req.session.errors : [];
     let initialData = sIDU.setInitialBenefitsAndHandoversData();
+    let benefitsList = initialData.initialBenefits;
+    let handoverTypesList = initialData.initialHandoverTypes;
+    let handoverReasonsList = initialData.initialHandoverReasons;
     let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
-    let handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
+    let handover;
     let handoverNotes = [];
-    let handoverTextDetails = handoverUtils.getHandoverDetails(handover);
+    if (errors.length === 0) {
+        handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
+    } else {
+        handover = req.session.invalidHandover;
+    }
+    let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
     let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, handover.nino);
     let officesList = sIDU.setInitialOfficesData();
@@ -205,22 +241,19 @@ function editHandoverPage(req, res) {
     userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
-    let errorsIn = req.session.errors ? req.session.errors : [];
-    let handoverDateRaisedAsDateObject = new Date (handover.dateAndTimeRaised);
-    let handoverTargetDateAndTimeAsDateObject = new Date(handover.targetDateAndTime);
-    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverDateRaisedAsDateObject);
-    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handoverTargetDateAndTimeAsDateObject);
+    handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+    handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
     let inQueueOfStaffDetails;
     if (handover.inQueueOfStaffId !== "") {
         inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
     }
-    if (handover.notes === null) {
-        handoverNotes = [];
+    if (!handover.notes) {
+        // Do nothing
     } else {
         for (let i=0; i < handover.notes.length; i++) {
             let handoverNote = {
                 id: handover.notes[i].id,
-                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(new Date(handover.notes[i].dateNoteAdded)),
+                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
                 userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
                 updateResultedFromCustomerContactIndicator: handover.notes[i].updateResultedFromCustomerContactIndicator,
                 noteContent: handover.notes[i].noteContent
@@ -233,9 +266,12 @@ function editHandoverPage(req, res) {
     req.session.handover = handover;
     req.session.handovers = handovers;
     res.render('handover-edit', {
-        benefitName : handoverTextDetails.benefitName,
-        handoverType : handoverTextDetails.handoverType,
-        handoverReason : handoverTextDetails.handoverReason,
+        benList : benefitsList,
+        handTypesList : handoverTypesList,
+        handReasonsList : handoverReasonsList,
+        benefitName : handoverDetails.benefitName,
+        handoverType : handoverDetails.handoverType,
+        handoverReason : handoverDetails.handoverReason,
         handoverNotes : handoverNotes,
         handoverNotesLength : handoverNotes.length,
         receivingOfficeDetails : receivingOfficeDetails,
@@ -245,8 +281,8 @@ function editHandoverPage(req, res) {
         userWhoRaisedHandover : userWhoRaisedHandover,
         customerOfficeDetails : customerOfficeDetails,
         editOrCreate : editOrCreate,
-        errors : errorsIn,
-        errorsLength : errorsIn.length
+        errors : errors,
+        errorsLength : errors.length
     });
 }
 
@@ -260,10 +296,10 @@ function editHandoverPageAction(req, res) {
     let customer = req.session.customer;
     let handoverNote = req.body['handover-note'];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
-    let editedHandover = new Object();
-    let editedHandoverNote = new Object();
+    let editedHandover = {};
+    let editedHandoverNote = {};
     let newHandoverNotes = [];
-    let errorsOut = [];
+    let errors = [];
     editedHandover.id = handover.id
     editedHandover.nino = handover.nino;
     editedHandover.raisedByStaffId = handover.raisedByStaffId;
@@ -279,13 +315,9 @@ function editHandoverPageAction(req, res) {
     editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
     editedHandover.callback = req.body['handover-callback'];
     editedHandover.status = req.body['handover-status'] || handover.status;
-    editedHandover.dateAndTimeRaised = new Date(handover.dateAndTimeRaised);
-    if (editedHandover.callback === 'Yes') {
-        editedHandover.targetDateAndTime = new Date(handover.dateAndTimeRaised);
-        editedHandover.targetDateAndTime.setHours(editedHandover.dateAndTimeRaised.getHours() + 3);
-    } else {
-        editedHandover.targetDateAndTime = handover.targetDateAndTime;
-    }
+    editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
+    editedHandover.targetDateAndTime = handover.targetDateAndTime;
+
     if (handoverNote === "" || handoverNote === null) {
         newHandoverNotes = handover.notes;
     } else {
@@ -296,16 +328,18 @@ function editHandoverPageAction(req, res) {
         editedHandoverNote.noteContent = handoverNote;
         if (handover.notes === null) {
             editedHandoverNote.id = "1";
-            newHandoverNotes.push(editedHandoverNote);
+            let updatedHandoverNote = new HandoverNote(editedHandoverNote);
+            newHandoverNotes.push(updatedHandoverNote);
         } else {
             editedHandoverNote.id = handover.notes.length + 1;
+            let updatedHandoverNote = new HandoverNote(editedHandoverNote);
             newHandoverNotes = handover.notes;
-            newHandoverNotes.unshift(editedHandoverNote);
+            newHandoverNotes.unshift(updatedHandoverNote);
         }
     }
     editedHandover.notes = newHandoverNotes;
     handoversList[handoverIndex] = editedHandover;
-    req.session.errors = errorsOut;
+    req.session.errors = errors;
     req.session.handovers = handoversList;
     req.session.handover = editedHandover;
     req.session.customer = customer;

@@ -1,7 +1,7 @@
 
 function formatDateAndTimeForDisplay(date) {
 
-    let inputDate = date;
+    let inputDate = new Date(date);
     let displayDay = inputDate.getDate();
     let displayMonth = getMonthForDisplay(inputDate.getMonth());
     let displayNumericMonth = getNumericMonth(inputDate.getMonth());
