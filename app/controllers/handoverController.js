@@ -111,7 +111,7 @@ function createHandoverPage(req, res) {
     if (errors.length !== 0) {
         handover = req.session.invalidHandover;
     } else {
-        handover.nino = customer.nino;
+    //     Do nothing
     }
     let initialData = sIDU.setInitialBenefitsAndHandoversData();
     let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
@@ -132,6 +132,7 @@ function createHandoverPage(req, res) {
     req.session.handovers = handovers;
     req.session.customers = customers;
     res.render('handover-edit', {
+        handover : handover,
         benList : benefitsList,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
@@ -157,6 +158,7 @@ function createHandoverPageAction(req, res) {
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
     let validatedHandover;
     let newHandover = {};
+    let newHandoverNote = {};
     let newHandoversList = handoversList;
     let handover;
     newHandover.id = handoversList.length + 1;
@@ -184,21 +186,18 @@ function createHandoverPageAction(req, res) {
     newHandover.notes = [];
     validatedHandover = handoverUtils.validateHandover(newHandover);
     if (handoverNote === "" || handoverNote === null) {
-        validatedHandover.notes = [];
+    //     Do nothing
     } else {
-        let newHandoverNote = {};
         newHandoverNote.id = '1';
         newHandoverNote.handoverId = newHandover.id;
         newHandoverNote.dateNoteAdded = new Date();
         newHandoverNote.userWhoAddedNote = newHandover.raisedByStaffId;
         newHandoverNote.updateResultedFromCustomerContactIndicator = updateResultedFromCustomerContactIndicator;
         newHandoverNote.noteContent = handoverNote;
-        let handoverNote = new HandoverNote(newHandoverNote);
-        validatedHandover.notes.push(handoverNote);
+        validatedHandover.handover.notes.push(new HandoverNote(newHandoverNote));
     }
-    req.session.customer = customer;
+    handover = new Handover(validatedHandover.handover);
     if (validatedHandover.errors.length === 0) {
-        handover = new Handover(validatedHandover.handover);
         newHandoversList.push(handover);
         req.session.handovers = newHandoversList;
         req.session.handover = handover;
@@ -206,7 +205,8 @@ function createHandoverPageAction(req, res) {
         req.session.errors = [];
         res.redirect('/customer/summary?nino=' + handover.nino);
     } else {
-        req.session.invalidHandover = validatedHandover.handover;
+        req.session.invalidHandover = handover;
+        req.session.handover = {};
         req.session.errors = validatedHandover.errors;
         res.redirect('/handover/create?nino=' + validatedHandover.handover.nino);
     }
@@ -224,12 +224,12 @@ function editHandoverPage(req, res) {
     let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
     let handover;
+    let handoverNotes = [];
     if (errors.length === 0) {
         handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
     } else {
         handover = req.session.invalidHandover;
     }
-    let handoverNotes = [];
     let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
     let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, handover.nino);
@@ -248,12 +248,12 @@ function editHandoverPage(req, res) {
         inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
     }
     if (!handover.notes) {
-        handoverNotes = [];
+        // Do nothing
     } else {
         for (let i=0; i < handover.notes.length; i++) {
             let handoverNote = {
                 id: handover.notes[i].id,
-                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(new Date(handover.notes[i].dateNoteAdded)),
+                dateNoteAdded: dateUtils.formatDateAndTimeForDisplay(handover.notes[i].dateNoteAdded),
                 userWhoAddedNote: userUtils.getUserByStaffIdFromListOfUsers(users, handover.notes[i].userWhoAddedNote),
                 updateResultedFromCustomerContactIndicator: handover.notes[i].updateResultedFromCustomerContactIndicator,
                 noteContent: handover.notes[i].noteContent

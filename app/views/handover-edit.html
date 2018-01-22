@@ -87,8 +87,8 @@
                 </div>
 
                 {% if editOrCreate === 'create' %}
-                <div>
-                </div>
+                    <div>
+                    </div>
                 {% else %}
                     {% if handover.inQueueOfStaffId !== "" %}
                     <div class="grid-row">
@@ -242,7 +242,6 @@
                                 </fieldset>
                             {% endif %}
                             <br>
-                            {% if editOrCreate === 'edit' %}
                             <legend class="form-label-bold">Existing notes</legend>
                                 {% if handoverNotesLength !== 0 %}
                                     {% for note in handoverNotes %}
@@ -255,7 +254,6 @@
                                 {% else %}
                                     <p>There are no notes for this handover yet</p>
                                 {% endif %}
-                            {% endif %}
                         </div>
                     </div>
                 </div>

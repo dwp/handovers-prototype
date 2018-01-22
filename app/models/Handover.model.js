@@ -17,7 +17,7 @@ class Handover {
         this.status = properties.status;
         this.priority = properties.priority;
         this.attachments = properties.attachments;
-        this.notes = [];
+        this.notes = properties.notes;
     }
 }
 

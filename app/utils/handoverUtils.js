@@ -108,6 +108,7 @@ function validateHandover(inputHandover) {
     handover.inQueueOfStaffId = inputHandover.inQueueOfStaffId;
     handover.dateAndTimeRaised = inputHandover.dateAndTimeRaised;
     handover.targetDateAndTime = inputHandover.targetDateAndTime;
+    handover.notes = inputHandover.notes;
 
     validatedHandover = {
         "handover" : handover,
