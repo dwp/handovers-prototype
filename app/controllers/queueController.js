@@ -29,6 +29,7 @@ function viewQueuePage(req, res) {
         handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
         handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
         handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
+        handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
         if (queueType === 'agent') {
             if (handover.inQueueOfStaffId == queueAgent.staffId) {
                 handoversQueueList.push(handover);
@@ -37,7 +38,7 @@ function viewQueuePage(req, res) {
             handoversQueueList.push(handover);
         }
     }
-    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['dateAndTimeRaised']);
+    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['timeLeftToTarget']);
     res.render('queue', {
         handoversQueueList : sortedHandoversQueueList,
         queueType : queueType,
@@ -66,5 +67,6 @@ function getNextQueueItem(req, res) {
     res.redirect('/queue/view?agentId=40001004');
 
 }
+
 module.exports.viewQueuePage = viewQueuePage;
 module.exports.getNextQueueItem = getNextQueueItem;
