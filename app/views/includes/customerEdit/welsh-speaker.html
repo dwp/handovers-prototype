@@ -3,13 +3,13 @@
         <legend class="form-label-bold">Welsh speaker ?</legend>
         <fieldset class="inline">
             <div class="multiple-choice">
-                <input id="welshSpeaker_no" type="radio" name="welsh-speaker" value="No" {% if customer.welshSpeaker === 'No' or editOrCreate === 'create' %}
+                <input id="welshSpeaker_no" type="radio" name="welsh-speaker" tabindex=10 value="No" {% if customer.welshSpeaker === 'No' or editOrCreate === 'create' %}
                 checked="checked"
                 {% endif %}>
                 <label for="welshSpeaker_no">No</label>
             </div>
             <div class="multiple-choice">
-                <input id="welshSpeaker_yes" type="radio" name="welsh-speaker" value="Yes" {% if customer.welshSpeaker === 'Yes' %}
+                <input id="welshSpeaker_yes" type="radio" name="welsh-speaker" tabindex=10 value="Yes" {% if customer.welshSpeaker === 'Yes' %}
                 checked="checked"
                 {% endif %}>
                 <label for="welshSpeaker_yes">Yes</label>

@@ -2,7 +2,7 @@
     <div class="form-group">
         <legend class="form-label-bold">Preferred contact number</legend>
         <div>
-            <input type="text" class="form-control" id="prefContNum" name="prefContNum" pattern="[0-9 ]*" value="{{ customer.preferredContactNumber }}">
+            <input type="text" class="form-control" id="prefContNum" name="prefContNum" pattern="[0-9 ]*" tabindex=8 value="{{ customer.preferredContactNumber }}">
         </div>
     </div>
 </div>
@@ -10,7 +10,7 @@
     <div class="form-group">
         <legend class="form-label-bold">Email address</legend>
         <div>
-            <input type="email" class="form-control" id="emailAddr" name="emailAddr" value="{{ customer.emailAddress }}">
+            <input type="email" class="form-control" id="emailAddr" name="emailAddr" tabindex=9 value="{{ customer.emailAddress }}">
         </div>
     </div>
 </div>

@@ -34,6 +34,7 @@ function viewHandoverPage(req, res) {
 
     //......including the notes
     let handoverNotes = [];
+
     if (handover.notes === null) {
     //     do nothing
     } else {

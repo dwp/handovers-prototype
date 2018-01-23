@@ -11,14 +11,18 @@
             <span class="form-label-bold">Postcode</span>
             <span class="error-message">Postcode must be entered</span>
         </label>
-        <input type="text" class="form-control form-control-error" id="postcode" name="postcode" pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}" value="{{ customer.postcode }}">
+        <input type="text" class="form-control form-control-error" id="postcode" name="postcode"
+               pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}"
+               tabindex=6 value="{{ customer.postcode }}">
     </div>
     {% else %}
     <div class="form-group">
         <label for="postcode">
             <span class="form-label-bold">Postcode</span>
         </label>
-        <input type="text" class="form-control" id="postcode" name="postcode" pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}" value="{{ customer.postcode }}">
+        <input type="text" class="form-control" id="postcode" name="postcode"
+               pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}"
+               tabindex=6 value="{{ customer.postcode }}">
     </div>
     {% endif %}
 </div>
