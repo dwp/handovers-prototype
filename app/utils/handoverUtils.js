@@ -106,7 +106,11 @@ function validateHandover(inputHandover) {
     handover.raisedOnBehalfOfOfficeId = inputHandover.raisedOnBehalfOfOfficeId;
     handover.receivingOfficeId = inputHandover.receivingOfficeId;
     handover.callback = inputHandover.callback;
-    handover.priority = inputHandover.priority;
+    handover.callbackStatus = inputHandover.status;
+    handover.firstCallback = inputHandover.firstCallback;
+    handover.secondCallback = inputHandover.secondCallback;
+    handover.thirdCallback = inputHandover.thirdCallback;
+    handover.escalated = inputHandover.escalated;
     handover.status = inputHandover.status;
     handover.inQueueOfStaffId = inputHandover.inQueueOfStaffId;
     handover.dateAndTimeRaised = inputHandover.dateAndTimeRaised;

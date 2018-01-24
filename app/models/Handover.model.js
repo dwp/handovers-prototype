@@ -14,8 +14,12 @@ class Handover {
         this.targetDateAndTime = properties.targetDateAndTime;
         this.targetDateAndTimeForDisplay;
         this.callback = properties.callback;
+        this.callbackStatus =  properties.callbackStatus;
+        this.firstCallBackReason = properties.firstCallBackReason;
+        this.secondCallBackReason = properties.secondCallBackReason;
+        this.thirdCallBackReason= properties.thirdCallBackReason;
         this.status = properties.status;
-        this.priority = properties.priority;
+        this.escalated = properties.escalated;
         this.attachments = properties.attachments;
         this.notes = properties.notes;
     }

@@ -1,208 +1,272 @@
-{ "title": "handoverData",
-  "handoverTypes": [{
+{
+  "title": "handoverData",
+  "handoverTypes": [
+    {
       "id": "1",
-      "handoverType" : "Appointment confirmation"
-    },{
+      "handoverType": "Appointment confirmation"
+    },
+    {
       "id": "2",
-      "handoverType" : "Claim closure"
-    },{
+      "handoverType": "Claim closure"
+    },
+    {
       "id": "3",
-      "handoverType" : "Hardship"
-    },{
+      "handoverType": "Hardship"
+    },
+    {
       "id": "4",
-      "handoverType" : "Missing evidence"
-    },{
+      "handoverType": "Missing evidence"
+    },
+    {
       "id": "5",
-      "handoverType" : "New claim"
-    },{
+      "handoverType": "New claim"
+    },
+    {
       "id": "6",
-      "handoverType" : "Reconsiderations"
-    }],
-  "handoverReasons" : [{
+      "handoverType": "Reconsiderations"
+    }
+  ],
+  "handoverReasons": [
+    {
       "id": "1",
-      "handoverReason" : "Appointment form"
-    },{
+      "handoverReason": "Appointment form"
+    },
+    {
       "id": "2",
-      "handoverReason" : "Claim termination"
-    },{
+      "handoverReason": "Claim termination"
+    },
+    {
       "id": "3",
-      "handoverReason" : "General query"
-    },{
+      "handoverReason": "General query"
+    },
+    {
       "id": "4",
-      "handoverReason" : "Joint claim"
-    },{
+      "handoverReason": "Joint claim"
+    },
+    {
       "id": "5",
-      "handoverReason" : "Missing direct payment"
-    },{
+      "handoverReason": "Missing direct payment"
+    },
+    {
       "id": "6",
-      "handoverReason" : "Payment query"
-    }],
-  "handovers": [{
-      "id" : "1",
+      "handoverReason": "Payment query"
+    }
+  ],
+  "handovers": [
+    {
+      "id": "1",
       "nino": "AA123456B",
       "raisedByStaffId": "40001001",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "7",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "7",
       "benefitId": "1",
-      "benSubType" : "",
+      "benSubType": "",
       "typeId": "2",
       "reasonId": "3",
-      "callback" : "Yes",
-      "priority" : "Standard callback",
-      "inQueueOfStaffId" : "40001004",
-      "status" : "Paused",
-      "dateAndTimeRaised" : "2018-01-23T11:58:39.379Z",
-      "targetDateAndTime" : "2018-01-23T11:58:39.379Z"
-    },{
-      "id" : "2",
+      "callback": "Yes",
+      "callbackStatus" : "1",
+      "firstCallbackReason" : "",
+      "secondCallbackReason" : "",
+      "thirdCallbackReason" : "",
+      "escalated": "No",
+      "inQueueOfStaffId": "40001004",
+      "status": "Paused",
+      "dateAndTimeRaised": "2018-01-23T11:58:39.379Z",
+      "targetDateAndTime": "2018-01-23T11:58:39.379Z"
+    },
+    {
+      "id": "2",
       "nino": "AA123456B",
       "raisedByStaffId": "40001001",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "6",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "6",
       "benefitId": "2",
-      "benSubType" : "",
+      "benSubType": "",
       "typeId": "3",
       "reasonId": "4",
-      "callback" : "No",
-      "priority" : "Priority duplicate",
-      "inQueueOfStaffId" : "40001004",
-      "status" : "In progress",
-      "dateAndTimeRaised" : "2017-11-17T12:57:39.379Z",
-      "targetDateAndTime" : "2017-11-17T12:57:39.379Z"
-    },{
-      "id" : "3",
+      "callback": "No",
+      "callbackStatus" : "8",
+      "firstCallbackReason" : "",
+      "secondCallbackReason" : "",
+      "thirdCallbackReason" : "",
+      "escalated": "Yes",
+      "inQueueOfStaffId": "40001004",
+      "status": "In progress",
+      "dateAndTimeRaised": "2017-11-17T12:57:39.379Z",
+      "targetDateAndTime": "2017-11-17T12:57:39.379Z"
+    },
+    {
+      "id": "3",
       "nino": "ZZ123456A",
       "raisedByStaffId": "40001002",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "7",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "7",
       "benefitId": "4",
-      "benSubType" : "",
+      "benSubType": "",
       "typeId": "4",
       "reasonId": "5",
-      "callback" : "Yes",
-      "priority" : "Non-callback",
-      "inQueueOfStaffId" : "40001003",
-      "status" : "In progress",
-      "dateAndTimeRaised" : "2017-11-17T12:59:39.379Z",
-      "targetDateAndTime" : "2017-11-17T15:59:39.379Z"
-    },{
-     "id" : "4",
+      "callback": "Yes",
+      "callbackStatus" : "3",
+      "firstCallbackReason" : "2",
+      "secondCallbackReason" : "",
+      "thirdCallbackReason" : "",
+      "escalated": "No",
+      "inQueueOfStaffId": "40001003",
+      "status": "In progress",
+      "dateAndTimeRaised": "2017-11-17T12:59:39.379Z",
+      "targetDateAndTime": "2017-11-17T15:59:39.379Z"
+    },
+    {
+      "id": "4",
       "nino": "AA345678B",
       "raisedByStaffId": "40001003",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "5",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "5",
       "benefitId": "1",
-      "benSubType" : "",
+      "benSubType": "",
       "typeId": "3",
       "reasonId": "4",
       "callback": "Yes",
-      "priority" : "Standard callback",
-      "inQueueOfStaffId" : "",
-      "status" : "Not allocated",
-      "dateAndTimeRaised" : "2017-11-18T12:48:39.379Z",
-      "targetDateAndTime" : "2017-11-18T15:48:39.379Z"
-    },{
-      "id" : "5",
+      "callbackStatus" : "6",
+      "firstCallbackReason" : "1",
+      "secondCallbackReason" : "3",
+      "thirdCallbackReason" : "",
+      "escalated": "No",
+      "inQueueOfStaffId": "",
+      "status": "Not allocated",
+      "dateAndTimeRaised": "2017-11-18T12:48:39.379Z",
+      "targetDateAndTime": "2017-11-18T15:48:39.379Z"
+    },
+    {
+      "id": "5",
       "nino": "AA345678B",
       "raisedByStaffId": "40001003",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "7",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "7",
       "benefitId": "1",
-      "benSubType" : "",
+      "benSubType": "",
       "typeId": "2",
       "reasonId": "3",
-      "callback" : "No",
-      "priority" : "Standard callback",
-      "inQueueOfStaffId" : "40001004",
-      "status" : "Cleared",
-      "dateAndTimeRaised" : "2017-11-18T12:46:39.379Z",
-      "targetDateAndTime" : "2017-11-18T12:46:39.379Z"
-    },{
-      "id" : "6",
+      "callback": "No",
+      "callbackStatus" : "8",
+      "firstCallbackReason" : "",
+      "secondCallbackReason" : "",
+      "thirdCallbackReason" : "",
+      "escalated": "Yes",
+      "inQueueOfStaffId": "40001004",
+      "status": "Cleared",
+      "dateAndTimeRaised": "2017-11-18T12:46:39.379Z",
+      "targetDateAndTime": "2017-11-18T12:46:39.379Z"
+    },
+    {
+      "id": "6",
       "nino": "ZZ234567A",
       "raisedByStaffId": "40001004",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "6",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "6",
       "benefitId": "5",
-      "benSubType" : "Social Fund Type 2",
+      "benSubType": "Social Fund Type 2",
       "typeId": "5",
       "reasonId": "6",
-      "callback" : "No",
-      "priority" : "Escalation",
-      "status" : "Withdrawn",
-      "inQueueOfStaffId" : "40001003",
-      "dateAndTimeRaised" : "2017-11-17T12:37:39.379Z",
-      "targetDateAndTime" : "2017-11-17T12:37:39.379Z"
-    },{
-      "id" : "7",
+      "callback": "No",
+      "callbackStatus" : "8",
+      "firstCallbackReason" : "",
+      "secondCallbackReason" : "",
+      "thirdCallbackReason" : "",
+      "escalated": "No",
+      "status": "Withdrawn",
+      "inQueueOfStaffId": "40001003",
+      "dateAndTimeRaised": "2017-11-17T12:37:39.379Z",
+      "targetDateAndTime": "2017-11-17T12:37:39.379Z"
+    },
+    {
+      "id": "7",
       "nino": "AA345678B",
       "raisedByStaffId": "40001004",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "5",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "5",
       "benefitId": "4",
-      "benSubType" : "",
+      "benSubType": "",
       "typeId": "3",
       "reasonId": "4",
-      "callback" : "No",
-      "priority" : "",
-      "status" : "Not allocated",
-      "inQueueOfStaffId" : "",
-      "dateAndTimeRaised" : "2017-11-18T12:25:39.379Z",
-      "targetDateAndTime" : "2017-11-18T12:25:39.379Z"
-    },{
-      "id" : "8",
+      "callback": "No",
+      "callbackStatus" : "8",
+      "firstCallbackReason" : "",
+      "secondCallbackReason" : "",
+      "thirdCallbackReason" : "",
+      "escalated": "No",
+      "status": "Not allocated",
+      "inQueueOfStaffId": "",
+      "dateAndTimeRaised": "2017-11-18T12:25:39.379Z",
+      "targetDateAndTime": "2017-11-18T12:25:39.379Z"
+    },
+    {
+      "id": "8",
       "nino": "AA345678B",
       "raisedByStaffId": "40001004",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "7",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "7",
       "benefitId": "3",
-      "benSubType" : "",
+      "benSubType": "",
       "typeId": "2",
       "reasonId": "4",
-      "callback" : "No",
-      "priority" : "Escalation",
-      "status" : "Not allocated",
-      "inQueueOfStaffId" : "",
-      "dateAndTimeRaised" : "2017-11-24T12:58:39.379Z",
-      "targetDateAndTime" : "2017-11-24T12:58:39.379Z"
-    },{
-      "id" : "9",
+      "callback": "No",
+      "callbackStatus" : "8",
+      "firstCallbackReason" : "",
+      "secondCallbackReason" : "",
+      "thirdCallbackReason" : "",
+      "escalated": "No",
+      "status": "Not allocated",
+      "inQueueOfStaffId": "",
+      "dateAndTimeRaised": "2017-11-24T12:58:39.379Z",
+      "targetDateAndTime": "2017-11-24T12:58:39.379Z"
+    },
+    {
+      "id": "9",
       "nino": "AA345678B",
       "raisedByStaffId": "40001004",
-      "raisedOnBehalfOfOfficeId" : "1",
-      "receivingOfficeId" : "5",
+      "raisedOnBehalfOfOfficeId": "1",
+      "receivingOfficeId": "5",
       "benefitId": "2",
-      "benSubType" : "",
+      "benSubType": "",
       "typeId": "1",
       "reasonId": "3",
-      "callback" : "No",
-      "priority" : "Escalation",
-      "status" : "Not allocated",
-      "inQueueOfStaffId" : "",
-      "dateAndTimeRaised" : "2017-11-17T12:16:39.379Z",
-      "targetDateAndTime" : "2017-11-17T12:16:39.379Z"
-    }],
-  "handoverNotes" : [{
-      "id" : "3",
-      "handoverId" : "1",
+      "callback": "No",
+      "callbackStatus" : "8",
+      "firstCallbackReason" : "",
+      "secondCallbackReason" : "",
+      "thirdCallbackReason" : "",
+      "escalated": "Yes",
+      "status": "Not allocated",
+      "inQueueOfStaffId": "",
+      "dateAndTimeRaised": "2017-11-17T12:16:39.379Z",
+      "targetDateAndTime": "2017-11-17T12:16:39.379Z"
+    }
+  ],
+  "handoverNotes": [
+    {
+      "id": "3",
+      "handoverId": "1",
       "dateNoteAdded": "2017-10-31T12:57:39.379Z",
-      "userWhoAddedNote" : "40001001",
-      "updateResultedFromCustomerContactIndicator" : "Yes",
+      "userWhoAddedNote": "40001001",
+      "updateResultedFromCustomerContactIndicator": "Yes",
       "noteContent": "Customer called for progress update as had not heard from own office since calling on 17th October"
-    }, {
+    },
+    {
       "id": "2",
       "handoverId": "1",
       "dateNoteAdded": "2017-10-24T12:57:39.379Z",
       "userWhoAddedNote": "40001002",
-      "updateResultedFromCustomerContactIndicator" : "No",
+      "updateResultedFromCustomerContactIndicator": "No",
       "noteContent": "Customer called and asked to be called on his mobile telephone number"
-    }, {
-      "id" : "1",
-      "handoverId" : "1",
+    },
+    {
+      "id": "1",
+      "handoverId": "1",
       "dateNoteAdded": "2017-10-17T12:57:39.379Z",
-      "userWhoAddedNote" : "40001000",
-      "updateResultedFromCustomerContactIndicator" : "Yes",
-      "noteContent" : "Customer could not contact own office"
+      "userWhoAddedNote": "40001000",
+      "updateResultedFromCustomerContactIndicator": "Yes",
+      "noteContent": "Customer could not contact own office"
     }
   ]
 }

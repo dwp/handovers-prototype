@@ -1,0 +1,24 @@
+<div class="column-half">
+    <legend class="form-label-bold">Callback status</legend>
+    {% if handover.callback === "No" %}
+        <p>N/A</p>
+    {% else %}
+    <select class="select form-control" name="handover-callback-status" id=handover-callback-status">
+        {% if handover.callbackStatus === "" or handover.callbackStatus === "8" %}
+            <option value="1" {{ 'selected' if handover.callbackStatus === "1" else ''}}>First call pending</option>
+        {% endif %}
+        {% if handover.callbackStatus === "1" %}
+            <option value="2" {{ 'selected' if handover.callbackStatus === "2" else ''}}>First call successful</option>
+            <option value="3" {{ 'selected' if handover.callbackStatus === "3" else ''}}>First call failed; second call pending</option>
+        {% endif %}
+        {% if handover.callbackStatus === "3" %}
+            <option value="4" {{ 'selected' if handover.callbackStatus === "4" else ''}}>Second call successful</option>
+            <option value="5" {{ 'selected' if handover.callbackStatus === "5" else ''}}>Second call failed; third call pending</option>
+        {% endif %}
+        {% if handover.callbackStatus === "5" %}
+            <option value="6" {{ 'selected' if handover.callbackStatus === "6" else ''}}>Third call successful</option>
+            <option value="7" {{ 'selected' if handover.callbackStatus === "7" else ''}}>Third call failed</option>
+        {% endif %}
+    </select>
+    {% endif %}
+</div>

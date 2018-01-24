@@ -180,7 +180,15 @@ function createHandoverPageAction(req, res) {
     newHandover.typeId = req.body['handover-type'];;
     newHandover.reasonId = req.body['handover-reason'];
     newHandover.callback = req.body['handover-callback'];
-    newHandover.priority = req.body['handover-priority'];
+    if (newHandover.callback === "Yes") {
+        newHandover.callbackStatus = "1"
+    } else {
+        newHandover.callbackStatus = "8"
+    }
+    newHandover.firstCallbackReason = "";
+    newHandover.secondCallbackReason = "";
+    newHandover.thirdCallbackReason = "";
+    newHandover.escalated = req.body['handover-escalated'];
     newHandover.status = "Not allocated";
     newHandover.inQueueOfStaffId = "";
     newHandover.dateAndTimeRaised = new Date();
@@ -323,6 +331,17 @@ function editHandoverPageAction(req, res) {
     editedHandover.typeId = req.body['handover-type'] || handover.typeId;
     editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
     editedHandover.callback = req.body['handover-callback'];
+    if (editedHandover.callback === "Yes") {
+        editedHandover.callbackStatus = handover.callbackStatus;
+        editedHandover.firstCallbackReason = handover.firstCallbackReason;
+        editedHandover.secondCallbackReason= handover.secondCallbackReason;
+        editedHandover.thirdCallbackReason = handover.secondCallbackReason;
+    } else {
+        editedHandover.callbackStatus = "8"
+        editedHandover.firstCallbackReason = handover.firstCallbackReason;
+        editedHandover.secondCallbackReason = handover.secondCallbackReason;
+        editedHandover.thirdCallbackReason = handover.secondCallbackReason;
+    }
     editedHandover.status = req.body['handover-status'] || handover.status;
     editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
     editedHandover.targetDateAndTime = handover.targetDateAndTime;

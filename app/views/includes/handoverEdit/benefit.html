@@ -1,0 +1,19 @@
+<div class="column-half">
+    <legend class="form-label-bold">Select a benefit</legend>
+    <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
+        <option value="" id="benSelect">Select</option>
+        {% for benefit in benList %}
+        <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="column-half" id="benSubTypeDiv" style="display:none;">
+    <legend class="form-label-bold">Select a benefit sub-type</legend>
+    <select class="select form-control" name="benefit-sub" id="benefit-sub">
+        <option value="">Select</option>
+        <option value="Social Fund Type 1" {{ 'selected' if handover.benSubType === 'Social Fund Type 1' else ''}}>Social Fund Type 1</option>
+        <option value="Social Fund Type 2" {{ 'selected' if handover.benSubType === 'Social Fund Type 2' else ''}}>Social Fund Type 2</option>
+        <option value="Social Fund Type 3" {{ 'selected' if handover.benSubType === 'Social Fund Type 3' else ''}}>Social Fund Type 3</option>
+        <option value="Social Fund Type 4" {{ 'selected' if handover.benSubType === 'Social Fund Type 4' else ''}}>Social Fund Type 4</option>
+    </select>
+</div>
