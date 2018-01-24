@@ -14,7 +14,6 @@ function formatDateAndTimeForDisplay(date) {
     } else {
         displayMins = mins;
     }
-
     let dateAndTimeForDisplay = {
         "day"  : displayDay,
         "month": displayMonth,
@@ -25,6 +24,24 @@ function formatDateAndTimeForDisplay(date) {
     };
 
     return dateAndTimeForDisplay;
+}
+
+function formatDateForDisplay(date) {
+
+    let inputDate = new Date(date)
+    let displayDay = inputDate.getDate();
+    let displayMonth = getMonthForDisplay(inputDate.getMonth());
+    let displayNumericMonth = getNumericMonth(inputDate.getMonth());
+    let displayYear = inputDate.getFullYear();
+    let dateForDisplay = {
+        "day"  : displayDay,
+        "month": displayMonth,
+        "numericMonth" : displayNumericMonth,
+        "year" : displayYear,
+    };
+
+    return dateForDisplay;
+
 }
 
 function getNumericMonth(monthIn) {
@@ -65,6 +82,31 @@ function getMonthForDisplay(monthIn) {
 
 }
 
+function calcTimeLeftToTarget(date) {
+// Set the date we're counting down to
+    let targetDateTime = new Date(date).getTime();
+// Get todays date and time
+    let now = new Date().getTime();
+// Find the distance between now and the target date
+    let distance = targetDateTime - now;
+// Time calculations for hours and minutes
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    let timeToTarget;
+
+    // If the target time has already passed, write some text, otherwise write the time left
+    if (distance < 0) {
+        timeToTarget = "Expired";
+    } else {
+        timeToTarget = (hours + " hrs " + minutes + " mins");
+    }
+
+    return timeToTarget;
+}
+
 module.exports.formatDateAndTimeForDisplay = formatDateAndTimeForDisplay;
+module.exports.formatDateForDisplay = formatDateForDisplay;
 module.exports.getNumericMonth = getNumericMonth;
 module.exports.getMonthForDisplay = getMonthForDisplay;
+module.exports.calcTimeLeftToTarget = calcTimeLeftToTarget;

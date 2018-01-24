@@ -51,8 +51,8 @@
       "priority" : "Standard callback",
       "inQueueOfStaffId" : "40001004",
       "status" : "Paused",
-      "dateAndTimeRaised" : "2017-11-17T12:58:39.379Z",
-      "targetDateAndTime" : "2017-11-17T15:58:39.379Z"
+      "dateAndTimeRaised" : "2018-01-23T11:58:39.379Z",
+      "targetDateAndTime" : "2018-01-23T11:58:39.379Z"
     },{
       "id" : "2",
       "nino": "AA123456B",
@@ -93,8 +93,8 @@
       "receivingOfficeId" : "5",
       "benefitId": "1",
       "benSubType" : "",
-      "typeId": "2",
-      "reasonId": "3",
+      "typeId": "3",
+      "reasonId": "4",
       "callback": "Yes",
       "priority" : "Standard callback",
       "inQueueOfStaffId" : "",

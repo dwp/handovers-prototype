@@ -1,3 +1,4 @@
+const Customer = require('../models/Customer.model');
 const sIDU = require('../utils/setInitialDataUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
@@ -6,6 +7,11 @@ const handoverUtils = require('../utils/handoverUtils');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customer Controllers
+/*
+/*    Throughout these controller functions, if all input data for an individual customer is valid then a Customer
+/*    object is created. If it is not valid then a generic object is created while errors are being handled. Once all
+/*    errors have been cleared, then a Customer object is created.
+/*
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
@@ -16,11 +22,10 @@ function customerFindPage(req, res) {
 
 function customerFindPageAction(req, res) {
 
-    let customer = {};
-    let inputNino = req.body['nino'];
-    let customerSearch = findIfCustomerNinoAlreadyExists(req, inputNino);
-    if (customerSearch.customerFound == 0) {
-        customer.nino = inputNino;
+    let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let inputNino = req.body.nino ? req.body.nino : "AA123456B";
+    let customer = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, inputNino);
+    if (!customer.firstName) {
         res.render('customer_search_results', customer);
     } else {
         req.session.customer = customer;
@@ -31,117 +36,94 @@ function customerFindPageAction(req, res) {
 function customerViewPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
-    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let errorsIn = req.session.errors ? req.session.errors : [];
+    let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let customer;
-    if (errorsIn.length === 0) {
-        if(req.query.nino) {
-            customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
-        } else {
-            customer = req.session.customer ? req.session.customer : customers[0];
-        }
-        let displayDate = dateUtils.formatDateAndTimeForDisplay(customer.dob);
-        customer.birthDay = parseInt(displayDate.day);
-        customer.birthMonth = displayDate.month;
-        customer.birthYear = parseInt(displayDate.year);
+    if(req.query.nino) {
+        customer = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, req.query.nino);
     } else {
-        if(req.session.editedCustomer) {
-            customer = req.session.editedCustomer;
-        } else {
-            customer = req.session.newCustomer;
-        }
+        customer = req.session.customer ? req.session.customer : customersList[0];
     }
     let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    let customerDobForDisplay = dateUtils.formatDateForDisplay(customer.dob);
+    customer.birthDay = customerDobForDisplay.day;
+    customer.birthMonth = customerDobForDisplay.month;
+    customer.birthYear = customerDobForDisplay.year;
     res.render('customer', {
         customer : customer,
-        customerOfficeDetails : customerOfficeDetails,
-        errors : errorsIn,
-        errorsLength : errorsIn.length
+        customerOfficeDetails : customerOfficeDetails
     });
 }
 
 function customerSummaryPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
-    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let errorsIn = req.session.errors ? req.session.errors : [];
+    let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let messages = req.session.messages;
+    let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let customer;
-    let displayDate;
     let handoversList = [];
-    if (errorsIn.length === 0) {
+    if (errors.length === 0) {
         if(req.query.nino) {
-            customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
+            customer = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, req.query.nino);
         } else {
-            customer = req.session.customer ? req.session.customer : customers[0];
+            customer = req.session.customer ? req.session.customer : customersList[0];
         }
-
     } else {
-        if(req.session.editedCustomer) {
-            customer = req.session.editedCustomer;
-        } else {
-            customer = req.session.newCustomer;
-        }
+        customer = req.session.invalidCustomer;
     }
     for (let i=0; i < handovers.length; i++) {
         let handover = handovers[i];
         if (handover.nino === customer.nino) {
-            let handoverTextDetails = handoverUtils.getHandoverDetails(handover);;
-            handover.handoverTextDetails = handoverTextDetails;
+            let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);;
+            handover.handoverDetails = handoverDetails;
             handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+            handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+            handover.dateRaised = (handover.dateAndTimeRaisedForDisplay.day + " " + handover.dateAndTimeRaisedForDisplay.month + " " + handover.dateAndTimeRaisedForDisplay.year);
+            handover.timeRaised = (handover.dateAndTimeRaisedForDisplay.hours + ":" + handover.dateAndTimeRaisedForDisplay.mins);
+            handover.targetDate = (handover.targetDateAndTimeForDisplay.day + " " + handover.targetDateAndTimeForDisplay.month + " " + handover.targetDateAndTimeForDisplay.year);
+            handover.targetTime = (handover.targetDateAndTimeForDisplay.hours + ":" + handover.targetDateAndTimeForDisplay.mins);
+            handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
             handoversList.push(handover);
         }
     }
-    displayDate = dateUtils.formatDateAndTimeForDisplay(customer.dob);
-    customer.birthDay = parseInt(displayDate.day);
-    customer.birthMonth = displayDate.month;
-    customer.birthYear = parseInt(displayDate.year);
     let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    let customerDobForDisplay = dateUtils.formatDateForDisplay(customer.dob);
+    customer.birthDay = customerDobForDisplay.day;
+    customer.birthMonth = customerDobForDisplay.month;
+    customer.birthYear = customerDobForDisplay.year;
     res.render('customer-summary', {
+        messages : messages,
         customer : customer,
         customerOfficeDetails : customerOfficeDetails,
         handoversList : handoversList,
-        errors : errorsIn,
-        errorsLength : errorsIn.length
+        errors : errors,
+        errorsLength : errors.length
     });
 }
 
 function customerCreatePage(req, res) {
 
     let editOrCreate = 'create';
-    let errorsIn = req.session.errors ? req.session.errors : [];
+    let errors = req.session.errors ? req.session.errors : [];
     let officesList = sIDU.setInitialOfficesData();
     let customer = {};
-
-    //   If there is a newCustomer session object it is because there were errors in data input previously during
-    //   customer create. It holds the previously-input data that has not been stored in the session customer
-    //   object because it contains errors, but is needed to be re-displayed in the customer create page.
-    //   If there is not a newCustomer session object, use the nino that was passed in with the url, or a default
-    //   if no nino was passed in.
-
-    if (req.session.newCustomer) {
-        customer = req.session.newCustomer;
+    if (errors.length !== 0) {
+        customer = req.session.invalidCustomer;
     } else {
         customer.nino = req.query.nino ? req.query.nino : "AB987654C";
     }
     res.render('customer-edit', {customer : customer,
                                  officesList : officesList,
                                  editOrCreate : editOrCreate,
-                                 errors : errorsIn,
-                                 errorsLength : errorsIn.length
+                                 errors : errors,
+                                 errorsLength : errors.length
                                 }
     );
 }
 
 function customerCreatePageAction(req, res) {
 
-    let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let newCustomer = new Object();
-    let year = req.body['birthYear'];
-    let month = req.body['birthMonth'];
-    let day = req.body['birthDay'];
-    let currentYear = new Date().getFullYear();
-    let errorsOut = [];
     let foundCustomer;
     if (req.body['nino'] === "") {
         errorsOut.push({
@@ -156,105 +138,44 @@ function customerCreatePageAction(req, res) {
             });
         }
     }
+    let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let customer;
+    let newCustomer = {};
+    let validatedCustomer;
+    let message;
+    let messages = [];
     newCustomer.nino = req.body['nino'];
-    if (req.body['postcode'] === "") {
-        errorsOut.push({
-            message : "Postcode must be entered",
-            field : "postcode"});
-    } else {
-        newCustomer.postcode = req.body['postcode'];
-    }
-    if (req.body['firstName'] === "") {
-        errorsOut.push({
-            message : "First name must be entered",
-            field : "firstName"});
-    } else {
-        newCustomer.firstName = req.body['firstName'];
-    }
-    if (req.body['lastName'] === "") {
-        errorsOut.push({
-            message : "Last name must be entered",
-            field : "lastName"});
-    } else {
-        newCustomer.lastName = req.body['lastName'];
-    }
-    if (req.body['customer-office'] === ""){
-        errorsOut.push({
-            message : "Home jobcentre must be selected from dropdown list",
-            field : "customer-office"});
-    } else {
-        newCustomer.customerOfficeId = req.body['customer-office'];
-    }
-    if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
-        errorsOut.push({
-            message : "Date of birth must be in valid format and within valid range",
-            field : "birth-date-group"});
-        if (!day || day < 1 || day > 31) {
-            errorsOut.push({
-                message : "......day of birth must be from 1 to 31",
-                field : "birthDay"});
-        }
-        if (!month || month < 1 || month > 12) {
-            errorsOut.push({
-                message : "......month of birth must be from 1 to 12",
-                field : "birthMonth"});
-        }
-        if (!year || year < 1900 || year > currentYear) {
-            errorsOut.push({
-                message : ("......year of birth must be between 1900 and " + currentYear),
-                field : "birthYear"});
-        }
-    }
+    newCustomer.postcode = req.body['postcode'];
+    newCustomer.firstName = req.body['firstName'];
+    newCustomer.lastName = req.body['lastName'];
+    newCustomer.customerOfficeId = req.body['customer-office'];
     newCustomer.preferredContactNumber = req.body['prefContNum'];
     newCustomer.emailAddress = req.body['emailAddr'];
     newCustomer.welshSpeaker = req.body['welsh-speaker'];
     newCustomer.translator = req.body['translator'];
-    if (newCustomer.translator === "No") {
-            newCustomer.language = '';
-        } else {
-            newCustomer.language = req.body['language'];
-            if (req.body['language'] === "") {
-                errorsOut.push({
-                    message : "Enter a language , or select No for Translator reqd",
-                    field : 'language'});
-            }
-        }
+    newCustomer.language = req.body['language'];
     newCustomer.approvedRep = req.body['approved-rep'];
-    if (newCustomer.approvedRep === "Yes") {
-            newCustomer.approvedRepName = req.body['rep-name'];
-            newCustomer.approvedRepContact = req.body['rep-contact'];
-            if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-                errorsOut.push({
-                    message : "Enter both name and contact details for approved representative, or select No",
-                    field : ""});
-                if (req.body['rep-name'] === "") {
-                    errorsOut.push({
-                        message : "         .....name must be entered",
-                        field : "rep-name"});
-                }
-                if (req.body['rep-contact'] === "") {
-                    errorsOut.push({
-                        message : "         .....contact details must be entered",
-                        field : "rep-contact"});
-                }
-            }
-    } else {
-        newCustomer.approvedRepName = "";
-        newCustomer.approvedRepContact = "";
-    }
-    if (errorsOut.length === 0) {
-        newCustomer.dob = new Date(year + '-' + month + '-' + day);
-        req.session.customer = newCustomer;
-        customers.push(newCustomer);
-        req.session.customers = customers;
+    newCustomer.approvedRepName = req.body['rep-name'];
+    newCustomer.approvedRepContact = req.body['rep-contact'];
+    newCustomer.birthDay = parseInt(req.body['birthDay']);
+    newCustomer.birthMonth = parseInt(req.body['birthMonth']);
+    newCustomer.birthYear = parseInt(req.body['birthYear']);
+    validatedCustomer = customerUtils.validateCustomer(newCustomer);
+    if (validatedCustomer.errors.length === 0) {
+        customer = new Customer(validatedCustomer.customer);
+        req.session.customer = customer;
+        customersList.push(customer);
+        req.session.customers = customersList;
+        req.session.invalidCustomer = {};
         req.session.errors = [];
+        message = "Successfully created record for " + customer.nino + " : " + customer.firstName + " " + customer.lastName;
+        messages.push(message);
+        req.session.messages = messages;
         res.redirect('/customer/summary');
     } else {
-        newCustomer.birthDay = day;
-        newCustomer.birthMonth = month;
-        newCustomer.birthYear = year;
-        req.session.newCustomer = newCustomer;
-        req.session.errors = errorsOut;
+        req.session.invalidCustomer = validatedCustomer.customer;
+        req.session.errors = validatedCustomer.errors;
+        req.session.messages = [];
         res.redirect('/customer/create');
     }
 }
@@ -262,30 +183,29 @@ function customerCreatePageAction(req, res) {
 function customerEditPage(req, res) {
 
     let editOrCreate = 'edit';
-    let errorsIn = req.session.errors ? req.session.errors : [];
+    let errors = req.session.errors ? req.session.errors : [];
     let officesList = sIDU.setInitialOfficesData();
     let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let customer;
-    if (errorsIn.length === 0) {
+    let customer = {};
+    if (errors.length === 0) {
         if(req.query.nino) {
             customer = customerUtils.getCustomerByNinoFromListOfCustomers(customers, req.query.nino);
         } else {
             customer = req.session.customer ? req.session.customer : customers[0];
         }
-        let displayDate = dateUtils.formatDateAndTimeForDisplay(customer.dob);
-        customer.birthDay = parseInt(displayDate.day);
-        customer.birthMonth = displayDate.numericMonth;
-        customer.birthYear = parseInt(displayDate.year);
+        let customerDobForDisplay = dateUtils.formatDateForDisplay(customer.dob);
+        customer.birthDay = customerDobForDisplay.day;
+        customer.birthMonth = customerDobForDisplay.numericMonth;
+        customer.birthYear = customerDobForDisplay.year;
     } else {
-        customer = req.session.editedCustomer;
+        customer = req.session.invalidCustomer;
     }
     let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
-    req.session.customer = customer;
     res.render('customer-edit', { customer : customer,
                                   customerOfficeDetails : customerOfficeDetails,
                                   editOrCreate : editOrCreate,
-                                  errors : errorsIn,
-                                  errorsLength : errorsIn.length
+                                  errors : errors,
+                                  errorsLength : errors.length
         }
     );
 }
@@ -293,13 +213,12 @@ function customerEditPage(req, res) {
 function customerEditPageAction(req, res) {
 
     let customers = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let customer = req.session.customer;
+    let customer = req.session.customer ? req.session.customer : customers[0];
     let editedCustomer = req.session.editedCustomer ? req.session.editedCustomer : new Object();
     let year = req.body['birthYear'];
     let month = req.body['birthMonth'];
     let day = req.body['birthDay'];
     let errorsOut = [];
-    let currentYear = new Date().getFullYear();
     let foundCustomer;
 
     // If there is already an edited customer in the session (i.e. this customer was previously edited with errors)
@@ -331,62 +250,18 @@ function customerEditPageAction(req, res) {
 
     editedCustomer.nino = req.body['nino'];
     editedCustomer.customerOfficeId = req.body['customer-office'];
-    if (req.body['postcode'] === "") {
-        errorsOut.push({
-            message : "Postcode must be entered",
-            field : "postcode"});
-    } else {
-        editedCustomer.postcode = req.body['postcode'];
-    }
-    if (req.body['firstName'] === "") {
-        errorsOut.push({
-            message : "First name must be entered",
-            field : "firstName"});
-    } else {
-        editedCustomer.firstName = req.body['firstName'];
-    }
-    if (req.body['lastName'] === "") {
-        errorsOut.push({
-            message : "Last name must be entered",
-            field : "lastName"});
-    } else {
-        editedCustomer.lastName = req.body['lastName'];
-    }
-    if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !year || year < 1900 || year > currentYear) {
-        errorsOut.push({
-            message : "Date of birth must be in a valid format and within valid range",
-            field : "birth-date-group"});
-        if (!day || day < 1 || day > 31) {
-            errorsOut.push({
-                message : "......day of birth must be from 1 to 31",
-                field : "birthDay"});
-        }
-        if (!month || month < 1 || month > 12) {
-            errorsOut.push({
-                message : "......month of birth must be from 1 to 12",
-                field : "birthMonth"});
-        }
-        if (!year || year < 1900 || year > currentYear) {
-            errorsOut.push({
-                message : ("......year of birth must be between 1900 and " + currentYear),
-                field : "birthYear"});
-        }
-    }
+    editedCustomer.nino = req.body['nino'];
+    editedCustomer.postcode = req.body['postcode'];
+    editedCustomer.firstName = req.body['firstName'];
+    editedCustomer.lastName = req.body['lastName'];
+    editedCustomer.customerOfficeId = req.body['customer-office'];
     editedCustomer.preferredContactNumber = req.body['prefContNum'];
     editedCustomer.emailAddress = req.body['emailAddr'];
     editedCustomer.welshSpeaker = req.body['welsh-speaker'];
     editedCustomer.translator = req.body['translator'];
-    if (editedCustomer.translator === "No") {
-        editedCustomer.language = '';
-    } else {
-        editedCustomer.language = req.body['language'];
-        if (req.body['language'] === "") {
-            errorsOut.push({
-                message : "Enter a language , or select No for Translator reqd",
-                field : 'language'});
-        }
-    }
+    editedCustomer.language = req.body['language'];
     editedCustomer.approvedRep = req.body['approved-rep'];
+
     if (editedCustomer.approvedRep === "Yes") {
             editedCustomer.approvedRepName = req.body['rep-name'];
             editedCustomer.approvedRepContact = req.body['rep-contact'];

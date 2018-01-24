@@ -5,8 +5,8 @@
 <main id="content" role="main">
     <div class="main-content">
         {% include "includes/handovers_summary_nav.html" %}
-        {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
+        {% include "includes/error-summary.html" %}
         <h1 class="heading-large">View summary details for {{ customer.firstName }} {{ customer.lastName }}</h1>
 
         <div>
@@ -52,7 +52,7 @@
                         </tr>
                         <tr>
                             <td>Translator required ?</td>
-                            <td>{% if customer.translator === 'Yes' %}{{ customer.language }}{% else %}N/A{% endif %}</td>
+                            <td>{% if customer.translator === 'Yes' %}{{ customer.language }}{% else %}No{% endif %}</td>
                         </tr>
                         <tr>
                             <td>Approved representative name</td>
@@ -73,7 +73,7 @@
                             <th scope="col"><span>Benefit type</span></th>
                             <th scope="col"><span>Handover type</span></th>
                             <th scope="col"><span>Handover reason</span></th>
-                            <th scope="col"><span>Date/time raised</span></th>
+                            <th scope="col"><span>Time left to clear</span></th>
                             <th scope="col"><span>Status</span></th>
                             <th scope="col"></th>
                         </tr>
@@ -81,10 +81,10 @@
                         <tbody>
                         {% for handover in handoversList %}
                         <tr>
-                            <td>{{handover.handoverTextDetails.benefitName}}</td>
-                            <td>{{handover.handoverTextDetails.handoverType}}</td>
-                            <td>{{handover.handoverTextDetails.handoverReason}}</td>
-                            <td>{{handover.dateAndTimeRaisedForDisplay.day}} {{handover.dateAndTimeRaisedForDisplay.month}} {{handover.dateAndTimeRaisedForDisplay.year}}</td>
+                            <td>{{handover.handoverDetails.benefitAbbr}}</td>
+                            <td>{{handover.handoverDetails.handoverType}}</td>
+                            <td>{{handover.handoverDetails.handoverReason}}</td>
+                            <td>{{handover.timeLeftToTarget}}</td>
                             <td>{{handover.status}}</td>
                             <td>{{handoverUpdateLink(handover)}}</td>
                         </tr>

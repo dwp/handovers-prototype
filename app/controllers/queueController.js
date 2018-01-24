@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const handoverUtils = require('../utils/handoverUtils');
-const queueUtils = require('../utils/skillsetUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
 const commonUtils = require('../utils/commonUtils');
@@ -20,25 +19,27 @@ function viewQueuePage(req, res) {
     let sortedHandoversQueueList;
     for (let i=0; i < handoversLength; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
-        let textDetails = handoverUtils.getHandoverDetails(handover);
+        let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
         let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
-        let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTimeForDisplay);
-        handover.benefitName = textDetails.benefitName;
-        handover.handoverType = textDetails.handoverType;
-        handover.handoverReason = textDetails.handoverReason;
+        let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+        handover.benefitName = handoverDetails.benefitName;
+        handover.benefitAbbr = handoverDetails.benefitAbbr;
+        handover.handoverType = handoverDetails.handoverType;
+        handover.handoverReason = handoverDetails.handoverReason;
         handover.dateRaised = (dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month + " " + dateAndTimeRaisedForDisplay.year);
         handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
         handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
         handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
+        handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
         if (queueType === 'agent') {
-            if (handover.inQueueOfStaffId === queueAgent.staffId) {
+            if (handover.inQueueOfStaffId == queueAgent.staffId) {
                 handoversQueueList.push(handover);
             }
         } else {
             handoversQueueList.push(handover);
         }
     }
-    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['dateAndTimeRaised']);
+    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['timeLeftToTarget']);
     res.render('queue', {
         handoversQueueList : sortedHandoversQueueList,
         queueType : queueType,
@@ -67,5 +68,6 @@ function getNextQueueItem(req, res) {
     res.redirect('/queue/view?agentId=40001004');
 
 }
+
 module.exports.viewQueuePage = viewQueuePage;
 module.exports.getNextQueueItem = getNextQueueItem;

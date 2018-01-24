@@ -4,7 +4,7 @@
             <legend class="form-label-bold">Home jobcentre</legend>
             <div>
                 <p>{{ customerOfficeDetails.officeName }}</p>
-                <input type="hidden" id="customer-office" name="customer-office" value="{{ customer.customerOfficeId }}">
+                <input type="hidden" id="customer-office" name="customer-office" tabindex=7 value="{{ customer.customerOfficeId }}">
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
                     <span class="form-label-bold">Home jobcentre</span>
                     <span class="error-message">Home jobcentre must be selected from dropdown list</span>
                 </label>
-                <select class="select form-control form-control-error" name="customer-office" id="customer-office">
+                <select class="select form-control form-control-error" name="customer-office" id="customer-office" tabindex=7>
                     <option value="">Select</option>
                     {% for office in officesList %}
                         {% if office.officeTypeId === 1 %}
@@ -36,7 +36,7 @@
                 <label for="customer-office">
                     <span class="form-label-bold">Home jobcentre</span>
                 </label>
-                <select class="select form-control" name="customer-office" id="customer-office">
+                <select class="select form-control" name="customer-office" id="customer-office" tabindex=7>
                     <option value="">Select</option>
                     {% for office in officesList %}
                         {% if office.officeTypeId === 1 %}
