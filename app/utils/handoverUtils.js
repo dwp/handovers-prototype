@@ -16,7 +16,7 @@ function getHandoverByIdFromListOfHandovers(handoversList, id) {
     return foundHandover;
 }
 
-function getHandoverDetails(handover) {
+function getHandoverBenefitNameHandoverTypeAndHandoverReason(handover) {
 
     let textVersions = {};
     let initialHandoversData = sIDU.setInitialBenefitsAndHandoversData();
@@ -25,12 +25,14 @@ function getHandoverDetails(handover) {
     let handoverReasonsList = initialHandoversData.initialHandoverReasons;
 
     let benefitName;
+    let benefitAbbr;
     let handoverType;
     let handoverReason;
 
     for (let i=0; i < benefitsList.length; i++) {
         if (handover.benefitId === benefitsList[i].id) {
             benefitName = benefitsList[i].benefitName;
+            benefitAbbr = benefitsList[i].benefitAbbr;
         }
     }
 
@@ -47,6 +49,7 @@ function getHandoverDetails(handover) {
     }
 
     textVersions.benefitName = benefitName;
+    textVersions.benefitAbbr = benefitAbbr;
     textVersions.handoverType = handoverType;
     textVersions.handoverReason = handoverReason;
 
@@ -55,6 +58,70 @@ function getHandoverDetails(handover) {
 
 }
 
+function validateHandover(inputHandover) {
+    let validatedHandover;
+    let handover = {};
+    let errors = [];
+
+    if (inputHandover.benefitId === "") {
+        errors.push({
+            message: "Benefit must be selected from dropdown list",
+            field: "benefit"
+        });
+    } else {
+        handover.benefitId = inputHandover.benefitId;
+    }
+
+    if (inputHandover.benefitId == 5) {
+        if (inputHandover.benSubType === "") {
+            errors.push({
+                message: "Benefit sub-type must be selected from dropdown list",
+                field: "benSubType"
+            });
+        } else {
+            handover.benSubType = inputHandover.benSubType;
+        }
+    }
+
+    if (inputHandover.typeId === "") {
+        errors.push({
+            message: "Handover type must be selected from dropdown list",
+            field: "handover-type"
+        });
+    } else {
+        handover.typeId = inputHandover.typeId;
+    }
+
+    if (inputHandover.reasonId === "") {
+        errors.push({
+            message: "Handover reason must be selected from dropdown list",
+            field: "handover-reason"
+        });
+    } else {
+        handover.reasonId = inputHandover.reasonId;
+    }
+    handover.id = inputHandover.id;
+    handover.nino = inputHandover.nino;
+    handover.raisedByStaffId = inputHandover.raisedByStaffId;
+    handover.raisedOnBehalfOfOfficeId = inputHandover.raisedOnBehalfOfOfficeId;
+    handover.receivingOfficeId = inputHandover.receivingOfficeId;
+    handover.callback = inputHandover.callback;
+    handover.priority = inputHandover.priority;
+    handover.status = inputHandover.status;
+    handover.inQueueOfStaffId = inputHandover.inQueueOfStaffId;
+    handover.dateAndTimeRaised = inputHandover.dateAndTimeRaised;
+    handover.targetDateAndTime = inputHandover.targetDateAndTime;
+    handover.notes = inputHandover.notes;
+
+    validatedHandover = {
+        "handover" : handover,
+        "errors" : errors
+    };
+
+    return validatedHandover;
+}
+
 module.exports.getHandoverByIdFromListOfHandovers = getHandoverByIdFromListOfHandovers;
-module.exports.getHandoverDetails = getHandoverDetails;
+module.exports.getHandoverBenefitNameHandoverTypeAndHandoverReason = getHandoverBenefitNameHandoverTypeAndHandoverReason;
+module.exports.validateHandover = validateHandover;
 

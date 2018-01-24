@@ -3,13 +3,13 @@
         <legend class="form-label-bold">Translator reqd ?</legend>
         <fieldset class="inline">
             <div class="multiple-choice">
-                <input id="translator-no" type="radio" name="translator" value="No" {% if customer.translator === 'No' or editOrCreate === 'create' %}
+                <input id="translator-no" type="radio" name="translator" tabindex=11 value="No" {% if customer.translator === 'No' or editOrCreate === 'create' %}
                 checked="checked"
                 {% endif %}>
                 <label for="translator-no">No</label>
             </div>
             <div class="multiple-choice" data-target="language-gp">
-                <input id="translator-yes" type="radio" name="translator" value="Yes" {% if customer.translator === 'Yes' %}
+                <input id="translator-yes" type="radio" name="translator" tabindex=11 value="Yes" {% if customer.translator === 'Yes' %}
                 checked="checked"
                 {% endif %}>
                 <label for="translator-yes">Yes</label>
@@ -26,14 +26,14 @@
                         <span class="form-label-bold">Language</span>
                         <span class="error-message">Language must be entered</span>
                     </label>
-                    <input class="form-control form-control-error" id="language" name="language" type="text" value="{{ customer.language }}">
+                    <input class="form-control form-control-error" id="language" name="language" type="text" tabindex=12 value="{{ customer.language }}">
                 </div>
             {% else %}
                 <div class="panel panel-border-narrow js-hidden" id="language-gp">
                     <label for="language">
                         <span class="form-label-bold">Language</span>
                     </label>
-                    <input class="form-control" id="language" name="language" type="text" value="{{ customer.language }}">
+                    <input class="form-control" id="language" name="language" type="text" tabindex=12 value="{{ customer.language }}">
                 </div>
             {% endif %}
         </fieldset>

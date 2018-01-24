@@ -3,7 +3,7 @@
   "customers": [{
       "firstName": "Adam",
       "lastName": "Brown",
-      "dob": "25 Jan 1982",
+      "dob": "1982-10-02",
       "nino": "AA123456B",
       "preferredContactNumber" : "01134 567890",
       "emailAddress" : "adam.brown@blah.com",
@@ -67,7 +67,7 @@
       "nino": "AA345678B",
       "preferredContactNumber" : "01136 901234",
       "emailAddress" : "ij34@blah.com",
-      "postcode": "MN4 3HK",
+      "postcode": "MN4 3HJ",
       "customerOfficeId" : "7",
       "welshSpeaker": "Yes",
       "translator" : "Yes",

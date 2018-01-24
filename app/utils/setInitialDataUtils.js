@@ -1,3 +1,9 @@
+const Customer = require('../models/Customer.model');
+const Handover = require('../models/Handover.model');
+const HandoverNote = require('../models/HandoverNote.model');
+const HandoverType = require('../models/HandoverType.model');
+const HandoverReason = require('../models/HandoverReason.model');
+const Benefit = require('../models/Benefit.model');
 const benefitsData = require('../data/benefitsData.json');
 const customerData = require('../data/customerData.json');
 const handoverData = require('../data/handoverData.json');
@@ -5,10 +11,11 @@ const officeData = require('../data/officeData.json');
 const teamData = require('../data/teamData.json');
 const dateUtils = require('../utils/dateUtils');
 
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customers Data Setup
 /*
-/*                Set up initial customers data from json file, and return in an array
+/*                Set up initial customers data from json file, and return in an array of Customer objects
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
 
@@ -18,23 +25,11 @@ function setInitialCustomersData() {
     let customersList = customerData['customers'];
     let initialCustomers = [];
     for (let i=0; i < customersList.length; i++) {
-        let customer = new Object();
         let dob = new Date(customersList[i].dob);
-        customer.firstName = customersList[i].firstName;
-        customer.lastName = customersList[i].lastName;
+        let customer = customersList[i];
         customer.dob = dob;
-        customer.nino = customersList[i].nino;
-        customer.preferredContactNumber = customersList[i].preferredContactNumber;
-        customer.emailAddress = customersList[i].emailAddress;
-        customer.postcode = customersList[i].postcode;
-        customer.customerOfficeId = customersList[i].customerOfficeId;
-        customer.welshSpeaker = customersList[i].welshSpeaker;
-        customer.language = customersList[i].language;
-        customer.translator = customersList[i].translator;
-        customer.approvedRep = customersList[i].approvedRep;
-        customer.approvedRepName = customersList[i].approvedRepName;
-        customer.approvedRepContact = customersList[i].approvedRepContact;
-        initialCustomers.push(customer);
+        let initialCustomer = new Customer(customer)
+        initialCustomers.push(initialCustomer);
     }
     return initialCustomers;
 }
@@ -72,11 +67,9 @@ function setInitialBenefitsData() {
     let benefitsList = benefitsData['benefitTypes'];
     let initialBenefits = [];
     for (let i=0; i < benefitsList.length; i++) {
-        let benefit = new Object();
-        benefit.id = benefitsList[i].id;
-        benefit.benefitName = benefitsList[i].benefitName;
+        let benefit = new Benefit(benefitsList[i]);
         if (benefit.id === '5') {
-            benefit.benefitSubTypes = benefitsList.benefitSubTypes;
+            benefit.benefitSubTypes = benefitsList[i].benefitSubTypes;
         }
         initialBenefits.push(benefit);
     }
@@ -89,9 +82,7 @@ function setInitialHandoverTypesData() {
     let handoverTypesList = handoverData['handoverTypes'];
     let initialHandoverTypes = [];
     for (let i = 0; i < handoverTypesList.length; i++) {
-        let handoverType = new Object();
-        handoverType.id = handoverTypesList[i].id;
-        handoverType.handoverType = handoverTypesList[i].handoverType;
+        let handoverType = new HandoverType(handoverTypesList[i]);
         initialHandoverTypes.push(handoverType);
     }
     return initialHandoverTypes;
@@ -102,9 +93,7 @@ function setInitialHandoverReasonsData() {
     let handoverReasonsList = handoverData['handoverReasons'];
     let initialHandoverReasons = [];
     for (let i = 0; i < handoverReasonsList.length; i++) {
-        let handoverReason = new Object();
-        handoverReason.id = handoverReasonsList[i].id;
-        handoverReason.handoverReason = handoverReasonsList[i].handoverReason;
+        let handoverReason = new HandoverReason(handoverReasonsList[i]);
         initialHandoverReasons.push(handoverReason);
     }
     return initialHandoverReasons;
@@ -115,30 +104,13 @@ function setInitialHandoversData() {
     let handoversList = handoverData['handovers'];
     let initialHandovers = [];
     for (let i=0; i < handoversList.length; i++) {
-        let handover = new Object();
-        let dateAndTimeRaised = new Date(handoversList[i].dateAndTimeRaised);
-        handover.id = handoversList[i].id;
-        handover.nino = handoversList[i].nino;
-        handover.raisedByStaffId = handoversList[i].raisedByStaffId;
-        handover.raisedOnBehalfOfOfficeId = handoversList[i].raisedOnBehalfOfOfficeId;
-        handover.receivingOfficeId = handoversList[i].receivingOfficeId;
-        handover.benefitId = handoversList[i].benefitId;
-        handover.benSubType = handoversList[i].benSubType;
-        handover.typeId = handoversList[i].typeId;
-        handover.reasonId = handoversList[i].reasonId;
-        handover.callback = handoversList[i].callback;
-        handover.priority = handoversList[i].priority;
-        handover.inQueueOfStaffId = handoversList[i].inQueueOfStaffId;
-        handover.status = handoversList[i].status;
-        handover.dateAndTimeRaised = dateAndTimeRaised;
+        let handover = handoversList[i];
+        handover.dateAndTimeRaised = new Date(handoversList[i].dateAndTimeRaised);
+        handover.targetDateAndTime = new Date(handoversList[i].dateAndTimeRaised);
+        handover.targetDateAndTime.setHours(handover.targetDateAndTime.getHours() + 3);
         handover.notes = null;
-
-        if (handover.callback === 'Yes') {
-            handover.targetDateAndTime = new Date(dateAndTimeRaised);
-            handover.targetDateAndTime.setHours(handover.targetDateAndTime.getHours() + 3);
-        }
-
-        initialHandovers.push(handover);
+        let initialHandover = new Handover(handover);
+        initialHandovers.push(initialHandover);
     }
 
     // Add list of notes to first handover in initialHandovers
@@ -153,14 +125,11 @@ function setInitialHandoverNotesData() {
     let handoverNotesList = handoverData['handoverNotes'];
     let initialHandoverNotes = [];
     for (let i = 0; i < handoverNotesList.length; i++) {
-        let handoverNote = new Object();
-        handoverNote.id = handoverNotesList[i].id;
-        handoverNote.handoverId = handoverNotesList[i].handoverId;
+        let handoverNote = handoverNotesList[i];
         handoverNote.dateNoteAdded = new Date(handoverNotesList[i].dateNoteAdded);
         handoverNote.userWhoAddedNote = parseInt(handoverNotesList[i].userWhoAddedNote);
-        handoverNote.updateResultedFromCustomerContactIndicator = handoverNotesList[i].updateResultedFromCustomerContactIndicator;
-        handoverNote.noteContent = handoverNotesList[i].noteContent;
-        initialHandoverNotes.unshift(handoverNote);
+        let initialHandoverNote = new HandoverNote(handoverNote);
+        initialHandoverNotes.unshift(initialHandoverNote);
     }
 
     return initialHandoverNotes;
