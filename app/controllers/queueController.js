@@ -23,6 +23,7 @@ function viewQueuePage(req, res) {
         let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
         let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
         handover.benefitName = handoverDetails.benefitName;
+        handover.benefitAbbr = handoverDetails.benefitAbbr;
         handover.handoverType = handoverDetails.handoverType;
         handover.handoverReason = handoverDetails.handoverReason;
         handover.dateRaised = (dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month + " " + dateAndTimeRaisedForDisplay.year);

@@ -25,12 +25,14 @@ function getHandoverBenefitNameHandoverTypeAndHandoverReason(handover) {
     let handoverReasonsList = initialHandoversData.initialHandoverReasons;
 
     let benefitName;
+    let benefitAbbr;
     let handoverType;
     let handoverReason;
 
     for (let i=0; i < benefitsList.length; i++) {
         if (handover.benefitId === benefitsList[i].id) {
             benefitName = benefitsList[i].benefitName;
+            benefitAbbr = benefitsList[i].benefitAbbr;
         }
     }
 
@@ -47,6 +49,7 @@ function getHandoverBenefitNameHandoverTypeAndHandoverReason(handover) {
     }
 
     textVersions.benefitName = benefitName;
+    textVersions.benefitAbbr = benefitAbbr;
     textVersions.handoverType = handoverType;
     textVersions.handoverReason = handoverReason;
 
