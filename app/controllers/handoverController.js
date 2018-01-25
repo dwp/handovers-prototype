@@ -9,6 +9,7 @@ const customerUtils = require('../utils/customerUtils');
 const userUtils = require('../utils/userUtils');
 const dateUtils = require('../utils/dateUtils');
 const commonUtils = require('../utils/commonUtils');
+const callbackData = require('../data/callbackData');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Handover Controllers
@@ -183,7 +184,7 @@ function createHandoverPageAction(req, res) {
     if (newHandover.callback === "Yes") {
         newHandover.callbackStatus = "1"
     } else {
-        newHandover.callbackStatus = "8"
+        newHandover.callbackStatus = "0"
     }
     newHandover.firstCallbackReason = "";
     newHandover.secondCallbackReason = "";
@@ -333,14 +334,14 @@ function editHandoverPageAction(req, res) {
     editedHandover.callback = req.body['handover-callback'];
     if (editedHandover.callback === "Yes") {
         editedHandover.callbackStatus = handover.callbackStatus;
-        editedHandover.firstCallbackReason = handover.firstCallbackReason;
-        editedHandover.secondCallbackReason= handover.secondCallbackReason;
-        editedHandover.thirdCallbackReason = handover.secondCallbackReason;
+        editedHandover.firstCallbackResult = handover.firstCallbackResult;
+        editedHandover.secondCallbackResult= handover.secondCallbackResult;
+        editedHandover.thirdCallbackResult = handover.secondCallbackResult;
     } else {
         editedHandover.callbackStatus = "8"
-        editedHandover.firstCallbackReason = handover.firstCallbackReason;
-        editedHandover.secondCallbackReason = handover.secondCallbackReason;
-        editedHandover.thirdCallbackReason = handover.secondCallbackReason;
+        editedHandover.firstCallbackResult = handover.firstCallbackResult;
+        editedHandover.secondCallbackResult = handover.secondCallbackResult;
+        editedHandover.thirdCallbackResult = handover.secondCallbackResult;
     }
     editedHandover.status = req.body['handover-status'] || handover.status;
     editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
