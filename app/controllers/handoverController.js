@@ -215,7 +215,7 @@ function createHandoverPageAction(req, res) {
         req.session.handover = handover;
         req.session.invalidHandover = {};
         req.session.errors = [];
-        message = "Successfully created handover for : " + customer.firstName + " " + customer.lastName;
+        message = "Successfully created handover for " + customer.firstName + " " + customer.lastName;
         messages.push(message);
         req.session.messages = messages;
         res.redirect('/customer/summary?nino=' + handover.nino);
@@ -259,6 +259,7 @@ function editHandoverPage(req, res) {
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
     handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
     handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+    handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
     let inQueueOfStaffDetails;
     if (handover.inQueueOfStaffId !== "") {
         inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);

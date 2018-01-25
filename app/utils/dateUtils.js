@@ -88,21 +88,29 @@ function calcTimeLeftToTarget(date) {
 // Get todays date and time
     let now = new Date().getTime();
 // Find the distance between now and the target date
-    let distance = targetDateTime - now;
+    let difference = targetDateTime - now;
 // Time calculations for hours and minutes
-    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
 
     let timeToTarget;
+    let expiredOrNot = 0;
+    let calcResult;
 
     // If the target time has already passed, write some text, otherwise write the time left
-    if (distance < 0) {
-        timeToTarget = "Expired";
+    if (difference < 0) {
+        expiredOrNot = 1;
+        let timeToTargetPosDays = Math.abs(days);
+        let timeToTargetPosHours = Math.abs(hours);
+        let timeToTargetPosMins = Math.abs(minutes);
+        timeToTarget = (timeToTargetPosDays + " days " + timeToTargetPosHours + " hrs " + timeToTargetPosMins + " mins ");
     } else {
         timeToTarget = (hours + " hrs " + minutes + " mins");
     }
 
-    return timeToTarget;
+    calcResult = {"expiredOrNot" : expiredOrNot, "timeToTarget" : timeToTarget };
+    return calcResult;
 }
 
 module.exports.formatDateAndTimeForDisplay = formatDateAndTimeForDisplay;
