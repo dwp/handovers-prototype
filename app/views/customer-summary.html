@@ -69,35 +69,34 @@
                 <div>
                     <table>
                         <thead>
-                        <tr>
-                            <th scope="col"><span>NI number</span></th>
-                            <th scope="col"><span>Date/time raised</span></th>
-                            <th scope="col"><span>Time left to clear</span></th>
-                            <th scope="col"><span>Benefit type</span></th>
-                            <th scope="col"><span>Handover type</span></th>
-                            <th scope="col"><span>Callback reqd?</span></th>
-                            <th scope="col"><span>Status</span></th>
-                            {% if queueType === "office" %}
-                            <th scope="col"><span>Being progressed by</span></th>
-                            {% endif %}
-                            <th scope="col"></th>
-                        </tr>
+                            <tr>
+                                <th scope="col"><span>NI number</span></th>
+                                <th scope="col"><span>Time left to clear</span></th>
+                                <th scope="col"><span>Time since clearance due</span></th>
+                                <th scope="col"><span>Benefit type</span></th>
+                                <th scope="col"><span>Handover type</span></th>
+                                <th scope="col"><span>Callback reqd?</span></th>
+                                <th scope="col"><span>Status</span></th>
+                                <th scope="col"></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {% for handover in handoversList %}
-                        <tr>
-                            <td>{{handover.nino}}</td>
-                            <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
-                            <td>{{handover.timeLeftToTarget}}</td>
-                            <td>{{handover.benefitAbbr}}</td>
-                            <td>{{handover.handoverType}}</td>
-                            <td>{{handover.callback}}</td>
-                            <td>{{handover.status}}</td>
-                            {% if queueType === "office" %}
-                            <td>{{ handover.inQueueOfStaffId}}</td>
-                            {% endif %}
-                            <td>{{handoverUpdateLink(handover)}}</td>
-                        </tr>
+                            {% for handover in handoversList %}
+                            <tr>
+                                <td>{{handover.nino}}</td>
+                                {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
+                                    <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
+                                    <td>Within target</td>
+                                {% else %}
+                                    <td>Expired</td>
+                                    <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
+                                {% endif %}
+                                <td>{{handover.handoverDetails.benefitAbbr}}</td>
+                                <td>{{handover.handoverDetails.handoverType}}</td>
+                                <td>{{handover.callback}}</td>
+                                <td>{{handover.status}}</td>
+                                <td>{{handoverUpdateLink(handover)}}</td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -145,5 +144,5 @@
 
 {% macro handoverUpdateLink(handover) %}
 {% set queryString = '?id=' + handover.id %}
-<a href="/handover/edit{{queryString}}">View/Update</a>
+<a href="/handover/edit{{queryString}}">View</a>
 {% endmacro %}

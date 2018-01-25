@@ -21,6 +21,7 @@
                         <th scope="col"><span>NI number</span></th>
                         <th scope="col"><span>Date/time raised</span></th>
                         <th scope="col"><span>Time left to clear</span></th>
+                        <th scope="col"><span>Time since clearance due</span></th>
                         <th scope="col"><span>Benefit type</span></th>
                         <th scope="col"><span>Handover type</span></th>
                         <th scope="col"><span>Callback reqd?</span></th>
@@ -36,13 +37,19 @@
                     <tr>
                         <td>{{handover.nino}}</td>
                         <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
-                        <td>{{handover.timeLeftToTarget}}</td>
+                        {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
+                            <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
+                            <td></td>
+                        {% else %}
+                            <td>Expired</td>
+                            <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
+                        {% endif %}
                         <td>{{handover.benefitAbbr}}</td>
                         <td>{{handover.handoverType}}</td>
                         <td>{{handover.callback}}</td>
                         <td>{{handover.status}}</td>
                         {% if queueType === "office" %}
-                            <td>{{ handover.inQueueOfStaffId}}</td>
+                            <td>{{ handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName }}</td>
                         {% endif %}
                         <td>{{handoverUpdateLink(handover)}}</td>
                     </tr>
@@ -78,7 +85,7 @@
         paging: false,
         info: false,
         filter: false,
-        order: [[ 4, "asc" ]],
+        order: [[ 2, "desc" ], [3, "desc"]],
     })
 </script>
 

@@ -19,27 +19,32 @@ function viewQueuePage(req, res) {
     let sortedHandoversQueueList;
     for (let i=0; i < handoversLength; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
-        let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
-        let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
-        let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
-        handover.benefitName = handoverDetails.benefitName;
-        handover.benefitAbbr = handoverDetails.benefitAbbr;
-        handover.handoverType = handoverDetails.handoverType;
-        handover.handoverReason = handoverDetails.handoverReason;
-        handover.dateRaised = (dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month + " " + dateAndTimeRaisedForDisplay.year);
-        handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
-        handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
-        handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
-        handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
-        if (queueType === 'agent') {
-            if (handover.inQueueOfStaffId == queueAgent.staffId) {
+        if (handover.status === "Cleared" || handover.status === "Withdrawn") {
+        //    Do nothing
+        } else {
+            let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
+            let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+            let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+            handover.benefitName = handoverDetails.benefitName;
+            handover.benefitAbbr = handoverDetails.benefitAbbr;
+            handover.handoverType = handoverDetails.handoverType;
+            handover.handoverReason = handoverDetails.handoverReason;
+            handover.dateRaised = (dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month + " " + dateAndTimeRaisedForDisplay.year);
+            handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
+            handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
+            handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
+            handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
+            if (queueType === 'agent') {
+                if (handover.inQueueOfStaffId == queueAgent.staffId) {
+                    handoversQueueList.push(handover);
+                }
+            } else {
+                handover.inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
                 handoversQueueList.push(handover);
             }
-        } else {
-            handoversQueueList.push(handover);
         }
     }
-    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['timeLeftToTarget']);
+    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['timeLeftToTarget.timeToTarget']);
     res.render('queue', {
         handoversQueueList : sortedHandoversQueueList,
         queueType : queueType,

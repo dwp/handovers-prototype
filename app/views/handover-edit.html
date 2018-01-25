@@ -73,15 +73,7 @@
                         <div class="column-half">
                         </div>
                     {% else %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Target time to clear</legend>
-                        {% if handover.callback === "No" %}
-                            <p>No target date and time for this priority</p>
-                        {% else %}
-                            <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
-                                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
-                        {% endif %}
-                    </div>
+                        {% include "includes/handoverEdit/targetTimeToClear.html" %}
                     {% endif %}
                     </div>
                 </div>

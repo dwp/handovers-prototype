@@ -1,0 +1,12 @@
+<div class="column-half">
+    <legend class="form-label-bold">Target time to clear</legend>
+    <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
+        &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
+    {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
+        <legend class="form-label-bold">Time left to clear</legend>
+        <p>{{ handover.timeLeftToTarget.timeToTarget }}</p>
+    {% else %}
+        <legend class="form-label-bold">Time since clearance due</legend>
+        <p>{{ handover.timeLeftToTarget.timeToTarget }}</p>
+    {% endif %}
+</div>
