@@ -242,7 +242,7 @@ function editHandoverPage(req, res) {
     let handover;
     let handoverNotes = [];
     if (errors.length === 0) {
-        handover = req.session.handover ? req.session.handover : handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
+        handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, req.query.id);
     } else {
         handover = req.session.invalidHandover;
     }

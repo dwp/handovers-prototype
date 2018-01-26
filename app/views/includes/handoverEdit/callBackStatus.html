@@ -1,6 +1,6 @@
 <div class="column-half">
     <legend class="form-label-bold">Callback status</legend>
-    {% if handover.callback === "No" %}
+    {% if handover.callback === "No" or editOrCreate === 'create' %}
         <p>Not applicable</p>
     {% else %}
         {% if handover.callbackStatus == 1 %}
@@ -29,6 +29,9 @@
                 <option value="3">Third call failed - number unobtainable</option>
                 <option value="4">Third call failed - not answered</option>
             </select>
+        {% endif %}
+        {% if handover.callbackStatus == 4 %}
+            <p>Callbacks complete - handover cleared</p>
         {% endif %}
     {% endif %}
 </div>

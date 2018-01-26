@@ -1,10 +1,10 @@
 <div class="column-half">
     <legend class="form-label-bold">Select a benefit</legend>
     <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
-        <option value="" id="benSelect">Select</option>
-        {% for benefit in benList %}
-        <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
-        {% endfor %}
+    <option value="" id="benSelect">Select</option>
+    {% for benefit in benList %}
+    <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
+    {% endfor %}
     </select>
 </div>
 <div class="column-half" id="benSubTypeDiv" style="display:none;">
