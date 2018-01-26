@@ -85,7 +85,7 @@
       "typeId": "3",
       "reasonId": "4",
       "callback": "No",
-      "callbackStatus" : "1",
+      "callbackStatus" : "0",
       "firstCallbackResult" : "",
       "secondCallbackResult" : "",
       "thirdCallbackResult" : "",
