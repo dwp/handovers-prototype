@@ -333,18 +333,32 @@ function editHandoverPageAction(req, res) {
     editedHandover.typeId = req.body['handover-type'] || handover.typeId;
     editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
     editedHandover.callback = req.body['handover-callback'];
-    if (editedHandover.callback === "Yes") {
-        editedHandover.callbackStatus = handover.callbackStatus;
-        editedHandover.firstCallbackResult = handover.firstCallbackResult;
-        editedHandover.secondCallbackResult= handover.secondCallbackResult;
-        editedHandover.thirdCallbackResult = handover.secondCallbackResult;
+    editedHandover.callbackStatus = handover.callbackStatus;
+    if (editedHandover.callback === "No") {
+        editedHandover.callbackStatus = "0";
+        editedHandover.firstCallbackResult = "";
+        editedHandover.secondCallbackResult= "";
+        editedHandover.thirdCallbackResult = "";
     } else {
-        editedHandover.callbackStatus = "8"
-        editedHandover.firstCallbackResult = handover.firstCallbackResult;
-        editedHandover.secondCallbackResult = handover.secondCallbackResult;
-        editedHandover.thirdCallbackResult = handover.secondCallbackResult;
+        let newCallbackStatusAndResult;
+        let currentCallbackStatus = handover.callbackStatus;
+        let newResult = req.body['handover-callback-result'];
+        let firstCallResult = handover.firstCallbackResult;
+        let secondCallResult = handover.secondCallbackResult;
+        let thirdCallResult = handover.thirdCallbackResult;
+        newCallbackStatusAndResult = getNewCallbackStatusAndResult(currentCallbackStatus, newResult,
+                                            firstCallResult, secondCallResult, thirdCallResult);
+        editedHandover.callbackStatus = newCallbackStatusAndResult.newStatus;
+        editedHandover.firstCallbackResult = newCallbackStatusAndResult.newFirst;
+        editedHandover.secondCallbackResult = newCallbackStatusAndResult.newSecond;
+        editedHandover.thirdCallbackResult = newCallbackStatusAndResult.newThird;
     }
-    editedHandover.status = req.body['handover-status'] || handover.status;
+
+    if (editedHandover.callbackStatus === "4") {
+        editedHandover.status = "Cleared";
+    } else {
+        editedHandover.status = req.body['handover-status'] || handover.status;
+    }
     editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
     editedHandover.targetDateAndTime = handover.targetDateAndTime;
 
@@ -378,6 +392,60 @@ function editHandoverPageAction(req, res) {
     req.session.customer = customer;
     res.redirect('/customer/summary?nino=' + editedHandover.nino);
 
+}
+
+function getNewCallbackStatusAndResult(currentCallbackStatus, newResult, firstCallResult, secondCallResult, thirdCallResult) {
+
+    let newStatus;
+    let newFirst;
+    let newSecond;
+    let newThird;
+
+    if (newResult === "") {
+        newStatus = currentCallbackStatus;
+        newFirst = firstCallResult;
+        newSecond = secondCallResult;
+        newThird = thirdCallResult;
+    } else {
+        if (currentCallbackStatus === "1") {    //    First call pending
+            newSecond = "";                     //      Second callback result should remain empty
+            newThird = "";                      //      Third callback result should remain empty
+            if (newResult === "1") {            //      Result recorded as successful
+                newStatus = "4";                //          Callback status = complete
+                newFirst = "1";                 //          Record first callback as successful
+            } else {                            //      Result recorded must be 2, 3 or 4 (failure)
+                newStatus === "2"               //          Second call pending, because first call failed
+                newFirst = newResult;           //          First call result recorded as relevant fail value (i.e. newResult)
+            }
+        }
+        if (currentCallbackStatus === "2") {    //    Second call pending
+            newFirst = firstCallResult;         //      Keep first callback result
+            newThird = "";                      //      Third callback result should remain empty
+            if (newResult === "1") {            //      Result recorded as successful
+                newStatus = "4";                //          Callback status = complete
+                newSecond = "1";                //          Record second callback as successful
+            } else {                            //      New result must be 2, 3 or 4 (failure)
+                newStatus === "3"               //          Third call pending, because second call failed
+                newSecond = newResult;          //          Second call result recorded as relevant fail value (i.e. newResult)
+            }
+        }
+        if (currentCallbackStatus === "3") {    //    Third call pending
+            newFirst = firstCallResult;         //      Keep first callback result the same
+            newSecond = secondCallResult;       //      Keep second callback result the same
+            newStatus = "4";                    //      New status = complete whether third call is success or fail
+            if (newResult === "1") {            //      Result recorded as successful
+                newThird = "1";                 //          Record third callback as successful
+            } else {                            //      New result must be 2, 3 or 4 (failure)
+                newThird = newResult;           //          Third call result recorded as relevant fail value (i.e. newResult)
+            }
+        }
+    }
+    return {
+        "newStatus" : newStatus,
+        "newFirst" : newFirst,
+        "newSecond" : newSecond,
+        "newThird" : newThird
+    }
 }
 
 module.exports.viewHandoverPage = viewHandoverPage;
