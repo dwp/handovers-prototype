@@ -1,62 +1,70 @@
 <div class="column-half">
-    <legend class="form-label-bold">Callback status</legend>
-    {% if handover.callback === "No" or editOrCreate === 'create' %}
-        <p>Not applicable</p>
+    {% if handover.callback === "No" %}
+        <div></div>
     {% else %}
-        {% if handover.callbackStatus == 1 %}
-            <p>First call pending</p>
-            <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
-                <option value="">Select</option>
-                <option value="1">First call successful</option>
-                <option value="2">First call failed - engaged</option>
-                <option value="3">First call failed - number unobtainable</option>
-                <option value="4">First call failed - not answered</option>
-            </select>
-        {% endif %}
-        {% if handover.callbackStatus == 2 %}
-            <p>Second call pending</p>
-            <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
-                <option value="">Select</option>
-                <option value="1">Second call successful</option>
-                <option value="2">Second call failed - engaged</option>
-                <option value="3">Second call failed - number unobtainable</option>
-                <option value="4">Second call failed - not answered</option>
-            </select>
-        {% endif %}
-        {% if handover.callbackStatus == 3 %}
-            <p>Third call pending</p>
-            <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
-                <option value="">Select</option>
-                <option value="1">Third call successful</option>
-                <option value="2">Third call failed - engaged</option>
-                <option value="3">Third call failed - number unobtainable</option>
-                <option value="4">Third call failed - not answered</option>
-            </select>
-        {% endif %}
-        {% if handover.callbackStatus == 4 %}
-            <p>Callbacks complete - handover cleared</p>
+        <legend class="form-label-bold">Callback status</legend>
+        {% if handover.status === "Cleared" or  handover.status === "Withdrawn" %}
+            <p>Cannot be changed - handover has been cleared or withdrawn</p>
+        {% else %}
+            {% if handover.callbackStatus == 1 %}
+                <p>First call pending</p>
+                <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
+                    <option value="">Select</option>
+                    <option value="1">First call successful</option>
+                    <option value="2">First call failed - engaged</option>
+                    <option value="3">First call failed - number unobtainable</option>
+                    <option value="4">First call failed - not answered</option>
+                </select>
+            {% endif %}
+            {% if handover.callbackStatus == 2 %}
+                <p>Second call pending</p>
+                <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
+                    <option value="">Select</option>
+                    <option value="1">Second call successful</option>
+                    <option value="2">Second call failed - engaged</option>
+                    <option value="3">Second call failed - number unobtainable</option>
+                    <option value="4">Second call failed - not answered</option>
+                </select>
+            {% endif %}
+            {% if handover.callbackStatus == 3 %}
+                <p>Third call pending</p>
+                <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
+                    <option value="">Select</option>
+                    <option value="1">Third call successful</option>
+                    <option value="2">Third call failed - engaged</option>
+                    <option value="3">Third call failed - number unobtainable</option>
+                    <option value="4">Third call failed - not answered</option>
+                </select>
+            {% endif %}
+            {% if handover.callbackStatus == 4 %}
+                <p>Callbacks complete - handover cleared</p>
+            {% endif %}
         {% endif %}
     {% endif %}
 </div>
 
 <div class="column-half">
-    <legend class="form-label-bold">Callback history</legend>
-    {% if handover.callbackStatus == 1 or handover.callback === "No" %}
-        <p>Not applicable</p>
-    {% endif %}
-    {% if handover.callbackStatus == 2 %}
-        <p>First callback: &nbsp;&nbsp;&nbsp; {{ handover.firstCallbackResult }}</p>
-        <p>Second callback: &nbsp;&nbsp;&nbsp;N/A</p>
-        <p>Third callback: &nbsp;&nbsp;&nbsp;N/A</p>
-    {% endif %}
-    {% if handover.callbackStatus == 3 %}
-        <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResult }}</p>
-        <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResult }}</p>
-        <p>Third callback: &nbsp;&nbsp;&nbsp;N/A</p>
-    {% endif %}
-    {% if handover.callbackStatus == 4 %}
-        <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResult }}</p>
-        <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResult }}</p>
-        <p>Third callback: &nbsp;&nbsp;&nbsp;{{ handover.thirdCallbackResult }}</p>
+    {% if handover.callback === "No" %}
+        <div></div>
+    {% else %}
+        <legend class="form-label-bold">Callback history</legend>
+        {% if handover.callbackStatus == 1 or handover.callback === "No" %}
+            <p>Not applicable</p>
+        {% endif %}
+        {% if handover.callbackStatus == 2 %}
+            <p>First callback: &nbsp;&nbsp;&nbsp; {{ handover.firstCallbackResult }}</p>
+            <p>Second callback: &nbsp;&nbsp;&nbsp;N/A</p>
+            <p>Third callback: &nbsp;&nbsp;&nbsp;N/A</p>
+        {% endif %}
+        {% if handover.callbackStatus == 3 %}
+            <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResult }}</p>
+            <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResult }}</p>
+            <p>Third callback: &nbsp;&nbsp;&nbsp;N/A</p>
+        {% endif %}
+        {% if handover.callbackStatus == 4 %}
+            <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResult }}</p>
+            <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResult }}</p>
+            <p>Third callback: &nbsp;&nbsp;&nbsp;{{ handover.thirdCallbackResult }}</p>
+        {% endif %}
     {% endif %}
 </div>

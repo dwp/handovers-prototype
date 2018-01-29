@@ -339,21 +339,27 @@ function editHandoverPageAction(req, res) {
         editedHandover.firstCallbackResult = "";
         editedHandover.secondCallbackResult= "";
         editedHandover.thirdCallbackResult = "";
-    } else {
-        let newCallbackStatusAndResult;
-        let currentCallbackStatus = handover.callbackStatus;
-        let newResult = req.body['handover-callback-result'];
-        let firstCallResult = handover.firstCallbackResult;
-        let secondCallResult = handover.secondCallbackResult;
-        let thirdCallResult = handover.thirdCallbackResult;
-        newCallbackStatusAndResult = getNewCallbackStatusAndResult(currentCallbackStatus, newResult,
-                                            firstCallResult, secondCallResult, thirdCallResult);
-        editedHandover.callbackStatus = newCallbackStatusAndResult.newStatus;
-        editedHandover.firstCallbackResult = newCallbackStatusAndResult.newFirst;
-        editedHandover.secondCallbackResult = newCallbackStatusAndResult.newSecond;
-        editedHandover.thirdCallbackResult = newCallbackStatusAndResult.newThird;
+    } else {                                            // editedCallback (i.e. req.body.callback = Yes
+        if (handover.callback === "No") {               // i.e. it used to be "No" on this handover and it's been changed to "Yes" on the screen
+            editedHandover.callbackStatus = "1";
+            editedHandover.firstCallbackResult = "";
+            editedHandover.secondCallbackResult = "";
+            editedHandover.thirdCallbackResult = "";
+        } else {                                        // i.e. it used to be "Yes", and its still "Yes", so need to check if the callbackStatus has changed
+            let newCallbackStatusAndResult;
+            let currentCallbackStatus = handover.callbackStatus;
+            let newResult = req.body['handover-callback-result'];
+            let firstCallResult = handover.firstCallbackResult;
+            let secondCallResult = handover.secondCallbackResult;
+            let thirdCallResult = handover.thirdCallbackResult;
+            newCallbackStatusAndResult = getNewCallbackStatusAndResult(currentCallbackStatus, newResult,
+                firstCallResult, secondCallResult, thirdCallResult);
+            editedHandover.callbackStatus = newCallbackStatusAndResult.newStatus;
+            editedHandover.firstCallbackResult = newCallbackStatusAndResult.newFirst;
+            editedHandover.secondCallbackResult = newCallbackStatusAndResult.newSecond;
+            editedHandover.thirdCallbackResult = newCallbackStatusAndResult.newThird;
+        }
     }
-
     if (editedHandover.callbackStatus === "4") {
         editedHandover.status = "Cleared";
     } else {
@@ -389,7 +395,7 @@ function editHandoverPageAction(req, res) {
     messages.push(message);
     req.session.messages = messages;
     req.session.handovers = handoversList;
-    req.session.handover = new Handover(editedHandover);
+    req.session.handover = editedHandover;
     req.session.customer = customer;
     res.redirect('/customer/summary?nino=' + editedHandover.nino);
 

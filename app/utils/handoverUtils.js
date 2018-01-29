@@ -106,7 +106,7 @@ function validateHandover(inputHandover) {
     handover.raisedOnBehalfOfOfficeId = inputHandover.raisedOnBehalfOfOfficeId;
     handover.receivingOfficeId = inputHandover.receivingOfficeId;
     handover.callback = inputHandover.callback;
-    handover.callbackStatus = inputHandover.status;
+    handover.callbackStatus = inputHandover.callbackStatus;
     handover.firstCallback = inputHandover.firstCallback;
     handover.secondCallback = inputHandover.secondCallback;
     handover.thirdCallback = inputHandover.thirdCallback;

@@ -61,9 +61,11 @@
                 </div>
                 <br>
 
-                <div class="grid-row">
-                    {% include "includes/handoverEdit/callBackStatus.html" %}
-                </div>
+                {% if editOrCreate === 'edit' %}
+                    <div class="grid-row">
+                        {% include "includes/handoverEdit/callBackStatus.html" %}
+                    </div>
+                {% endif %}
                 <br>
 
                 <div class="grid-row">
