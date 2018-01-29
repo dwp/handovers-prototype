@@ -1,0 +1,13 @@
+{% if editOrCreate === 'create' %}
+    <div>
+    </div>
+{% else %}
+    {% if handover.inQueueOfStaffId !== "" %}
+        <div class="column-half">
+            <legend class="form-label-bold">Agent progressing handover</legend>
+            <p>{{ inQueueOfStaffDetails.firstName }} {{ inQueueOfStaffDetails.lastName }}</p>
+        </div>
+        <div class="column-half">
+        </div>
+    {% endif %}
+{% endif %}

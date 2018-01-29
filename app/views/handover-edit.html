@@ -32,223 +32,46 @@
                 </div>
                 <br>
                 <div class="grid-row">
-                    {% if editOrCreate === 'edit' %}
-                        <div class="column-half">
-                            <legend class="form-label-bold">Handover raised by:</legend>
-                            <div>
-                                <p>{{ userWhoRaisedHandover.firstName }} {{ userWhoRaisedHandover.lastName }} in {{ userWhoRaisedHandover.officeDetails.officeName }} {{ userWhoRaisedHandover.officeDetails.officeType}}</p>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="column-half">
-                            <legend class="form-label-bold">Handover raised by:</legend>
-                            <div>
-                                <p>{{ user.firstName }} {{ user.lastName }} in {{ user.officeDetails.officeName }} {{ user.officeDetails.officeType}}</p>
-                            </div>
-                        </div>
-                    {% endif %}
-                    {% if editOrCreate === 'create' %}
-                        <div class="column-half">
-                        </div>
-                    {% else %}
-                    <div class="column-half">
-                        <legend class="form-label-bold">Date and time raised</legend>
-                        <p>Date: {{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
-                            &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</p>
-                    </div>
-                    {% endif %}
+                    {% include "includes/handoverEdit/handoverRaisedNameTime.html" %}
                 </div>
 
                 <div class="grid-row">
-                    {% if editOrCreate === 'create' %}
-                        <div class="column-half">
-                        </div>
-                    {% else %}
-                        <div class="column-half">
-                            <legend class="form-label-bold">Receiving office</legend>
-                            <p>{{ receivingOfficeDetails.officeName }} Jobcentre</p>
-                        </div>
-                    {% endif %}
-                    {% if editOrCreate === 'create' %}
-                        <div class="column-half">
-                        </div>
-                    {% else %}
-                        {% include "includes/handoverEdit/targetTimeToClear.html" %}
-                    {% endif %}
-                    </div>
+                    {% include "includes/handoverEdit/receivingOffice.html" %}
+                    {% include "includes/handoverEdit/targetTime.html" %}
                 </div>
 
-                {% if editOrCreate === 'create' %}
-                    <div>
-                    </div>
-                {% else %}
-                    {% if handover.inQueueOfStaffId !== "" %}
+                <div class="grid-row">
+                    {% include "includes/handoverEdit/agentProgressing.html" %}
+                </div>
+                <br>
+
+                <div class="grid-row">
+                        {% include "includes/handoverEdit/benefit.html" %}
+                </div>
+                <br>
+
+                <div class="grid-row">
+                        {% include "includes/handoverEdit/handoverTypeAndReason.html" %}
+                </div>
+                <br>
+
+                <div class="grid-row">
+                    {% include "includes/handoverEdit/callBack.html" %}
+                    {% include "includes/handoverEdit/handoverStatus.html" %}
+                </div>
+                <br>
+
+                {% if editOrCreate === 'edit' %}
                     <div class="grid-row">
-                        <div class="column-half">
-                            <legend class="form-label-bold">Agent progressing handover</legend>
-                            <p>{{ inQueueOfStaffDetails.firstName }} {{ inQueueOfStaffDetails.lastName }}</p>
-                        </div>
-                        <div class="column-half">
-                        </div>
+                        {% include "includes/handoverEdit/callBackStatus.html" %}
                     </div>
-                    {% endif %}
                 {% endif %}
-
-                <div class="grid-row">
-                        <div class="column-half">
-                            <legend class="form-label-bold">Select a benefit</legend>
-                            <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
-                                <option value="" id="benSelect">Select</option>
-                                {% for benefit in benList %}
-                                    <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="column-half" id="benSubTypeDiv" style="display:none;">
-                            <legend class="form-label-bold">Select a benefit sub-type</legend>
-                            <select class="select form-control" name="benefit-sub" id="benefit-sub">
-                                <option value="">Select</option>
-                                <option value="Social Fund Type 1" {{ 'selected' if handover.benSubType === 'Social Fund Type 1' else ''}}>Social Fund Type 1</option>
-                                <option value="Social Fund Type 2" {{ 'selected' if handover.benSubType === 'Social Fund Type 2' else ''}}>Social Fund Type 2</option>
-                                <option value="Social Fund Type 3" {{ 'selected' if handover.benSubType === 'Social Fund Type 3' else ''}}>Social Fund Type 3</option>
-                                <option value="Social Fund Type 4" {{ 'selected' if handover.benSubType === 'Social Fund Type 4' else ''}}>Social Fund Type 4</option>
-                            </select>
-                        </div>
-                </div>
-                <br>
-                <div class="grid-row">
-                        <div class="column-half">
-                            <legend class="form-label-bold">Select a handover type</legend>
-                            <select class="select form-control" name="handover-type" id="handover-type">
-                                <option value="">Select</option>
-                                {% for handoverType in handTypesList %}
-                                    <option value="{{ handoverType.id }}" {{ 'selected' if handover.typeId === handoverType.id else ''}}>{{ handoverType.handoverType }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="column-half">
-                            <legend class="form-label-bold">Select a handover reason</legend>
-                            <select class="select form-control" name="handover-reason" id="handover-reason">
-                                <option value="">Select</option>
-                                {% for handoverReason in handReasonsList %}
-                                    <option value="{{ handoverReason.id }}" {{ 'selected' if  handover.reasonId === handoverReason.id else ''}}>{{ handoverReason.handoverReason }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                </div>
                 <br>
 
                 <div class="grid-row">
-                    <div class="column-half">
-                        <legend class="form-label-bold">Callback required ?</legend>
-                        {% if handover.callback === 'Yes' and editOrCreate === 'edit' %}
-                            <input class="hidden" id="handover-callback" name="handover-callback" value="{{ handover.callback }}">
-                            <p>{{ handover.callback }}</p>
-                        {% else %}
-                            <fieldset class="inline">
-                                <div class="multiple-choice">
-                                    <input id="handover-callback-no" type="radio" name="handover-callback" value="No" {% if handover.callback === 'No' or editOrCreate === 'create' %}
-                                                                                                                        checked="checked"
-                                                                                                                        {% endif %}>
-                                    <label for="handover-callback-no">No</label>
-                                </div>
-                                <div class="multiple-choice">
-                                    <input id="handover-callback-yes" type="radio" name="handover-callback" value="Yes" {% if handover.callback === 'Yes' %}
-                                                                                                                        checked="checked"
-                                                                                                                        {% endif %}>
-                                    <label for="handover-callback-yes">Yes</label>
-                                </div>
-                            </fieldset>
-                        {% endif %}
-                    </div>
-                    {% if editOrCreate === "edit" %}
-                        <div class="column-half">
-                            <legend class="form-label-bold">Status</legend>
-                            {% if handover.status === "Withdrawn" %}
-                                <p>Cannot be changed as current status is 'Withdrawn'</p>
-                            {% else %}
-                                {% if handover.status === "Cleared" %}
-                                    <p>Cannot be changed as current status is 'Cleared'</p>
-                                {% else %}
-                                    <select class="select form-control" name="handover-status" id=handover-status">
-                                    {% if handover.status === "Not allocated" %}
-                                        <option value="Not allocated" {{ 'selected' if handover.status === "Not allocated" else ''}}>Not allocated</option>
-                                    {% endif %}
-                                    {% if handover.status === "Paused" or handover.status === "In progress" %}
-                                        <option value="In progress" {{ 'selected' if handover.status === "In progress" else ''}}>In progress</option>
-                                    {% endif %}
-                                    {% if handover.status === "In progress" or handover.status === "Paused" %}
-                                        <option value="Paused" {{ 'selected' if handover.status === "Paused" else ''}}>Paused</option>
-                                    {% endif %}
-                                    {% if handover.status === "In progress" or handover.status === "Paused" or handover.status === "Cleared" %}
-                                        <option value="Cleared" {{ 'selected' if handover.status === "Cleared" else ''}}>Cleared</option>
-                                    {% endif %}
-                                    {% if handover.status === "Not allocated" or handover.status === "In progress" or handover.status === "Paused" %}
-                                        <option value="Withdrawn" {{ 'selected' if handover.status === "Withdrawn" else ''}}>Withdrawn</option>
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}
-                            </select>
-                        </div>
-                    {% else %}
-                        <div class="column-half">
-                        </div>
-                    {% endif %}
+                    {% include "includes/handoverEdit/handoverNotes.html" %}
                 </div>
                 <br>
-                <div class="grid-row">
-                    <div class="column-full">
-                        <legend class="form-label-bold">Notes</legend>
-                        <div class="panel panel-border-narrow">
-                            <legend class="form-label-bold">Add a note</legend>
-                            {% if editOrCreate === 'edit' %}
-                                <div class="panel panel-border-narrow">
-                                    <textarea class="form-control" id="handover-note" name="handover-note" rows="6"></textarea>
-                                    <br>
-                                        <legend class="form-label-bold">Did this update result from customer contact ?</legend>
-                                        <fieldset class="inline">
-                                            <div class="multiple-choice">
-                                                <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
-                                                <label for="handover-contact-no">No</label>
-                                            </div>
-                                            <div class="multiple-choice">
-                                                <input id="handover-contact-yes" type="radio" name="handover-contact-indicator" value="Yes">
-                                                <label for="handover-contact-yes">Yes</label>
-                                            </div>
-                                        </fieldset>
-                                </div>
-                            {% else %}
-                                <textarea class="form-control" id="handover-note" name="handover-note" rows="6"></textarea>
-                                <br>
-                                <legend class="form-label-bold">Did this update result from customer contact ?</legend>
-                                <fieldset class="inline">
-                                    <div class="multiple-choice">
-                                        <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
-                                        <label for="handover-contact-no">No</label>
-                                    </div>
-                                    <div class="multiple-choice">
-                                        <input id="handover-contact-yes" type="radio" name="handover-contact-indicator" value="Yes">
-                                        <label for="handover-contact-yes">Yes</label>
-                                    </div>
-                                </fieldset>
-                            {% endif %}
-                            <br>
-                            <legend class="form-label-bold">Existing notes</legend>
-                                {% if handoverNotesLength !== 0 %}
-                                    {% for note in handoverNotes %}
-                                        <p>{{ note.noteContent }}</p>
-                                        <p class="font-xsmall form-hint">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                            (added by {{ note.userWhoAddedNote.firstName }} {{ note.userWhoAddedNote.lastName }}
-                                            on {{ note.dateNoteAdded.day }} {{ note.dateNoteAdded.month }} {{ note.dateNoteAdded.year }}
-                                            at {{ note.dateNoteAdded.hours }}:{{ note.dateNoteAdded.mins }})</p>
-                                    {% endfor %}
-                                {% else %}
-                                    <p>There are no notes for this handover yet</p>
-                                {% endif %}
-                        </div>
-                    </div>
-                </div>
                 <br>
                 <div class="form-group">
                     <input type="submit" class="button" value="Submit">
