@@ -3,7 +3,7 @@
   "callbackStatusValues": [{
     "id": "0",
     "callBackStatus": "Not applicable"
-  },
+    },
     {
       "id": "1",
       "callBackStatus": "First call pending"
@@ -22,9 +22,12 @@
     }
   ],
   "callbackResultValues": [{
+    "id" : "0",
+    "callBackResult" : ""},
+    {
     "id": "1",
     "callBackResult": "Successful"
-  },
+    },
     {
       "id": "2",
       "callBackResult": "Failed - engaged"

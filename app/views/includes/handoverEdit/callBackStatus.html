@@ -38,3 +38,25 @@
         {% endif %}
     {% endif %}
 </div>
+
+<div class="column-half">
+    <legend class="form-label-bold">Callback history</legend>
+    {% if handover.callbackStatus == 1 or handover.callback === "No" %}
+        <p>Not applicable</p>
+    {% endif %}
+    {% if handover.callbackStatus == 2 %}
+        <p>First callback: &nbsp;&nbsp;&nbsp; {{ handover.firstCallbackResult }}</p>
+        <p>Second callback: &nbsp;&nbsp;&nbsp;N/A</p>
+        <p>Third callback: &nbsp;&nbsp;&nbsp;N/A</p>
+    {% endif %}
+    {% if handover.callbackStatus == 3 %}
+        <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResult }}</p>
+        <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResult }}</p>
+        <p>Third callback: &nbsp;&nbsp;&nbsp;N/A</p>
+    {% endif %}
+    {% if handover.callbackStatus == 4 %}
+        <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResult }}</p>
+        <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResult }}</p>
+        <p>Third callback: &nbsp;&nbsp;&nbsp;{{ handover.thirdCallbackResult }}</p>
+    {% endif %}
+</div>

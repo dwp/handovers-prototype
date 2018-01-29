@@ -357,7 +357,7 @@ function editHandoverPageAction(req, res) {
     if (editedHandover.callbackStatus === "4") {
         editedHandover.status = "Cleared";
     } else {
-        editedHandover.status = req.body['handover-status'] || handover.status;
+        editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
     }
     editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
     editedHandover.targetDateAndTime = handover.targetDateAndTime;
@@ -381,6 +381,7 @@ function editHandoverPageAction(req, res) {
             newHandoverNotes.unshift(updatedHandoverNote);
         }
     }
+
     editedHandover.notes = newHandoverNotes;
     handoversList[handoverIndex] = editedHandover;
     req.session.errors = errors;
@@ -388,7 +389,7 @@ function editHandoverPageAction(req, res) {
     messages.push(message);
     req.session.messages = messages;
     req.session.handovers = handoversList;
-    req.session.handover = editedHandover;
+    req.session.handover = new Handover(editedHandover);
     req.session.customer = customer;
     res.redirect('/customer/summary?nino=' + editedHandover.nino);
 
@@ -412,10 +413,10 @@ function getNewCallbackStatusAndResult(currentCallbackStatus, newResult, firstCa
             newThird = "";                      //      Third callback result should remain empty
             if (newResult === "1") {            //      Result recorded as successful
                 newStatus = "4";                //          Callback status = complete
-                newFirst = "1";                 //          Record first callback as successful
+                newFirst = "Successful";                 //          Record first callback as successful
             } else {                            //      Result recorded must be 2, 3 or 4 (failure)
-                newStatus === "2"               //          Second call pending, because first call failed
-                newFirst = newResult;           //          First call result recorded as relevant fail value (i.e. newResult)
+                newStatus = "2"                 //          Second call pending, because first call failed
+                newFirst = callbackData.callbackResultValues[newResult].callBackResult;           //          First call result recorded as relevant fail value (i.e. newResult)
             }
         }
         if (currentCallbackStatus === "2") {    //    Second call pending
@@ -423,10 +424,10 @@ function getNewCallbackStatusAndResult(currentCallbackStatus, newResult, firstCa
             newThird = "";                      //      Third callback result should remain empty
             if (newResult === "1") {            //      Result recorded as successful
                 newStatus = "4";                //          Callback status = complete
-                newSecond = "1";                //          Record second callback as successful
+                newSecond = "Successful";                //          Record second callback as successful
             } else {                            //      New result must be 2, 3 or 4 (failure)
-                newStatus === "3"               //          Third call pending, because second call failed
-                newSecond = newResult;          //          Second call result recorded as relevant fail value (i.e. newResult)
+                newStatus = "3"                 //          Third call pending, because second call failed
+                newSecond = callbackData.callbackResultValues[newResult].callBackResult;          //          Second call result recorded as relevant fail value (i.e. newResult)
             }
         }
         if (currentCallbackStatus === "3") {    //    Third call pending
@@ -434,9 +435,9 @@ function getNewCallbackStatusAndResult(currentCallbackStatus, newResult, firstCa
             newSecond = secondCallResult;       //      Keep second callback result the same
             newStatus = "4";                    //      New status = complete whether third call is success or fail
             if (newResult === "1") {            //      Result recorded as successful
-                newThird = "1";                 //          Record third callback as successful
+                newThird = "Successful";                 //          Record third callback as successful
             } else {                            //      New result must be 2, 3 or 4 (failure)
-                newThird = newResult;           //          Third call result recorded as relevant fail value (i.e. newResult)
+                newThird = callbackData.callbackResultValues[newResult].callBackResult;          //          Third call result recorded as relevant fail value (i.e. newResult)
             }
         }
     }
