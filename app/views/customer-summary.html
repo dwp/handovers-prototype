@@ -64,26 +64,37 @@
         </div>
         <br>
         <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="/customer/edit?nino={{ customer.nino }}" class="button">Amend customer details</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="grid-row">
             <div class="column-full">
                 <h3 class="heading-medium">Handovers</h3>
                 <div>
                     <table>
                         <thead>
                             <tr>
-                                <th scope="col"><span>NI number</span></th>
+                                <th scope="col"><span>Date/time raised</span></th>
+                                <th scope="col"><span>Routed to</span></th>
                                 <th scope="col"><span>Time left to clear</span></th>
-                                <th scope="col"><span>Time since clearance due</span></th>
+                                <th scope="col"><span>Time overdue</span></th>
                                 <th scope="col"><span>Benefit type</span></th>
                                 <th scope="col"><span>Handover type</span></th>
                                 <th scope="col"><span>Callback reqd?</span></th>
                                 <th scope="col"><span>Status</span></th>
-                                <th scope="col"></th>
+                                <th scope="col"><span></span></th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for handover in handoversList %}
                             <tr>
-                                <td>{{handover.nino}}</td>
+                                <td>{{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;{{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</td>
+                                <td>{{handover.receivingOfficeDetails.officeName}}</td>
                                 {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
                                     <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
                                     <td>Within target</td>
@@ -106,11 +117,6 @@
         <br>
         <br>
         <div class="grid-row">
-            <div class="column-half">
-                <div class="form-group">
-                    <a href="/customer/edit?nino={{ customer.nino }}" class="button">Amend customer details</a>
-                </div>
-            </div>
             <div class="column-half">
                 <div class="form-group">
                     <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>
@@ -144,5 +150,5 @@
 
 {% macro handoverUpdateLink(handover) %}
 {% set queryString = '?id=' + handover.id %}
-<a href="/handover/edit{{queryString}}">View</a>
+<a href="/handover/edit{{queryString}}">Update</a>
 {% endmacro %}

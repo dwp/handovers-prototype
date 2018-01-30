@@ -58,7 +58,7 @@ function customerSummaryPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let messages = req.session.messages;
+    let messages = req.session.messages ? req.session.messages : [];
     let messagesLength = messages.length;
     let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
@@ -73,10 +73,14 @@ function customerSummaryPage(req, res) {
     } else {
         customer = req.session.invalidCustomer;
     }
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    let customerDobForDisplay = dateUtils.formatDateForDisplay(customer.dob);
+
     for (let i=0; i < handovers.length; i++) {
         let handover = handovers[i];
         if (handover.nino === customer.nino) {
-            let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);;
+            let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
+            handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
             handover.handoverDetails = handoverDetails;
             handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
             handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
@@ -88,8 +92,6 @@ function customerSummaryPage(req, res) {
             handoversList.push(handover);
         }
     }
-    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
-    let customerDobForDisplay = dateUtils.formatDateForDisplay(customer.dob);
     customer.birthDay = customerDobForDisplay.day;
     customer.birthMonth = customerDobForDisplay.month;
     customer.birthYear = customerDobForDisplay.year;

@@ -6,6 +6,7 @@ class Handover {
         this.owningOfficeId = properties.owningOfficeId;
         this.raisedByStaffId = properties.raisedByStaffId;
         this.inQueueOfStaffId = properties.inQueueOfStaffId;
+        this.receivingOfficeId = properties.receivingOfficeId;
         this.benefitId = properties.benefitId;
         this.benSubType = properties.benSubType;
         this.typeId = properties.typeId;
