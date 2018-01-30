@@ -157,11 +157,11 @@ function createHandoverPageAction(req, res) {
     let customer = req.session.customer;
     let users = sIDU.setInitialUsersData();
     let handoverNote = req.body['handover-note'];
-    let message;
     let messages = [];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
     let validatedHandover;
     let newHandover = {};
+    let newHandoverDetails;
     let newHandoverNote = {};
     let newHandoversList = handoversList;
     let handover;
@@ -215,8 +215,13 @@ function createHandoverPageAction(req, res) {
         req.session.handover = handover;
         req.session.invalidHandover = {};
         req.session.errors = [];
-        message = "Successfully created handover for " + customer.firstName + " " + customer.lastName;
-        messages.push(message);
+        newHandoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
+        handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+        messages[0] = "Successfully created handover for " + customer.firstName + " " + customer.lastName;
+        messages[1] = "Handover raised : " + handover.dateAndTimeRaisedForDisplay.day + " " + handover.dateAndTimeRaisedForDisplay.month +
+            " " + handover.dateAndTimeRaisedForDisplay.year + " at " + handover.dateAndTimeRaisedForDisplay.hours + ":" + handover.dateAndTimeRaisedForDisplay.mins;
+        messages[2] = "Benefit type : "  + newHandoverDetails.benefitName;
+        messages[3] = "Handover type : " + newHandoverDetails.handoverType;
         req.session.messages = messages;
         res.redirect('/customer/summary?nino=' + handover.nino);
     } else {
@@ -313,11 +318,12 @@ function editHandoverPageAction(req, res) {
     let handoverNote = req.body['handover-note'];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
     let editedHandover = {};
+    let editedHandoverDetails;
     let editedHandoverNote = {};
     let newHandoverNotes = [];
-    let message;
     let messages = [];
     let errors = [];
+    let dateAndTimeRaisedForDisplay;
     editedHandover.id = handover.id
     editedHandover.nino = handover.nino;
     editedHandover.raisedByStaffId = handover.raisedByStaffId;
@@ -391,8 +397,13 @@ function editHandoverPageAction(req, res) {
     editedHandover.notes = newHandoverNotes;
     handoversList[handoverIndex] = editedHandover;
     req.session.errors = errors;
-    message = "Successfully amended handover details for " + customer.firstName + " " + customer.lastName;
-    messages.push(message);
+    dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+    editedHandoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
+    messages[0] = "Successfully amended handover for " + customer.firstName + " " + customer.lastName;
+    messages[1] = "Handover raised : " + dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month +
+        " " + dateAndTimeRaisedForDisplay.year + " at " + dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins;
+    messages[2] = "Benefit type : "  + editedHandoverDetails.benefitName;
+    messages[3] = "Handover type : " + editedHandoverDetails.handoverType;
     req.session.messages = messages;
     req.session.handovers = handoversList;
     req.session.handover = editedHandover;

@@ -47,7 +47,7 @@
                         {% endif %}
                         {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
                             <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
-                            <td></td>
+                            <td>Within target</td>
                         {% else %}
                             <td>Expired</td>
                             <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
