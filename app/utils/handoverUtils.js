@@ -103,6 +103,7 @@ function validateHandover(inputHandover) {
     handover.id = inputHandover.id;
     handover.nino = inputHandover.nino;
     handover.raisedByStaffId = inputHandover.raisedByStaffId;
+    handover.inQueueOfStaffId = inputHandover.inQueueOfStaffId;
     handover.raisedOnBehalfOfOfficeId = inputHandover.raisedOnBehalfOfOfficeId;
     handover.receivingOfficeId = inputHandover.receivingOfficeId;
     handover.callback = inputHandover.callback;
