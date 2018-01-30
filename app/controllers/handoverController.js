@@ -252,7 +252,6 @@ function editHandoverPage(req, res) {
     let officesList = sIDU.setInitialOfficesData();
     let officeTypes = sIDU.setInitialOfficeTypesData();
     let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId)
-    let receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
     let userWhoRaisedHandover = userUtils.getUserByStaffIdFromListOfUsers(users, handover.raisedByStaffId);
     userWhoRaisedHandover.officeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, userWhoRaisedHandover.owningOfficeId);
     let userOfficeTypeIndex = commonUtils.findPositionOfObjectInArray(userWhoRaisedHandover.officeDetails.officeTypeId, officeTypes);
@@ -260,6 +259,7 @@ function editHandoverPage(req, res) {
     handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
     handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
     handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
+    handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
     let inQueueOfStaffDetails;
     if (handover.inQueueOfStaffId !== "") {
         inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
@@ -291,7 +291,6 @@ function editHandoverPage(req, res) {
         handoverReason : handoverDetails.handoverReason,
         handoverNotes : handoverNotes,
         handoverNotesLength : handoverNotes.length,
-        receivingOfficeDetails : receivingOfficeDetails,
         inQueueOfStaffDetails : inQueueOfStaffDetails,
         customer : customer,
         handover : handover,

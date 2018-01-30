@@ -4,11 +4,15 @@ const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
 const commonUtils = require('../utils/commonUtils');
 const userUtils = require('../utils/userUtils');
+const officeUtils = require('../utils/officeUtils');
+const customerUtils = require('../utils/customerUtils');
 
 function viewQueuePage(req, res) {
 
     let users = sIDU.setInitialUsersData();
+    let offices = sIDU.setInitialOfficesData();
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
+    let customersList = sIDU.setInitialCustomersData();
     let handoversLength = handovers.length;
     let messages = req.session.queueMessages ? req.session.queueMessages : [];
     let messagesLength = messages.length;
@@ -37,6 +41,8 @@ function viewQueuePage(req, res) {
             handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
             handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
             handover.inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
+            handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(offices, handover.receivingOfficeId);
+            handover.customerDetails = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, handover.nino);
             if (queueType === 'agent') {
                 if (handover.inQueueOfStaffId == queueAgent.staffId) {
                     handoversQueueList.push(handover);

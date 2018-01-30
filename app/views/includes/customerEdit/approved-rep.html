@@ -1,3 +1,4 @@
+<br>
 <div class="grid-row">
     <div class="column-half">
         <div class="form-group">
@@ -18,64 +19,67 @@
     </div>
 </div>
 
-<div class="grid-row js-hidden" id="approved-rep-group">
-    <div class="column-half">
-        {% set errorFlag = 0 %}
-        {% for error in errors %}
-            {% if error.field === 'rep-name' %}
-                {% set errorFlag = 1 %}
+<div class="js-hidden" id="approved-rep-group">
+    <div class="grid-row">
+        <div class="column-half">
+            {% set errorFlag = 0 %}
+            {% for error in errors %}
+                {% if error.field === 'rep-name' %}
+                    {% set errorFlag = 1 %}
+                {% endif %}
+            {% endfor %}
+            {% if errorFlag === 1 %}
+                <div class="form-group form-group-error">
+                    <label for="rep-name">
+                        <span class="form-label-bold">Approved representative name</span>
+                        <span class="error-message">Name must be entered</span>
+                    </label>
+                    <div>
+                        <input type="text" class="form-control form-control-error" id="rep-name" name="rep-name" tabindex=14 value="{{ customer.approvedRepName }}">
+                    </div>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label for="rep-name">
+                        <span class="form-label-bold">Approved representative name</span>
+                    </label>
+                    <div>
+                        <input type="text" class="form-control" id="rep-name" name="rep-name" tabindex=14 value="{{ customer.approvedRepName }}">
+                    </div>
+                </div>
             {% endif %}
-        {% endfor %}
-        {% if errorFlag === 1 %}
-            <div class="form-group form-group-error">
-                <label for="rep-name">
-                    <span class="form-label-bold">Approved representative name</span>
-                    <span class="error-message">Name must be entered</span>
-                </label>
-                <div>
-                    <input type="text" class="form-control form-control-error" id="rep-name" name="rep-name" tabindex=14 value="{{ customer.approvedRepName }}">
-                </div>
-            </div>
-        {% else %}
-            <div class="form-group">
-                <label for="rep-name">
-                    <span class="form-label-bold">Approved representative name</span>
-                </label>
-                <div>
-                    <input type="text" class="form-control" id="rep-name" name="rep-name" tabindex=14 value="{{ customer.approvedRepName }}">
-                </div>
-            </div>
-        {% endif %}
+        </div>
     </div>
-
-    <div class="column-half">
-        {% set errorFlag = 0 %}
-        {% for error in errors %}
-            {% if error.field === 'rep-contact' %}
-                {% set errorFlag = 1 %}
+    <div class="grid-row">
+        <div class="column-half">
+            {% set errorFlag = 0 %}
+            {% for error in errors %}
+                {% if error.field === 'rep-contact' %}
+                    {% set errorFlag = 1 %}
+                {% endif %}
+            {% endfor %}
+            {% if errorFlag === 1 %}
+                <div class="form-group form-group-error">
+                    <label for="rep-contact" id="error-rep-name">
+                        <span class="form-label-bold">Approved representative contact details</span>
+                        <span class="error-message">Contact details must entered</span>
+                    </label>
+                    <p class="form-hint">Enter a telephone number</p>
+                    <div>
+                        <input type="text" class="form-control from-error-control" id="rep-contact" name="rep-contact" tabindex=15 value="{{ customer.approvedRepContact }}">
+                    </div>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label for="rep-contact">
+                        <span class="form-label-bold">Approved representative contact details</span>
+                    </label>
+                    <p class="form-hint">Enter a telephone number</p>
+                    <div>
+                        <input type="text" class="form-control" id="rep-contact" name="rep-contact" tabindex=15 value="{{ customer.approvedRepContact }}">
+                    </div>
+                </div>
             {% endif %}
-        {% endfor %}
-        {% if errorFlag === 1 %}
-            <div class="form-group form-group-error">
-                <label for="rep-contact" id="error-rep-name">
-                    <span class="form-label-bold">Approved representative contact details</span>
-                    <span class="error-message">Contact details must entered</span>
-                </label>
-                <p class="form-hint">Enter a telephone number</p>
-                <div>
-                    <input type="text" class="form-control from-error-control" id="rep-contact" name="rep-contact" tabindex=15 value="{{ customer.approvedRepContact }}">
-                </div>
-            </div>
-        {% else %}
-            <div class="form-group">
-                <label for="rep-contact">
-                    <span class="form-label-bold">Approved representative contact details</span>
-                </label>
-                <p class="form-hint">Enter a telephone number</p>
-                <div>
-                    <input type="text" class="form-control" id="rep-contact" name="rep-contact" tabindex=15 value="{{ customer.approvedRepContact }}">
-                </div>
-            </div>
-        {% endif %}
+        </div>
     </div>
 </div>
