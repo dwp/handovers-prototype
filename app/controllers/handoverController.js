@@ -167,6 +167,7 @@ function createHandoverPageAction(req, res) {
     let handover;
     newHandover.id = handoversList.length + 1;
     newHandover.nino = customer.nino;
+    newHandover.description = req.body['handover-description'];
     newHandover.raisedByStaffId = '40001001';
     let agent = userUtils.getUserByStaffIdFromListOfUsers(users, newHandover.raisedByStaffId);
     newHandover.raisedOnBehalfOfOfficeId = agent.owningOfficeId;
@@ -326,6 +327,7 @@ function editHandoverPageAction(req, res) {
     let dateAndTimeRaisedForDisplay;
     editedHandover.id = handover.id
     editedHandover.nino = handover.nino;
+    editedHandover.description = handover.description;
     editedHandover.raisedByStaffId = handover.raisedByStaffId;
     editedHandover.inQueueOfStaffId = handover.inQueueOfStaffId;
     editedHandover.raisedOnBehalfOfOfficeId = handover.raisedOnBehalfOfOfficeId;
