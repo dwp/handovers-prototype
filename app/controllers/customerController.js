@@ -59,6 +59,7 @@ function customerSummaryPage(req, res) {
     let officesList = sIDU.setInitialOfficesData();
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let messages = req.session.messages;
+    let messagesLength = messages.length;
     let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let customer;
@@ -92,8 +93,10 @@ function customerSummaryPage(req, res) {
     customer.birthDay = customerDobForDisplay.day;
     customer.birthMonth = customerDobForDisplay.month;
     customer.birthYear = customerDobForDisplay.year;
+    req.session.messages = [];
     res.render('customer-summary', {
         messages : messages,
+        messagesLength : messagesLength,
         customer : customer,
         customerOfficeDetails : customerOfficeDetails,
         handoversList : handoversList,

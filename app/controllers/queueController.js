@@ -10,7 +10,7 @@ function viewQueuePage(req, res) {
     let users = sIDU.setInitialUsersData();
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let handoversLength = handovers.length;
-    let messages = req.session.messages ? req.session.messages : [];
+    let messages = req.session.queueMessages ? req.session.queueMessages : [];
     let messagesLength = messages.length;
     let queueType = req.query.agentId ? 'agent' : 'office';
     let queueAgent = '';
@@ -82,7 +82,7 @@ function getNextQueueItem(req, res) {
         messages.push(message);
     }
     req.session.handovers = newHandoversQueueList;
-    req.session.messages = messages;
+    req.session.queueMessages = messages;
     res.redirect('/queue/view?agentId=40001004');
 
 }
