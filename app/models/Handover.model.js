@@ -2,6 +2,7 @@ class Handover {
     constructor(properties) {
         this.id = properties.id;
         this.nino = properties.nino;
+        this.description = properties.description;
         this.staffId = properties.staffId;
         this.owningOfficeId = properties.owningOfficeId;
         this.raisedByStaffId = properties.raisedByStaffId;

@@ -3,12 +3,15 @@
     </div>
 {% else %}
     <div class="column-half">
-        <legend class="form-label-bold">Target time to clear</legend>
-        {% if handover.callback === "No" %}
-        <p>No target date and time for this priority</p>
+        <legend class="form-label-bold">Target time</legend>
+            <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
+                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
+        <br>
+        {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
+            <legend class="form-label-bold">Target time to clear</legend>
         {% else %}
-        <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
-            &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
+            <legend class="form-label-bold">Target overdue by</legend>
         {% endif %}
+                <p>{{handover.timeLeftToTarget.timeToTarget}}</p>
     </div>
 {% endif %}
