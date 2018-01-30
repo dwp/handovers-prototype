@@ -10,6 +10,8 @@ function viewQueuePage(req, res) {
     let users = sIDU.setInitialUsersData();
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let handoversLength = handovers.length;
+    let messages = req.session.queueMessages ? req.session.queueMessages : [];
+    let messagesLength = messages.length;
     let queueType = req.query.agentId ? 'agent' : 'office';
     let queueAgent = '';
     if (queueType === 'agent') {
@@ -34,18 +36,20 @@ function viewQueuePage(req, res) {
             handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
             handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
             handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
+            handover.inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
             if (queueType === 'agent') {
                 if (handover.inQueueOfStaffId == queueAgent.staffId) {
                     handoversQueueList.push(handover);
                 }
             } else {
-                handover.inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
                 handoversQueueList.push(handover);
             }
         }
     }
     sortedHandoversQueueList = _.sortBy(handoversQueueList, ['timeLeftToTarget.timeToTarget']);
     res.render('queue', {
+        messages : messages,
+        messagesLength : messagesLength,
         handoversQueueList : sortedHandoversQueueList,
         queueType : queueType,
         queueAgent : queueAgent
@@ -57,8 +61,12 @@ function getNextQueueItem(req, res) {
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let sortedHandovers = _.sortBy(handovers, ['dateAndTimeRaised']);
     let sortedHandoversLength = sortedHandovers.length;
+    let users = sIDU.setInitialUsersData();
+    let agentDetails = userUtils.getUserByStaffIdFromListOfUsers(users, req.query.agentId);
     let gotFirstUnallocatedItem = 0;
     let newHandoversQueueList = [];
+    let messages = [];
+    let message;
     for (let i=0; i < sortedHandoversLength; i++) {
         if (gotFirstUnallocatedItem === 0) {
             if (sortedHandovers[i].status === "Not allocated") {
@@ -69,7 +77,12 @@ function getNextQueueItem(req, res) {
         }
         newHandoversQueueList.push(sortedHandovers[i]);
     }
+    if (gotFirstUnallocatedItem == 0) {
+        message = ("There are no unallocated handovers for " + agentDetails.firstName + " " + agentDetails.lastName + ". Try again later");
+        messages.push(message);
+    }
     req.session.handovers = newHandoversQueueList;
+    req.session.queueMessages = messages;
     res.redirect('/queue/view?agentId=40001004');
 
 }

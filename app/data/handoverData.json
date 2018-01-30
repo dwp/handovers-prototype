@@ -112,7 +112,7 @@
       "thirdCallbackResult" : "",
       "escalated": "No",
       "inQueueOfStaffId": "40001003",
-      "status": "In progress",
+      "status": "Not allocated",
       "dateAndTimeRaised": "2018-01-24T15:03:39.379Z",
       "targetDateAndTime": "2018-01-24T18:03:39.379Z"
     },
@@ -175,7 +175,7 @@
       "thirdCallbackResult" : "",
       "escalated": "No",
       "inQueueOfStaffId": "40001003",
-      "status": "In progress",
+      "status": "Not allocated",
       "dateAndTimeRaised": "2018-01-23T09:06:39.379Z",
       "targetDateAndTime": "2018-01-23T12:06:39.379Z"
     },
@@ -238,7 +238,7 @@
       "thirdCallbackResult" : "",
       "escalated": "Yes",
       "inQueueOfStaffId": "40001003",
-      "status": "In progress",
+      "status": "Not allocated",
       "dateAndTimeRaised": "2018-01-22T11:09:39.379Z",
       "targetDateAndTime": "2018-01-22T14:09:39.379Z"
     }

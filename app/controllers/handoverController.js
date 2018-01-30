@@ -322,6 +322,7 @@ function editHandoverPageAction(req, res) {
     editedHandover.id = handover.id
     editedHandover.nino = handover.nino;
     editedHandover.raisedByStaffId = handover.raisedByStaffId;
+    editedHandover.inQueueOfStaffId = handover.inQueueOfStaffId;
     editedHandover.raisedOnBehalfOfOfficeId = handover.raisedOnBehalfOfOfficeId;
     editedHandover.receivingOfficeId = handover.receivingOfficeId;
     editedHandover.benefitId = req.body['benefit'] || handover.benefitId;

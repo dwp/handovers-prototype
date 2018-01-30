@@ -62,7 +62,7 @@
         {% if queueType === "agent" %}
         <div class="grid-row">
             <div class="column-full">
-                <form action="/queue/getNextQueueItem" method="POST" class="form">
+                <form action="/queue/getNextQueueItem?agentId={{ queueAgent.staffId }}" method="POST" class="form">
                     <div class="form-group">
                         <input type="submit" class="button" value="Fetch next work item">
                     </div>
