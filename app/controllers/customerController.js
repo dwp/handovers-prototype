@@ -133,7 +133,6 @@ function customerCreatePageAction(req, res) {
     let customer;
     let newCustomer = {};
     let validatedCustomer;
-    let message;
     let messages = [];
     newCustomer.nino = req.body['nino'];
     newCustomer.postcode = req.body['postcode'];
@@ -159,8 +158,9 @@ function customerCreatePageAction(req, res) {
         req.session.customers = customersList;
         req.session.invalidCustomer = {};
         req.session.errors = [];
-        message = "Successfully created record for " + customer.nino + " : " + customer.firstName + " " + customer.lastName;
-        messages.push(message);
+        messages[0] = "Successfully saved details for : " + customer.nino;
+        messages[1] = "Full name : " + customer.firstName + " " + customer.lastName;
+        messages[2] = "More details below";
         req.session.messages = messages;
         res.redirect('/customer/summary');
     } else {
@@ -207,7 +207,6 @@ function customerEditPageAction(req, res) {
     let customer;
     let editedCustomer = {};
     let validatedCustomer;
-    let message;
     let messages = [];
     editedCustomer.customerOfficeId = req.body['customer-office'];
     editedCustomer.nino = req.body['nino'];
@@ -234,8 +233,8 @@ function customerEditPageAction(req, res) {
         req.session.customers = customersList;
         req.session.invalidCustomer = {};
         req.session.errors = [];
-        message = "Successfully amended details for " + customer.nino + " : " + customer.firstName + " " + customer.lastName;
-        messages.push(message);
+        messages[0] = "Successfully amended details for : " + customer.nino;
+        messages[1] = "Full name : " + customer.firstName + " " + customer.lastName;
         req.session.messages = messages;
         res.redirect('/customer/summary');
     } else {

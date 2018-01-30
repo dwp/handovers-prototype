@@ -12,7 +12,7 @@ function viewQueuePage(req, res) {
     let users = sIDU.setInitialUsersData();
     let offices = sIDU.setInitialOfficesData();
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
-    let customersList = sIDU.setInitialCustomersData();
+    let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let handoversLength = handovers.length;
     let messages = req.session.queueMessages ? req.session.queueMessages : [];
     let messagesLength = messages.length;
