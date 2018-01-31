@@ -1,0 +1,17 @@
+{% if editOrCreate === 'create' %}
+    <div class="column-half">
+    </div>
+{% else %}
+    <div class="column-half">
+        <legend class="form-label-bold">Target time</legend>
+            <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
+                &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
+        <br>
+        {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
+            <legend class="form-label-bold">Target time to clear</legend>
+        {% else %}
+            <legend class="form-label-bold">Target overdue by</legend>
+        {% endif %}
+                <p>{{handover.timeLeftToTarget.timeToTarget}}</p>
+    </div>
+{% endif %}

@@ -58,7 +58,8 @@ function customerSummaryPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
-    let messages = req.session.messages;
+    let messages = req.session.messages ? req.session.messages : [];
+    let messagesLength = messages.length;
     let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let customer;
@@ -72,10 +73,14 @@ function customerSummaryPage(req, res) {
     } else {
         customer = req.session.invalidCustomer;
     }
+    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
+    let customerDobForDisplay = dateUtils.formatDateForDisplay(customer.dob);
+
     for (let i=0; i < handovers.length; i++) {
         let handover = handovers[i];
         if (handover.nino === customer.nino) {
-            let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);;
+            let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
+            handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
             handover.handoverDetails = handoverDetails;
             handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
             handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
@@ -87,13 +92,13 @@ function customerSummaryPage(req, res) {
             handoversList.push(handover);
         }
     }
-    let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
-    let customerDobForDisplay = dateUtils.formatDateForDisplay(customer.dob);
     customer.birthDay = customerDobForDisplay.day;
     customer.birthMonth = customerDobForDisplay.month;
     customer.birthYear = customerDobForDisplay.year;
+    req.session.messages = [];
     res.render('customer-summary', {
         messages : messages,
+        messagesLength : messagesLength,
         customer : customer,
         customerOfficeDetails : customerOfficeDetails,
         handoversList : handoversList,
@@ -142,7 +147,6 @@ function customerCreatePageAction(req, res) {
     let customer;
     let newCustomer = {};
     let validatedCustomer;
-    let message;
     let messages = [];
     newCustomer.nino = req.body['nino'];
     newCustomer.postcode = req.body['postcode'];
@@ -168,8 +172,9 @@ function customerCreatePageAction(req, res) {
         req.session.customers = customersList;
         req.session.invalidCustomer = {};
         req.session.errors = [];
-        message = "Successfully created record for " + customer.nino + " : " + customer.firstName + " " + customer.lastName;
-        messages.push(message);
+        messages[0] = "Successfully saved details for : " + customer.nino;
+        messages[1] = "Full name : " + customer.firstName + " " + customer.lastName;
+        messages[2] = "More details below";
         req.session.messages = messages;
         res.redirect('/customer/summary');
     } else {
@@ -249,6 +254,8 @@ function customerEditPageAction(req, res) {
     }
 
     editedCustomer.nino = req.body['nino'];
+    let validatedCustomer;
+    let messages = [];
     editedCustomer.customerOfficeId = req.body['customer-office'];
     editedCustomer.nino = req.body['nino'];
     editedCustomer.postcode = req.body['postcode'];
@@ -287,10 +294,13 @@ function customerEditPageAction(req, res) {
     if (errorsOut.length === 0) {
         editedCustomer.dob = new Date(year + '-' + month + '-' + day);
         req.session.customer = customer;
-        req.session.editedCustomer = {};
-        customers.push(editedCustomer);
-        req.session.customers = customers;
-        req.session.errors = errorsOut;
+        customersList.push(customer);
+        req.session.customers = customersList;
+        req.session.invalidCustomer = {};
+        req.session.errors = [];
+        messages[0] = "Successfully amended details for : " + customer.nino;
+        messages[1] = "Full name : " + customer.firstName + " " + customer.lastName;
+        req.session.messages = messages;
         res.redirect('/customer/summary');
     } else {
         editedCustomer.birthDay = day;

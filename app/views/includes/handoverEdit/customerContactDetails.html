@@ -1,0 +1,15 @@
+{% if editOrCreate === "edit" %}
+<div class="column-half">
+    <legend class="form-label-bold">Customer contact details</legend>
+    {% if customer.approvedRepName === "" %}
+    <div>
+        <p>{{ customer.preferredContactNumber }}</p>
+    </div>
+    {% else %}
+    <div>
+        <p>Contact approved representative</p>
+        <p>Name: {{ customer.approvedRepName }} &nbsp;&nbsp;&nbsp;&nbsp; Telephone: {{ customer.approvedRepContact }}</p>
+    </div>
+    {% endif %}
+</div>
+{% endif %}

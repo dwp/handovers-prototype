@@ -1,0 +1,13 @@
+{% if editOrCreate === 'create' %}
+<div class="column-full">
+    <legend class="form-label-bold">Description</legend>
+    <textarea class="form-control" id="handover-description" name="handover-description" rows="6"></textarea>
+</div>
+{% else %}
+<div class="column-full">
+    <legend class="form-label-bold">Description</legend>
+    <div>
+        <p>{{ handover.description }}</p>
+    </div>
+</div>
+{% endif %}

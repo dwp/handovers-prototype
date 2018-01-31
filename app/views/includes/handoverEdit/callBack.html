@@ -1,0 +1,22 @@
+<div class="column-half">
+    <legend class="form-label-bold">Callback required ?</legend>
+    {% if handover.callback === 'Yes' and editOrCreate === 'edit' %}
+        <input class="hidden" id="handover-callback" name="handover-callback" value="{{ handover.callback }}">
+        <p>{{ handover.callback }}</p>
+    {% else %}
+        <fieldset class="inline">
+            <div class="multiple-choice">
+                <input id="handover-callback-no" type="radio" name="handover-callback" value="No" {% if handover.callback === 'No' or editOrCreate === 'create' %}
+                checked="checked"
+                {% endif %}>
+                <label for="handover-callback-no">No</label>
+            </div>
+            <div class="multiple-choice">
+                <input id="handover-callback-yes" type="radio" name="handover-callback" value="Yes" {% if handover.callback === 'Yes' %}
+                checked="checked"
+                {% endif %}>
+                <label for="handover-callback-yes">Yes</label>
+            </div>
+        </fieldset>
+    {% endif %}
+</div>
