@@ -102,11 +102,17 @@ function validateHandover(inputHandover) {
     }
     handover.id = inputHandover.id;
     handover.nino = inputHandover.nino;
+    handover.description = inputHandover.description;
     handover.raisedByStaffId = inputHandover.raisedByStaffId;
+    handover.inQueueOfStaffId = inputHandover.inQueueOfStaffId;
     handover.raisedOnBehalfOfOfficeId = inputHandover.raisedOnBehalfOfOfficeId;
     handover.receivingOfficeId = inputHandover.receivingOfficeId;
     handover.callback = inputHandover.callback;
-    handover.priority = inputHandover.priority;
+    handover.callbackStatus = inputHandover.callbackStatus;
+    handover.firstCallback = inputHandover.firstCallback;
+    handover.secondCallback = inputHandover.secondCallback;
+    handover.thirdCallback = inputHandover.thirdCallback;
+    handover.escalated = inputHandover.escalated;
     handover.status = inputHandover.status;
     handover.inQueueOfStaffId = inputHandover.inQueueOfStaffId;
     handover.dateAndTimeRaised = inputHandover.dateAndTimeRaised;
