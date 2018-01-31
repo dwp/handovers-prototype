@@ -52,19 +52,19 @@
             <p>Not applicable</p>
         {% endif %}
         {% if handover.callbackStatus == 2 %}
-            <p>First callback: &nbsp;&nbsp;&nbsp; {{ handover.firstCallbackResult }}</p>
-            <p>Second callback: &nbsp;&nbsp;&nbsp;N/A</p>
-            <p>Third callback: &nbsp;&nbsp;&nbsp;N/A</p>
+            <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResultDescription }}</p>
+            <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResultDescription }}</p>
+            <p>Third callback: &nbsp;&nbsp;&nbsp;{{ handover.thirdCallbackResultDescription }}</p>
         {% endif %}
         {% if handover.callbackStatus == 3 %}
-            <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResult }}</p>
-            <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResult }}</p>
-            <p>Third callback: &nbsp;&nbsp;&nbsp;N/A</p>
+            <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResultDescription }}</p>
+            <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResultDescription }}</p>
+            <p>Third callback: &nbsp;&nbsp;&nbsp;{{ handover.thirdCallbackResultDescription }}</p>
         {% endif %}
         {% if handover.callbackStatus == 4 %}
-            <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResult }}</p>
-            <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResult }}</p>
-            <p>Third callback: &nbsp;&nbsp;&nbsp;{{ handover.thirdCallbackResult }}</p>
+            <p>First callback: &nbsp;&nbsp;&nbsp;{{ handover.firstCallbackResultDescription }}</p>
+            <p>Second callback: &nbsp;&nbsp;&nbsp;{{ handover.secondCallbackResultDescription }}</p>
+            <p>Third callback: &nbsp;&nbsp;&nbsp;{{ handover.thirdCallbackResultDescription }}</p>
         {% endif %}
     {% endif %}
 </div>

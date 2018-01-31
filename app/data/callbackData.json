@@ -1,12 +1,13 @@
 {
   "title": "callbackData",
-  "callbackStatusValues": [{
-    "id": "0",
-    "callBackStatus": "Not applicable"
+  "callbackStatusValues": [
+    {
+      "id": "0",
+      "callbackStatus": "Not applicable"
     },
     {
       "id": "1",
-      "callBackStatus": "First call pending"
+      "callbackStatus": "First call pending"
     },
     {
       "id": "2",
@@ -21,24 +22,26 @@
       "callbackStatus": "Complete"
     }
   ],
-  "callbackResultValues": [{
-    "id" : "0",
-    "callBackResult" : ""},
+  "callbackResultValues": [
     {
-    "id": "1",
-    "callBackResult": "Successful"
+      "id" : "0",
+      "callbackResult" : "Not applicable"
+    },
+    {
+      "id": "1",
+      "callbackResult": "Successful"
     },
     {
       "id": "2",
-      "callBackResult": "Failed - engaged"
+      "callbackResult": "Failed - engaged"
     },
     {
       "id": "3",
-      "callBackResult": "Failed - number unobtainable"
+      "callbackResult": "Failed - number unobtainable"
     },
     {
       "id": "4",
-      "callBackResult": "Failed - not answered"
+      "callbackResult": "Failed - not answered"
     }
   ]
 }
