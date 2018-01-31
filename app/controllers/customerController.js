@@ -4,6 +4,7 @@ const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
 const dateUtils = require('../utils/dateUtils');
 const handoverUtils = require('../utils/handoverUtils');
+const callbackData = require('../data/callbackData.json');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customer Controllers
@@ -62,6 +63,7 @@ function customerSummaryPage(req, res) {
     let messagesLength = messages.length;
     let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
+    let callbackStatusValues = callbackData['callbackStatusValues'];
     let customer;
     let handoversList = [];
     if (errors.length === 0) {
@@ -89,6 +91,7 @@ function customerSummaryPage(req, res) {
             handover.targetDate = (handover.targetDateAndTimeForDisplay.day + " " + handover.targetDateAndTimeForDisplay.month + " " + handover.targetDateAndTimeForDisplay.year);
             handover.targetTime = (handover.targetDateAndTimeForDisplay.hours + ":" + handover.targetDateAndTimeForDisplay.mins);
             handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
+            handover.callbackStatusDescription = callbackStatusValues[handover.callbackStatus].callbackStatus;
             handoversList.push(handover);
         }
     }

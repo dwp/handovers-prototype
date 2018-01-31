@@ -230,7 +230,7 @@ function createHandoverPageAction(req, res) {
         req.session.handover = {};
         req.session.errors = validatedHandover.errors;
         req.session.messages = [];
-        res.redirect('/handover/create?nino=' + validatedHandover.handover.nino);
+        res.redirect('/handover/create?nino=' + handover.nino);
     }
 
 }
@@ -326,11 +326,11 @@ function editHandoverPageAction(req, res) {
     let handoverNote = req.body['handover-note'];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
     let editedHandover = {};
-    let editedHandoverDetails;
     let editedHandoverNote = {};
+    let validatedHandover;
+    let validatedHandoverDetails;
     let newHandoverNotes = [];
     let messages = [];
-    let errors = [];
     let dateAndTimeRaisedForDisplay;
     editedHandover.id = handover.id
     editedHandover.nino = handover.nino;
@@ -402,23 +402,31 @@ function editHandoverPageAction(req, res) {
             newHandoverNotes.unshift(updatedHandoverNote);
         }
     }
-
-    editedHandover.notes = newHandoverNotes;
-    handoversList[handoverIndex] = editedHandover;
-    req.session.errors = errors;
-    dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
-    editedHandoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
-    messages[0] = "Successfully amended handover for " + customer.firstName + " " + customer.lastName;
-    messages[1] = "Handover raised : " + dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month +
-        " " + dateAndTimeRaisedForDisplay.year + " at " + dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins;
-    messages[2] = "Benefit type : "  + editedHandoverDetails.benefitName;
-    messages[3] = "Handover type : " + editedHandoverDetails.handoverType;
-    req.session.messages = messages;
-    req.session.handovers = handoversList;
-    req.session.handover = editedHandover;
     req.session.customer = customer;
-    res.redirect('/customer/summary?nino=' + editedHandover.nino);
-
+    editedHandover.notes = newHandoverNotes;
+    validatedHandover = handoverUtils.validateHandover(editedHandover);
+    if (validatedHandover.errors.length === 0) {
+        handoversList[handoverIndex] = validatedHandover;
+        req.session.errors = [];
+        dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(validatedHandover.handover.dateAndTimeRaised);
+        validatedHandoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(validatedHandover.handover);
+        messages[0] = "Successfully amended handover for " + customer.firstName + " " + customer.lastName;
+        messages[1] = "Handover raised : " + dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month +
+            " " + dateAndTimeRaisedForDisplay.year + " at " + dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins;
+        messages[2] = "Benefit type : "  + validatedHandoverDetails.benefitName;
+        messages[3] = "Handover type : " + validatedHandoverDetails.handoverType;
+        req.session.messages = messages;
+        req.session.handovers = handoversList;
+        req.session.invalidHandover = {};
+        req.session.handover = validatedHandover;
+        res.redirect('/customer/summary?nino=' + validatedHandover.handover.nino);
+    } else {
+        req.session.invalidHandover = validatedHandover;
+        req.session.errors = validatedHandover.errors;
+        req.session.handover = {};
+        req.session.messages = [];
+        res.redirect('/handover/edit?id=' + validatedHandover.handover.id);
+    }
 }
 
 function getNewCallbackStatusAndResult(currentCallbackStatus, newResult, firstCallResult, secondCallResult, thirdCallResult) {
