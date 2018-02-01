@@ -21,15 +21,15 @@
                         <th scope="col"><span>NI number</span></th>
                         <th scope="col"><span>Name</span></th>
                         <th scope="col"><span>Date/time raised</span></th>
-                        <th scope="col"><span>Routed to</span></th>
+                        {% if queueType === "office" %}
+                            <th scope="col"><span>Routed to</span></th>
+                            <th scope="col"><span>Being progressed by</span></th>
+                        {% endif %}
                         <th scope="col"><span>Time left to clear</span></th>
                         <th scope="col"><span>Benefit type</span></th>
                         <th scope="col"><span>Handover type</span></th>
                         <th scope="col"><span>Handover Status</span></th>
                         <th scope="col"><span>Callback status</span></th>
-                        {% if queueType === "office" %}
-                            <th scope="col"><span>Being progressed by</span></th>
-                        {% endif %}
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -39,10 +39,14 @@
                         <td>{{handover.nino}}</td>
                         <td>{{handover.customerDetails.firstName}} {{handover.customerDetails.lastName}}</td>
                         <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
-                        {% if handover.status === "Not allocated" %}
-                            <td>Not applicable</td>
-                        {% else %}
-                            <td>{{handover.receivingOfficeDetails.officeName}}</td>
+                        {% if queueType === "office" %}
+                            {% if handover.status === "Not allocated" %}
+                                <td>Not applicable</td>
+                                <td>Not applicable</td>
+                            {% else %}
+                                <td>{{handover.receivingOfficeDetails.officeName}}</td>
+                                <td>{{handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName}}</td>
+                            {% endif %}
                         {% endif %}
                         {% if handover.timeLeftToTarget.expiredOrNot == 1 %}
                             <td>Expired</td>
@@ -53,9 +57,6 @@
                         <td>{{handover.handoverType}}</td>
                         <td>{{handover.status}}</td>
                         <td>{{handover.callbackStatusDescription}}</td>
-                        {% if queueType === "office" %}
-                            <td>{{ handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName }}</td>
-                        {% endif %}
                         <td>{{handoverUpdateLink(handover)}}</td>
                     </tr>
                     {% endfor %}

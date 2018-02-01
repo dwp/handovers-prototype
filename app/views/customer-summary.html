@@ -80,6 +80,7 @@
                             <tr>
                                 <th scope="col"><span>Date/time raised</span></th>
                                 <th scope="col"><span>Routed to</span></th>
+                                <th scope="col"><span>Being progressed by</span></th>
                                 <th scope="col"><span>Time left to clear</span></th>
                                 <th scope="col"><span>Benefit type</span></th>
                                 <th scope="col"><span>Handover type</span></th>
@@ -93,7 +94,13 @@
                             <tr>
                                 <td>{{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
                                     &nbsp;&nbsp;&nbsp;&nbsp;{{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</td>
-                                <td>{{handover.receivingOfficeDetails.officeName}}</td>
+                                {% if handover.status === "Not allocated" %}
+                                    <td>Not applicable</td>
+                                    <td>Not applicable</td>
+                                {% else %}
+                                    <td>{{handover.receivingOfficeDetails.officeName}}</td>
+                                    <td>{{handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName}}</td>
+                                {% endif %}
                                 {% if handover.timeLeftToTarget.expiredOrNot == 1 %}
                                     <td>Expired</td>
                                 {% else %}
