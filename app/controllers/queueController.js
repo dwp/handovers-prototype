@@ -20,6 +20,7 @@ function viewQueuePage(req, res) {
     let messagesLength = messages.length;
     let queueType = req.query.agentId ? 'agent' : 'office';
     let queueAgent;
+    let queueAgentId = req.query.agentId;
     if (queueType === 'agent') {
         queueAgent = userUtils.getUserByStaffIdFromListOfUsers(users, (req.query.agentId ? req.query.agentId : '40001003'));
     }
