@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Customer = require('../models/Customer.model');
 const sIDU = require('../utils/setInitialDataUtils');
 const officeUtils = require('../utils/officeUtils');
@@ -64,8 +65,10 @@ function customerSummaryPage(req, res) {
     let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let callbackStatusValues = callbackData['callbackStatusValues'];
+    let callbackStatusDescription;
     let customer;
     let handoversList = [];
+    let sortedHandoversList;
     if (errors.length === 0) {
         if(req.query.nino) {
             customer = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, req.query.nino);
@@ -95,16 +98,18 @@ function customerSummaryPage(req, res) {
             handoversList.push(handover);
         }
     }
+    sortedHandoversList = _.sortBy(handoversList, ['timeLeftToTarget.timeToTarget']);
     customer.birthDay = customerDobForDisplay.day;
     customer.birthMonth = customerDobForDisplay.month;
     customer.birthYear = customerDobForDisplay.year;
     req.session.messages = [];
+    req.session.customer = customer;
     res.render('customer-summary', {
         messages : messages,
         messagesLength : messagesLength,
         customer : customer,
         customerOfficeDetails : customerOfficeDetails,
-        handoversList : handoversList,
+        handoversList : sortedHandoversList,
         errors : errors,
         errorsLength : errors.length
     });

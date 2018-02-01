@@ -327,7 +327,7 @@ function editHandoverPageAction(req, res) {
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
     let editedHandover = {};
     let editedHandoverNote = {};
-    let validatedHandover;
+    let validatedHandoverAndErrors;
     let validatedHandoverDetails;
     let newHandoverNotes = [];
     let messages = [];
@@ -348,37 +348,44 @@ function editHandoverPageAction(req, res) {
     editedHandover.typeId = req.body['handover-type'] || handover.typeId;
     editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
     editedHandover.callback = req.body['handover-callback'];
-    editedHandover.callbackStatus = handover.callbackStatus;
-    if (editedHandover.callback === "No") {
-        editedHandover.callbackStatus = 0;
-        editedHandover.firstCallbackResult = 0;
-        editedHandover.secondCallbackResult= 0;
-        editedHandover.thirdCallbackResult = 0;
-    } else {                                            // editedCallback (i.e. req.body.callback = Yes
-        if (handover.callback === "No") {               // i.e. it used to be "No" on this handover and it's been changed to "Yes" on the screen
-            editedHandover.callbackStatus = 1;
-            editedHandover.firstCallbackResult = 0;
-            editedHandover.secondCallbackResult = 0;
-            editedHandover.thirdCallbackResult = 0;
-        } else {                                        // i.e. it used to be "Yes", and its still "Yes", so need to check if the callbackStatus has changed
-            let newCallbackStatusAndResult;
-            let currentCallbackStatus = handover.callbackStatus;
-            let newResult = parseInt(req.body['handover-callback-result']);
-            let firstCallResult = handover.firstCallbackResult;
-            let secondCallResult = handover.secondCallbackResult;
-            let thirdCallResult = handover.thirdCallbackResult;
-            newCallbackStatusAndResult = getNewCallbackStatusAndResult(currentCallbackStatus, newResult,
-                firstCallResult, secondCallResult, thirdCallResult);
-            editedHandover.callbackStatus = newCallbackStatusAndResult.newStatus;
-            editedHandover.firstCallbackResult = newCallbackStatusAndResult.newFirst;
-            editedHandover.secondCallbackResult = newCallbackStatusAndResult.newSecond;
-            editedHandover.thirdCallbackResult = newCallbackStatusAndResult.newThird;
-        }
-    }
-    if (editedHandover.callbackStatus == 4) {
-        editedHandover.status = "Cleared";
+
+    if (handover.status === "Cleared" || handover.status === "Withdrawn") {
+        editedHandover.callbackStatus = handover.callbackStatus;
+        editedHandover.status = handover.status;
+        editedHandover.firstCallbackResult = handover.firstCallbackResult;
+        editedHandover.secondCallbackResult= handover.secondCallbackResult
+        editedHandover.thirdCallbackResult = handover.thirdCallbackResult;
     } else {
-        editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
+        if (editedHandover.callback === "No") {
+            editedHandover.callbackStatus = 0;
+            editedHandover.firstCallbackResult = 0;
+            editedHandover.secondCallbackResult= 0;
+            editedHandover.thirdCallbackResult = 0;
+        } else {
+            if (handover.callback === "No") {               // i.e. callback required used to be "No" but it's been changed to "Yes"
+                editedHandover.callbackStatus = 1;
+                editedHandover.firstCallbackResult = 0;
+                editedHandover.secondCallbackResult = 0;
+                editedHandover.thirdCallbackResult = 0;
+            } else {                                        // i.e. it used to be "Yes", and its still "Yes", so now need to check if the callbackStatus has changed
+                let newCallbackStatusAndResult;
+                let newResult = parseInt(req.body['handover-callback-result']);
+                let firstCallResult = handover.firstCallbackResult;
+                let secondCallResult = handover.secondCallbackResult;
+                let thirdCallResult = handover.thirdCallbackResult;
+                newCallbackStatusAndResult = getNewCallbackStatusAndResult(handover.callbackStatus, newResult,
+                    firstCallResult, secondCallResult, thirdCallResult);
+                editedHandover.callbackStatus = newCallbackStatusAndResult.newStatus;
+                editedHandover.firstCallbackResult = newCallbackStatusAndResult.newFirst;
+                editedHandover.secondCallbackResult = newCallbackStatusAndResult.newSecond;
+                editedHandover.thirdCallbackResult = newCallbackStatusAndResult.newThird;
+            }
+        }
+        if (editedHandover.callbackStatus == 4) {
+            editedHandover.status = "Cleared";
+        } else {
+            editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
+        }
     }
     editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
     editedHandover.targetDateAndTime = handover.targetDateAndTime;
@@ -404,12 +411,12 @@ function editHandoverPageAction(req, res) {
     }
     req.session.customer = customer;
     editedHandover.notes = newHandoverNotes;
-    validatedHandover = handoverUtils.validateHandover(editedHandover);
-    if (validatedHandover.errors.length === 0) {
-        handoversList[handoverIndex] = validatedHandover;
+    validatedHandoverAndErrors = handoverUtils.validateHandover(editedHandover);
+    if (validatedHandoverAndErrors.errors.length === 0) {
+        handoversList[handoverIndex] = validatedHandoverAndErrors.handover;
         req.session.errors = [];
-        dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(validatedHandover.handover.dateAndTimeRaised);
-        validatedHandoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(validatedHandover.handover);
+        dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(validatedHandoverAndErrors.handover.dateAndTimeRaised);
+        validatedHandoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(validatedHandoverAndErrors.handover);
         messages[0] = "Successfully amended handover for " + customer.firstName + " " + customer.lastName;
         messages[1] = "Handover raised : " + dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month +
             " " + dateAndTimeRaisedForDisplay.year + " at " + dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins;
@@ -418,14 +425,14 @@ function editHandoverPageAction(req, res) {
         req.session.messages = messages;
         req.session.handovers = handoversList;
         req.session.invalidHandover = {};
-        req.session.handover = validatedHandover;
-        res.redirect('/customer/summary?nino=' + validatedHandover.handover.nino);
+        req.session.handover = validatedHandoverAndErrors.handover;
+        res.redirect('/customer/summary?nino=' + validatedHandoverAndErrors.handover.nino);
     } else {
-        req.session.invalidHandover = validatedHandover;
-        req.session.errors = validatedHandover.errors;
+        req.session.invalidHandover = validatedHandoverAndErrors.handover;
+        req.session.errors = validatedHandoverAndErrors.errors;
         req.session.handover = {};
         req.session.messages = [];
-        res.redirect('/handover/edit?id=' + validatedHandover.handover.id);
+        res.redirect('/handover/edit?id=' + validatedHandoverAndErrors.handover.id);
     }
 }
 

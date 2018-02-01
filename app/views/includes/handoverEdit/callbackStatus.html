@@ -3,8 +3,10 @@
         <div></div>
     {% else %}
         <legend class="form-label-bold">Callback status</legend>
-        {% if handover.status === "Cleared" or  handover.status === "Withdrawn" %}
-            <p>Cannot be changed - handover has been cleared or withdrawn</p>
+        {% if handover.status === "Cleared" %}
+            <p>Cannot be changed - handover has been cleared</p>
+        {% elif handover.status === "Withdrawn"%}
+            <p>Cannot be changed - handover has been withdrawn</p>
         {% else %}
             {% if handover.callbackStatus == 1 %}
                 <p>First call pending</p>
