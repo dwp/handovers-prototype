@@ -5,6 +5,7 @@ const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
 const dateUtils = require('../utils/dateUtils');
 const handoverUtils = require('../utils/handoverUtils');
+const userUtils = require('../utils/userUtils');
 const callbackData = require('../data/callbackData.json');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -60,12 +61,12 @@ function customerSummaryPage(req, res) {
 
     let officesList = sIDU.setInitialOfficesData();
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let users = sIDU.setInitialUsersData();
     let messages = req.session.messages ? req.session.messages : [];
     let messagesLength = messages.length;
     let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let callbackStatusValues = callbackData['callbackStatusValues'];
-    let callbackStatusDescription;
     let customer;
     let handoversList = [];
     let sortedHandoversList;
@@ -86,6 +87,7 @@ function customerSummaryPage(req, res) {
         if (handover.nino === customer.nino) {
             let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
             handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
+            handover.inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
             handover.handoverDetails = handoverDetails;
             handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
             handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
