@@ -6,6 +6,7 @@ const commonUtils = require('../utils/commonUtils');
 const userUtils = require('../utils/userUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
+const callbackData = require('../data/callbackData.json');
 
 function viewQueuePage(req, res) {
 
@@ -14,6 +15,7 @@ function viewQueuePage(req, res) {
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let handoversLength = handovers.length;
+    let callbackStatusValues = callbackData['callbackStatusValues'];
     let messages = req.session.queueMessages ? req.session.queueMessages : [];
     let messagesLength = messages.length;
     let queueType = req.query.agentId ? 'agent' : 'office';
@@ -29,6 +31,8 @@ function viewQueuePage(req, res) {
         if (handover.status === "Cleared" || handover.status === "Withdrawn") {
         //    Do nothing
         } else {
+            let callbackStatusDescription = callbackStatusValues[handover.callbackStatus].callbackStatus;
+            handover.callbackStatusDescription = callbackStatusDescription;
             let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
             let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
             let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
