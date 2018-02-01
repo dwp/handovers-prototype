@@ -23,11 +23,10 @@
                         <th scope="col"><span>Date/time raised</span></th>
                         <th scope="col"><span>Routed to</span></th>
                         <th scope="col"><span>Time left to clear</span></th>
-                        <th scope="col"><span>Time overdue</span></th>
                         <th scope="col"><span>Benefit type</span></th>
                         <th scope="col"><span>Handover type</span></th>
-                        <th scope="col"><span>Callback reqd?</span></th>
-                        <th scope="col"><span>Status</span></th>
+                        <th scope="col"><span>Handover Status</span></th>
+                        <th scope="col"><span>Callback status</span></th>
                         {% if queueType === "office" %}
                             <th scope="col"><span>Being progressed by</span></th>
                         {% endif %}
@@ -41,21 +40,19 @@
                         <td>{{handover.customerDetails.firstName}} {{handover.customerDetails.lastName}}</td>
                         <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
                         {% if handover.status === "Not allocated" %}
-                            <td>Not yet allocated</td>
+                            <td>Not applicable</td>
                         {% else %}
                             <td>{{handover.receivingOfficeDetails.officeName}}</td>
                         {% endif %}
-                        {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
-                            <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
-                            <td>Within target</td>
-                        {% else %}
+                        {% if handover.timeLeftToTarget.expiredOrNot == 1 %}
                             <td>Expired</td>
+                        {% else %}
                             <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
                         {% endif %}
                         <td>{{handover.benefitAbbr}}</td>
                         <td>{{handover.handoverType}}</td>
-                        <td>{{handover.callback}}</td>
                         <td>{{handover.status}}</td>
+                        <td>{{handover.callbackStatusDescription}}</td>
                         {% if queueType === "office" %}
                             <td>{{ handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName }}</td>
                         {% endif %}
@@ -92,8 +89,8 @@
     $('table').DataTable({
         paging: false,
         info: false,
-        filter: false,
-        order: [[ 2, "desc" ], [3, "desc"]],
+        filter: false
+        order: [[ 4, "desc" ]],
     })
 </script>
 

@@ -1,9 +1,11 @@
+const _ = require('lodash');
 const Customer = require('../models/Customer.model');
 const sIDU = require('../utils/setInitialDataUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
 const dateUtils = require('../utils/dateUtils');
 const handoverUtils = require('../utils/handoverUtils');
+const callbackData = require('../data/callbackData.json');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 /*                                        Customer Controllers
@@ -62,8 +64,11 @@ function customerSummaryPage(req, res) {
     let messagesLength = messages.length;
     let errors = req.session.errors ? req.session.errors : [];
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
+    let callbackStatusValues = callbackData['callbackStatusValues'];
+    let callbackStatusDescription;
     let customer;
     let handoversList = [];
+    let sortedHandoversList;
     if (errors.length === 0) {
         if(req.query.nino) {
             customer = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, req.query.nino);
@@ -89,19 +94,22 @@ function customerSummaryPage(req, res) {
             handover.targetDate = (handover.targetDateAndTimeForDisplay.day + " " + handover.targetDateAndTimeForDisplay.month + " " + handover.targetDateAndTimeForDisplay.year);
             handover.targetTime = (handover.targetDateAndTimeForDisplay.hours + ":" + handover.targetDateAndTimeForDisplay.mins);
             handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
+            handover.callbackStatusDescription = callbackStatusValues[handover.callbackStatus].callbackStatus;
             handoversList.push(handover);
         }
     }
+    sortedHandoversList = _.sortBy(handoversList, ['timeLeftToTarget.timeToTarget']);
     customer.birthDay = customerDobForDisplay.day;
     customer.birthMonth = customerDobForDisplay.month;
     customer.birthYear = customerDobForDisplay.year;
     req.session.messages = [];
+    req.session.customer = customer;
     res.render('customer-summary', {
         messages : messages,
         messagesLength : messagesLength,
         customer : customer,
         customerOfficeDetails : customerOfficeDetails,
-        handoversList : handoversList,
+        handoversList : sortedHandoversList,
         errors : errors,
         errorsLength : errors.length
     });
