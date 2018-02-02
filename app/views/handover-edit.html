@@ -87,6 +87,12 @@
                 <div class="form-group">
                     <input type="submit" class="button" value="Submit">
                 </div>
+                <br>
+                {% if editOrCreate === 'edit' %}
+                <div>
+                    <a href="../queue/view?queueType=office">Back to queue</a>
+                </div>
+                {% endif %}
             </div>
         </form>
     </div>
