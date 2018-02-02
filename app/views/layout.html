@@ -6,6 +6,10 @@
   {% include "includes/head.html" %}
 {% endblock %}
 
+{% block cookie_message %}
+  <p>{{cookieText | safe }}</p>
+{% endblock %}
+
 {% block proposition_header %}
 
 <div class="header-proposition">
@@ -26,10 +30,6 @@
   </div>
 </div>
 
-{% endblock %}
-
-{% block cookie_message %}
-  <p>{{cookieText | safe }}</p>
 {% endblock %}
 
 {% block header_class %}
