@@ -3,7 +3,8 @@ module.exports = function(router, usersForRoleToggle) {
 
     let fromIndexPage = req.header('referer').endsWith('/');
     if(req.session.user) {
-      let indexOfUser = usersForRoleToggle.indexOf(usersForRoleToggle.find((user) => req.session.user.name === user.name));
+      let userName = (req.session.user.firstName + ' ' + req.session.user.lastName);
+      let indexOfUser = usersForRoleToggle.indexOf(usersForRoleToggle.find((user) => (userName === (user.firstName + ' ' + user.lastName))));
       let newIndex = ((indexOfUser + 1) % (usersForRoleToggle.length));
       req.session.user = usersForRoleToggle[newIndex];
     } else {
@@ -12,7 +13,7 @@ module.exports = function(router, usersForRoleToggle) {
     if (fromIndexPage) {
       res.redirect('/queue/view?queueType=office');
     } else {
-      res.redirect('/queue/view?agentId=' + req.session.user.id);
+      res.redirect('/queue/view?agentId=' + req.session.user.staffId);
     }
   });
 }
