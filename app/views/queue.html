@@ -22,8 +22,7 @@
                         <th scope="col"><span>Name</span></th>
                         <th scope="col"><span>Date/time raised</span></th>
                         {% if queueType === "office" %}
-                            <th scope="col"><span>Routed to</span></th>
-                            <th scope="col"><span>Being progressed by</span></th>
+                            <th scope="col"><span>Agent</span></th>
                         {% endif %}
                         <th scope="col"><span>Time left to clear</span></th>
                         <th scope="col"><span>Benefit type</span></th>
@@ -42,9 +41,7 @@
                         {% if queueType === "office" %}
                             {% if handover.status === "Not allocated" %}
                                 <td>Not applicable</td>
-                                <td>Not applicable</td>
                             {% else %}
-                                <td>{{handover.receivingOfficeDetails.officeName}}</td>
                                 <td>{{handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName}}</td>
                             {% endif %}
                         {% endif %}
