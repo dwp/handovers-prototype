@@ -1,7 +1,7 @@
 /**
  * Created by jane.gleadall on 27/11/2017.
  */
-var queue = require("../controllers/queueController.js");
+const queue = require("../controllers/queueController.js");
 
 module.exports = function(router) {
 
