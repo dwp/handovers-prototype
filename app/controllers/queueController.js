@@ -54,7 +54,7 @@ function viewQueuePage(req, res) {
         }
     }
     req.session.messages = [];
-    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['timeLeftToTarget.timeToTarget']);
+    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['dateAndTimeRaised']);
     res.render('queue', {
         messages : messages,
         messagesLength : messagesLength,
@@ -92,7 +92,7 @@ function getNextQueueItem(req, res) {
     }
     req.session.handovers = newHandoversQueueList;
     req.session.messages = messages;
-    res.redirect('/queue/view?agentId=40001004');
+    res.redirect('/queue/view?agentId=' + user.staffId);
 
 }
 

@@ -87,22 +87,32 @@ function calcTimeLeftToTarget(date) {
     let targetDateTime = new Date(date).getTime();
 // Get todays date and time
     let now = new Date().getTime();
-// Find the distance between now and the target date
+// Find the difference between now and the target date
     let difference = targetDateTime - now;
 // Time calculations for hours and minutes
     let days = Math.floor(difference / (1000 * 60 * 60 * 24));
     let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+// Find the difference between the target date and now
+    let overdue = now - targetDateTime;
+// Time overdue calculations for days, hours and minutes
+    let overdueDays = Math.floor(overdue / (1000 * 60 * 60 * 24));
+    let overdueHours = Math.floor((overdue % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let overdueMinutes = Math.floor((overdue % (1000 * 60 * 60)) / (1000 * 60));
 
+    let timeOverdue;
     let timeToTarget;
     let expiredOrNot = 0;
     let calcResult;
 
     if (difference < 0) {
         expiredOrNot = 1;
+        timeOverdue = (overdueDays + " days " + overdueHours + " hrs " + overdueMinutes + " mins");
+    } else {
+        timeToTarget = (hours + " hrs " + minutes + " mins");
     }
-    timeToTarget = (hours + " hrs " + minutes + " mins");
-    calcResult = {"expiredOrNot" : expiredOrNot, "timeToTarget" : timeToTarget };
+
+    calcResult = { "expiredOrNot" : expiredOrNot, "timeToTarget" : timeToTarget, "timeOverdue" : timeOverdue };
     return calcResult;
 }
 
