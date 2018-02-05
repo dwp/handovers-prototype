@@ -1,12 +1,12 @@
 /**
  * Created by jane.gleadall on 02/02/2018.
  */
-function officeESABeforePage(req, res) {
+function officeESAPage(req, res) {
 
     res.render('allocationFlow/officeESAMaintQBefore.html');
 }
 
-function officeESABeforePageAction(req, res) {
+function officeESAPageAction(req, res) {
 
     let user1 = req.body['user-allocation-1'];
     let user2 = req.body['user-allocation-2'];
@@ -21,6 +21,22 @@ function officeESABeforePageAction(req, res) {
     res.render('allocationFlow/officeESAMaintQAfter.html', users);
 
 }
-module.exports.officeESABeforePage = officeESABeforePage;
-module.exports.officeESABeforePageAction = officeESABeforePageAction;
+
+function userQueuePage(req, res) {
+
+    res.render('allocationFLow/userQBefore.html');
+
+}
+
+function userQueuePageAction(req, res) {
+
+    res.render('allocationFlow/userQAfter.html');
+
+}
+
+module.exports.officeESAPage = officeESAPage;
+module.exports.officeESAPageAction = officeESAPageAction;
+module.exports.userQueuePage = userQueuePage;
+module.exports.userQueuePageAction = userQueuePageAction;
+
 

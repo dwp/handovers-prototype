@@ -20,21 +20,25 @@
   </div>
   <div class="grid-row">
     {% set allocationScreens = [{
-    workTitle : 'Allocating',
+    workTitle : 'Supervisor view',
     links: [{
     link : '/allocation/esa', title : 'ESA Maintenance Queue - allocate user'
-    },{
-    link : '/allocationFlow/officeESAAfter.html', title : 'ESA Maintenance Queue - after allocation'
-    },{
-    link : '/allocationFlow/userQBefore.html', title : 'User queue - before allocation'
-    },{
-    link : '/allocationFlow/userQAfter.html', title : 'User queue - after allocation'
-    },{
-    link : '/allocationFlow/dummy', title : ''
     }]
     }] %}
 
-    {{ sprintLinks( 'Allocations and Selections', allocationScreens) }}
+    {{ sprintLinks( 'Allocation of handovers', allocationScreens) }}
+
+    {% set allocationScreens = [{
+    workTitle : 'User view',
+    links: [{
+    link : '/allocation/user', title : 'User queue - before allocation'
+    },{
+    link : '/allocationFlow/userQAfter.html', title : 'User queue - after allocation'
+    }]
+    }] %}
+
+    {{ sprintLinks( '', allocationScreens) }}
+
 
   </div>
   <div class="grid-row">

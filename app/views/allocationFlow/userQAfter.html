@@ -7,16 +7,16 @@
         {% include "includes/handovers_summary_nav.html" %}
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
-        <h1 class="heading-large">Sheffield Jobcentre - ESA Maintenance</h1>
-        <div class="grid-row">
-            <div class="column-full">
-                <table>
-                    <thead>
+        <h1 class="heading-large">Handovers queue - Peter Wright</h1>
+        <form action="/allocation/esa" method="POST" class="form">
+            <div class="grid-row">
+                <div class="column-full">
+                    <table>
+                        <thead>
                         <tr>
                             <th scope="col"><span>NI number</span></th>
                             <th scope="col"><span>Name</span></th>
                             <th scope="col"><span>Date/time raised</span></th>
-                            <th scope="col"><span>Agent</span></th>
                             <th scope="col"><span>Time left to clear</span></th>
                             <th scope="col"><span>Benefit type</span></th>
                             <th scope="col"><span>Handover type</span></th>
@@ -24,14 +24,13 @@
                             <th scope="col"><span>Callback status</span></th>
                             <th scope="col"></th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr>
-                            <td>KL129834M</td>
-                            <td>Harry Harper</td>
-                            <td>03 February 2018 16:05</td>
-                            <td>Tracey Evans</td>
-                            <td>1 days 16 hrs 25 mins</td>
+                            <td>FG928374H</td>
+                            <td>Patsy Parker</td>
+                            <td>04 February 2018 11:10</td>
+                            <td>1 day 2 hrs 30 mins</td>
                             <td>ESA</td>
                             <td>Maintenance</td>
                             <td>In progress</td>
@@ -39,43 +38,10 @@
                             <td><a href="/allocation/esa">Update</a></td>
                         </tr>
                         <tr>
-                            <td>FG928374H</td>
-                            <td>Patsy Parker</td>
-                            <td>04 February 2018 11:10</td>
-                            <td>{{ user1 }}</td>
-                            <td>1 day 2 hrs 30 mins</td>
-                            <td>ESA</td>
-                            <td>Maintenance</td>
-                            {% if user1 === "Not allocated" %}
-                                <td>Not allocated</td>
-                            {% else %}
-                                <td>In progress</td>
-                            {% endif %}
-                            <td>Not applicable</td>
-                            <td><a href="/allocation/esa">Update</a></td>
-                        </tr>
-                        <tr>
                             <td>BC345345D</td>
                             <td>David Dixon</td>
                             <td>04 February 2018 11:10</td>
-                            <td>{{ user2 }}</td>
                             <td>1 day 2 hrs 30 mins</td>
-                            <td>ESA</td>
-                            <td>Maintenance</td>
-                            {% if user2 === "Not allocated" %}
-                                <td>Not allocated</td>
-                            {% else %}
-                                <td>In progress</td>
-                            {% endif %}
-                            <td>Not applicable</td>
-                            <td><a href="/allocation/esa">Update</a></td>
-                        </tr>
-                        <tr>
-                            <td>NP918273R</td>
-                            <td>Susan Sontag</td>
-                            <td>05 February 2018 10:40</td>
-                            <td>Don Anfill</td>
-                            <td>1 hrs 20 mins</td>
                             <td>ESA</td>
                             <td>Maintenance</td>
                             <td>In progress</td>
@@ -86,15 +52,10 @@
                             <td>AB123123C</td>
                             <td>Justin Jones</td>
                             <td>05 February 2018 11:10</td>
-                            <td>{{ user3 }}</td>
                             <td>2 hrs 30 mins</td>
                             <td>ESA</td>
                             <td>Maintenance</td>
-                            {% if user3 === "Not allocated" %}
-                                <td>Not allocated</td>
-                            {% else %}
-                                 <td>In progress</td>
-                            {% endif %}
+                            <td>In progress</td>
                             <td>Not applicable</td>
                             <td><a href="/allocation/esa">Update</a></td>
                         </tr>
@@ -102,7 +63,6 @@
                             <td>CD987654E</td>
                             <td>Arthur Armstrong</td>
                             <td>05 February 2018 11:10</td>
-                            <td>Peter Wright</td>
                             <td>2 hrs 30 mins</td>
                             <td>ESA</td>
                             <td>Maintenance</td>
@@ -114,26 +74,45 @@
                             <td>ST918273W</td>
                             <td>Terry Thomas</td>
                             <td>05 February 2018 12:10</td>
-                            <td>{{ user4 }}</td>
                             <td>2 hrs 50 mins</td>
                             <td>ESA</td>
                             <td>Maintenance</td>
-                            {% if user4 === "Not allocated" %}
-                                <td>Not allocated</td>
-                            {% else %}
-                             <td>In progress</td>
-                            {% endif %}
+                            <td>In progress</td>
                             <td>Not applicable</td>
                             <td><a href="/allocation/esa">Update</a></td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <br>
+            <br>
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <input type="submit" class="button" value="Get next work item">
+                    </div>
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="column-half">
+                    <div class="form-group">
+                        <a href="/index">Back to index page</a>
+                    </div>
+                </div>
+            </div>
     </div>
 </main>
 
 <script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script src="/public/javascripts/vendor/datatables.min.js"></script>
+
+<script>
+    $('table').DataTable({
+        paging: false,
+        info: false,
+        filter: false
+        order: [[ 4, "desc" ]],
+    })
+</script>
 
 {% endblock %}
