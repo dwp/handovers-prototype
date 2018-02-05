@@ -9,9 +9,11 @@
         <br>
         {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
             <legend class="form-label-bold">Target time to clear</legend>
+            <p>{{handover.timeLeftToTarget.timeToTarget}}</p>
         {% else %}
             <legend class="form-label-bold">Target overdue by</legend>
+            <p>{{handover.timeLeftToTarget.timeOverdue}}</p>
         {% endif %}
-                <p>{{handover.timeLeftToTarget.timeToTarget}}</p>
+
     </div>
 {% endif %}
