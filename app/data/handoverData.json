@@ -114,8 +114,8 @@
       "secondCallbackResult" : 0,
       "thirdCallbackResult" : 0,
       "escalated": "No",
-      "inQueueOfStaffId": "40001003",
-      "status": "Not allocated",
+      "inQueueOfStaffId": "40001005",
+      "status": "In progress",
       "dateAndTimeRaised": "2018-01-31T15:03:39.379Z",
       "targetDateAndTime": "2018-01-31T18:03:39.379Z"
     },
@@ -180,7 +180,7 @@
       "secondCallbackResult" : 0,
       "thirdCallbackResult" : 0,
       "escalated": "No",
-      "inQueueOfStaffId": "40001005",
+      "inQueueOfStaffId": "",
       "status": "Not allocated",
       "dateAndTimeRaised": "2018-01-30T09:06:39.379Z",
       "targetDateAndTime": "2018-01-30T12:06:39.379Z"
@@ -246,7 +246,7 @@
       "secondCallbackResult" : 0,
       "thirdCallbackResult" : 0,
       "escalated": "Yes",
-      "inQueueOfStaffId": "40001006",
+      "inQueueOfStaffId": "",
       "status": "Not allocated",
       "dateAndTimeRaised": "2018-02-01T11:09:39.379Z",
       "targetDateAndTime": "2018-02-01T14:09:39.379Z"
@@ -268,7 +268,7 @@
       "secondCallbackResult" : 0,
       "thirdCallbackResult" : 0,
       "escalated": "Yes",
-      "inQueueOfStaffId": "40001007",
+      "inQueueOfStaffId": "",
       "status": "Not allocated",
       "dateAndTimeRaised": "2018-02-02T11:09:39.379Z",
       "targetDateAndTime": "2018-02-02T14:09:39.379Z"
@@ -290,7 +290,7 @@
       "secondCallbackResult": 0,
       "thirdCallbackResult": 0,
       "escalated": "Yes",
-      "inQueueOfStaffId": "40001003",
+      "inQueueOfStaffId": "",
       "status": "Not allocated",
       "dateAndTimeRaised": "2018-01-31T11:09:39.379Z",
       "targetDateAndTime": "2018-01-31T14:09:39.379Z"

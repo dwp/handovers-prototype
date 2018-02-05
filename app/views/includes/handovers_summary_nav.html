@@ -9,7 +9,7 @@
         </li>
 
         <li class="{% if currentClaimantPage === 'queues' %}selected{% endif %}">
-            <a id="queue_view" href="/queue/view?agentId=40001004" class="menu-item">Queue</a>
+            <a id="queue_view" href="/queue/view?agentId={{data.user.staffId}}" class="menu-item">Queue</a>
         </li>
 
         <li class="{% if currentClaimantPage === 'teams' %}selected{% endif %}">

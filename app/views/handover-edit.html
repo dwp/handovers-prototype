@@ -89,9 +89,15 @@
                 </div>
                 <br>
                 {% if editOrCreate === 'edit' %}
-                <div>
-                    <a href="../queue/view?queueType=office">Back to queue</a>
-                </div>
+                    {% if queueType === 'office' %}
+                        <div>
+                            <a href="../queue/view?queueType=office">Back to queue</a>
+                        </div>
+                    {% else %}
+                        <div>
+                            <a href="../queue/view?agentId={{ user.staffId }}">Back to queue</a>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </form>

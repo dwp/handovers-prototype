@@ -245,7 +245,7 @@ function editHandoverPage(req, res) {
     let handoverReasonsList = initialData.initialHandoverReasons;
     let callbackStatusValues = callbackData['callbackStatusValues'];
     let callbackResultValues = callbackData['callbackResultValues'];
-    let users = req.session.user ? req.session.user : sIDU.setInitialUsersData();
+    let users = sIDU.setInitialUsersData();
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
     let handover;
     let handoverNotes = [];
