@@ -15,7 +15,6 @@
       <p>
         Allows prototyping of service to raise and process handovers
       </p>
-
     </div>
   </div>
   <div class="grid-row">
@@ -63,9 +62,9 @@
     {% set initialScreens = [{
     workTitle : 'Queues',
     links: [{
-    link : '/queue/view', title : 'View office queue'
+    link : '/queue/view?queueType=office', title : 'View office queue'
     },{
-    link : '/queue/view?agentId=40001004', title : 'View my queue'
+    link : '/queue/view?agentId=' + data.user.staffId, title : 'View my queue'
     }]
     }] %}
 

@@ -4,12 +4,13 @@
 */
 
 class User {
-    constructor(firstName, lastName, staffId, telNum) {
+    constructor(firstName, lastName, staffId, telNum, role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.staffId = staffId;
         this.telNum = telNum;
         this.homeOfficeLocation = 'Barnsley Jobcentre';
+        this.role = role;
     }
 
     setHomeOfficeLocation(newOfficeLocation) {
