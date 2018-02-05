@@ -17,9 +17,31 @@
       </p>
     </div>
   </div>
-
   <div class="grid-row">
-    {% set groupLinksScreens = [{
+    {% set allocationScreens = [{
+    workTitle : 'Supervisor view',
+    links: [{
+    link : '/allocation/esa', title : 'ESA Maintenance Queue - allocate user'
+    }]
+    }] %}
+
+    {{ sprintLinks( 'Allocation of handovers', allocationScreens) }}
+
+    {% set allocationScreens = [{
+    workTitle : 'User view',
+    links: [{
+    link : '/allocation/user', title : 'User queue - before allocation'
+    },{
+    link : '/allocationFlow/userQAfter.html', title : 'User queue - after allocation'
+    }]
+    }] %}
+
+    {{ sprintLinks( '', allocationScreens) }}
+
+
+  </div>
+  <div class="grid-row">
+    {% set initialScreens = [{
     workTitle : 'Customers',
     links: [{
     link : '/customer/find', title : 'Find customer'
@@ -34,10 +56,10 @@
     }]
     }] %}
 
-    {{ sprintLinks( 'Handovers Pages', groupLinksScreens) }}
+    {{ sprintLinks( 'Initial Prototype', initialScreens) }}
 
 
-    {% set groupLinksScreens = [{
+    {% set initialScreens = [{
     workTitle : 'Queues',
     links: [{
     link : '/queue/view?queueType=office', title : 'View office queue'
@@ -46,10 +68,10 @@
     }]
     }] %}
 
-    {{ sprintLinks( '', groupLinksScreens) }}
+    {{ sprintLinks( '', initialScreens) }}
 
 
-    {% set groupLinksScreens = [{
+    {% set initialScreens = [{
     workTitle : 'Handovers',
     links: [{
     link : '/handover/create?nino=AA123456B', title : 'Create handover'
@@ -60,10 +82,10 @@
     }]
     }] %}
 
-    {{ sprintLinks( '', groupLinksScreens) }}
+    {{ sprintLinks( '', initialScreens) }}
   </div>
   <div class="grid-row">
-    {% set groupLinksScreens = [{
+    {% set initialScreens = [{
     workTitle : 'Teams',
     links: [{
     link : '/team_menu.html', title : 'Team management menu'
@@ -78,7 +100,7 @@
     }]
     }] %}
 
-    {{ sprintLinks( '', groupLinksScreens) }}
+    {{ sprintLinks( '', initialScreens) }}
 
   </div>
 </div>
