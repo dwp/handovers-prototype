@@ -54,7 +54,7 @@ function viewQueuePage(req, res) {
         }
     }
     req.session.messages = [];
-    sortedHandoversQueueList = _.sortBy(handoversQueueList, [{'dateAndTimeRaised' : 'desc'}]);
+    sortedHandoversQueueList = _.orderBy(handoversQueueList, ['callback', 'dateAndTimeRaised'], ['desc', 'asc']);
     res.render('queue', {
         messages : messages,
         messagesLength : messagesLength,
