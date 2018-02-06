@@ -48,3 +48,7 @@ caption {
 .column-three-quarters {
   @include grid-column( 3/4 );
 }
+
+.highlight-table-row {
+  background-color : $mellow-red-50;
+}

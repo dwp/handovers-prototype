@@ -100,19 +100,23 @@ function calcTimeLeftToTarget(date) {
     let overdueHours = Math.floor((overdue % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let overdueMinutes = Math.floor((overdue % (1000 * 60 * 60)) / (1000 * 60));
 
-    let timeOverdue;
     let timeToTarget;
+    let timeOverdue;
+    let overdueMoreThanOneHour = 0;
     let expiredOrNot = 0;
     let calcResult;
 
     if (difference < 0) {
         expiredOrNot = 1;
         timeOverdue = (overdueDays + " days " + overdueHours + " hrs " + overdueMinutes + " mins");
+        if (overdueDays > 0 || overdueHours > 1) {
+            overdueMoreThanOneHour = 1;
+        }
     } else {
         timeToTarget = (hours + " hrs " + minutes + " mins");
     }
 
-    calcResult = { "expiredOrNot" : expiredOrNot, "timeToTarget" : timeToTarget, "timeOverdue" : timeOverdue };
+    calcResult = { "expiredOrNot" : expiredOrNot, "timeToTarget" : timeToTarget, "timeOverdue" : timeOverdue, "overdueMoreThanOneHour" : overdueMoreThanOneHour };
     return calcResult;
 }
 

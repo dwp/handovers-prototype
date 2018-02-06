@@ -34,7 +34,7 @@
                     </thead>
                     <tbody>
                     {% for handover in handoversQueueList %}
-                        <tr>
+                        <tr {% if handover.callback === 'Yes' and handover.timeLeftToTarget.overdueMoreThanOneHour == 1 %} class="highlight-table-row" {% endif %}>
                             <td>{{handover.nino}}</td>
                             <td>{{handover.customerDetails.firstName}} {{handover.customerDetails.lastName}}</td>
                             <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
@@ -91,7 +91,7 @@
         paging: false,
         info: false,
         filter: false
-        order: [[ 4, "desc" ]],
+//        order: [[ 2, "desc" ]]
     })
 </script>
 
