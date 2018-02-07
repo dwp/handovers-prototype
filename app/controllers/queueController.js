@@ -2,7 +2,6 @@ const _ = require('lodash');
 const handoverUtils = require('../utils/handoverUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
-const commonUtils = require('../utils/commonUtils');
 const userUtils = require('../utils/userUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');

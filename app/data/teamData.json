@@ -67,7 +67,7 @@
         "staffId": "40001000",
         "telNum": "01234 567890",
         "owningOfficeId" : "1",
-        "role" : "0"
+        "role" : "1"
       },
       {
         "firstName": "Callum",

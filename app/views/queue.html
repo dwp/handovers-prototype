@@ -29,12 +29,13 @@
                             <th scope="col"><span>Handover type</span></th>
                             <th scope="col"><span>Handover Status</span></th>
                             <th scope="col"><span>Callback status</span></th>
+                            <th scope="col"><span>!</span></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for handover in handoversQueueList %}
-                        <tr {% if handover.callback === 'Yes' and handover.timeLeftToTarget.overdueMoreThanOneHour == 1 %} class="highlight-table-row" {% endif %}>
+                        <tr {% if handover.callback === 'Yes' and handover.timeLeftToTarget.expiredOrNot == 1 %} class="highlight-table-row" {% endif %}>
                             <td>{{handover.nino}}</td>
                             <td>{{handover.customerDetails.firstName}} {{handover.customerDetails.lastName}}</td>
                             <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
@@ -42,18 +43,28 @@
                                 {% if handover.status === "Not allocated" %}
                                     <td>Not applicable</td>
                                 {% else %}
-                                    <td>{{handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName}}</td>
+                                    <td>{{ handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName }}</td>
                                 {% endif %}
                             {% endif %}
-                            {% if handover.timeLeftToTarget.expiredOrNot == 1 %}
+                            {% if handover.timeLeftToTarget.expiredOrNot == 1 and handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown == 0 %}
                                 <td>Expired</td>
                             {% else %}
-                                <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
+                                <td>{% if handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown == 0 %}
+                                        {{ handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown }}
+                                    {% else %}
+                                        {{ handover.timeLeftToTarget.timeToTarget }}
+                                    {% endif %}
+                                </td>
                             {% endif %}
                             <td>{{handover.benefitAbbr}}</td>
                             <td>{{handover.handoverType}}</td>
                             <td>{{handover.status}}</td>
                             <td>{{handover.callbackStatusDescription}}</td>
+                            {% if (handover.callback === 'Yes' and handover.expiredOrNot == 1) or (handover.callback === 'Yes' and handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown > 0) %}
+                                <td>!</td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
                             <td>{{handoverUpdateLink(handover)}}</td>
                         </tr>
                     {% endfor %}

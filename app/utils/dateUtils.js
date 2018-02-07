@@ -93,30 +93,36 @@ function calcTimeLeftToTarget(date) {
     let days = Math.floor(difference / (1000 * 60 * 60 * 24));
     let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-// Find the difference between the target date and now
-    let overdue = now - targetDateTime;
-// Time overdue calculations for days, hours and minutes
-    let overdueDays = Math.floor(overdue / (1000 * 60 * 60 * 24));
-    let overdueHours = Math.floor((overdue % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let overdueMinutes = Math.floor((overdue % (1000 * 60 * 60)) / (1000 * 60));
 
     let timeToTarget;
     let timeOverdue;
-    let overdueMoreThanOneHour = 0;
+    let overdueBetweenThreeAndFourHoursCountdown = 0;
     let expiredOrNot = 0;
     let calcResult;
 
-    if (difference < 0) {
-        expiredOrNot = 1;
-        timeOverdue = (overdueDays + " days " + overdueHours + " hrs " + overdueMinutes + " mins");
-        if (overdueDays > 0 || overdueHours > 1) {
-            overdueMoreThanOneHour = 1;
-        }
-    } else {
+    if (difference > 0) {                                           // target time not yet reached
         timeToTarget = (hours + " hrs " + minutes + " mins");
+    } else {                                                        // target time has passed  (overdue)
+        if (days > 0) {                                             // overdue by more than a day, so always show as expired
+            timeOverdue = (days + " days " + hours + " hrs " + minutes + " mins");
+        } else {                                                    // overdue by less than a day
+            if (hours >= 4) {                                       // overdue by less than a day and by more than 4 hours, so show as expired
+                timeOverdue = (hours + " hrs " + minutes + " mins");
+            } else {                                                // overdue by less than a day and by less than 4 hours
+                if (hours >= 3) {                                   // overdue by less than a day and by less than 4 hours, but by more than or equal to 3 hours
+                    overdueBetweenThreeAndFourHoursCountdown = (60 - minutes); //  calculate how many minutes left of the fourth hour
+                    timeOverdue = (hours + " hrs " + minutes + " mins");
+                }
+            }
+        }
+        expiredOrNot = 1;
     }
 
-    calcResult = { "expiredOrNot" : expiredOrNot, "timeToTarget" : timeToTarget, "timeOverdue" : timeOverdue, "overdueMoreThanOneHour" : overdueMoreThanOneHour };
+    calcResult = {  "expiredOrNot" : expiredOrNot,
+                    "timeToTarget" : timeToTarget,
+                    "timeOverdue" : timeOverdue,
+                    "overdueBetweenThreeAndFourHoursCountdown" : overdueBetweenThreeAndFourHoursCountdown
+                };
     return calcResult;
 }
 
