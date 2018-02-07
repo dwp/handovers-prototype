@@ -1,7 +1,7 @@
 /**
  * Created by janegleadall on 24/08/2017.
  */
-var customer = require("../controllers/customerController.js");
+const customer = require("../controllers/customerController.js");
 
 module.exports = function(router) {
 

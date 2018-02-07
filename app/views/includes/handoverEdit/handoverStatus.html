@@ -2,10 +2,10 @@
     <div class="column-half">
         <legend class="form-label-bold">Handover status</legend>
         {% if handover.status === "Withdrawn" %}
-            <p>Cannot be changed as current status is 'Withdrawn'</p>
+            <p>Cannot be changed - handover has been withdrawn</p>
         {% else %}
             {% if handover.status === "Cleared" %}
-            <p>Cannot be changed as current status is 'Cleared'</p>
+            <p>Cannot be changed - handover has been cleared</p>
             {% else %}
             <select class="select form-control" name="handover-status" id=handover-status">
                 {% if handover.status === "Not allocated" %}

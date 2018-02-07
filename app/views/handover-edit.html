@@ -67,14 +67,14 @@
                 <br>
 
                 <div class="grid-row">
-                    {% include "includes/handoverEdit/callBack.html" %}
+                    {% include "includes/handoverEdit/callback.html" %}
                     {% include "includes/handoverEdit/handoverStatus.html" %}
                 </div>
                 <br>
 
                 {% if editOrCreate === 'edit' %}
                     <div class="grid-row">
-                        {% include "includes/handoverEdit/callBackStatus.html" %}
+                        {% include "includes/handoverEdit/callbackStatus.html" %}
                     </div>
                 {% endif %}
                 <br>
@@ -87,6 +87,18 @@
                 <div class="form-group">
                     <input type="submit" class="button" value="Submit">
                 </div>
+                <br>
+                {% if editOrCreate === 'edit' %}
+                    {% if queueType === 'office' %}
+                        <div>
+                            <a href="../queue/view?queueType=office">Back to queue</a>
+                        </div>
+                    {% else %}
+                        <div>
+                            <a href="../queue/view?agentId={{ user.staffId }}">Back to queue</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
             </div>
         </form>
     </div>

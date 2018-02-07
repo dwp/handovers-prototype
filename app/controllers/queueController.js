@@ -6,21 +6,20 @@ const commonUtils = require('../utils/commonUtils');
 const userUtils = require('../utils/userUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
+const callbackData = require('../data/callbackData.json');
 
 function viewQueuePage(req, res) {
 
     let users = sIDU.setInitialUsersData();
+    let user = req.session.user;
     let offices = sIDU.setInitialOfficesData();
     let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
     let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
     let handoversLength = handovers.length;
-    let messages = req.session.queueMessages ? req.session.queueMessages : [];
+    let callbackStatusValues = callbackData['callbackStatusValues'];
+    let messages = req.session.messages ? req.session.messages : [];
     let messagesLength = messages.length;
     let queueType = req.query.agentId ? 'agent' : 'office';
-    let queueAgent = '';
-    if (queueType === 'agent') {
-        queueAgent = userUtils.getUserByStaffIdFromListOfUsers(users, (req.query.agentId ? req.query.agentId : '40001003'));
-    }
     let handoversQueueList = [];
     let sortedHandoversQueueList;
     for (let i=0; i < handoversLength; i++) {
@@ -28,6 +27,8 @@ function viewQueuePage(req, res) {
         if (handover.status === "Cleared" || handover.status === "Withdrawn") {
         //    Do nothing
         } else {
+            let callbackStatusDescription = callbackStatusValues[handover.callbackStatus].callbackStatus;
+            handover.callbackStatusDescription = callbackStatusDescription;
             let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
             let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
             let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
@@ -44,7 +45,7 @@ function viewQueuePage(req, res) {
             handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(offices, handover.receivingOfficeId);
             handover.customerDetails = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, handover.nino);
             if (queueType === 'agent') {
-                if (handover.inQueueOfStaffId == queueAgent.staffId) {
+                if (handover.inQueueOfStaffId == user.staffId) {
                     handoversQueueList.push(handover);
                 }
             } else {
@@ -52,13 +53,14 @@ function viewQueuePage(req, res) {
             }
         }
     }
-    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['timeLeftToTarget.timeToTarget']);
+    req.session.messages = [];
+    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['dateAndTimeRaised']);
     res.render('queue', {
         messages : messages,
         messagesLength : messagesLength,
         handoversQueueList : sortedHandoversQueueList,
         queueType : queueType,
-        queueAgent : queueAgent
+        queueAgent : user
     });
 }
 
@@ -68,6 +70,7 @@ function getNextQueueItem(req, res) {
     let sortedHandovers = _.sortBy(handovers, ['dateAndTimeRaised']);
     let sortedHandoversLength = sortedHandovers.length;
     let users = sIDU.setInitialUsersData();
+    let user = req.session.user;
     let agentDetails = userUtils.getUserByStaffIdFromListOfUsers(users, req.query.agentId);
     let gotFirstUnallocatedItem = 0;
     let newHandoversQueueList = [];
@@ -76,7 +79,7 @@ function getNextQueueItem(req, res) {
     for (let i=0; i < sortedHandoversLength; i++) {
         if (gotFirstUnallocatedItem === 0) {
             if (sortedHandovers[i].status === "Not allocated") {
-                sortedHandovers[i].inQueueOfStaffId = "40001004";
+                sortedHandovers[i].inQueueOfStaffId = user.staffId;
                 sortedHandovers[i].status = "In progress";
                 gotFirstUnallocatedItem = 1;
             }
@@ -88,8 +91,8 @@ function getNextQueueItem(req, res) {
         messages.push(message);
     }
     req.session.handovers = newHandoversQueueList;
-    req.session.queueMessages = messages;
-    res.redirect('/queue/view?agentId=40001004');
+    req.session.messages = messages;
+    res.redirect('/queue/view?agentId=' + user.staffId);
 
 }
 

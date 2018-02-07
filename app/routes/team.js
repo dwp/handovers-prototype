@@ -1,7 +1,7 @@
 /**
  * Created by janegleadall on 24/08/2017.
  */
-var team = require("../controllers/teamController.js");
+const team = require("../controllers/teamController.js");
 
 module.exports = function(router) {
 

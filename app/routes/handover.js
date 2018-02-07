@@ -1,4 +1,4 @@
-var handover = require("../controllers/handoverController.js");
+const handover = require("../controllers/handoverController.js");
 
 module.exports = function(router) {
 
