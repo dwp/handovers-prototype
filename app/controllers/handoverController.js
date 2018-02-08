@@ -296,6 +296,7 @@ function editHandoverPage(req, res) {
     req.session.handover = handover;
     req.session.handovers = handovers;
     res.render('handover-edit', {
+        users : users,
         benList : benefitsList,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
@@ -325,6 +326,7 @@ function editHandoverPageAction(req, res) {
     let customer = req.session.customer;
     let handoverNote = req.body['handover-note'];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
+    let allocatedUser = req.body['handover-allocated-user'];
     let editedHandover = {};
     let editedHandoverNote = {};
     let validatedHandoverAndErrors;
@@ -336,7 +338,7 @@ function editHandoverPageAction(req, res) {
     editedHandover.nino = handover.nino;
     editedHandover.description = handover.description;
     editedHandover.raisedByStaffId = handover.raisedByStaffId;
-    editedHandover.inQueueOfStaffId = handover.inQueueOfStaffId;
+    editedHandover.inQueueOfStaffId = allocatedUser ? allocatedUser : handover.inQueueOfStaffId;
     editedHandover.raisedOnBehalfOfOfficeId = handover.raisedOnBehalfOfOfficeId;
     editedHandover.receivingOfficeId = handover.receivingOfficeId;
     editedHandover.benefitId = req.body['benefit'] || handover.benefitId;
@@ -384,9 +386,14 @@ function editHandoverPageAction(req, res) {
         if (editedHandover.callbackStatus == 4) {
             editedHandover.status = "Cleared";
         } else {
-            editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
+            if (handover.inQueueOfStaffId === "" && editedHandover.inQueueOfStaffId !== "") {
+                editedHandover.status = "In progress";
+            } else {
+                editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
+            }
         }
     }
+    if (handover.inQueueOfStaffId === "" && editedHandover.inQueueOfStaffId !== "") { editedHandover.status = "In progress" ;}
     editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
     editedHandover.targetDateAndTime = handover.targetDateAndTime;
 
