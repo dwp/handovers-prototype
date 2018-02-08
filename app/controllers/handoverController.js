@@ -409,10 +409,10 @@ function editHandoverPageAction(req, res) {
             newHandoverNotes.unshift(updatedHandoverNote);
         }
     }
-    req.session.customer = customer;
     editedHandover.notes = newHandoverNotes;
+    req.session.customer = customer;
     validatedHandoverAndErrors = handoverUtils.validateHandover(editedHandover);
-    if (validatedHandoverAndErrors.errors.length === 0) {
+    if (validatedHandoverAndErrors.errors.length == 0) {
         handoversList[handoverIndex] = validatedHandoverAndErrors.handover;
         req.session.errors = [];
         dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(validatedHandoverAndErrors.handover.dateAndTimeRaised);
