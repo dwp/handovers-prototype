@@ -13,12 +13,18 @@
     {% if data.user.role == 1 %}
         <div class="column-half">
             <legend class="form-label-bold">Select agent to allocate to handover</legend>
-            <select class="select form-control" name="handover-allocated-user" id=handover-allocated-user">
+            {% if handover.status === "Cleared" %}
+                <p>Cannot re-allocate because handover cleared</p>
+            {% elif handover.status === "Withdrawn" %}
+                <p>Cannot re-allocate because handover withdrawn</p>
+            {% else %}
+                <select class="select form-control" name="handover-allocated-user" id=handover-allocated-user">
                 <option value="">Select</option>
-                {% for user in users %}
-                    <option value="{{ user.staffId }}" {{ 'selected' if user.staffId === handover.inQueueOfStaffId else ''}}>{{ user.firstName }} {{ user.lastName }} - {{ user.staffId }}</option>
-                {% endfor %}
-            </select>
+                    {% for user in users %}
+                        <option value="{{ user.staffId }}" {{ 'selected' if user.staffId === handover.inQueueOfStaffId else ''}}>{{ user.firstName }} {{ user.lastName }} - {{ user.staffId }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
         </div>
     {% else %}
         <div class="column-half">

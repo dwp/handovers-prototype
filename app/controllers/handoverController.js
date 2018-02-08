@@ -266,7 +266,7 @@ function editHandoverPage(req, res) {
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
     handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
     handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
-    handover.timeLeftToTarget = dateUtils.calcTimeLeftOrTimeOverdue(handover.targetDateAndTime);
+    handover.timeLeftToTarget = dateUtils.calcTimeLeftOrTimeOverdue(handover.targetDateAndTime, handover.callback);
     handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
     let inQueueOfStaffDetails;
     if (handover.inQueueOfStaffId !== "") {
@@ -329,6 +329,11 @@ function editHandoverPageAction(req, res) {
     let allocatedUser = req.body['handover-allocated-user'];
     let editedHandover = {};
     let editedHandoverNote = {};
+    let newCallbackStatusAndResult;
+    let newResult;
+    let firstCallResult;
+    let secondCallResult;
+    let thirdCallResult;
     let validatedHandoverAndErrors;
     let validatedHandoverDetails;
     let newHandoverNotes = [];
@@ -370,11 +375,10 @@ function editHandoverPageAction(req, res) {
                 editedHandover.secondCallbackResult = 0;
                 editedHandover.thirdCallbackResult = 0;
             } else {                                        // i.e. it used to be "Yes", and its still "Yes", so now need to check if the callbackStatus has changed
-                let newCallbackStatusAndResult;
-                let newResult = parseInt(req.body['handover-callback-result']);
-                let firstCallResult = handover.firstCallbackResult;
-                let secondCallResult = handover.secondCallbackResult;
-                let thirdCallResult = handover.thirdCallbackResult;
+                newResult = parseInt(req.body['handover-callback-result']);
+                firstCallResult = handover.firstCallbackResult;
+                secondCallResult = handover.secondCallbackResult;
+                thirdCallResult = handover.thirdCallbackResult;
                 newCallbackStatusAndResult = getNewCallbackStatusAndResult(handover.callbackStatus, newResult,
                     firstCallResult, secondCallResult, thirdCallResult);
                 editedHandover.callbackStatus = newCallbackStatusAndResult.newStatus;

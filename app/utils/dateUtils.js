@@ -82,52 +82,64 @@ function getMonthForDisplay(monthIn) {
 
 }
 
-function calcTimeLeftOrTimeOverdue(dateTime) {
-// Set the date we're counting down to
-    let target = new Date(dateTime);
-// Get todays date and time
-    let now = new Date();
-// Find the difference between now and the target date
-    let difference = target - now;
-// Time calculations for hours and minutes
+function calcTimeLeftOrTimeOverdue(targetDateTime, callback) {
+
+    let callbackReqd = 0;
+    let now = new Date();                                                           //  Find date and time now
+    let target = new Date(targetDateTime);                                          //  Assign dateTime input object to new local date object
+    let difference = target - now;                                                  //  Find difference between the target and now
+    let targetPlusOneHour = new Date(targetDateTime);                               //  Assign dateTime input object to another new local date object
+    targetPlusOneHour.setHours(targetPlusOneHour.getHours() + 1);                   //  Set to target time plus one hour
+    let differencePlusOneHour = targetPlusOneHour - now;                            //  Find difference between target time plus one hour, and now
+    let withinOriginalTargetTime = 0;
+    let withinAdditionalHour = 0;
+    let expired = 0;
+    let timeOverdue;
+    let timeRemaining;
+    let calcResult;
+
+    // Time calculations for the difference in hours and minutes between target time and now
     let days = Math.floor(difference / (1000 * 60 * 60 * 24));
     let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-// Change difference to absolute value so not displaying negative numbers
-    let absDays = Math.abs(days);
-    let absHours = Math.abs(hours);
-    let absMinutes = Math.abs(minutes);
 
-    let timeToTarget;
-    let timeOverdue;
-    let overdueBetweenThreeAndFourHoursCountdown = 0;
-    let expiredOrNot = 0;
-    let calcResult;
-
-    if (difference > 0) {                                           // target time not yet reached
-        timeToTarget = (hours + " hrs " + minutes + " mins");
-    } else {                                                        // target time has passed  (overdue)
-        if (days > 0) {                                          // overdue by more than a day, so always show as expired
-            timeOverdue = (absDays + " days " + absHours + " hrs " + absMinutes + " mins");
-        } else {                                                    // overdue by less than a day
-            if (absHours >= 4) {                                       // overdue by less than a day and by more than 4 hours, so show as expired
-                timeOverdue = (absHours + " hrs " + absMinutes + " mins");
-            } else {                                                // overdue by less than a day and by less than 4 hours
-                if (absHours >= 3) {                                   // overdue by less than a day and by less than 4 hours, but by more than or equal to 3 hours
-                    overdueBetweenThreeAndFourHoursCountdown = (60 - absMinutes); //  calculate how many minutes left of the fourth hour
-                    timeOverdue = (overdueBetweenThreeAndFourHoursCountdown + " mins");
-                }
-            }
-        }
-        expiredOrNot = 1;
+    let hoursPlusOne = Math.floor((differencePlusOneHour % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutesPlusOne = Math.floor((differencePlusOneHour % (1000 * 60 * 60)) / (1000 * 60));
+    if (callback === "Yes") {
+        callbackReqd = 1;
     }
 
-    calcResult = {  "expiredOrNot" : expiredOrNot,
-                    "timeToTarget" : timeToTarget,
-                    "timeOverdue" : timeOverdue,
-                    "overdueBetweenThreeAndFourHoursCountdown" : overdueBetweenThreeAndFourHoursCountdown
-                };
+    if ( difference > 0) {                                                          //  If difference is positive, we are still within the original target time
+        withinOriginalTargetTime = 1;
+    } else {
+        if ( differencePlusOneHour > 0 ) {                                          //  If callback is reqd, and difference to target time plus one hour is positive, we are still within the callback escalation additional time
+            withinAdditionalHour = 1;
+        }
+    }
+
+    if (withinOriginalTargetTime == 1) {
+        timeRemaining = (hours + " hrs " + minutes + " minutes");
+    } else {
+        if (withinAdditionalHour == 1 && callbackReqd == 1) {
+            timeRemaining = (hoursPlusOne + " hrs " + minutesPlusOne + " mins");
+        } else {
+            expired = 1;
+        }
+    }
+
+    if ( expired == 1) {
+        timeOverdue = ((Math.abs(days) - 1) + " days " + (Math.abs(hours) -1) + " hrs " + Math.abs(minutes) + " mins");
+    }
+
+    calcResult =  { "expired" : expired,
+                    "withinOriginalTargetTime" : withinOriginalTargetTime,
+                    "withinAdditionalHour" : withinAdditionalHour,
+                    "timeRemaining" : timeRemaining,
+                    "timeOverdue" : timeOverdue
+                    };
+
     return calcResult;
+
 }
 
 module.exports.formatDateAndTimeForDisplay = formatDateAndTimeForDisplay;
