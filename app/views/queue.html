@@ -29,12 +29,13 @@
                             <th scope="col"><span>Handover type</span></th>
                             <th scope="col"><span>Handover Status</span></th>
                             <th scope="col"><span>Callback status</span></th>
+                            <th scope="col"><span>!</span></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for handover in handoversQueueList %}
-                        <tr>
+                        <tr {% if handover.callback === 'Yes' and handover.timeLeftToTarget.withinOriginalTargetTime == 0 %} class="highlight-table-row" {% endif %}>
                             <td>{{handover.nino}}</td>
                             <td>{{handover.customerDetails.firstName}} {{handover.customerDetails.lastName}}</td>
                             <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
@@ -42,18 +43,23 @@
                                 {% if handover.status === "Not allocated" %}
                                     <td>Not applicable</td>
                                 {% else %}
-                                    <td>{{handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName}}</td>
+                                    <td>{{ handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName }}</td>
                                 {% endif %}
                             {% endif %}
-                            {% if handover.timeLeftToTarget.expiredOrNot == 1 %}
+                            {% if handover.timeLeftToTarget.expired == 1 %}
                                 <td>Expired</td>
                             {% else %}
-                                <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
+                                <td>{{ handover.timeLeftToTarget.timeRemaining }}</td>
                             {% endif %}
                             <td>{{handover.benefitAbbr}}</td>
                             <td>{{handover.handoverType}}</td>
                             <td>{{handover.status}}</td>
                             <td>{{handover.callbackStatusDescription}}</td>
+                            {% if handover.callback === 'Yes' and handover.timeLeftToTarget.withinOriginalTargetTime == 0 %}
+                                <td>!</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
                             <td>{{handoverUpdateLink(handover)}}</td>
                         </tr>
                     {% endfor %}
@@ -91,7 +97,7 @@
         paging: false,
         info: false,
         filter: false,
-        order: [[ 4, "desc" ]]
+        order: [[ 9, "desc" ]]
     })
 </script>
 

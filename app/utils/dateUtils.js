@@ -82,42 +82,68 @@ function getMonthForDisplay(monthIn) {
 
 }
 
-function calcTimeLeftToTarget(date) {
-// Set the date we're counting down to
-    let targetDateTime = new Date(date).getTime();
-// Get todays date and time
-    let now = new Date().getTime();
-// Find the difference between now and the target date
-    let difference = targetDateTime - now;
-// Time calculations for hours and minutes
+function calcTimeLeftOrTimeOverdue(targetDateTime, callback) {
+
+    let callbackReqd = 0;
+    let now = new Date();                                                           //  Find date and time now
+    let target = new Date(targetDateTime);                                          //  Assign dateTime input object to new local date object
+    let difference = target - now;                                                  //  Find difference between the target and now
+    let targetPlusOneHour = new Date(targetDateTime);                               //  Assign dateTime input object to another new local date object
+    targetPlusOneHour.setHours(targetPlusOneHour.getHours() + 1);                   //  Set to target time plus one hour
+    let differencePlusOneHour = targetPlusOneHour - now;                            //  Find difference between target time plus one hour, and now
+    let withinOriginalTargetTime = 0;
+    let withinAdditionalHour = 0;
+    let expired = 0;
+    let timeOverdue;
+    let timeRemaining;
+    let calcResult;
+
+    // Time calculations for the difference in hours and minutes between target time and now
     let days = Math.floor(difference / (1000 * 60 * 60 * 24));
     let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-// Find the difference between the target date and now
-    let overdue = now - targetDateTime;
-// Time overdue calculations for days, hours and minutes
-    let overdueDays = Math.floor(overdue / (1000 * 60 * 60 * 24));
-    let overdueHours = Math.floor((overdue % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let overdueMinutes = Math.floor((overdue % (1000 * 60 * 60)) / (1000 * 60));
 
-    let timeOverdue;
-    let timeToTarget;
-    let expiredOrNot = 0;
-    let calcResult;
-
-    if (difference < 0) {
-        expiredOrNot = 1;
-        timeOverdue = (overdueDays + " days " + overdueHours + " hrs " + overdueMinutes + " mins");
-    } else {
-        timeToTarget = (hours + " hrs " + minutes + " mins");
+    let hoursPlusOne = Math.floor((differencePlusOneHour % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutesPlusOne = Math.floor((differencePlusOneHour % (1000 * 60 * 60)) / (1000 * 60));
+    if (callback === "Yes") {
+        callbackReqd = 1;
     }
 
-    calcResult = { "expiredOrNot" : expiredOrNot, "timeToTarget" : timeToTarget, "timeOverdue" : timeOverdue };
+    if ( difference > 0) {                                                          //  If difference is positive, we are still within the original target time
+        withinOriginalTargetTime = 1;
+    } else {
+        if ( differencePlusOneHour > 0 ) {                                          //  If callback is reqd, and difference to target time plus one hour is positive, we are still within the callback escalation additional time
+            withinAdditionalHour = 1;
+        }
+    }
+
+    if (withinOriginalTargetTime == 1) {
+        timeRemaining = (hours + " hrs " + minutes + " minutes");
+    } else {
+        if (withinAdditionalHour == 1 && callbackReqd == 1) {
+            timeRemaining = (hoursPlusOne + " hrs " + minutesPlusOne + " mins");
+        } else {
+            expired = 1;
+        }
+    }
+
+    if ( expired == 1) {
+        timeOverdue = ((Math.abs(days) - 1) + " days " + (Math.abs(hours) -1) + " hrs " + Math.abs(minutes) + " mins");
+    }
+
+    calcResult =  { "expired" : expired,
+                    "withinOriginalTargetTime" : withinOriginalTargetTime,
+                    "withinAdditionalHour" : withinAdditionalHour,
+                    "timeRemaining" : timeRemaining,
+                    "timeOverdue" : timeOverdue
+                    };
+
     return calcResult;
+
 }
 
 module.exports.formatDateAndTimeForDisplay = formatDateAndTimeForDisplay;
 module.exports.formatDateForDisplay = formatDateForDisplay;
 module.exports.getNumericMonth = getNumericMonth;
 module.exports.getMonthForDisplay = getMonthForDisplay;
-module.exports.calcTimeLeftToTarget = calcTimeLeftToTarget;
+module.exports.calcTimeLeftOrTimeOverdue = calcTimeLeftOrTimeOverdue;

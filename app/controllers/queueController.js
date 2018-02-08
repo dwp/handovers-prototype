@@ -2,7 +2,6 @@ const _ = require('lodash');
 const handoverUtils = require('../utils/handoverUtils');
 const sIDU = require('../utils/setInitialDataUtils');
 const dateUtils = require('../utils/dateUtils');
-const commonUtils = require('../utils/commonUtils');
 const userUtils = require('../utils/userUtils');
 const officeUtils = require('../utils/officeUtils');
 const customerUtils = require('../utils/customerUtils');
@@ -22,6 +21,9 @@ function viewQueuePage(req, res) {
     let queueType = req.query.agentId ? 'agent' : 'office';
     let handoversQueueList = [];
     let sortedHandoversQueueList;
+
+    if (user.role == 1) { queueType = 'office' };
+
     for (let i=0; i < handoversLength; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
         if (handover.status === "Cleared" || handover.status === "Withdrawn") {
@@ -40,7 +42,7 @@ function viewQueuePage(req, res) {
             handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
             handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
             handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
-            handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
+            handover.timeLeftToTarget = dateUtils.calcTimeLeftOrTimeOverdue(handover.targetDateAndTime, handover.callback);
             handover.inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
             handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(offices, handover.receivingOfficeId);
             handover.customerDetails = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, handover.nino);
@@ -54,7 +56,7 @@ function viewQueuePage(req, res) {
         }
     }
     req.session.messages = [];
-    sortedHandoversQueueList = _.sortBy(handoversQueueList, ['dateAndTimeRaised']);
+    sortedHandoversQueueList = _.orderBy(handoversQueueList, ['callback', 'dateAndTimeRaised'], ['desc', 'asc']);
     res.render('queue', {
         messages : messages,
         messagesLength : messagesLength,

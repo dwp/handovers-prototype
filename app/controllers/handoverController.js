@@ -266,7 +266,7 @@ function editHandoverPage(req, res) {
     userWhoRaisedHandover.officeDetails.officeType = officeTypes[userOfficeTypeIndex].officeType;
     handover.dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
     handover.targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
-    handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
+    handover.timeLeftToTarget = dateUtils.calcTimeLeftOrTimeOverdue(handover.targetDateAndTime, handover.callback);
     handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, handover.receivingOfficeId);
     let inQueueOfStaffDetails;
     if (handover.inQueueOfStaffId !== "") {
@@ -296,6 +296,7 @@ function editHandoverPage(req, res) {
     req.session.handover = handover;
     req.session.handovers = handovers;
     res.render('handover-edit', {
+        users : users,
         benList : benefitsList,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
@@ -325,8 +326,14 @@ function editHandoverPageAction(req, res) {
     let customer = req.session.customer;
     let handoverNote = req.body['handover-note'];
     let updateResultedFromCustomerContactIndicator = req.body['handover-contact-indicator'];
+    let allocatedUser = req.body['handover-allocated-user'];
     let editedHandover = {};
     let editedHandoverNote = {};
+    let newCallbackStatusAndResult;
+    let newResult;
+    let firstCallResult;
+    let secondCallResult;
+    let thirdCallResult;
     let validatedHandoverAndErrors;
     let validatedHandoverDetails;
     let newHandoverNotes = [];
@@ -336,7 +343,7 @@ function editHandoverPageAction(req, res) {
     editedHandover.nino = handover.nino;
     editedHandover.description = handover.description;
     editedHandover.raisedByStaffId = handover.raisedByStaffId;
-    editedHandover.inQueueOfStaffId = handover.inQueueOfStaffId;
+    editedHandover.inQueueOfStaffId = allocatedUser ? allocatedUser : handover.inQueueOfStaffId;
     editedHandover.raisedOnBehalfOfOfficeId = handover.raisedOnBehalfOfOfficeId;
     editedHandover.receivingOfficeId = handover.receivingOfficeId;
     editedHandover.benefitId = req.body['benefit'] || handover.benefitId;
@@ -368,11 +375,10 @@ function editHandoverPageAction(req, res) {
                 editedHandover.secondCallbackResult = 0;
                 editedHandover.thirdCallbackResult = 0;
             } else {                                        // i.e. it used to be "Yes", and its still "Yes", so now need to check if the callbackStatus has changed
-                let newCallbackStatusAndResult;
-                let newResult = parseInt(req.body['handover-callback-result']);
-                let firstCallResult = handover.firstCallbackResult;
-                let secondCallResult = handover.secondCallbackResult;
-                let thirdCallResult = handover.thirdCallbackResult;
+                newResult = parseInt(req.body['handover-callback-result']);
+                firstCallResult = handover.firstCallbackResult;
+                secondCallResult = handover.secondCallbackResult;
+                thirdCallResult = handover.thirdCallbackResult;
                 newCallbackStatusAndResult = getNewCallbackStatusAndResult(handover.callbackStatus, newResult,
                     firstCallResult, secondCallResult, thirdCallResult);
                 editedHandover.callbackStatus = newCallbackStatusAndResult.newStatus;
@@ -384,9 +390,14 @@ function editHandoverPageAction(req, res) {
         if (editedHandover.callbackStatus == 4) {
             editedHandover.status = "Cleared";
         } else {
-            editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
+            if (handover.inQueueOfStaffId === "" && editedHandover.inQueueOfStaffId !== "") {
+                editedHandover.status = "In progress";
+            } else {
+                editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
+            }
         }
     }
+    if (handover.inQueueOfStaffId === "" && editedHandover.inQueueOfStaffId !== "") { editedHandover.status = "In progress" ;}
     editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
     editedHandover.targetDateAndTime = handover.targetDateAndTime;
 
@@ -409,10 +420,10 @@ function editHandoverPageAction(req, res) {
             newHandoverNotes.unshift(updatedHandoverNote);
         }
     }
-    req.session.customer = customer;
     editedHandover.notes = newHandoverNotes;
+    req.session.customer = customer;
     validatedHandoverAndErrors = handoverUtils.validateHandover(editedHandover);
-    if (validatedHandoverAndErrors.errors.length === 0) {
+    if (validatedHandoverAndErrors.errors.length == 0) {
         handoversList[handoverIndex] = validatedHandoverAndErrors.handover;
         req.session.errors = [];
         dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(validatedHandoverAndErrors.handover.dateAndTimeRaised);

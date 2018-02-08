@@ -7,9 +7,9 @@
             <p>Date: {{ handover.targetDateAndTimeForDisplay.day }} {{ handover.targetDateAndTimeForDisplay.month }} {{ handover.targetDateAndTimeForDisplay.year }}
                 &nbsp;&nbsp;&nbsp;&nbsp;Time: {{ handover.targetDateAndTimeForDisplay.hours }}:{{ handover.targetDateAndTimeForDisplay.mins }}</p>
         <br>
-        {% if handover.timeLeftToTarget.expiredOrNot == 0 %}
+        {% if handover.timeLeftToTarget.expired == 0 %}
             <legend class="form-label-bold">Target time to clear</legend>
-            <p>{{handover.timeLeftToTarget.timeToTarget}}</p>
+            <p>{{handover.timeLeftToTarget.timeRemaining}}</p>
         {% else %}
             <legend class="form-label-bold">Target overdue by</legend>
             <p>{{handover.timeLeftToTarget.timeOverdue}}</p>

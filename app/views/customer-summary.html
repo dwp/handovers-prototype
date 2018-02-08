@@ -101,10 +101,10 @@
                                     <td>{{handover.receivingOfficeDetails.officeName}}</td>
                                     <td>{{handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName}}</td>
                                 {% endif %}
-                                {% if handover.timeLeftToTarget.expiredOrNot == 1 %}
+                                {% if handover.timeLeftToTarget.expired == 1 %}
                                     <td>Expired</td>
                                 {% else %}
-                                    <td>{{handover.timeLeftToTarget.timeToTarget}}</td>
+                                    <td>{{handover.timeLeftToTarget.timeRemaining}}</td>
                                 {% endif %}
                                 <td>{{handover.handoverDetails.benefitAbbr}}</td>
                                 <td>{{handover.handoverDetails.handoverType}}</td>
