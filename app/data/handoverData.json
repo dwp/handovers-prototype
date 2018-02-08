@@ -159,7 +159,7 @@
       "thirdCallbackResult" : 1,
       "escalated": "Yes",
       "inQueueOfStaffId": "40001002",
-      "status": "Not allocated",
+      "status": "Cleared",
       "dateAndTimeRaised": "2018-02-08T07:05:39.379Z",
       "targetDateAndTime": "2018-02-08T10:05:39.379Z"
     },
@@ -174,16 +174,16 @@
       "benSubType": "Social Fund Type 2",
       "typeId": "5",
       "reasonId": "6",
-      "callback": "No",
-      "callbackStatus" : 0,
+      "callback": "Yes",
+      "callbackStatus" : 1,
       "firstCallbackResult" : 0,
       "secondCallbackResult" : 0,
       "thirdCallbackResult" : 0,
       "escalated": "No",
       "inQueueOfStaffId": "",
       "status": "Not allocated",
-      "dateAndTimeRaised": "2018-02-08T09:06:39.379Z",
-      "targetDateAndTime": "2018-02-08T12:06:39.379Z"
+      "dateAndTimeRaised": "2018-02-08T13:06:39.379Z",
+      "targetDateAndTime": "2018-02-08T16:06:39.379Z"
     },
     {
       "id": "7",
