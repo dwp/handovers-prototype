@@ -22,6 +22,9 @@ function viewQueuePage(req, res) {
     let queueType = req.query.agentId ? 'agent' : 'office';
     let handoversQueueList = [];
     let sortedHandoversQueueList;
+
+    if (user.role == 1) { queueType = 'office' };
+
     for (let i=0; i < handoversLength; i++) {
         let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
         if (handover.status === "Cleared" || handover.status === "Withdrawn") {
