@@ -11,7 +11,7 @@
             {% if handover.callbackStatus == 1 %}
                 <p>First call pending</p>
                 <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
-                    <option value="">Select</option>
+                    <option value="0">Select</option>
                     <option value="1">First call successful</option>
                     <option value="2">First call failed - engaged</option>
                     <option value="3">First call failed - number unobtainable</option>
@@ -21,7 +21,7 @@
             {% if handover.callbackStatus == 2 %}
                 <p>Second call pending</p>
                 <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
-                    <option value="">Select</option>
+                    <option value="0">Select</option>
                     <option value="1">Second call successful</option>
                     <option value="2">Second call failed - engaged</option>
                     <option value="3">Second call failed - number unobtainable</option>
@@ -31,7 +31,7 @@
             {% if handover.callbackStatus == 3 %}
                 <p>Third call pending</p>
                 <select class="select form-control" name="handover-callback-result" id=handover-callback-result">
-                    <option value="">Select</option>
+                    <option value="0">Select</option>
                     <option value="1">Third call successful</option>
                     <option value="2">Third call failed - engaged</option>
                     <option value="3">Third call failed - number unobtainable</option>
