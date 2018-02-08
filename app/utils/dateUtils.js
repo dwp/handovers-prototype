@@ -115,7 +115,7 @@ function calcTimeLeftOrTimeOverdue(dateTime) {
             } else {                                                // overdue by less than a day and by less than 4 hours
                 if (absHours >= 3) {                                   // overdue by less than a day and by less than 4 hours, but by more than or equal to 3 hours
                     overdueBetweenThreeAndFourHoursCountdown = (60 - absMinutes); //  calculate how many minutes left of the fourth hour
-                    timeOverdue = (absDays + " days " + absHours + " hrs " + absMinutes + " mins");
+                    timeOverdue = (overdueBetweenThreeAndFourHoursCountdown + " mins");
                 }
             }
         }

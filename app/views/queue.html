@@ -50,7 +50,7 @@
                                 <td>Expired</td>
                             {% else %}
                                 <td>{% if handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown > 0 %}
-                                        {{ handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown }}
+                                        {{ handover.timeLeftToTarget.timeOverdue }}
                                     {% else %}
                                         {{ handover.timeLeftToTarget.timeToTarget }}
                                     {% endif %}
@@ -60,7 +60,7 @@
                             <td>{{handover.handoverType}}</td>
                             <td>{{handover.status}}</td>
                             <td>{{handover.callbackStatusDescription}}</td>
-                            {% if (handover.callback === 'Yes' and handover.expiredOrNot == 1) or (handover.callback === 'Yes' and handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown > 0) %}
+                            {% if (handover.callback === 'Yes' and handover.expiredOrNot == 1) or (handover.callback === 'Yes') %}
                                 <td>!</td>
                             {% else %}
                             <td></td>
