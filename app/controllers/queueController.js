@@ -39,7 +39,7 @@ function viewQueuePage(req, res) {
             handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
             handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
             handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
-            handover.timeLeftToTarget = dateUtils.calcTimeLeftToTarget(handover.targetDateAndTime);
+            handover.timeLeftToTarget = dateUtils.calcTimeLeftOrTimeOverdue(handover.targetDateAndTime);
             handover.inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
             handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(offices, handover.receivingOfficeId);
             handover.customerDetails = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, handover.nino);

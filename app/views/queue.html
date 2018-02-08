@@ -49,7 +49,7 @@
                             {% if handover.timeLeftToTarget.expiredOrNot == 1 and handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown == 0 %}
                                 <td>Expired</td>
                             {% else %}
-                                <td>{% if handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown == 0 %}
+                                <td>{% if handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown > 0 %}
                                         {{ handover.timeLeftToTarget.overdueBetweenThreeAndFourHoursCountdown }}
                                     {% else %}
                                         {{ handover.timeLeftToTarget.timeToTarget }}
