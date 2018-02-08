@@ -386,9 +386,14 @@ function editHandoverPageAction(req, res) {
         if (editedHandover.callbackStatus == 4) {
             editedHandover.status = "Cleared";
         } else {
-            editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
+            if (handover.inQueueOfStaffId === "" && editedHandover.inQueueOfStaffId !== "") {
+                editedHandover.status = "In progress";
+            } else {
+                editedHandover.status = req.body['handover-status'] ? req.body['handover-status'] : handover.status;
+            }
         }
     }
+    if (handover.inQueueOfStaffId === "" && editedHandover.inQueueOfStaffId !== "") { editedHandover.status = "In progress" ;}
     editedHandover.dateAndTimeRaised = handover.dateAndTimeRaised;
     editedHandover.targetDateAndTime = handover.targetDateAndTime;
 

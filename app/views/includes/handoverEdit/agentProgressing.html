@@ -2,14 +2,17 @@
     <div>
     </div>
 {% else %}
-    {% if handover.inQueueOfStaffId !== "" %}
-        <div class="column-half">
-            <legend class="form-label-bold">Agent progressing handover</legend>
+    <div class="column-half">
+        <legend class="form-label-bold">Agent progressing handover</legend>
+        {% if handover.inQueueOfStaffId !== "" %}
             <p>{{ inQueueOfStaffDetails.firstName }} {{ inQueueOfStaffDetails.lastName }}</p>
-        </div>
-        {% if data.user.role == 1 %}
+        {% else %}
+            <p>Not applicable</p>
+        {% endif %}
+    </div>
+    {% if data.user.role == 1 %}
         <div class="column-half">
-            <legend class="form-label-bold">Agent progressing handover</legend>
+            <legend class="form-label-bold">Select agent to allocate to handover</legend>
             <select class="select form-control" name="handover-allocated-user" id=handover-allocated-user">
                 <option value="">Select</option>
                 {% for user in users %}
@@ -17,9 +20,9 @@
                 {% endfor %}
             </select>
         </div>
-        {% else %}
-            <div class="column-half">
-            </div>
-        {% endif %}
+    {% else %}
+        <div class="column-half">
+        </div>
     {% endif %}
+
 {% endif %}
