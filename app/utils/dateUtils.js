@@ -82,37 +82,51 @@ function getMonthForDisplay(monthIn) {
 
 }
 
-function calcTimeLeftToTarget(date) {
+function calcTimeLeftOrTimeOverdue(dateTime) {
 // Set the date we're counting down to
-    let targetDateTime = new Date(date).getTime();
+    let target = new Date(dateTime);
 // Get todays date and time
-    let now = new Date().getTime();
+    let now = new Date();
 // Find the difference between now and the target date
-    let difference = targetDateTime - now;
+    let difference = target - now;
 // Time calculations for hours and minutes
     let days = Math.floor(difference / (1000 * 60 * 60 * 24));
     let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-// Find the difference between the target date and now
-    let overdue = now - targetDateTime;
-// Time overdue calculations for days, hours and minutes
-    let overdueDays = Math.floor(overdue / (1000 * 60 * 60 * 24));
-    let overdueHours = Math.floor((overdue % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let overdueMinutes = Math.floor((overdue % (1000 * 60 * 60)) / (1000 * 60));
+// Change difference to absolute value so not displaying negative numbers
+    let absDays = Math.abs(days);
+    let absHours = Math.abs(hours);
+    let absMinutes = Math.abs(minutes);
 
-    let timeOverdue;
     let timeToTarget;
+    let timeOverdue;
+    let overdueBetweenThreeAndFourHoursCountdown = 0;
     let expiredOrNot = 0;
     let calcResult;
 
-    if (difference < 0) {
-        expiredOrNot = 1;
-        timeOverdue = (overdueDays + " days " + overdueHours + " hrs " + overdueMinutes + " mins");
-    } else {
+    if (difference > 0) {                                           // target time not yet reached
         timeToTarget = (hours + " hrs " + minutes + " mins");
+    } else {                                                        // target time has passed  (overdue)
+        if (days > 0) {                                          // overdue by more than a day, so always show as expired
+            timeOverdue = (absDays + " days " + absHours + " hrs " + absMinutes + " mins");
+        } else {                                                    // overdue by less than a day
+            if (absHours >= 4) {                                       // overdue by less than a day and by more than 4 hours, so show as expired
+                timeOverdue = (absHours + " hrs " + absMinutes + " mins");
+            } else {                                                // overdue by less than a day and by less than 4 hours
+                if (absHours >= 3) {                                   // overdue by less than a day and by less than 4 hours, but by more than or equal to 3 hours
+                    overdueBetweenThreeAndFourHoursCountdown = (60 - absMinutes); //  calculate how many minutes left of the fourth hour
+                    timeOverdue = (overdueBetweenThreeAndFourHoursCountdown + " mins");
+                }
+            }
+        }
+        expiredOrNot = 1;
     }
 
-    calcResult = { "expiredOrNot" : expiredOrNot, "timeToTarget" : timeToTarget, "timeOverdue" : timeOverdue };
+    calcResult = {  "expiredOrNot" : expiredOrNot,
+                    "timeToTarget" : timeToTarget,
+                    "timeOverdue" : timeOverdue,
+                    "overdueBetweenThreeAndFourHoursCountdown" : overdueBetweenThreeAndFourHoursCountdown
+                };
     return calcResult;
 }
 
@@ -120,4 +134,4 @@ module.exports.formatDateAndTimeForDisplay = formatDateAndTimeForDisplay;
 module.exports.formatDateForDisplay = formatDateForDisplay;
 module.exports.getNumericMonth = getNumericMonth;
 module.exports.getMonthForDisplay = getMonthForDisplay;
-module.exports.calcTimeLeftToTarget = calcTimeLeftToTarget;
+module.exports.calcTimeLeftOrTimeOverdue = calcTimeLeftOrTimeOverdue;
