@@ -29,7 +29,11 @@
                         </tr>
                         <tr>
                             <td>Preferred contact number</td>
-                            <td>{{ customer.preferredContactNumber }}</td>
+                            {% if customer.approvedRep === "Yes" %}
+                                <td>{{ customer.approvedRepContact }}</td>
+                            {% else %}
+                                <td>{{ customer.preferredContactNumber }}</td>
+                            {% endif %}
                         </tr>
                         <tr>
                             <td>Email address</td>
