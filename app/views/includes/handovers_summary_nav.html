@@ -9,7 +9,11 @@
         </li>
 
         <li class="{% if currentClaimantPage === 'queues' %}selected{% endif %}">
-            <a id="queue_view" href="/queue/view?agentId={{data.user.staffId}}" class="menu-item">Queue</a>
+            {% if data.user.role == 0 %}
+                 <a id="queue_view" href="/queue/view?agentId={{data.user.staffId}}" class="menu-item">Queue</a>
+            {% else %}
+                 <a id="queue_view" href="/queue/view?queueType=office" class="menu-item">Queue</a>
+            {% endif %}
         </li>
 
         <li class="{% if currentClaimantPage === 'teams' %}selected{% endif %}">
