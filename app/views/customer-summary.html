@@ -90,12 +90,13 @@
                                 <th scope="col"><span>Handover type</span></th>
                                 <th scope="col"><span>Handover Status</span></th>
                                 <th scope="col"><span>Callback status</span></th>
+                                <th scope="col"><span>!</span></th>
                                 <th scope="col"><span></span></th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for handover in handoversList %}
-                            <tr>
+                            <tr {% if handover.callback === 'Yes' and handover.timeLeftToTarget.withinOriginalTargetTime == 0 and handover.status !== "Cleared" and handover.status !== "Withdrawn" %} class="highlight-table-row" {% endif %}>
                                 <td>{{ handover.dateAndTimeRaisedForDisplay.day }} {{ handover.dateAndTimeRaisedForDisplay.month }} {{ handover.dateAndTimeRaisedForDisplay.year }}
                                     &nbsp;&nbsp;&nbsp;&nbsp;{{ handover.dateAndTimeRaisedForDisplay.hours }}:{{ handover.dateAndTimeRaisedForDisplay.mins }}</td>
                                 {% if handover.status === "Not allocated" %}
@@ -114,6 +115,11 @@
                                 <td>{{handover.handoverDetails.handoverType}}</td>
                                 <td>{{handover.status}}</td>
                                 <td>{{handover.callbackStatusDescription}}</td>
+                                {% if handover.callback === 'Yes' and handover.timeLeftToTarget.withinOriginalTargetTime == 0 and handover.status !== "Cleared" and handover.status !== "Withdrawn" %}
+                                    <td>!</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
                                 <td>{{handoverUpdateLink(handover)}}</td>
                             </tr>
                         {% endfor %}
