@@ -21,7 +21,9 @@
                 <select class="select form-control" name="handover-allocated-user" id=handover-allocated-user">
                 <option value="">Select</option>
                     {% for user in users %}
-                        <option value="{{ user.staffId }}" {{ 'selected' if user.staffId === handover.inQueueOfStaffId else ''}}>{{ user.firstName }} {{ user.lastName }} - {{ user.staffId }}</option>
+                        {% if user.role == 0 %}
+                            <option value="{{ user.staffId }}" {{ 'selected' if user.staffId === handover.inQueueOfStaffId else ''}}>{{ user.firstName }} {{ user.lastName }} - {{ user.staffId }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             {% endif %}
