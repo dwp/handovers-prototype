@@ -204,6 +204,7 @@ function customerEditPage(req, res) {
     let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
     res.render('customer-edit', { customer : customer,
                                   customerOfficeDetails : customerOfficeDetails,
+                                  officesList : officesList,
                                   editOrCreate : editOrCreate,
                                   errors : errors,
                                   errorsLength : errors.length
