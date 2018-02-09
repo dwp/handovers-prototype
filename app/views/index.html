@@ -18,16 +18,26 @@
     </div>
   </div>
   <div class="grid-row">
-    {% set allocationScreens = [{
+
+    {% set supervisorScreens = [{
+    workTitle : 'View agent queue',
+    links: [{
+    link : '/queue/agent', title : 'View agent queue - select user'
+    }]
+    }] %}
+
+    {{ sprintLinks( 'Supervisor functions', supervisorScreens) }}
+
+    {% set supervisorScreens = [{
     workTitle : 'Supervisor view',
     links: [{
     link : '/allocation/esa', title : 'ESA Maintenance Queue - allocate user'
     }]
     }] %}
 
-    {{ sprintLinks( 'Allocation of handovers', allocationScreens) }}
+    {{ sprintLinks( '', supervisorScreens) }}
 
-    {% set allocationScreens = [{
+    {% set supervisorScreens = [{
     workTitle : 'User view',
     links: [{
     link : '/allocation/user', title : 'User queue - before allocation'
@@ -36,7 +46,7 @@
     }]
     }] %}
 
-    {{ sprintLinks( '', allocationScreens) }}
+    {{ sprintLinks( '', supervisorScreens) }}
 
 
   </div>

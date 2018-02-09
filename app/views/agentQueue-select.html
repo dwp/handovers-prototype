@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+    <div class="main-content">
+        {% include "includes/handovers_summary_nav.html" %}
+        {% include "includes/error-summary.html" %}
+        {% include "includes/message-banner.html" %}
+        <div class="grid-row">
+            <div class="column-full">
+                <h1 class="heading-large">View agent queue - select agent</h1>
+                <form action="/queue/agent" method="post" class="form" id="search-form">
+                    <div>
+                        <select class="select form-control" name="queue-agent" id=queue-agent">
+                            <option value="">Select</option>
+                            {% for user in users %}
+                                {% if user.role == 0 %}
+                                    <option value="{{ user.staffId }}" {{ 'selected' if user.staffId === handover.inQueueOfStaffId else ''}}>{{ user.firstName }} {{ user.lastName }} - {{ user.staffId }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" class="button" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
