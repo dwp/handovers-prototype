@@ -1,50 +1,39 @@
-{% if editOrCreate === 'edit' %}
-    <div class="column-half">
-        <div class="form-group">
-            <legend class="form-label-bold">Home jobcentre</legend>
-            <div>
-                <p>{{ customerOfficeDetails.officeName }}</p>
-                <input type="hidden" id="customer-office" name="customer-office" tabindex=7 value="{{ customer.customerOfficeId }}">
-            </div>
-        </div>
-    </div>
-{% else %}
-    <div class="column-half">
-        {% set errorFlag = 0 %}
+<div class="column-half">
+    {% set errorFlag = 0 %}
         {% for error in errors %}
             {% if error.field === 'customer-office' %}
                 {% set errorFlag = 1 %}
             {% endif %}
         {% endfor %}
-        {% if errorFlag === 1 %}
-            <div class="form-group form-group-error">
-                <label for="customer-office" id="error-customer-office">
-                    <span class="form-label-bold">Home jobcentre</span>
-                    <span class="error-message">Home jobcentre must be selected from dropdown list</span>
-                </label>
-                <select class="select form-control form-control-error" name="customer-office" id="customer-office" tabindex=7>
-                    <option value="">Select</option>
-                    {% for office in officesList %}
-                        {% if office.officeTypeId === 1 %}
-                        <option value="{{ office.id }}" {{ 'selected' if customer.customerOfficeId == office.id else ''}}>{{ office.officeName }}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-            </div>
-        {% else %}
-            <div class="form-group">
-                <label for="customer-office">
-                    <span class="form-label-bold">Home jobcentre</span>
-                </label>
-                <select class="select form-control" name="customer-office" id="customer-office" tabindex=7>
-                    <option value="">Select</option>
-                    {% for office in officesList %}
-                        {% if office.officeTypeId === 1 %}
-                            <option value="{{ office.id }}" {{ 'selected' if customer.customerOfficeId == office.id else ''}}>{{ office.officeName }}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-            </div>
-        {% endif %}
+    {% if errorFlag === 1 %}
+    <div class="form-group form-group-error">
+        <label for="customer-office" id="error-customer-office">
+            <span class="form-label-bold">Home jobcentre</span>
+            <span class="error-message">Home jobcentre must be selected from dropdown list</span>
+        </label>
+        <select class="select form-control form-control-error" name="customer-office" id="customer-office" tabindex=7>
+            <option value="">Select</option>
+            {% for office in officesList %}
+                {% if office.officeTypeId === 1 %}
+                    <option value="{{ office.id }}" {{ 'selected' if customer.customerOfficeId == office.id else ''}}>{{ office.officeName }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
     </div>
-{% endif %}
+    {% else %}
+    <div class="form-group">
+        <label for="customer-office">
+            <span class="form-label-bold">Home jobcentre</span>
+        </label>
+        <select class="select form-control" name="customer-office" id="customer-office" tabindex=7>
+            <option value="">Select</option>
+            {% for office in officesList %}
+                {% if office.officeTypeId === 1 %}
+                    <option value="{{ office.id }}" {{ 'selected' if customer.customerOfficeId == office.id else ''}}>{{ office.officeName }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    {% endif %}
+</div>
+
