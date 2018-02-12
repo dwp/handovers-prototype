@@ -7,7 +7,7 @@
     </div>
     {% else %}
     <div>
-        <p>Contact approved representative</p>
+        <p>Contact {% if customer.approvedRepType == 1 %} agent {% elif customer.approvedRepType == 2 %} appointee {% else %} power of attorney {% endif %}</p>
         <p>Name: {{ customer.approvedRepName }} &nbsp;&nbsp;&nbsp;&nbsp; Telephone: {{ customer.approvedRepContact }}</p>
     </div>
     {% endif %}

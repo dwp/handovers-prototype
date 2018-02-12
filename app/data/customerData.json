@@ -13,6 +13,7 @@
       "translator" : "No",
       "language" : "",
       "approvedRep" : "Yes",
+      "approvedRepType" : "1",
       "approvedRepName" : "Angela Brown",
       "approvedRepContact" : "01234 567891"
     },
@@ -28,6 +29,7 @@
       "translator" : "No",
       "language" : "",
       "approvedRep" : "No",
+      "approvedRepType" : "0",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -43,6 +45,7 @@
       "translator" : "No",
       "language" : "",
       "approvedRep" : "No",
+      "approvedRepType" : "0",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -58,6 +61,7 @@
       "translator" : "Yes",
       "language" : "Polish",
       "approvedRep" : "No",
+      "approvedRepType" : "0",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     },
@@ -73,6 +77,7 @@
       "translator" : "Yes",
       "language" : "German",
       "approvedRep" : "No",
+      "approvedRepType" : "0",
       "approvedRepName" : "",
       "approvedRepContact" : ""
     }]

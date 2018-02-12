@@ -155,6 +155,7 @@ function customerCreatePageAction(req, res) {
     newCustomer.translator = req.body['translator'];
     newCustomer.language = req.body['language'];
     newCustomer.approvedRep = req.body['approved-rep'];
+    newCustomer.approvedRepType = req.body['rep-type'];
     newCustomer.approvedRepName = req.body['rep-name'];
     newCustomer.approvedRepContact = req.body['rep-contact'];
     newCustomer.birthDay = parseInt(req.body['birthDay']);
@@ -231,6 +232,7 @@ function customerEditPageAction(req, res) {
     editedCustomer.translator = req.body['translator'];
     editedCustomer.language = req.body['language'];
     editedCustomer.approvedRep = req.body['approved-rep'];
+    editedCustomer.approvedRepType = req.body['rep-type'];
     editedCustomer.approvedRepName = req.body['rep-name'];
     editedCustomer.approvedRepContact = req.body['rep-contact'];
     editedCustomer.birthDay = parseInt(req.body['birthDay']);
