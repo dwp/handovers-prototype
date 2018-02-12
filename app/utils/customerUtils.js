@@ -96,11 +96,11 @@ function validateCustomer(inputCustomer) {
     }
     customer.approvedRep = inputCustomer.approvedRep;
     if (inputCustomer.approvedRep === "Yes") {
-        if (inputCustomer.approvedRepType === "" || inputCustomer.approvedRepName === "" || inputCustomer.approvedRepContact === "") {
+        if (inputCustomer.approvedRepType == 0 || inputCustomer.approvedRepName === "" || inputCustomer.approvedRepContact === "") {
             errors.push({
                 message : "Enter type, name, and contact details for approved representative, or select No",
                 field : ""});
-            if (inputCustomer.approvedRepType === "") {
+            if (inputCustomer.approvedRepType == 0) {
                 errors.push({
                     message : "         .....type must be entered",
                     field : "rep-type"});
@@ -122,6 +122,7 @@ function validateCustomer(inputCustomer) {
                 customer.approvedRepContact= inputCustomer.approvedRepContact;
             }
         } else {
+            customer.approvedRepType = inputCustomer.approvedRepType;
             customer.approvedRepName = inputCustomer.approvedRepName;
             customer.approvedRepContact= inputCustomer.approvedRepContact;
         }

@@ -29,6 +29,46 @@
                 {% endif %}
             {% endfor %}
             {% if errorFlag === 1 %}
+            <div class="form-group form-group-error">
+                <label for="rep-type">
+                    <span class="form-label-bold">Approved representative type</span>
+                    <span class="error-message">Type must be selected</span>
+                </label>
+                <div>
+                    <select class="select form-control" name="rep-type" id="rep-type" tabindex=14>
+                        <option value="0">Select</option>
+                        <option value="1" {{ 'selected' if customer.approvedRepType === '1' else ''}}>Agent</option>
+                        <option value="2" {{ 'selected' if customer.approvedRepType === '2' else ''}}>Appointee</option>
+                        <option value="3" {{ 'selected' if customer.approvedRepType === '3' else ''}}>Power of attorney</option>
+                    </select>
+                </div>
+            </div>
+            {% else %}
+            <div class="form-group">
+                <label for="rep-type">
+                    <span class="form-label-bold">Approved representative type</span>
+                </label>
+                <div>
+                    <select class="select form-control" name="rep-type" id="rep-type" tabindex=14>
+                        <option value="0">Select</option>
+                        <option value="1" {{ 'selected' if customer.approvedRepType === '1' else ''}}>Agent</option>
+                        <option value="2" {{ 'selected' if customer.approvedRepType === '2' else ''}}>Appointee</option>
+                        <option value="3" {{ 'selected' if customer.approvedRepType === '3' else ''}}>Power of attorney</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="grid-row">
+        <div class="column-half">
+            {% set errorFlag = 0 %}
+            {% for error in errors %}
+                {% if error.field === 'rep-name' %}
+                    {% set errorFlag = 1 %}
+                {% endif %}
+            {% endfor %}
+            {% if errorFlag === 1 %}
                 <div class="form-group form-group-error">
                     <label for="rep-name">
                         <span class="form-label-bold">Approved representative name</span>
