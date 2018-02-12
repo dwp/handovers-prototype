@@ -30,7 +30,7 @@
                         <tr>
                             <td>Preferred contact number</td>
                             {% if customer.approvedRep === "Yes" %}
-                                <td>{{ customer.approvedRepContact }}</td>
+                                <td>Please contact approved rep</td>
                             {% else %}
                                 <td>{{ customer.preferredContactNumber }}</td>
                             {% endif %}
@@ -58,9 +58,19 @@
                             <td>Translator required ?</td>
                             <td>{% if customer.translator === 'Yes' %}{{ customer.language }}{% else %}No{% endif %}</td>
                         </tr>
-                        <tr>
+                        {% if customer.approvedRep === "Yes" %}
+                            <tr>
+                                <td>Approved representative name</td>
+                                <td>{{ customer.approvedRepName }}</td>
+                            </tr>
+                            <tr>
+                                <td>Approved representative contact details</td>
+                                <td>{{ customer.approvedRepContact }}</td>
+                            </tr>
+                        {% else %}
                             <td>Approved representative name</td>
-                            <td>{% if customer.approvedRepName === '' %}N/A{% else %}{{ customer.approvedRepName }}{% endif %}</td>
+                            <td>No approved representative</td>
+                        {% endif %}
                         </tr>
                     </table>
                 </div>
