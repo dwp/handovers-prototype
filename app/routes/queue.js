@@ -8,5 +8,7 @@ module.exports = function(router) {
     // Queue page routes
     router.get('/queue/view', queue.viewQueuePage);
     router.post('/queue/getNextQueueItem', queue.getNextQueueItem);
+    router.get('/queue/agent', queue.agentQueuePage);
+    router.post('/queue/agent', queue.agentQueuePageAction);
 
 }
