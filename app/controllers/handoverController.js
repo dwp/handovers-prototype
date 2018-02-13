@@ -78,6 +78,7 @@ function viewHandoverPage(req, res) {
 
     res.render('handover', {
         benefitName : handoverDetails.benefitName,
+        benefitSubTypeNme : handoverDetails.benefitSubTypeName,
         handoverType : handoverDetails.handoverType,
         handoverReason : handoverDetails.handoverReason,
         handoverNotes : handoverNotes,
@@ -119,6 +120,7 @@ function createHandoverPage(req, res) {
     let users = sIDU.setInitialUsersData();
     let user = req.session.user ? req.session.user : users[0];
     let benefitsList = initialData.initialBenefits;
+    let benefitSubTypesList = initialData.initialBenefitSubTypes;
     let handoverTypesList = initialData.initialHandoverTypes;
     let handoverReasonsList = initialData.initialHandoverReasons;
     let handovers = req.session.handovers ? req.session.handovers : initialData.initialHandovers;
@@ -136,6 +138,7 @@ function createHandoverPage(req, res) {
     res.render('handover-edit', {
         handover : handover,
         benList : benefitsList,
+        benSubTypesList : benefitSubTypesList,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
         customer : customer,
@@ -172,10 +175,10 @@ function createHandoverPageAction(req, res) {
     let agent = userUtils.getUserByStaffIdFromListOfUsers(users, newHandover.raisedByStaffId);
     newHandover.raisedOnBehalfOfOfficeId = agent.owningOfficeId;
     newHandover.benefitId = req.body['benefit'];
-    if (newHandover.benefitId === "5") {
-        newHandover.benSubType = req.body['benefit-sub'];
+    if (newHandover.benefitId === "6") {
+        newHandover.benSubTypeId = req.body['benefit-sub'];
     } else {
-        newHandover.benSubType = null;
+        newHandover.benSubTypeId = null;
     }
     // Set receiving office to this value until/unless prototype changed to show some kind of routing rules
     newHandover.receivingOfficeId = 4;
@@ -241,6 +244,7 @@ function editHandoverPage(req, res) {
     let errors = req.session.errors ? req.session.errors : [];
     let initialData = sIDU.setInitialBenefitsAndHandoversData();
     let benefitsList = initialData.initialBenefits;
+    let benefitSubTypesList = initialData.initialBenefitSubTypes;
     let handoverTypesList = initialData.initialHandoverTypes;
     let handoverReasonsList = initialData.initialHandoverReasons;
     let callbackStatusValues = callbackData['callbackStatusValues'];
@@ -298,9 +302,11 @@ function editHandoverPage(req, res) {
     res.render('handover-edit', {
         users : users,
         benList : benefitsList,
+        benSubTypesList : benefitSubTypesList,
         handTypesList : handoverTypesList,
         handReasonsList : handoverReasonsList,
         benefitName : handoverDetails.benefitName,
+        benefitSubTypeName : handoverDetails.benefitSubTypeName,
         handoverType : handoverDetails.handoverType,
         handoverReason : handoverDetails.handoverReason,
         handoverNotes : handoverNotes,
@@ -347,7 +353,7 @@ function editHandoverPageAction(req, res) {
     editedHandover.raisedOnBehalfOfOfficeId = handover.raisedOnBehalfOfOfficeId;
     editedHandover.receivingOfficeId = handover.receivingOfficeId;
     editedHandover.benefitId = req.body['benefit'] || handover.benefitId;
-    if (editedHandover.benefitId === "5") {
+    if (editedHandover.benefitId === "6") {
         editedHandover.benSubType = req.body['benefit-sub'] || handover.benSubType;
     } else {
         editedHandover.benSubType = null;

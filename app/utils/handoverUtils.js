@@ -21,10 +21,12 @@ function getHandoverBenefitNameHandoverTypeAndHandoverReason(handover) {
     let textVersions = {};
     let initialHandoversData = sIDU.setInitialBenefitsAndHandoversData();
     let benefitsList = initialHandoversData.initialBenefits;
+    let benefitSubTypesList = initialHandoversData.initialBenefitSubTypes;
     let handoverTypesList = initialHandoversData.initialHandoverTypes;
     let handoverReasonsList = initialHandoversData.initialHandoverReasons;
 
     let benefitName;
+    let benefitSubTypeName;
     let benefitAbbr;
     let handoverType;
     let handoverReason;
@@ -33,6 +35,12 @@ function getHandoverBenefitNameHandoverTypeAndHandoverReason(handover) {
         if (handover.benefitId === benefitsList[i].id) {
             benefitName = benefitsList[i].benefitName;
             benefitAbbr = benefitsList[i].benefitAbbr;
+        }
+    }
+
+    for (let i=0; i < benefitSubTypesList.length; i++) {
+        if (handover.benSubTypeId === benefitSubTypesList[i].id) {
+            benefitSubTypeName = benefitSubTypesList[i].benefitSubType;
         }
     }
 
@@ -48,8 +56,10 @@ function getHandoverBenefitNameHandoverTypeAndHandoverReason(handover) {
         }
     }
 
+
     textVersions.benefitName = benefitName;
     textVersions.benefitAbbr = benefitAbbr;
+    textVersions.benefitSubTypeName = benefitSubTypeName;
     textVersions.handoverType = handoverType;
     textVersions.handoverReason = handoverReason;
 
@@ -72,14 +82,14 @@ function validateHandover(inputHandover) {
         handover.benefitId = inputHandover.benefitId;
     }
 
-    if (inputHandover.benefitId == 5) {
-        if (inputHandover.benSubType === "") {
+    if (inputHandover.benefitId == 6) {
+        if (inputHandover.benSubTypeId === "") {
             errors.push({
                 message: "Benefit sub-type must be selected from dropdown list",
                 field: "benSubType"
             });
         } else {
-            handover.benSubType = inputHandover.benSubType;
+            handover.benSubTypeId = inputHandover.benSubTypeId;
         }
     }
 

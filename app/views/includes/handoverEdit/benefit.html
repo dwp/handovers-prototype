@@ -3,7 +3,7 @@
     <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
     <option value="" id="benSelect">Select</option>
     {% for benefit in benList %}
-    <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
+        <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
     {% endfor %}
     </select>
 </div>
@@ -11,9 +11,10 @@
     <legend class="form-label-bold">Select a benefit sub-type</legend>
     <select class="select form-control" name="benefit-sub" id="benefit-sub">
         <option value="">Select</option>
-        <option value="Social Fund Type 1" {{ 'selected' if handover.benSubType === 'Social Fund Type 1' else ''}}>Social Fund Type 1</option>
-        <option value="Social Fund Type 2" {{ 'selected' if handover.benSubType === 'Social Fund Type 2' else ''}}>Social Fund Type 2</option>
-        <option value="Social Fund Type 3" {{ 'selected' if handover.benSubType === 'Social Fund Type 3' else ''}}>Social Fund Type 3</option>
-        <option value="Social Fund Type 4" {{ 'selected' if handover.benSubType === 'Social Fund Type 4' else ''}}>Social Fund Type 4</option>
+        {% for benSubType in benSubTypesList %}
+            {% if benSubType.benefitSubType !== "" %}
+                <option value="{{ benSubType.id }}" {{ 'selected' if handover.benSubTypeId === benSubType.id else ''}}>{{ benSubType.benefitSubType }}</option>
+            {% endif %}
+        {% endfor %}
     </select>
 </div>

@@ -9,7 +9,7 @@ class Handover {
         this.inQueueOfStaffId = properties.inQueueOfStaffId;
         this.receivingOfficeId = properties.receivingOfficeId;
         this.benefitId = properties.benefitId;
-        this.benSubType = properties.benSubType;
+        this.benSubTypeId = properties.benSubTypeId;
         this.typeId = properties.typeId;
         this.reasonId = properties.reasonId;
         this.dateAndTimeRaised = properties.dateAndTimeRaised;

@@ -2,26 +2,455 @@
   "title": "benefitsData",
   "benefitTypes": [
     {
-    "id": "1",
-    "benefitName" : "Employment & Support Allowance [ESA]",
-    "benefitAbbr" : "ESA"
-    },{
-    "id": "2",
-    "benefitName" : "Jobseekers Allowance [JSA]",
-    "benefitAbbr" : "JSA"
-    },{
-    "id": "3",
-    "benefitName" : "Universal Credit [UC]",
-    "benefitAbbr" : "UC"
-    },{
-    "id": "4",
-    "benefitName" : "Housing Benefit [HB]",
-    "benefitAbbr" : "HB"
-    },{
-    "id": "5",
-    "benefitName" : "Social Fund [SF]",
-    "benefitAbbr" : "SF",
-    "benefitSubTypes" : ["Social Fund Type 1", "Social Fund Type 2", "Social Fund Type 3", "Social Fund Type 4"]
+      "id": "1",
+      "benefitName": "DLA-Adult [DLA-A]",
+      "benefitAbbr": "DLA-A"
+    },
+    {
+      "id": "2",
+      "benefitName": "DLA-Child [DLA-C]",
+      "benefitAbbr": "DLA-C"
+    },
+    {
+      "id": "3",
+      "benefitName": "Employment & Support Allowance [ESA]",
+      "benefitAbbr": "ESA"
+    },
+    {
+      "id": "4",
+      "benefitName": "Incapacity Benefit [IB]",
+      "benefitAbbr": "IB"
+    },
+    {
+      "id": "5",
+      "benefitName": "Incapacity Benefit(IS) Reassessment [IB(IS)]",
+      "benefitAbbr": "IB(IS)"
+    },
+    {
+      "id": "6",
+      "benefitName": "Social Fund [SF]",
+      "benefitAbbr": "SF"
+    }
+  ],
+  "benefitSubTypes": [
+    {
+      "id": "1",
+      "benefitId": "1",
+      "benefitSubType" : ""
+    },
+    {
+      "id": "2",
+      "benefitId": "2",
+      "benefitSubType" : ""
+    },
+    {
+      "id": "3",
+      "benefitId": "3",
+      "benefitSubType" : ""
+    },
+    {
+      "id": "4",
+      "benefitId": "4",
+      "benefitSubType" : ""
+    },
+    {
+      "id": "5",
+      "benefitId": "5",
+      "benefitSubType" : ""
+    },
+    {
+      "id": "6",
+      "benefitId": "6",
+      "benefitSubType": "BL"
+    },
+    {
+      "id": "7",
+      "benefitId": "6",
+      "benefitSubType" : "CL(LE)"
+    },
+    {
+      "id": "8",
+      "benefitId": "6",
+      "benefitSubType" : "CL(RIA)"
+    },
+    {
+      "id": "9",
+      "benefitId": "6",
+      "benefitSubType" : "FP"
+    },
+    {
+      "id": "10",
+      "benefitId": "6",
+      "benefitSubType" : "SSMG"
+    }
+  ],
+  "handoverTypes" : [
+    {
+      "id" : "1",
+      "benefitSubTypeId" : "1",
+      "handoverType" : "Change Of Address/Phone Number"
+    },
+    {
+      "id" : "2",
+      "benefitSubTypeId" : "1",
+      "handoverType" : "Hospital Admission/Discharge"
+    },
+    {
+      "id": "3",
+      "benefitSubTypeId": "2",
+      "handoverType": "MRU26 DRT"
+    },
+    {
+      "id": "4",
+      "benefitSubTypeId": "2",
+      "handoverType" : "MU26 Maintenance"
+    },
+    {
+      "id": "5",
+      "benefitSubTypeId": "3",
+      "handoverType" : "3rd Party Deductions"
+    },
+    {
+      "id": "6",
+      "benefitSubTypeId": "3",
+      "handoverType" : "Appeal"
+    },
+    {
+      "id": "7",
+      "benefitSubTypeId": "4",
+      "handoverType" : "Appeal"
+    },
+    {
+      "id": "8",
+      "benefitSubTypeId": "4",
+      "handoverType" : "Benefit Cap Query"
+    },
+    {
+      "id": "9",
+      "benefitSubTypeId": "5",
+      "handoverType": "3rd Party Deductions"
+    },
+    {
+      "id": "10",
+      "benefitSubTypeId": "5",
+      "handoverType" : "Mandatory Reconsideration"
+    },
+    {
+      "id": "11",
+      "benefitSubTypeId":"6",
+      "handoverType" : "Disputed Debt"
+    },
+    {
+      "id": "12",
+      "benefitSubTypeId": "6",
+      "handoverType" : "General"
+    },
+    {
+      "id": "13",
+      "benefitSubTypeId": "7",
+      "handoverType" : "Disputed Debt"
+    },
+    {
+      "id": "14",
+      "benefitSubTypeId": "7",
+      "handoverType" : "Recoveries"
+    },
+    {
+      "id": "15",
+      "benefitSubTypeId": "8",
+      "handoverType" : "Disputed Debt"
+    },
+    {
+      "id": "16",
+      "benefitSubTypeId": "8",
+      "handoverType" : "Recoveries"
+    },
+    {
+      "id": "17",
+      "benefitSubTypeId": "9",
+      "handoverType" : "Appeal"
+    },
+    {
+      "id": "18",
+      "benefitSubTypeId": "9",
+      "handoverType" : "General"
+    },
+    {
+      "id": "19",
+      "benefitSubTypeId": "10",
+      "handoverType" : "Missing Instrument Of Payment (IOP)"
+    },
+    {
+      "id": "20",
+      "benefitSubTypeId": "10",
+      "handoverType" : "Notepad Full"
+    }
+  ],
+  "handoverReasons" : [
+    {
+      "id" : "1",
+      "handoverTypeId" : "1",
+      "handoverReason" : "Both"
+    },
+    {
+      "id" : "2",
+      "handoverTypeId" : "1",
+      "handoverReason" : "PAB"
+    },
+    {
+      "id": "3",
+      "handoverTypeId" : "2",
+      "handoverReason" : "Admmission"
+    },
+    {
+      "id": "4",
+      "handoverTypeId" : "2",
+      "handoverReason" : "Both"
+    },
+    {
+      "id": "5",
+      "handoverTypeId" : "2",
+      "handoverReason" : "Discharge"
+    },
+    {
+      "id": "6",
+      "handoverTypeId" : "3",
+      "handoverReason" : "Hospital Admission/Discharge"
+    },
+    {
+      "id": "7",
+      "handoverTypeId" : "3",
+      "handoverReason" : "Other"
+    },
+    {
+      "id": "8",
+      "handoverTypeId" : "4",
+      "handoverReason" : "CoE"
+    },
+    {
+      "id": "9",
+      "handoverTypeId" : "4",
+      "handoverReason" : "Out Of Entitlement (OOE)"
+    },
+    {
+      "id": "10",
+      "handoverTypeId" : "5",
+      "handoverReason" : "Clerical Claim"
+    },
+    {
+      "id": "11",
+      "handoverTypeId" : "5",
+      "handoverReason" : "Other"
+    },
+    {
+      "id": "12",
+      "handoverTypeId" : "5",
+      "handoverReason" : "Payment Query"
+    },
+    {
+      "id": "13",
+      "handoverTypeId" : "6",
+      "handoverReason" : "Checking Receipt Of Post Or Documents"
+    },
+    {
+      "id": "14",
+      "handoverTypeId" : "6",
+      "handoverReason" : "Clerical Claim"
+    },
+    {
+      "id": "15",
+      "handoverTypeId" : "6",
+      "handoverReason" : "General Query"
+    },
+    {
+      "id": "16",
+      "handoverTypeId" : "6",
+      "handoverReason" : "Progress Chasing"
+    },
+    {
+      "id": "17",
+      "handoverTypeId" : "7",
+      "handoverReason" : "Clerical Claim"
+    },
+    {
+      "id": "18",
+      "handoverTypeId" : "7",
+      "handoverReason" : "General Query"
+    },
+    {
+      "id": "19",
+      "handoverTypeId" : "7",
+      "handoverReason" : "Other"
+    },
+    {
+      "id": "20",
+      "handoverTypeId" : "7",
+      "handoverReason" : "Progress Chasing"
+    },
+    {
+      "id": "21",
+      "handoverTypeId" : "7",
+      "handoverReason" : "Querying Letter"
+    },
+    {
+      "id": "22",
+      "handoverTypeId" : "8",
+      "handoverReason" : "Exempt Benefit Query"
+    },
+    {
+      "id": "23",
+      "handoverTypeId" : "8",
+      "handoverReason" : "Grace Period Query"
+    },
+    {
+      "id": "24",
+      "handoverTypeId" : "8",
+      "handoverReason" : "Pension Credit Query"
+    },
+    {
+      "id": "25",
+      "handoverTypeId" : "9",
+      "handoverReason" : "Clerical Claim"
+    },
+    {
+      "id": "26",
+      "handoverTypeId" : "9",
+      "handoverReason" : "Other"
+    },
+    {
+      "id": "27",
+      "handoverTypeId": "9",
+      "handoverReason": "Progress Chasing"
+    },
+    {
+      "id": "28",
+      "handoverTypeId" : "10",
+      "handoverReason" : "Duplicate Mandatory Reconsideration Notice Request"
+    },
+    {
+      "id": "29",
+      "handoverTypeId" : "10",
+      "handoverReason" : "Mandatory Reconsideration Progress Chasing"
+    },
+    {
+      "id": "30",
+      "handoverTypeId" : "10",
+      "handoverReason" : "Mandatory Reconsideration Request"
+    },
+    {
+      "id": "31",
+      "handoverTypeId" : "11",
+      "handoverReason" : "Disputed Debt"
+    },
+    {
+      "id": "32",
+      "handoverTypeId" : "12",
+      "handoverReason" : "Declaration Letter Returned"
+    },
+    {
+      "id": "33",
+      "handoverTypeId" : "12",
+      "handoverReason" : "Other"
+    },
+    {
+      "id": "34",
+      "handoverTypeId" : "12",
+      "handoverReason" : "Payment Not Released"
+    },
+    {
+      "id": "35",
+      "handoverTypeId" : "12",
+      "handoverReason" : "Querying Letter"
+    },
+    {
+      "id": "36",
+      "handoverTypeId" : "13",
+      "handoverReason" : "Disputed Debt"
+    },
+    {
+      "id": "37",
+      "handoverTypeId" : "14",
+      "handoverReason" : "Clerical Claim"
+    },
+    {
+      "id": "38",
+      "handoverTypeId" : "14",
+      "handoverReason" : "General"
+    },
+    {
+      "id": "39",
+      "handoverTypeId" : "14",
+      "handoverReason" : "Other"
+    },
+    {
+      "id": "40",
+      "handoverTypeId" : "14",
+      "handoverReason" : "Progress Chasing"
+    },
+    {
+      "id": "41",
+      "handoverTypeId" : "15",
+      "handoverReason" : "Disputed Debt"
+    },
+    {
+      "id": "42",
+      "handoverTypeId" : "16",
+      "handoverReason" : "Clerical Claim"
+    },
+    {
+      "id": "43",
+      "handoverTypeId" : "16",
+      "handoverReason" : "Other"
+    },
+    {
+      "id": "44",
+      "handoverTypeId" : "16",
+      "handoverReason" : "Progress Chasing"
+    },
+    {
+      "id": "45",
+      "handoverTypeId" : "17",
+      "handoverReason" : "Appeal Requested"
+    },
+    {
+      "id": "46",
+      "handoverTypeId" : "17",
+      "handoverReason" : "Clerical Claim"
+    },
+    {
+      "id": "47",
+      "handoverTypeId" : "17",
+      "handoverReason" : "Progress Chasing"
+    },
+    {
+      "id": "48",
+      "handoverTypeId" : "18",
+      "handoverReason" : "Querying Letter"
+    },
+    {
+      "id": "49",
+      "handoverTypeId" : "18",
+      "handoverReason" : "Request For Application Form"
+    },
+    {
+      "id": "50",
+      "handoverTypeId" : "19",
+      "handoverReason" : "Clerical Claim"
+    },
+    {
+      "id": "51",
+      "handoverTypeId" : "19",
+      "handoverReason" : "Other"
+    },
+    {
+      "id": "52",
+      "handoverTypeId" : "19",
+      "handoverReason" : "Progress Chasing"
+    },
+    {
+      "id": "53",
+      "handoverTypeId" : "20",
+      "handoverReason" : "Notepad Full"
     }
   ]
 }

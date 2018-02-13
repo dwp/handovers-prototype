@@ -4,6 +4,7 @@ const HandoverNote = require('../models/HandoverNote.model');
 const HandoverType = require('../models/HandoverType.model');
 const HandoverReason = require('../models/HandoverReason.model');
 const Benefit = require('../models/Benefit.model');
+const BenefitSubType = require('../models/BenefitSubType.model');
 const benefitsData = require('../data/benefitsData.json');
 const customerData = require('../data/customerData.json');
 const handoverData = require('../data/handoverData.json');
@@ -45,15 +46,18 @@ function setInitialBenefitsAndHandoversData() {
 
     let initialBenefitsAndHandoversData;
     let initialBenefits;
+    let initialBenefitSubTypes;
     let initialHandoverTypes;
     let initialHandoverReasons;
     let initialHandovers;
     initialBenefits = setInitialBenefitsData();
+    initialBenefitSubTypes = setInitialBenefitSubTypesData();
     initialHandoverTypes = setInitialHandoverTypesData();
     initialHandoverReasons = setInitialHandoverReasonsData();
     initialHandovers = setInitialHandoversData();
     initialBenefitsAndHandoversData = {
         "initialBenefits"       : initialBenefits,
+        "initialBenefitSubTypes": initialBenefitSubTypes,
         "initialHandoverTypes"  : initialHandoverTypes,
         "initialHandoverReasons": initialHandoverReasons,
         "initialHandovers"      : initialHandovers
@@ -68,18 +72,26 @@ function setInitialBenefitsData() {
     let initialBenefits = [];
     for (let i=0; i < benefitsList.length; i++) {
         let benefit = new Benefit(benefitsList[i]);
-        if (benefit.id === '5') {
-            benefit.benefitSubTypes = benefitsList[i].benefitSubTypes;
-        }
         initialBenefits.push(benefit);
     }
     return initialBenefits;
 }
 
+function setInitialBenefitSubTypesData() {
+
+    let benefitSubTypesList = benefitsData['benefitSubTypes'];
+    let initialBenefitSubTypes = [];
+    for (let i=0; i < benefitSubTypesList.length; i++) {
+        let benefitSubType = new BenefitSubType(benefitSubTypesList[i]);
+        initialBenefitSubTypes.push(benefitSubType);
+    }
+    return initialBenefitSubTypes;
+}
+
 // Set up initial handover types data and return in an array
 function setInitialHandoverTypesData() {
 
-    let handoverTypesList = handoverData['handoverTypes'];
+    let handoverTypesList = benefitsData['handoverTypes'];
     let initialHandoverTypes = [];
     for (let i = 0; i < handoverTypesList.length; i++) {
         let handoverType = new HandoverType(handoverTypesList[i]);
@@ -90,7 +102,7 @@ function setInitialHandoverTypesData() {
 // Set up initial handover reasons data and return in an array
 function setInitialHandoverReasonsData() {
 
-    let handoverReasonsList = handoverData['handoverReasons'];
+    let handoverReasonsList = benefitsData['handoverReasons'];
     let initialHandoverReasons = [];
     for (let i = 0; i < handoverReasonsList.length; i++) {
         let handoverReason = new HandoverReason(handoverReasonsList[i]);

@@ -1,57 +1,5 @@
 {
   "title": "handoverData",
-  "handoverTypes": [
-    {
-      "id": "1",
-      "handoverType": "Appointment confirmation"
-    },
-    {
-      "id": "2",
-      "handoverType": "Claim closure"
-    },
-    {
-      "id": "3",
-      "handoverType": "Hardship"
-    },
-    {
-      "id": "4",
-      "handoverType": "Missing evidence"
-    },
-    {
-      "id": "5",
-      "handoverType": "New claim"
-    },
-    {
-      "id": "6",
-      "handoverType": "Reconsiderations"
-    }
-  ],
-  "handoverReasons": [
-    {
-      "id": "1",
-      "handoverReason": "Appointment form"
-    },
-    {
-      "id": "2",
-      "handoverReason": "Claim termination"
-    },
-    {
-      "id": "3",
-      "handoverReason": "General query"
-    },
-    {
-      "id": "4",
-      "handoverReason": "Joint claim"
-    },
-    {
-      "id": "5",
-      "handoverReason": "Missing direct payment"
-    },
-    {
-      "id": "6",
-      "handoverReason": "Payment query"
-    }
-  ],
   "handovers": [
     {
       "id": "1",
@@ -61,7 +9,7 @@
       "raisedOnBehalfOfOfficeId": "1",
       "receivingOfficeId": "7",
       "benefitId": "1",
-      "benSubType": "",
+      "benSubType": "1",
       "typeId": "2",
       "reasonId": "3",
       "callback": "Yes",
@@ -83,7 +31,7 @@
       "raisedOnBehalfOfOfficeId": "1",
       "receivingOfficeId": "6",
       "benefitId": "2",
-      "benSubType": "",
+      "benSubType": "2",
       "typeId": "3",
       "reasonId": "4",
       "callback": "No",
@@ -105,7 +53,7 @@
       "raisedOnBehalfOfOfficeId": "1",
       "receivingOfficeId": "7",
       "benefitId": "4",
-      "benSubType": "",
+      "benSubType": "4",
       "typeId": "4",
       "reasonId": "5",
       "callback": "Yes",
@@ -127,7 +75,7 @@
       "raisedOnBehalfOfOfficeId": "1",
       "receivingOfficeId": "5",
       "benefitId": "1",
-      "benSubType": "",
+      "benSubType": "1",
       "typeId": "3",
       "reasonId": "4",
       "callback": "Yes",
@@ -149,7 +97,7 @@
       "raisedOnBehalfOfOfficeId": "1",
       "receivingOfficeId": "7",
       "benefitId": "1",
-      "benSubType": "",
+      "benSubType": "1",
       "typeId": "2",
       "reasonId": "3",
       "callback": "Yes",
@@ -171,7 +119,7 @@
       "raisedOnBehalfOfOfficeId": "1",
       "receivingOfficeId": "6",
       "benefitId": "5",
-      "benSubType": "Social Fund Type 2",
+      "benSubType": "5",
       "typeId": "5",
       "reasonId": "6",
       "callback": "Yes",
