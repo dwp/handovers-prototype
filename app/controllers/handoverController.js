@@ -175,14 +175,14 @@ function createHandoverPageAction(req, res) {
     let agent = userUtils.getUserByStaffIdFromListOfUsers(users, newHandover.raisedByStaffId);
     newHandover.raisedOnBehalfOfOfficeId = agent.owningOfficeId;
     newHandover.benefitId = req.body['benefit'];
-    if (newHandover.benefitId === "6") {
+    if (newHandover.benefitId == 6) {
         newHandover.benSubTypeId = req.body['benefit-sub'];
     } else {
         newHandover.benSubTypeId = null;
     }
     // Set receiving office to this value until/unless prototype changed to show some kind of routing rules
     newHandover.receivingOfficeId = 4;
-    newHandover.typeId = req.body['handover-type'];;
+    newHandover.typeId = req.body['handover-type'];
     newHandover.reasonId = req.body['handover-reason'];
     newHandover.callback = req.body['handover-callback'];
     if (newHandover.callback === "Yes") {
@@ -352,14 +352,14 @@ function editHandoverPageAction(req, res) {
     editedHandover.inQueueOfStaffId = allocatedUser ? allocatedUser : handover.inQueueOfStaffId;
     editedHandover.raisedOnBehalfOfOfficeId = handover.raisedOnBehalfOfOfficeId;
     editedHandover.receivingOfficeId = handover.receivingOfficeId;
-    editedHandover.benefitId = req.body['benefit'] || handover.benefitId;
-    if (editedHandover.benefitId === "6") {
-        editedHandover.benSubType = req.body['benefit-sub'] || handover.benSubType;
+    editedHandover.benefitId = req.body['benefit'];
+    if (editedHandover.benefitId == 6) {
+        editedHandover.benSubTypeId = req.body['benefit-sub'];
     } else {
-        editedHandover.benSubType = null;
+        editedHandover.benSubTypeId = null;
     }
-    editedHandover.typeId = req.body['handover-type'] || handover.typeId;
-    editedHandover.reasonId = req.body['handover-reason'] || handover.reasonId;
+    editedHandover.typeId = req.body['handover-type'];
+    editedHandover.reasonId = req.body['handover-reason'];
     editedHandover.callback = req.body['handover-callback'];
 
     if (handover.status === "Cleared" || handover.status === "Withdrawn") {
