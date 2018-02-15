@@ -100,11 +100,11 @@ function getNextQueueItem(req, res) {
 function agentQueuePage (req, res) {
 
     let users = sIDU.setInitialUsersData();
-    let supervisor = req.session.user;
+    let allocator = req.session.user;
 
     res.render('agentQueue-select', {
         users : users,
-        supervisor : supervisor
+        allocator : allocator
     });
 }
 
