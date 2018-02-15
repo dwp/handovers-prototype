@@ -1,0 +1,280 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main id="content" role="main">
+    <div class="main-content">
+        {% include "includes/handovers_summary_nav.html" %}
+        {% include "includes/error-summary.html" %}
+        {% include "includes/message-banner.html" %}
+            <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
+
+        <div class="grid-row">
+            <div class="column-full">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col"><span>Name & NINO</span></th>
+                            <th scope="col"><span>Date/time raised</span></th>
+                            <th scope="col"><span>Agent</span></th>
+                            <th scope="col"><span>Time left to clear</span></th>
+                            <th></th>
+                            <th scope="col"><span>Benefit type</span></th>
+                            <th scope="col"><span>Handover type</span></th>
+                            <th scope="col"><span>Handover Status</span></th>
+                            <th scope="col"><span>Callback status</span></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr role="row">
+                        <td><p>Adam Brown<br><span class="font-xsmall">AA123456B</span></p></td>
+                        <td>8 February 2018 8:01</td>
+
+
+                        <td>Imogen Johnson</td>
+
+
+
+                        <td><p>Expired<br><span class="urgent">Escalated</span></p></td>
+                        <td><p class="hidden">1</p></td>
+
+                        <td>ESA</td>
+                        <td>Claim closure</td>
+                        <td>Paused</td>
+                        <td>First call pending</td>
+                        <td>
+
+                            <a href="/handover/edit?id=1">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Grace Harris<br><span class="font-xsmall">ZZ234567A</span></p></td>
+                        <td>8 February 2018 13:06</td>
+
+
+                        <td>Not applicable</td>
+
+
+
+                        <td><p>Expired<br><span class="urgent">Escalated</span></p></td>
+                        <td><p class="hidden">2</p></td>
+
+                        <td>SF</td>
+                        <td>New claim</td>
+                        <td>Not allocated</td>
+                        <td>First call pending</td>
+
+                        <td>
+
+                            <a href="/handover/edit?id=6">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Ian Jackson<br><span class="font-xsmall">AA345678B</span></p></td>
+                        <td>15 February 2018 8:04</td>
+
+
+                        <td>Grant Hopper</td>
+
+
+
+                        <td><p>Expired<br><span class="urgent">Escalated</span></p></td>
+                        <td><p class="hidden">3</p></td>
+
+                        <td>ESA</td>
+                        <td>Hardship</td>
+                        <td>In progress</td>
+                        <td>Third call pending</td>
+
+
+                        <td>
+
+                            <a href="/handover/edit?id=4">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Christine Dixon<br><span class="font-xsmall">ZZ123456A</span></p></td>
+                        <td>15 February 2018 11:03</td>
+
+
+                        <td>Kevin Lambeth</td>
+
+
+
+                        <td><p>0 hrs 1 mins<br><span class="urgent">Escalated</span></p></td>
+                        <td><p class="hidden">4</p></td>
+
+                        <td>HB</td>
+                        <td>Missing evidence</td>
+                        <td>In progress</td>
+                        <td>Second call pending</td>
+
+
+                        <td>
+
+                            <a href="/handover/edit?id=3">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Christine Dixon<br><span class="font-xsmall">ZZ123456A</span></p></td>
+                        <td>15 February 2018 15:09</td>
+
+
+                        <td>Not applicable</td>
+
+
+
+                        <td>2 hrs 29 mins</td>
+                        <td><p class="hidden">5</p></td>
+
+                        <td>JSA</td>
+                        <td>Appointment confirmation</td>
+                        <td>Not allocated</td>
+                        <td>Not requested</td>
+
+
+                        <td>
+
+                            <a href="/handover/edit?id=11">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Ian Jackson<br><span class="font-xsmall">AA345678B</span></p></td>
+                        <td>15 February 2018 15:07</td>
+
+
+                        <td>Grant Hopper</td>
+
+
+
+                        <td>2 hrs 31 mins</td>
+                        <td><p class="hidden">6</p></td>
+
+                        <td>HB</td>
+                        <td>Hardship</td>
+                        <td>In progress</td>
+                        <td>Not requested</td>
+
+
+                        <td>
+
+                            <a href="/handover/edit?id=7">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Ian Jackson<br><span class="font-xsmall">AA345678B</span></p></td>
+                        <td>15 February 2018 13:08</td>
+
+
+                        <td>Grant Hopper</td>
+
+
+
+                        <td>1 hr 10 mins</td>
+                        <td><p class="hidden">7</p></td>
+
+                        <td>UC</td>
+                        <td>Claim closure</td>
+                        <td>In progress</td>
+                        <td>Not requested</td>
+
+
+                        <td>
+
+                            <a href="/handover/edit?id=8">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Ian Jackson<br><span class="font-xsmall">AA345678B</span></p></td>
+                        <td>7 February 2018 11:09</td>
+
+
+                        <td>Not applicable</td>
+
+
+
+                        <td>Expired</td>
+                        <td><p class="hidden">8</p></td>
+
+                        <td>JSA</td>
+                        <td>Appointment confirmation</td>
+                        <td>Not allocated</td>
+                        <td>Not requested</td>
+
+
+                        <td>
+
+                            <a href="/handover/edit?id=9">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Christine Dixon<br><span class="font-xsmall">ZZ123456A</span></p></td>
+                        <td>7 February 2018 11:09</td>
+
+
+                        <td>Not applicable</td>
+
+
+
+                        <td>Expired</td>
+                        <td><p class="hidden">9</p></td>
+
+                        <td>JSA</td>
+                        <td>Appointment confirmation</td>
+                        <td>Not allocated</td>
+                        <td>Not requested</td>
+
+
+                        <td>
+
+                            <a href="/handover/edit?id=10">Update</a>
+                        </td>
+                    </tr><tr role="row">
+                        <td><p>Adam Brown<br><span class="font-xsmall">AA123456B</span></p></td>
+                        <td>8 February 2018 9:02</td>
+
+
+                        <td>Imogen Johnson</td>
+
+
+
+                        <td>Expired</td>
+                        <td><p class="hidden">10</p></td>
+
+                        <td>JSA</td>
+                        <td>Hardship</td>
+                        <td>In progress</td>
+                        <td>Not requested</td>
+
+
+                        <td>
+
+                            <a href="/handover/edit?id=2">Update</a>
+                        </td>
+                    </tr></tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+
+            <div>
+                <a href="../queue/view?queueType=office">Go to office queue</a>
+            </div>
+
+                </div>
+            </div>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script src="/public/javascripts/vendor/datatables.min.js"></script>
+
+<script>
+    $('table').DataTable({
+        paging: false,
+        info: false,
+        filter: false,
+        order: [[ 4, "asc" ]]
+    })
+</script>
+
+{% endblock %}
+
+{% macro handoverUpdateLink(handover) %}
+{% set queryString = '?id=' + handover.id %}
+<a href="/handover/edit{{queryString}}">Update</a>
+{% endmacro %}
