@@ -1,9 +1,9 @@
 <div class="column-half">
     <legend class="form-label-bold">Select a benefit</legend>
     <select class="select form-control" name="benefit" id="benefit" onchange="benCheck()">
-    <option value="" id="benSelect">Select</option>
+    <option value="">Select</option>
     {% for benefit in benList %}
-        <option value="{{ benefit.id }}" id="ben-{{ benefit.id }}"{{ 'selected' if  handover.benefitId === benefit.id else ''}}>{{ benefit.benefitName }}</option>
+        <option value="{{ benefit.id }}">{{ benefit.benefitName }}</option>
     {% endfor %}
     </select>
 </div>
@@ -13,7 +13,7 @@
         <option value="">Select</option>
         {% for benSubType in benSubTypesList %}
             {% if benSubType.benefitSubType !== "" %}
-                <option value="{{ benSubType.id }}" {{ 'selected' if handover.benSubTypeId === benSubType.id else ''}}>{{ benSubType.benefitSubType }}</option>
+                <option value="{{ benSubType.id }}" data-benefitSubtype-id="{{ benSubType.benefitId }}">{{ benSubType.benefitSubType }}</option>
             {% endif %}
         {% endfor %}
     </select>

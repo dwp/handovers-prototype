@@ -3,7 +3,7 @@
     <select class="select form-control" name="handover-type" id="handover-type">
         <option value="">Select</option>
         {% for handoverType in handTypesList %}
-            <option value="{{ handoverType.id }}" {{ 'selected' if handover.typeId === handoverType.id else ''}}>{{ handoverType.handoverType }}</option>
+            <option value="{{ handoverType.id }}" data-handovertype-id="{{ handoverType.benefitSubTypeId }}"></option>
         {% endfor %}
     </select>
 </div>
@@ -13,7 +13,7 @@
     <select class="select form-control" name="handover-reason" id="handover-reason">
         <option value="">Select</option>
         {% for handoverReason in handReasonsList %}
-            <option value="{{ handoverReason.id }}" {{ 'selected' if  handover.reasonId === handoverReason.id else ''}}>{{ handoverReason.handoverReason }}</option>
+            <option value="{{ handoverReason.id }}" data-handoverReason-id="{{ handoverReason.handoverTypeId }}"></option>
         {% endfor %}
     </select>
 </div>
