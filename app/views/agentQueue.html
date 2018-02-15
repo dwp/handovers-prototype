@@ -7,12 +7,7 @@
         {% include "includes/handovers_summary_nav.html" %}
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
-        {% if queueType === "office" %}
-            <h1 class="heading-large">Handovers queue - Sheffield Benefit Centre</h1>
-        {% else %}
-            <h1 class="heading-large">Handovers queue - {{ queueAgent.firstName }} {{ queueAgent.lastName }}</h1>
-        {% endif %}
-
+        <h1 class="heading-large">View agent queue for - {{ agent.firstName }} {{ agent.lastName }}</h1>
         <div class="grid-row">
             <div class="column-full">
                 <table>
@@ -21,9 +16,6 @@
                             <th scope="col"><span>NI number</span></th>
                             <th scope="col"><span>Name</span></th>
                             <th scope="col"><span>Date/time raised</span></th>
-                            {% if queueType === "office" %}
-                                <th scope="col"><span>Agent</span></th>
-                            {% endif %}
                             <th scope="col"><span>Time left to clear</span></th>
                             <th scope="col"><span>Benefit type</span></th>
                             <th scope="col"><span>Handover type</span></th>
@@ -39,13 +31,6 @@
                             <td>{{handover.nino}}</td>
                             <td>{{handover.customerDetails.firstName}} {{handover.customerDetails.lastName}}</td>
                             <td>{{handover.dateRaised}} {{handover.timeRaised}}</td>
-                            {% if queueType === "office" %}
-                                {% if handover.status === "Not allocated" %}
-                                    <td>Not applicable</td>
-                                {% else %}
-                                    <td>{{ handover.inQueueOfStaffDetails.firstName }} {{ handover.inQueueOfStaffDetails.lastName }}</td>
-                                {% endif %}
-                            {% endif %}
                             {% if handover.timeLeftToTarget.expired == 1 %}
                                 <td>Expired</td>
                             {% else %}
@@ -68,24 +53,15 @@
             </div>
         </div>
         <br>
-        {% if queueType === "agent" %}
-            <div class="grid-row">
-                <div class="column-full">
-                    <form action="/queue/getNextQueueItem?agentId={{ queueAgent.staffId }}" method="POST" class="form">
-                        <div class="form-group">
-                            <input type="submit" class="button" value="Fetch next work item">
-                        </div>
-                    </form>
-                    <br>
-                    <!--If user has a role of allocator-->
-                    {% if queueAgent.role === "1" %}
-                        <div>
-                            <a href="../queue/view?queueType=office">Go to office queue</a>
-                        </div>
-                    {% endif %}
-                </div>
+        <div class="grid-row">
+            <div class="column-full">
+                <form action="/queue/agent" method="GET" class="form">
+                    <div class="form-group">
+                        <input type="submit" class="button" value="Select another agent">
+                    </div>
+                </form>
             </div>
-        {% endif %}
+        </div>
     </div>
 </main>
 
@@ -96,8 +72,7 @@
     $('table').DataTable({
         paging: false,
         info: false,
-        filter: false,
-        order: [[ 9, "desc" ]]
+        filter: false
     })
 </script>
 

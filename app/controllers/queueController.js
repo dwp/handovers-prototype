@@ -95,8 +95,64 @@ function getNextQueueItem(req, res) {
     req.session.handovers = newHandoversQueueList;
     req.session.messages = messages;
     res.redirect('/queue/view?agentId=' + user.staffId);
+}
 
+function agentQueuePage (req, res) {
+
+    let users = sIDU.setInitialUsersData();
+    let allocator = req.session.user;
+
+    res.render('agentQueue-select', {
+        users : users,
+        allocator : allocator
+    });
+}
+
+function agentQueuePageAction(req, res) {
+
+    let agentId = req.body['queue-agent'];
+    let handovers = req.session.handovers ? req.session.handovers : sIDU.setInitialHandoversData();
+    let handoversLength = handovers.length;
+    let users = sIDU.setInitialUsersData();
+    let user = req.session.user;
+    let agent = userUtils.getUserByStaffIdFromListOfUsers(users, agentId);
+    let offices = sIDU.setInitialOfficesData();
+    let customersList = req.session.customers ? req.session.customers : sIDU.setInitialCustomersData();
+    let callbackStatusValues = callbackData['callbackStatusValues'];
+    let handoversQueueList = [];
+    let sortedHandoversQueueList;
+
+    for (let i=0; i < handoversLength; i++) {
+        let handover = handoverUtils.getHandoverByIdFromListOfHandovers(handovers, handovers[i].id);
+        if (handover.inQueueOfStaffId == agentId) {
+            let callbackStatusDescription = callbackStatusValues[handover.callbackStatus].callbackStatus;
+            handover.callbackStatusDescription = callbackStatusDescription;
+            let handoverDetails = handoverUtils.getHandoverBenefitNameHandoverTypeAndHandoverReason(handover);
+            let dateAndTimeRaisedForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.dateAndTimeRaised);
+            let targetDateAndTimeForDisplay = dateUtils.formatDateAndTimeForDisplay(handover.targetDateAndTime);
+            handover.benefitName = handoverDetails.benefitName;
+            handover.benefitAbbr = handoverDetails.benefitAbbr;
+            handover.handoverType = handoverDetails.handoverType;
+            handover.handoverReason = handoverDetails.handoverReason;
+            handover.dateRaised = (dateAndTimeRaisedForDisplay.day + " " + dateAndTimeRaisedForDisplay.month + " " + dateAndTimeRaisedForDisplay.year);
+            handover.timeRaised = (dateAndTimeRaisedForDisplay.hours + ":" + dateAndTimeRaisedForDisplay.mins);
+            handover.targetDate = (targetDateAndTimeForDisplay.day + " " + targetDateAndTimeForDisplay.month + " " + targetDateAndTimeForDisplay.year);
+            handover.targetTime = (targetDateAndTimeForDisplay.hours + ":" + targetDateAndTimeForDisplay.mins);
+            handover.timeLeftToTarget = dateUtils.calcTimeLeftOrTimeOverdue(handover.targetDateAndTime, handover.callback);
+            handover.inQueueOfStaffDetails = userUtils.getUserByStaffIdFromListOfUsers(users, handover.inQueueOfStaffId);
+            handover.receivingOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(offices, handover.receivingOfficeId);
+            handover.customerDetails = customerUtils.getCustomerByNinoFromListOfCustomers(customersList, handover.nino);
+            handoversQueueList.push(handover);
+        }
+    }
+    sortedHandoversQueueList = _.orderBy(handoversQueueList, ['callback', 'dateAndTimeRaised'], ['desc', 'asc']);
+    res.render('agentQueue', {
+        handoversQueueList : sortedHandoversQueueList,
+        agent : agent
+    });
 }
 
 module.exports.viewQueuePage = viewQueuePage;
 module.exports.getNextQueueItem = getNextQueueItem;
+module.exports.agentQueuePage = agentQueuePage;
+module.exports.agentQueuePageAction = agentQueuePageAction;

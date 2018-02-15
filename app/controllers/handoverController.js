@@ -437,7 +437,11 @@ function editHandoverPageAction(req, res) {
         req.session.handovers = handoversList;
         req.session.invalidHandover = {};
         req.session.handover = validatedHandoverAndErrors.handover;
-        res.redirect('/customer/summary?nino=' + validatedHandoverAndErrors.handover.nino);
+        if (user.role == 0) {
+            res.redirect('/customer/summary?nino=' + validatedHandoverAndErrors.handover.nino);
+        } else {
+            res.redirect('/queue/view?queueType=office');
+        }
     } else {
         req.session.invalidHandover = validatedHandoverAndErrors.handover;
         req.session.errors = validatedHandoverAndErrors.errors;

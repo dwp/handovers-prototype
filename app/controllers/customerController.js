@@ -169,6 +169,7 @@ function customerCreatePageAction(req, res) {
     newCustomer.translator = req.body['translator'];
     newCustomer.language = req.body['language'];
     newCustomer.approvedRep = req.body['approved-rep'];
+    newCustomer.approvedRepType = req.body['rep-type'];
     newCustomer.approvedRepName = req.body['rep-name'];
     newCustomer.approvedRepContact = req.body['rep-contact'];
     newCustomer.birthDay = parseInt(req.body['birthDay']);
@@ -218,6 +219,7 @@ function customerEditPage(req, res) {
     let customerOfficeDetails = officeUtils.getOfficeByIdFromListOfOffices(officesList, customer.customerOfficeId);
     res.render('customer-edit', { customer : customer,
                                   customerOfficeDetails : customerOfficeDetails,
+                                  officesList : officesList,
                                   editOrCreate : editOrCreate,
                                   errors : errors,
                                   errorsLength : errors.length
@@ -278,31 +280,15 @@ function customerEditPageAction(req, res) {
     editedCustomer.translator = req.body['translator'];
     editedCustomer.language = req.body['language'];
     editedCustomer.approvedRep = req.body['approved-rep'];
-
-    if (editedCustomer.approvedRep === "Yes") {
-            editedCustomer.approvedRepName = req.body['rep-name'];
-            editedCustomer.approvedRepContact = req.body['rep-contact'];
-            if (req.body['rep-name'] === "" || req.body['rep-contact'] === "") {
-                errorsOut.push({
-                    message : "Enter both name and contact details for approved representative, or select No",
-                    field : ""});
-                if (req.body['rep-name'] === "") {
-                    errorsOut.push({
-                        message : "......name must be entered",
-                        field : "rep-name"});
-                }
-                if (req.body['rep-contact'] === "") {
-                    errorsOut.push({
-                        message : "......contact details must be entered",
-                        field : "rep-contact"});
-                }
-            }
-    } else {
-        editedCustomer.approvedRepName = "";
-        editedCustomer.approvedRepContact = "";
-    }
-    if (errorsOut.length === 0) {
-        editedCustomer.dob = new Date(year + '-' + month + '-' + day);
+    editedCustomer.approvedRepType = req.body['rep-type'];
+    editedCustomer.approvedRepName = req.body['rep-name'];
+    editedCustomer.approvedRepContact = req.body['rep-contact'];
+    editedCustomer.birthDay = parseInt(req.body['birthDay']);
+    editedCustomer.birthMonth = parseInt(req.body['birthMonth']);
+    editedCustomer.birthYear = parseInt(req.body['birthYear']);
+    validatedCustomer = customerUtils.validateCustomer(editedCustomer);
+    if (validatedCustomer.errors.length === 0) {
+        customer = validatedCustomer.customer;
         req.session.customer = customer;
         customersList.push(customer);
         req.session.customers = customersList;

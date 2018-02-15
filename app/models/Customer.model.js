@@ -12,6 +12,7 @@ class Customer {
         this.translator = properties.translator;
         this.language = properties.language;
         this.approvedRep = properties.approvedRep;
+        this.approvedRepType = properties.approvedRepType;
         this.approvedRepName = properties.approvedRepName;
         this.approvedRepContact = properties.approvedRepContact;
     }
