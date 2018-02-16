@@ -2,12 +2,12 @@
 
     let $benefitSelect = $("#benefit"),
         $benefitSubtypeSelect = $("#benefit-sub"),
-        $handovertypeSelect = $("#handover-type"),
+        $handoverTypeSelect = $("#handover-type"),
         $handoverReasonSelect = $("#handover-reason"),
         $benefitSubtypeDiv = $("#benSubTypeDiv"),
         $benefitSelectOptions = $benefitSelect.find("option:eq(0)"),
         $benefitSubtypeOptions = $benefitSubtypeSelect.find("option:gt(0)"),
-        $handovertypeOptions = $handovertypeSelect.find("option:gt(0)"),
+        $handoverTypeOptions = $handoverTypeSelect.find("option:gt(0)"),
         $handoverReasonOptions = $handoverReasonSelect.find("option:gt(0)");
 
     $(document).ready(function() {
@@ -42,7 +42,7 @@
     function showHandoverTypeDropdownForDefaultBenefitSubtype(selectedBenefitId){
         let defaultBenefitsubtypeId = $benefitSubtypeOptions.filter("[data-benefitSubtype-id="+ selectedBenefitId +"]").val();
         sortOptionsForHandoverType(defaultBenefitsubtypeId);
-        $handovertypeOptions.find("option:eq(0)").prop("selected", true);
+        $handoverTypeOptions.find("option:eq(0)").prop("selected", true);
     }
 
     function sortOptionsForBenefitSubtype(selectedBenefitId) {
@@ -57,14 +57,14 @@
 
         if($benefitSubtypeSelect.val() !== "") {
             sortOptionsForHandoverType(this.value);
-            $handovertypeOptions.find("option:eq(0)").prop("selected", true);
+            $handoverTypeOptions.find("option:eq(0)").prop("selected", true);
         }
     });
 
-    $handovertypeSelect.on("change", function() {
+    $handoverTypeSelect.on("change", function() {
         handoverReasonRefresh();
 
-        if($handovertypeSelect.val() !== "") {
+        if($handoverTypeSelect.val() !== "") {
             sortOptionsForHandoverReason(this.value);
             $handoverReasonOptions.find("option:eq(0)").prop("selected", true);
         }
@@ -76,8 +76,8 @@
     }
 
     function sortOptionsForHandoverType(selectedBenefitSubtypeId) {
-        $handovertypeOptions.filter("[data-handovertype-id="+ selectedBenefitSubtypeId +"]").optVisible(true);
-        $handovertypeOptions.filter("[data-handovertype-id!="+ selectedBenefitSubtypeId +"]").optVisible(false);
+        $handoverTypeOptions.filter("[data-handovertype-id="+ selectedBenefitSubtypeId +"]").optVisible(true);
+        $handoverTypeOptions.filter("[data-handovertype-id!="+ selectedBenefitSubtypeId +"]").optVisible(false);
     }
 
     function sortOptionsForHandoverReason(selectedBenefitSubtypeId) {
@@ -90,8 +90,8 @@
     }
 
     function handoverTypeRefresh(){
-        $handovertypeSelect.find("option:eq(0)").prop("selected", true);
-        $handovertypeOptions.filter("*").optVisible(false);
+        $handoverTypeSelect.find("option:eq(0)").prop("selected", true);
+        $handoverTypeOptions.filter("*").optVisible(false);
     }
 
     function handoverReasonRefresh(){
