@@ -98,7 +98,7 @@ function validateCustomer(inputCustomer) {
     if (inputCustomer.approvedRep === "Yes") {
         if (inputCustomer.approvedRepType == 0 || inputCustomer.approvedRepName === "" || inputCustomer.approvedRepContact === "") {
             errors.push({
-                message : "Enter type, name, and contact details for approved representative, or select No",
+                message : "Enter type, name, and contact details for customer representative, or select No",
                 field : ""});
             if (inputCustomer.approvedRepType == 0) {
                 errors.push({
