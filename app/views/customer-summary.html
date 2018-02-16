@@ -60,7 +60,7 @@
                         </tr>
                         {% if customer.approvedRep === "Yes" %}
                             <tr>
-                                <td>Approved representative type</td>
+                                <td>Customer representative type</td>
                                 {% if customer.approvedRepType == 1 %}
                                     <td>Agent</td>
                                 {% elif customer.approvedRepType == 2 %}
@@ -70,16 +70,16 @@
                                 {% endif %}
                             </tr>
                             <tr>
-                                <td>Approved representative name</td>
+                                <td>Customer representative name</td>
                                 <td>{{ customer.approvedRepName }}</td>
                             </tr>
                             <tr>
-                                <td>Approved representative contact details</td>
+                                <td>Customer representative contact details</td>
                                 <td>{{ customer.approvedRepContact }}</td>
                             </tr>
                         {% else %}
-                            <td>Approved representative</td>
-                            <td>No approved representative</td>
+                            <td>Customer representative</td>
+                            <td>No customer representative</td>
                         {% endif %}
                         </tr>
                     </table>
