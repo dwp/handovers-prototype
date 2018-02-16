@@ -2,7 +2,7 @@
 <div class="grid-row">
     <div class="column-half">
         <div class="form-group">
-            <legend class="form-label-bold">Does the customer have an approved representative ?</legend>
+            <legend class="form-label-bold">Does the customer have a representative ?</legend>
             <fieldset class="inline">
                 <div class="multiple-choice">
                     <input id="approved-rep-no" type="radio" name="approved-rep" tabindex=13 value="No" {% if customer.approvedRep === "No" or editOrCreate === 'create' %} checked="checked" {% endif %}>
@@ -31,7 +31,7 @@
             {% if errorFlag === 1 %}
             <div class="form-group form-group-error">
                 <label for="rep-type" id="error-rep-type">
-                    <span class="form-label-bold">Approved representative type</span>
+                    <span class="form-label-bold">Customer representative type</span>
                     <span class="error-message">Type must be selected</span>
                 </label>
                 <div>
@@ -46,7 +46,7 @@
             {% else %}
             <div class="form-group">
                 <label for="rep-type">
-                    <span class="form-label-bold">Approved representative type</span>
+                    <span class="form-label-bold">Customer representative type</span>
                 </label>
                 <div>
                     <select class="select form-control" name="rep-type" id="rep-type" tabindex=14>
@@ -71,7 +71,7 @@
             {% if errorFlag === 1 %}
                 <div class="form-group form-group-error">
                     <label for="rep-name" id="error-rep-name">
-                        <span class="form-label-bold">Approved representative name</span>
+                        <span class="form-label-bold">Customer representative name</span>
                         <span class="error-message">Name must be entered</span>
                     </label>
                     <div>
@@ -81,7 +81,7 @@
             {% else %}
                 <div class="form-group">
                     <label for="rep-name">
-                        <span class="form-label-bold">Approved representative name</span>
+                        <span class="form-label-bold">Customer representative name</span>
                     </label>
                     <div>
                         <input type="text" class="form-control" id="rep-name" name="rep-name" tabindex=14 value="{{ customer.approvedRepName }}">
@@ -101,7 +101,7 @@
             {% if errorFlag === 1 %}
                 <div class="form-group form-group-error">
                     <label for="rep-contact" id="error-rep-contact">
-                        <span class="form-label-bold">Approved representative contact details</span>
+                        <span class="form-label-bold">Customer representative contact details</span>
                         <span class="error-message">Contact details must entered</span>
                     </label>
                     <p class="form-hint">Enter a telephone number</p>
@@ -112,7 +112,7 @@
             {% else %}
                 <div class="form-group">
                     <label for="rep-contact">
-                        <span class="form-label-bold">Approved representative contact details</span>
+                        <span class="form-label-bold">Customer representative contact details</span>
                     </label>
                     <p class="form-hint">Enter a telephone number</p>
                     <div>
