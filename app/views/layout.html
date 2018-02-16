@@ -1,55 +1,23 @@
-{% extends "govuk_template.html" %}
-
-{% block page_title %}DCAMS Handovers Prototype{% endblock %}
-
-{% block head %}
-  {% include "includes/head.html" %}
-{% endblock %}
-
-{% block cookie_message %}
-  <p>{{cookieText | safe }}</p>
-{% endblock %}
-
-{% block proposition_header %}
-
+<p>{{cookieText | safe }}</p>
 <div class="header-proposition">
   <div class="content">
     <nav id="proposition-menu">
-      <a href="/" id="proposition-name">
-        {# Set serviceName in config.js. Use a block to override on a page. #}
-        {% block service_name %}
-          {% if serviceName %} {{ serviceName }} {% endif %}
-        {% endblock %}
-      </a>
+      <a href="/"
+         id="proposition-name">{# Set serviceName in config.js. Use a block to override on a page. #} {% block service_name %} {% if serviceName %} {{ serviceName }} {% endif %} {% endblock %}</a>
     </nav>
     <nav id="sign-out-menu">
       <ul>
-        <li><a class="bold-nav-link" href="/toggle_user_role">{{ data.user.firstName }} {{ data.user.lastName }}</a></li>
+        <li>
+          <a class="bold-nav-link"
+             href="/toggle_user_role">{{ data.user.firstName }} {{ data.user.lastName }}</a>
+        </li>
       </ul>
     </nav>
   </div>
 </div>
-
-{% endblock %}
-
-{% block header_class %}
-  with-proposition
-{% endblock %}
-
-{% block footer_support_links %}
-  {% if useAutoStoreData %}
-    <ul>
-      <li>
-        <a href="/prototype-admin/clear-data">Clear data</a>
-      </li>
-    </ul>
-  {% endif %}
-{% endblock %}
-
-{% block body_end %}
-  {% block scripts %}
-    {% include "includes/scripts.html" %}
-    {% block page_scripts %}{% endblock %}
-  {% endblock %}
-  <!-- GOV.UK Prototype kit {{releaseVersion}} -->
-{% endblock %}
+<ul>
+  <li>
+    <a href="/prototype-admin/clear-data">Clear data</a>
+  </li>
+</ul>
+<!-- GOV.UK Prototype kit {{releaseVersion}} -->
