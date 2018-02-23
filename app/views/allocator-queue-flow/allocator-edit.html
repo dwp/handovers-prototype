@@ -1,0 +1,222 @@
+{% extends "layout.html" %}
+{% block content %}
+{% include "includes/handovers_summary_nav.1.html" %}
+<main id="content" role="main">
+    <div class="main-content">
+        {% include "includes/error-summary.html" %}
+        {% include "includes/message-banner.html" %}
+            <h1 class="heading-large">
+            <span class="heading-secondary">Edit Handover</span>
+              Adam Brown</h1>
+
+           <div class="grid-row">
+               <div class="column-full">
+                 <h2 class="heading-medium">Description</h2>
+                 <p>Initial information input when the handover was created</p>
+               </div>
+             </div>
+
+
+        <div class="grid-row">
+          <div class="column-full">
+            <h2 class="heading-medium">Summary</h2>
+          </div>
+                      <div class="column-half">
+                                      <div>
+                                          <table>
+                                              <tbody>
+                                              <tr>
+                                                  <td>Handover raised by:</td>
+                                                  <td>Callum Dalton in Barnsley Jobcentre</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Date and time raised</td>
+                                                  <td>Date: 8 February 2018 Time: 8:01</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Target time</td>
+                                                  <td>Date: 8 February 2018 Time: 11:01</td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Target overdue by</td>
+                                                  <td>Date: 8 February 2018     Time: 11:01</td>
+                                              </tr>
+                                          </tbody></table>
+                                      </div>
+                                  </div>
+                                  <div class="column-half">
+                                                  <div>
+                                                      <table>
+                                                          <tbody>
+                                                            <tr>
+                                                              <td><strong>National insurance number</strong></td>
+                                                              <td>AA123456B</td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>Customers Jobcentre</td>
+                                                              <td>Barnsley</td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>Contact agent</td>
+                                                              <td>Name: Angela Brown <br>Telephone: 01234 567891</td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>Agent progressing handover</td>
+                                                              <td>Imogen Johnson</td>
+                                                          </tr>
+                                                      </tbody></table>
+                                                  </div>
+                                              </div>
+          </div>
+          <div class="grid-row">
+              <div class="column-full">
+                <h2 class="heading-medium">Edit handover</h2>
+              </div>
+          </div>
+            <div class="grid-row">
+              <div class="column-third">
+            <div class="form-group">
+            <label class="form-label-bold">Select agent to allocate to handover</label>
+                <select class="select form-control form-control-3-4" name="handover-allocated-user" id="handover-allocated-user&quot;">
+                <option value="">Select</option>
+                            <option value="40001001">Callum Dalton - 40001001</option>
+                            <option value="40001002">Ellie Fuller - 40001002</option>
+                            <option value="40001003">Grant Hopper - 40001003</option>
+                            <option value="40001004" selected="">Imogen Johnson - 40001004</option>
+                            <option value="40001007">Olive Potter - 40001007</option>
+                            <option value="40001008">Quentin Redruth - 40001008</option>
+                            <option value="40001009">Steven Tumnus - 40001009</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr />
+    <div class="grid-row">
+  <div class="column-third">
+                 <div class="form-group">
+                 <label class="form-label-bold" for="select-box">Select a benefit</label>
+                 <select class="select form-control form-control-3-4" name="benefit" id="benefit" onchange="benCheck()">
+                 <option value="" id="benSelect">Select</option>
+                 <option value="1" id="ben-1" selected="">Employment &amp; Support Allowance [ESA]</option>
+                 <option value="2" id="ben-2">Jobseekers Allowance [JSA]</option>
+                 <option value="3" id="ben-3">Universal Credit [UC]</option>
+                 <option value="4" id="ben-4">Housing Benefit [HB]</option>
+                 <option value="5" id="ben-5">Social Fund [SF]</option>
+                 </select>
+               </div>
+</div>
+  <div class="column-third">
+                <div class="form-group">
+                <label class="form-label-bold" for="select-box">Select a handover type</label>
+                <select class="form-control form-control-3-4" id="select-box" name="select-box">
+                  <option value="">Select</option>
+                  <option value="1">Appointment confirmation</option>
+                  <option value="2" selected="">Claim closure</option>
+                  <option value="3">Hardship</option>
+                  <option value="4">Missing evidence</option>
+                  <option value="5">New claim</option>
+                  <option value="6">Reconsiderations</option>
+                </select>
+              </div>
+</div>
+  <div class="column-third">
+              <div class="form-group">
+              <label class="form-label-bold" for="select-box">Select a handover reason</label>
+              <select class="select form-control form-control-3-4" name="handover-reason" id="handover-reason">
+              <option value="">Select</option>
+
+              <option value="1">Appointment form</option>
+
+              <option value="2">Claim termination</option>
+
+              <option value="3" selected="">General query</option>
+
+              <option value="4">Joint claim</option>
+
+              <option value="5">Missing direct payment</option>
+
+              <option value="6">Payment query</option>
+
+          </select>
+            </div>
+</div>
+
+
+        </div>
+        <hr />
+                  <div class="grid-row">
+              <div class="column-third">
+                <div class="form-group">
+                <label class="form-label-bold">Callback status</label>
+                <div class="panel panel-border">
+               <p>
+               First call pending
+               </p>
+               </div>
+                      <select class="select form-control form-control-3-4" name="handover-callback-result" id="handover-callback-result&quot;">
+                          <option value="0">Select</option>
+                          <option value="1">First call successful</option>
+                          <option value="2">First call failed - engaged</option>
+                          <option value="3">First call failed - number unobtainable</option>
+                          <option value="4">First call failed - not answered</option>
+                      </select>
+                  </div>
+</div>
+<div class="column-third">
+ <h3 class="heading-small mt-0">Callback history</h3>
+ <div class="panel panel-border">
+<p>
+Not applicable
+</p>
+</div>
+</div>
+</div>
+<hr />
+<div class="grid-row">
+  <div class="column-third">
+           <legend class="form-label-bold">Add a note</legend>
+
+                   <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note" rows="6"></textarea>
+                   <br />
+                   <div class="panel panel-border-narrow">
+                   <legend class="form-label-bold">Did this update result from customer contact ?</legend>
+                   <fieldset class="inline">
+                       <div class="multiple-choice">
+                           <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
+                           <label for="handover-contact-no">No</label>
+                       </div>
+                       <div class="multiple-choice">
+                           <input id="handover-contact-yes" type="radio" name="handover-contact-indicator" value="Yes">
+                           <label for="handover-contact-yes">Yes</label>
+                       </div>
+                   </fieldset>
+               </div>
+
+</div>
+<div class="column-third">
+<h3 class="heading-small mt-0">Existing notes</h3>
+<div class="panel panel-border">
+<p>Customer could not contact own office<br />
+<span class="hint font-xsmall">added by Alex Black on 17 October 2017 at 13:57</span>
+</p>
+<p>Customer called and asked to be called on his mobile telephone number<br />
+<span class="hint font-xsmall">added by Ellie Fuller on 24 October 2017 at 13:57</span>
+</p>
+<p>Customer called for progress update as had not heard from own office since calling on 17th October<br />
+<span class="hint font-xsmall">added by Callum Dalton on 31 October 2017 at 12:57</span>
+</p>
+</div>
+</div>
+</div>
+<hr />
+<div class="grid-row">
+<div class="column-full">
+<a href="" class="button">Submit</a>
+<br />
+<a href="#" class="link-back">Back to queue</a>
+</div>
+</div>
+</main>
+
+
+{% endblock %}

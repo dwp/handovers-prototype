@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block content %}
+{% include "includes/handovers_summary_nav.1.html" %}
+<main id="content" role="main">
+    <div class="main-content">
+        {% include "includes/error-summary.html" %}
+        {% include "includes/message-banner.html" %}
+            <h1 class="heading-large">
+            <span class="heading-secondary">Sheffield Benefit Centre</span>
+              Handovers queue - Imogen Johnson</h1>
+
+        <div class="grid-row">
+            <div class="column-full">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col"><span>Name & NINO</span></th>
+                            <th scope="col"><span>Date/time raised</span></th>
+                            <th scope="col"><span>Time left to clear</span></th>
+                            <th scope="col"><span>Benefit type</span></th>
+                            <th></th>
+                            <th scope="col"><span>Handover type</span></th>
+                            <th scope="col"><span>Handover Status</span></th>
+                            <th scope="col"><span>Callback status</span></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr role="row">
+                        <td><p class="font-small">Adam Brown<br><span class="form-hint">AA123456B</span></p></td>
+                        <td><p class="font-small">8 February 2018<br><span class="form-hint"> 8:01</span></p></td>
+                        <td><p class="font-small">Expired<br><span class="badge badge-danger">ESCALATED</span></p></td>
+                        <td><p>ESA<p></td>
+                        <td><p class="hidden">1</p></td>
+                        <td><p class="font-small">Claim closure</p></td>
+                        <td><p class="font-small">Paused</p></td>
+                        <td><p class="font-small">First call pending</p></td>
+                        <td>
+                        <p class="font-small"><a href="/allocator-queue-flow/allocator-edit">Update</a></p>
+                        </td>
+                    </tr>
+                    <tr role="row">
+                    <td><p class="font-small">Grace Harris<br><span class="form-hint">ZZ234567A</span></p></td>
+                    <td><p class="font-small">27 February 2018 <span class="form-hint">13:06</span></p></td>
+                    <td><p class="font-small">58mins</p></td>
+                    <td><p>SF<p></td>
+                    <td class="sorting_1"><p class="hidden">7</p></td>
+                    <td><p class="font-small"></p>New Claim<p></p></td>
+                    <td><p class="font-small"></p><p>Not allocated</p></td>
+                    <td><p class="font-small">First call pending</p></td>
+                    <td>
+                            <p class="font-small"><a href="/allocator-queue-flow/allocator-edit">Update</a></p>
+                    </td>
+                </tr>
+                   </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="column-full">
+              <br><br>
+               <a href="#" class="button">Fetch next work item</a>
+            </div>
+          </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script src="/public/javascripts/vendor/datatables.min.js"></script>
+
+<script>
+    $('table').DataTable({
+        paging: false,
+        info: false,
+        filter: false,
+        order: [[ 5, "asc" ]]
+    })
+</script>
+
+{% endblock %}

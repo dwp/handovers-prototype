@@ -438,7 +438,7 @@ function editHandoverPageAction(req, res) {
         req.session.invalidHandover = {};
         req.session.handover = validatedHandoverAndErrors.handover;
         if (user.role == 0) {
-            res.redirect('/customer/summary?nino=' + validatedHandoverAndErrors.handover.nino);
+            res.redirect('/queue/view?agentId=40001001');
         } else {
             res.redirect('/queue/view?queueType=office');
         }

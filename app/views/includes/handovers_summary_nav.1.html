@@ -1,0 +1,28 @@
+<div class="nav-horizontal">
+  <div class="main-nav-wrapper">
+    <ul class="main-nav">
+      <li class="{% if currentHandoversPage === 'customers' %}selected{% endif %}">
+        <a class="menu-item"
+           href="/customer/find"
+           id="customer_find">Find Customer</a>
+      </li>
+      <li class="{% if currentHandoversPage === 'summary' %}selected{% endif %}">
+        <a class="menu-item"
+           href="/customer/summary"
+           id="customer_summary">Customer Summary</a>
+      </li>
+      <li class="selected">{% if data.user.role == 0 %}
+      <a class="menu-item"
+         href="/queue/view?agentId={{data.user.staffId}}"
+         id="queue_view">Queue</a>{% else %}
+      <a class="menu-item"
+         href="/queue/view?queueType=office"
+         id="queue_view">Queue</a>{% endif %}</li>
+      <li class="{% if currentClaimantPage === 'teams' %}selected{% endif %}">
+        <a class="menu-item"
+           href="/team_menu.html"
+           id="team_menu">Team</a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,12 +1,13 @@
-<div class="column-full summary-nav-wrapper">
-    <ul>
+<div class="nav-horizontal">
+  <div class="main-nav-wrapper">
+    <ul class="main-nav">
         <li class="{% if currentHandoversPage === 'customers' %}selected{% endif %}">
             <a id="customer_find" href="/customer/find" class="menu-item ">Find Customer</a>
         </li>
 
-        <li class="{% if currentHandoversPage === 'summary' %}selected{% endif %}">
+     <!--   <li class="{% if currentHandoversPage === 'summary' %}selected{% endif %}">
             <a id="customer_summary" href="/customer/summary" class="menu-item ">Customer Summary</a>
-        </li>
+        </li> -->
 
         <li class="{% if currentClaimantPage === 'queues' %}selected{% endif %}">
             {% if data.user.role == 0 %}
@@ -23,4 +24,5 @@
         <li
 
     </ul>
+</div>
 </div>
