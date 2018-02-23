@@ -12,3 +12,4 @@ module.exports = function(router) {
     router.post('/queue/agent', queue.agentQueuePageAction);
 
 }
+

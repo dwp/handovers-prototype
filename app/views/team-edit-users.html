@@ -1,10 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
+{% include "includes/handovers_summary_nav.html" %}
 <main id="content" role="main">
     <div class="main-content">
-        {% include "includes/handovers_summary_nav.html" %}
         {% include "includes/error-summary.html" %}
         {% include "includes/message-banner.html" %}
         <h1 class="heading-large">Add agent to {{ team.teamName }} team</h1>
