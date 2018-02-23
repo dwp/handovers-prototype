@@ -1,4 +1,4 @@
-{% extends "govuk_template.html" %}
+{% extends "handouts_template.html" %}
 
 {% block page_title %}DCAMS Handovers Prototype{% endblock %}
 
@@ -12,23 +12,31 @@
 
 {% block proposition_header %}
 
-<div class="header-proposition">
+
   <div class="content">
-    <nav id="proposition-menu">
+      <nav id="proposition-menu">
+          <a href="/index" id="logo" class="content">DCAMS Handovers <strong class="phase-tag">PROTOTYPE</strong></a>
+      </nav>
+    <!--  <nav id="proposition-menu">
       <a href="/" id="proposition-name">
-        {# Set serviceName in config.js. Use a block to override on a page. #}
+      {# Set serviceName in config.js. Use a block to override on a page. #}
         {% block service_name %}
         {% if serviceName %} {{ serviceName }} {% endif %}
         {% endblock %}
       </a>
-    </nav>
+    </nav> -->
     <nav id="sign-out-menu">
       <ul>
+            <li>
+              <a href="" style="color:#2b8cc4" class="availability">Set Availability</a>
+              <span class="badge badge-success available">AVAILABLE</span>
+              <span class="badge not-available" style="display:none">NOT AVAILABLE</span> |
+            </li>
         <li><a class="bold-nav-link" href="/toggle_user_role">{{ data.user.firstName }} {{ data.user.lastName }}</a></li>
       </ul>
     </nav>
   </div>
-</div>
+
 
 {% endblock %}
 
