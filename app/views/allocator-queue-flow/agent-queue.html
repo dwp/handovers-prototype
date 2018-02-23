@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-{% include "includes/handovers_summary_nav.1.html" %}
+{% include "includes/allocator-queue-flow/allocator-nav.html" %}
 <main id="content" role="main">
     <div class="main-content">
         {% include "includes/error-summary.html" %}
@@ -60,8 +60,10 @@
         </div>
         <div class="grid-row">
             <div class="column-full">
-              <br><br>
+              <br>
                <a href="#" class="button">Fetch next work item</a>
+               <br />
+               <a href="allocator-queue" class="link-back">Back to queue</a>
             </div>
           </div>
 </main>

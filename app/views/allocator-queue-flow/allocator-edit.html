@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-{% include "includes/handovers_summary_nav.1.html" %}
+{% include "includes/allocator-queue-flow/allocator-nav.html" %}
 <main id="content" role="main">
     <div class="main-content">
         {% include "includes/error-summary.html" %}
@@ -12,7 +12,7 @@
            <div class="grid-row">
                <div class="column-full">
                  <h2 class="heading-medium">Description</h2>
-                 <p>Initial information input when the handover was created</p>
+                 <p>Change in bank details / change of address</p>
                </div>
              </div>
 
@@ -211,9 +211,9 @@ Not applicable
 <hr />
 <div class="grid-row">
 <div class="column-full">
-<a href="" class="button">Submit</a>
+<a href="allocator-queue" class="button">Submit</a>
 <br />
-<a href="#" class="link-back">Back to queue</a>
+<a href="allocator-queue" class="link-back">Back to queue</a>
 </div>
 </div>
 </main>
