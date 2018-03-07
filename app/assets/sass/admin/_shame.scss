@@ -104,14 +104,26 @@ caption {
 
 .panel-alt{
   border-left:none;
-  background:darken($grey-4, 5%);
+  background:$grey-4;
+  padding:30px;
 }
 
 .hint{
   color: #6f777b;
 }
 
-.show{
-  display:block;
-  visibility: visible;
-}
+.warning {
+
+color: #ffc107;
+  }
+
+
+  [role="switch"][aria-checked="true"] :first-child, 
+  [role="switch"][aria-checked="false"] :last-child {
+    background: #000;
+    color: #fff;
+  }
+
+  .w100{
+    width:100%;
+  }

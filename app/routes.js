@@ -11,4 +11,15 @@ require('./routes/handover')(router);
 require('./routes/queue')(router);
 require('./routes/allocation')(router);
 
+
+
+router.post('./agent/queue', function (req, res) {
+    res.redirect('./agent/edit')
+})  
+
+router.post('./agent/create', function (req, res) {
+        res.redirect('./agent/customer')
+    })
+
+
 module.exports = router;
