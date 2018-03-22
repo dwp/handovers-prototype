@@ -1,0 +1,9 @@
+<div class="form-group">
+    <label class="form-label-bold" for="select-box">Handover status</label>
+    <select class="select form-control form-control-1-2" name="handoverStatus" id="handoverStatus">{{ data['handoverStatus'] }}
+        <option value="In progress" {{ 'selected' if data.handoverStatus==='In progress' else 'selected'}}>In progress</option>
+        <option value="Paused" {{ 'selected' if data.handoverStatus==='Paused' else ''}}>Paused</option>
+        <option value="Cleared" {{ 'selected' if data.handoverStatus==='Cleared' else ''}}>Cleared</option>
+        <option value="Withdrawn" {{ 'selected' if data.handoverStatus==='Withdrawn' else ''}}>Withdrawn</option>
+    </select>
+</div>

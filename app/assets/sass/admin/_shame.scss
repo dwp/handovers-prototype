@@ -98,15 +98,8 @@ caption {
 
 }
 
-.mt-0{
-  margin-top:0px;
-}
 
-.panel-alt{
-  border-left:none;
-  background:$grey-4;
-  padding:30px;
-}
+
 
 .hint{
   color: #6f777b;
@@ -126,4 +119,105 @@ color: #ffc107;
 
   .w100{
     width:100%;
+  }
+
+
+  .card {
+    display: block;
+    float: left;
+    margin-bottom: 30px;
+  }
+  
+  .card__body {
+    display: block;
+    background-color: $panel-colour;
+    padding: 1em;
+    background-color: $panel-colour;
+    color: $text-colour;
+    text-decoration: none;
+  
+    span {
+      display: block;
+    }
+  }
+  
+  a.card__body {
+    color: $link-colour;
+  
+    &:hover, &:focus {
+      cursor: pointer;
+      background-color: $highlight-colour;
+      color: $link-hover-colour;
+      text-decoration: none;
+    }
+  }
+  
+  .card__footer {
+    display: block;
+    background-color: $highlight-colour;
+    padding: 1em;
+  }
+
+// https://home-office-digital-patterns.herokuapp.com/components/status extended it to meet handover's needs
+  .status {
+    background-color: $govuk-blue;
+    color: $white;
+    margin-bottom:30px;
+
+    .status__body{
+      padding:15px 0;
+    }
+
+    .status__header{
+      padding:15px;
+      background-color: darken($govuk-blue, 10%);
+
+      p, h3 {
+        display:inline;
+      }
+    }
+
+  
+    p {
+      font-weight: 700;
+    }
+  
+    .status-extra {
+      font-weight: normal;
+    }
+   @media screen and (min-width:640px){
+    .col {
+      border-right:1px solid rgba(#fff, 0.2);
+      padding:0 15px;
+      flex:1;
+
+      &:last-of-type{
+        border:none;
+      }
+
+    }
+  }
+
+    .badge-danger {
+      color: #dc3545;
+      background-color: #fff;
+      
+      }
+  }
+  
+  @include media(tablet) {
+    .status .status__body {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+  
+      p {
+        margin: 0;
+      }
+  
+      .status-extra {
+        font-size: 18px;
+      }
+    }
   }
