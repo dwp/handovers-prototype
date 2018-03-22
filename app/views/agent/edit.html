@@ -1,0 +1,293 @@
+{% extends "layout.html" %} {% block content %} {% include "includes/allocator-queue-flow/allocator-nav.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    {% include "includes/error-summary.html" %} {% include "includes/message-banner.html" %}
+    <form class="form" action="queue" method="post">
+      <div class="grid-row">
+        <div class="column-full">
+          <h1 class="heading-large">
+            Christine Dixon
+            <span class="heading-secondary">ZZ123456A</span>
+          </h1>
+          <div class="status">
+            <div class="status__header">
+
+              <h3>Agent: </h3>
+              <p class="bold  mt0">Callum Dalton</p>
+            </div>
+
+            <div class="status__body">
+              <div class="col">
+                <h3>Time remaining</h3>
+                <p class="bold  mt0">1 hour 59 mins
+                  <!-- <span class="badge badge-danger">ESCALATED</span> -->
+                </p>
+
+              </div>
+                {% if data['callbackRequired'] === 'Yes' %}
+              <div class="col">
+                <h3>Callback required</h3>
+                <p class="bold mt-0">Yes</p>
+              </div>
+              <div class="col">
+                  <h3>Telephone</h3>
+                  <p class="bold mt-0">01234 567891</p>
+                </div>
+              {% else %}
+              <div class="col">
+                  <h3>Callback required</h3>
+                  <p class="bold mt-0">No</p>
+                </div>
+              {% endif %}
+              {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' %}
+              <div class="col">
+                  <h3>Status</h3>
+                  <p class="bold mt-0">First call pending</p>
+                </div>
+              {% elif data['callbackRequired']==='Yes' and data['callBackStatus']==='First call failed - engaged' %}
+              <div class="col">
+                  <h3>Status</h3>
+                  <p class="bold mt-0">Second call pending</p>
+                </div>
+              {% else %}
+              <div class="col">
+                  <h3>Status</h3>
+                  <p class="bold mt-0">In Progress</p>
+                </div>
+              {% endif %}
+               <!-- <div class="col">
+                <h3>Raised by:</h3>
+                <p class="bold mt-0">Barnsley Jobcentre</p>
+              </div> -->
+                          
+            </div>
+          </div>
+
+
+          <div class="js-tabs tabs">
+            <!-- JS will add .tabs class -->
+            <ul class="list list-bullet">
+
+              <li>
+                <a class="tabs__link" href="#info">Handover information</a>
+              </li>
+              <li>
+                <a class="tabs__link" href="#reAllocate">Reallocate</a>
+              </li>
+              <li>
+                <a class="tabs__link" href="#timeline">Timeline</a>
+              </li>
+            </ul>
+
+            <!-- Tab 1 -->
+            <div id="info" class="tab-content">
+              <h2 class="heading-medium">Description</h2>
+              <!--<p class="lede">{{ data['description'] }}</p>-->
+              <p>Confirm appointment for customer</p>
+
+              <legend class="heading-medium">Add a note</legend>
+
+              <textarea class="form-control form-control-1-2" id="handover-note" name="handover-note" rows="6">{{ data['handover-note'] }}</textarea>
+              <br />
+              <div class="panel panel-border-narrow">
+                <legend class="form-label-bold">Did this update result from customer contact ?</legend>
+                <fieldset class="inline">
+                  <div class="multiple-choice">
+                    <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
+                    <label for="handover-contact-no">No</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="handover-contact-yes" type="radio" name="handover-contact-indicator" value="Yes">
+                    <label for="handover-contact-yes">Yes</label>
+                  </div>
+                </fieldset>
+              </div>
+
+              {% if data['handover-note'] %}
+
+              <h2 class="heading-medium">Previous Notes</h2>
+              <div class="timeline">
+
+
+                <span class="line"></span>
+                <div class="timeline__event">
+                  <h3 class="heading-small">{{ data['handover-note'] }}</h3>
+                  <p class="timeline_datetime font-xsmall">Callum Dalton some day some date</p>
+                </div>
+                <div style="clear:both"></div>
+              </div>
+
+              {% endif %}
+
+
+              <div class="form-group">
+                  {% if data['callbackRequired'] === 'Yes' %}
+
+
+                 
+                    <h2 class="heading-medium">Status</h2>
+
+                    {% if data.callBackStatus === 'First call failed - engaged' %}
+                    <p class="lede">
+                        Second call pending
+                      </p>
+                    {% else %}
+                    <p class="lede">
+                      First call pending
+                    </p>
+                    {% endif %} 
+                    
+                    {% if data.callBackStatus === 'First call failed - engaged' %}
+                    <select class="select form-control form-control-1-2" name="secondCallBackStatus" id="secondCallBackStatus">{{ data['secondCallBackStatus'] }}
+                      <option value="">Select</option>
+                      <option value="Second call successful" {{ 'selected' if data.secondCallBackStatus==='Second call successful' else ''}}>Second call successful</option>
+                      <option value="Second failed - engaged" {{ 'selected' if data.secondCallBackStatus==='Second call failed - engaged' else
+                        ''}}>Second call failed - engaged</option>
+                      <option value="Second call failed - number unobtainable" {{ 'selected' if data.secondCallBackStatus==='Second call failed - number unobtainable'
+                        else ''}}>Second call failed - number unobtainable</option>
+                      <option value="Second call failed - not answered" {{ 'selected' if data.secondCallBackStatus==='Second call failed - not answered'
+                        else ''}}>Second call failed - not answered</option>
+                    </select>
+
+                    {% else %}
+                    <select class="select form-control form-control-1-2" name="callBackStatus" id="callBackStatus">{{ data['callBackStatus'] }}
+                      <option value="">Select</option>
+                      <option value="First call successful" {{ 'selected' if data.callBackStatus==='First call successful' else ''}}>First call successful</option>
+                      <option value="First call failed - engaged" {{ 'selected' if data.callBackStatus==='First call failed - engaged' else ''}}>First call failed - engaged</option>
+                      <option value="First call failed - number unobtainable" {{ 'selected' if data.callBackStatus==='First call failed - number unobtainable'
+                        else ''}}>First call failed - number unobtainable</option>
+                      <option value="First call failed - not answered" {{ 'selected' if data.callBackStatus==='First call failed - not answered'
+                        else ''}}>First call failed - not answered</option>
+                    </select>
+
+                    {% endif %} 
+                    {% if data['callBackStatus'] %}
+                    <h2 class="heading-medium" id="callbackRequired">Callback history</h2>
+                    <div class="timeline">
+                      <span class="line"></span>
+                      <div class="timeline__event">
+                        <h3 class="heading-small">First callback: Failed - engaged</h3>
+                        <p class="timeline_datetime font-xsmall">Alex Black on 17 October 2017 at 13:57</p>
+                      </div>
+                      <div style="clear:both"></div>
+
+                    </div>
+                    {% endif %}
+                  
+                  {% else %}
+
+                  <fieldset class="inline">
+                    
+                                      <legend>
+                                        <h1 class="heading-medium mb0">
+                                          Callback required ?
+                                        </h1>
+                                      </legend>
+
+                  <div class="multiple-choice" data-target="callbackRequired">
+                    <input id="radio-inline-1" type="radio" name="callbackRequired" value="Yes" {{ 'checked' if data[ 'callbackRequired']==='Yes'
+                      else ''}}>
+                    <label for="radio-inline-1">Yes</label>
+                  </div>
+                  <div class="multiple-choice" data-target="callbackNo">
+                    <input id="radio-inline-2" type="radio" name="callbackRequired" value="No" {{ 'checked' if data[ 'callbackRequired']==='No'
+                      else 'checked'}}>
+                    <label for="radio-inline-2">No</label>
+                  </div>
+                </fieldset>
+                  {% endif %}
+                  </form>
+
+               
+              </div>
+
+
+
+
+
+
+              <input type="submit" class="button" value="Save and back to queue"> <span id="callbackNo"><input type="submit" class="button button-secondary" value="Clear handover"></span>
+            </div>
+
+            <!-- Tab 2 -->
+            <div id="reAllocate" class="tab-content">
+              <h2 class="heading-medium">Reallocate handover</h2>
+              {% include "includes/editHandover/reallocateAgent.html" %}
+              <hr class="w100">
+              <div class="form-group">
+                {% include "includes/editHandover/selectBenefit.html" %}
+                <div class="panel panel-border-narrow">
+                  {% include "includes/editHandover/selectHandoverType.html" %}
+                  <div class="panel panel-border-narrow"> {% include "includes/editHandover/selectHandoverReason.html" %}</div>
+                </div>
+              </div>
+              <hr class="w100">
+              <div class="form-group">
+                <fieldset class="inline">
+
+                  <legend>
+                    <h1 class="heading-small">
+                      Recieving office type
+                    </h1>
+                  </legend>
+
+                  <div class="multiple-choice">
+                    <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes" checked="checked">
+                    <label for="radio-inline-1">Benefit office</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No">
+                    <label for="radio-inline-2">Jobcentre</label>
+                  </div>
+                </fieldset>
+              </div>
+              <input type="submit" class="button" value="Reallocate handover">
+            </div>
+
+
+
+
+
+
+            <!-- Tab 3 -->
+            <div id="timeline" class="tab-content">
+              <h2 class="heading-medium mt-0">Timeline</h2>
+              <div class="timeline">
+
+
+                <span class="line"></span>
+                <div class="timeline__event">
+                  <h3 class="heading-small">Customer could not contact own office</h3>
+                  <p class="timeline_datetime font-xsmall">Alex Black on 17 October 2017 at 13:57</p>
+                </div>
+
+                <span class="line"></span>
+                <div class="timeline__event">
+                  <h3 class="heading-small">reallocated from bc to jc</h3>
+                  <p class="timeline_datetime font-xsmall">Ellie Fuller on 24 October 2017 at 13:57</p>
+                </div>
+
+                <span class="line"></span>
+                <div class="timeline__event">
+                  <h3 class="heading-small">Handover created at Barnsley Jobcentre</h3>
+                  <p class="font-xsmall hint">Callum Dalton on 31 October 2017 at 12:57</p>
+                </div>
+
+                <div style="clear:both"></div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+      <a href="allocator-queue" class="link-back">Back to queue</a>
+    </form>
+  </div>
+</main>
+
+{% endblock %}

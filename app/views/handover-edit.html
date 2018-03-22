@@ -67,10 +67,33 @@
 
                 <div class="grid-row">
                     {% include "includes/handoverEdit/callback.html" %}
+                    <div class="form-group">
                     {% include "includes/handoverEdit/handoverStatus.html" %}
+                    </div>
                 </div>
-                <br>
-
+                <div class="grid-row">
+                <div class="column-half">
+                        <div class="form-group">
+                          <fieldset class="inline">
+                      
+                            <legend>
+                              <h1 class="heading-small">
+                                Recieving office type
+                              </h1>
+                            </legend>
+                      
+                            <div class="multiple-choice">
+                              <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
+                              <label for="radio-inline-1">Benefit office</label>
+                            </div>
+                            <div class="multiple-choice">
+                              <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No">
+                              <label for="radio-inline-2">Jobcentre</label>
+                            </div>
+                          </fieldset>
+                        </div>
+                    </div>  
+                </div>
                 {% if editOrCreate === 'edit' %}
                     <div class="grid-row">
                         {% include "includes/handoverEdit/callbackStatus.html" %}

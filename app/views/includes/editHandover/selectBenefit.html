@@ -1,0 +1,11 @@
+
+
+            <label class="form-label-bold" for="select-box">Select a benefit</label>
+            <select class="select form-control form-control-1-2" name="benefit" id="benefit">{{ data['benefit'] }}
+                <option value="" id="benSelect">Select</option>
+                <option value="ESA" id="ben-1" {{ 'selected' if data.benefit==='ESA' else ''}}>Employment &amp; Support Allowance [ESA]</option>
+                <option value="JSA" id="ben-2" {{ 'selected' if data.benefit==='JSA' else 'selected'}}>Jobseekers Allowance [JSA]</option>
+                <option value="UC" id="ben-3" {{ 'selected' if data.benefit==='UC' else ''}}>Universal Credit [UC]</option>
+                <option value="HB" id="ben-4" {{ 'selected' if data.benefit==='HB' else ''}}>Housing Benefit [HB]</option>
+                <option value="SF" id="ben-5" {{ 'selected' if data.benefit==='SF' else ''}}>Social Fund [SF]</option>
+            </select>

@@ -1,0 +1,11 @@
+
+        <label class="form-label-bold" for="select-box">Select a handover reason</label>
+        <select class="select form-control form-control-1-2" id="handoverReason" name="handoverReason">{{ data['handoverReason'] }}
+          <option value="">Select</option>
+          <option value="Appointment form" {{ 'selected' if  data.handoverReason === 'Appointment form' else 'selected'}}>Appointment form</option>
+          <option value="Claim termination" {{ 'selected' if  data.handoverReason === 'Claim termination' else ''}}>Claim termination</option>
+          <option value="General query" {{ 'selected' if  data.handoverReason === 'General query' else ''}}>General query</option>
+          <option value="Joint claim" {{ 'selected' if  data.handoverReason === 'Joint claim' else ''}}>Joint claim</option>
+          <option value="Missing direct payment" {{ 'selected' if  data.handoverReason === 'Missing direct payment' else ''}}>Missing direct payment</option>
+          <option value="Payment query" {{ 'selected' if  data.handoverReason === 'Payment query' else ''}}>Payment query</option>
+        </select>

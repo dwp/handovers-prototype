@@ -168,25 +168,6 @@
                 </table>
             </div>
         </div>
-    <!--    <table>
-                <thead>
-                    <tr>
-                        <th scope="col"><span>Description</span></th>
-                        <th scope="col"><span>Name & NINO</span></th>
-                        <th scope="col"><span>Date/time raised</span></th>
-                        <th scope="col"><span>Agent</span></th>
-                        <th scope="col"><span>Time left to clear</span></th>
-                        <th></th>
-                        <th scope="col"><span>Handover type</span></th>
-                        <th scope="col"><span>Handover Status</span></th>
-                        <th scope="col"><span>Callback status</span></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-  {% include "includes/test.html" %}
-</tbody>
-</table> -->
 </main>
 
 <script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
@@ -203,39 +184,5 @@
 
 {% endblock %}
 
-{% macro handoverUpdateLink(handover) %}
-{% set queryString = '?id=' + handover.id %}
-<a href="/handover/edit{{queryString}}">Update</a>
-{% endmacro %}
 
 
-{% macro tableRow(description, customerName, nino, customerSummaryLink, date, time, agentName, agentQueueLink, timeToClear, handoverType, handoverStatus, callbackStatus) %}
-
-
-<tr role="row">
-        <td>
-            <details>
-                <summary><span class="summary">Handover description</span></summary>
-                <div class="panel panel-border-narrow">
-                  <p>
-                       {{ description }}
-                  </p>
-                </div>
-         </details>
-        </td>
-        <td><p class="font-small"><p><a href="{{ customerSummaryLink }}">{{ customerName }}</a><br><span class="form-hint">{{ nino }}</span></p></td>
-        <td><p class="font-small"><p>{{ date }}<span class="form-hint">{{time}}</span></p></td>
-        <td><p class="font-small"><p><a href="{{ agentQueueLink }}">{{ agentName }}
-          {% if agentName == "john smith" %}
-            <br><span class="badge">NOT AVAILABLE</span>
-          {% endif %}</a></p></td>
-        <td><p class="font-small"><p>{{ timeToClear }}</p></td>
-        <td><p class="hidden"><p>7</p></td>
-        <td><p class="font-small"><p>{{ handoverType }}</p></td>
-        <td><p class="font-small"><p>{{ handoverStatus }}</p></td>
-        <td><p class="font-small"><p>{{ callbackStatus }}</p></td>
-        <td>
-                <p class="font-small"><a href="/handover/edit?id=8">Update</a></p>
-        </td>
-    </tr>
-{% endmacro %}

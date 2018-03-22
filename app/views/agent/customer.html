@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+
+{% block content %}
+        {% include "includes/handovers_summary_nav.html" %}
+<main id="content" role="main">
+    <div class="main-content">
+        {% include "includes/message-banner.html" %}
+        {% include "includes/error-summary.html" %}
+        <h1 class="heading-large">
+            <span class="heading-secondary">View summary details for</span>
+            Christine Dixon
+        </h1>
+
+        <div>
+            <h3 class="heading-medium">Customer details</h3>
+        <div class="grid-row">
+            <div class="column-half">
+                <div>
+                    <table>
+                        <tr>
+                            <td>National insurance number</td>
+                            <td>ZZ123456A</td>
+                        </tr>
+                        <tr>
+                            <td>Postcode</td>
+                            <td>S17 3JX</td>
+                        </tr>
+                        <tr>
+                            <td>Job Centre</td>
+                            <td>Sheffield South West</td>
+                        </tr>
+                        <tr>
+                            <td>Preferred contact number</td>        
+                            <td>01134 678901</td>
+                        
+                        </tr>
+                
+                    </table>
+                </div>
+            </div>
+
+            <div class="column-half">
+                <div>
+                    <table>
+                        <tr>
+                            <td>Date of birth</td>
+                            <td>16/12/1960</td>
+                        </tr>
+                        <tr>
+                            <td>Welsh speaker ?</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Translator required ?</td>
+                            <td>no</td>
+                        </tr>
+                        <tr>
+                                <td>Email address</td>
+                                <td>cdixon@hotmailc.com</td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="/customer/edit?nino={{ customer.nino }}" class="button">Amend customer details</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="grid-row">
+            <div class="column-full">
+                <h3 class="heading-medium">Handovers</h3>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col"><span>Date/time raised</span></th>
+                                <th scope="col"><span>Routed to</span></th>
+                                <th scope="col"><span>Agent</span></th>
+                                <th scope="col"><span>Time left to clear</span></th>
+                                <th scope="col"><span>Benefit type</span></th>
+                                <th scope="col"><span>Handover type</span></th>
+                                <th scope="col"><span>Handover Status</span></th>
+                                <th scope="col"><span>Callback status</span></th>
+                                <th scope="col"><span>Callback status</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                     
+                            <tr >
+                                <td><p>02/03/2018<br><span class="tint">8:06am</span></p></td>
+                                
+                                    <td>{{ data['centre'] }}</td>
+                                    <td>Not applicable</td>
+                              
+                                    <td><p>2 hours 59 mins</p></td>
+                                    <td>{{ data['benefit'] }}</td>
+                        
+                                {% if data['handover-type'] %}
+                                    <td>{{ data['handover-type'] }}</td>
+                                {% else %}
+                                    <td>NA</td>
+                                {% endif %}
+                                {% if data['handover-reason'] %}
+                                <td>{{ data['handover-reason'] }}</td>
+                                {% else %}
+                                <td>NA</td>
+                                {% endif %}
+                                {% if data['handover-status'] %}
+                                <td>{{ data['handover-status'] }}</td>
+                                {% else %}
+                                <td>NA</td>
+                                {% endif %}
+                                <td><a href="/agent/edit">update</a></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="/index">Back to index page</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.3.min.js"></script>
+
+<script>
+    $('table').DataTable({
+        paging: false,
+        info: false,
+        filter: false,
+        order: [[ 3, "desc" ]],
+    })
+</script>
+
+{% endblock %}
+
+{% macro handoverUpdateLink(handover) %}
+{% set queryString = '?id=' + handover.id %}
+<a href="/handover/edit{{queryString}}">Update</a>
+{% endmacro %}
