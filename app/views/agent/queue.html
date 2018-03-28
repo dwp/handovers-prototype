@@ -9,20 +9,15 @@
             <div class="column-full">
                 <div class="panel panel-border-wide alert-success mt1">
                     <h2 class="heading-medium">Successfully amended handover for Christine Dixon</h2>
-      
-                     
                 </div>
             </div>
         </div>
         {% endif %}
-
-        {% if data['clearHandover'] %} 
+        {% if data['secondCallBackStatus']==='Second call successful' %} 
         <div class="grid-row">
             <div class="column-full">
                 <div class="panel panel-border-wide alert-success mt1">
-                    <h2 class="heading-medium">Successfully cleared handover for Christine Dixon</h2>
-      
-                     
+                    <p>Successfully cleared handover for Christine Dixon</p>
                 </div>
             </div>
         </div>
@@ -49,38 +44,56 @@
                     </thead>
                     <tbody>
 
-                        {% if data.secondCallBackStatus %}
-
-                            <tr class="odd"><td valign="top" colspan="8" class="dataTables_empty">No data available in table</td></tr>
-
-                            {% elif data.clearHandover %}
-                            <tr class="odd"><td valign="top" colspan="8" class="dataTables_empty">No data available in table</td></tr>
+                      
+                        <!--    <tr class="odd"><td valign="top" colspan="8" class="dataTables_empty">No data available in table</td></tr> -->
+                        {% if data['secondCallBackStatus']==='Second call successful' %} 
+                            <tr>
+                        <td><p class="font-small">Ian Jackson<br><span class="hint">AA345678B</span></p></td>  
+                        <td><p>26/03/2018<br><span class="hint">11:06am</span></p></td>
+                            <td><p class="bold">2 hours 10mins</p></td>
+                            <td><p>JSA</p></td>
+                                <td><p>Ongoing appeal</p></td>
+                            <td><p>In progress</p></td>
+                            <td><p><a href="/agent/edit">Update</a></p></td>
+                        </tr>
                         {% else %}
-            <tr>
-                <td><p class="font-small">Christine Dixon<br><span class="hint">ZZ123456A</span></p></td>  
-                <td><p>02/03/2018<br><span class="hint">8:06am</span></p></td>
-                    <td><p class="bold">1hours 59mins</p></td>
-                    {% if data['benefit'] %}   
-                    <td><p>{{ data['benefit'] }}</p></td>
-                    {% else %}
-                    <td><p>JSA</p></td>
-                    {% endif %}
-            
-                    {% if data['handoverType'] %}
-                        <td><p>{{ data['handoverType'] }}</p></td>
-                    {% else %}
-                        <td><p>Appointment confirmation</p></td>
-                    {% endif %}
-                    {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' %}
-                    <td><p>First call pending</p></td>
-                    {% elif data['callbackRequired']==='Yes' and data['callBackStatus']==='First call failed - engaged' %}
-                    <td><p>Second call pending</p></td>
-                    {% else %}
-                    <td><p>In progress</p></td>
-                    {% endif %}
-                    <td><p><a href="/agent/edit">Update</a></p></td>
-                </tr>
-                {% endif %}
+                        <tr>
+                                <td><p class="font-small">Christine Dixon<br><span class="hint">ZZ123456A</span></p></td>  
+                                <td><p>26/03/2018<br><span class="hint">10:56am</span></p></td>
+                                    <td><p class="bold">1 hour 59mins</p></td>
+                                    {% if data['benefit'] %}   
+                                    <td><p>{{ data['benefit'] }}</p></td>
+                                    {% else %}
+                                    <td><p>JSA</p></td>
+                                    {% endif %}
+                            
+                                    {% if data['handoverType'] %}
+                                        <td><p>{{ data['handoverType'] }}</p></td>
+                                    {% else %}
+                                        <td><p>Mortgage</p></td>
+                                    {% endif %}
+                                    {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' %}
+                                    <td><p>First call pending</p></td>
+                                    {% elif data['callBackStatus']==='First call failed - engaged' %}
+                                    <td><p>Second call pending</p></td>
+                                    {% else %}
+                                    <td><p>In progress</p></td>
+                                    {% endif %}
+                                    <td><p><a href="/agent/edit">Update</a></p></td>
+                                </tr>      
+
+                <tr>
+                        <td><p class="font-small">Ian Jackson<br><span class="hint">AA345678B</span></p></td>  
+                        <td><p>26/03/2018<br><span class="hint">11:06am</span></p></td>
+                            <td><p class="bold">2 hours 10mins</p></td>
+                            <td><p>JSA</p></td>
+                                <td><p>Ongoing appeal</p></td>
+                            <td><p>In progress</p></td>
+                            <td><p><a href="/agent/edit">Update</a></p></td>
+                        </tr>
+
+                        {% endif %}        
+                    
                    </tbody>
                 </table>
                </form>
@@ -103,7 +116,7 @@
         paging: false,
         info: false,
         filter: false,
-        order: [[ 5, "asc" ]]
+        order: [[ 1, "asc" ]]
     })
 
 

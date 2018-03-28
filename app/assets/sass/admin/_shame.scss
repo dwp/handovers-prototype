@@ -221,3 +221,27 @@ color: #ffc107;
       }
     }
   }
+
+  .button.text {
+    background: none;
+    border-color: #fff;
+    color: #005ea5;
+    text-decoration: underline;
+    box-shadow: none;
+}
+
+.panel.alt{
+  border:5px solid #dedede;
+
+  p.icon{
+    margin-top:10px;
+    .icon{
+      float:left;
+      margin:-9px 10px 0 0;
+    }
+  }
+}
+
+td p {
+  margin-bottom: 0.2em;
+}

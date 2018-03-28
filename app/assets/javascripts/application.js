@@ -53,3 +53,12 @@ var hash = window.location.hash;
 if (hash) {
   $('.tabs__link[href="' + hash +'"]').click();
 }
+
+
+$("#clear").click(function () {
+  $('#clearHandover').css('display','block');
+ });
+
+ $(".cancel").click(function () {
+  $('#clearHandover').css('display','none');
+ });
