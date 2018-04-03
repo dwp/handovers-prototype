@@ -4,7 +4,8 @@
     {% include "includes/error-summary.html" %} {% include "includes/message-banner.html" %}
     <form class="form" action="queue" method="post">
       <div class="grid-row">
-        <div class="column-full">
+        
+    
         
             <div class="panel alt mt1" role="group" id="clearHandover" aria-labelledby="" tabindex="-1" style="display:none">
               
@@ -94,23 +95,6 @@
       
                   <!-- Tab 1 -->
                   <div id="info" class="tab-content">
-                      <div class="panel panel-border mt1">    
-                        
-                      <div class="form-group">
-                          <fieldset>
-                              
-                                  <legend>
-                                    <h3 class="heading-medium">Escalate handover</h3>
-                                  </legend>
-                              
-                                  <div class="multiple-choice">
-                                    <input id="waste-type-1" name="waste-types" type="checkbox" value="escalate">
-                                    <label for="escalate">Escalate</label>
-                                  </div>                           
-                                </fieldset>
-                      </div>
-                    </div>
-
                     <h2 class="heading-medium">Description</h2>
                     <!--<p class="lede">{{ data['description'] }}</p>-->
                     <p>Customer called with concern over mortgage docs she fwwd WC 19/03/18 – nothing showing in JSAPS, please update customer of progress</p>
@@ -135,13 +119,13 @@
       
         
       
+      
                     <div class="form-group">
-                  
                         {% if data['callbackRequired'] === 'Yes' %}
       
       
                        
-                    <!--      <h2 class="heading-medium"> Current status</h2>
+                          <h2 class="heading-medium">Status</h2>
       
                           {% if data.callBackStatus === 'First call failed - engaged' %}
                           <div class="panel panel-border-narrow"><p>
@@ -151,10 +135,10 @@
                           <div class="panel panel-border-narrow"><p>
                               First call pending
                             </p></div>
-                          {% endif %} -->
-                      
+                          {% endif %} 
+                          
                           {% if data.callBackStatus === 'First call failed - engaged' %}
-                         <!-- <select class="select form-control form-control-1-2" name="secondCallBackStatus" id="secondCallBackStatus">{{ data['secondCallBackStatus'] }}
+                          <select class="select form-control form-control-1-2" name="secondCallBackStatus" id="secondCallBackStatus">{{ data['secondCallBackStatus'] }}
                             <option value="">Select</option>
                             <option value="Second call successful" {{ 'selected' if data.secondCallBackStatus==='Second call successful' else ''}}>Second call successful</option>
                             <option value="Second failed - engaged" {{ 'selected' if data.secondCallBackStatus==='Second call failed - engaged' else
@@ -163,40 +147,10 @@
                               else ''}}>Second call failed - number unobtainable</option>
                             <option value="Second call failed - not answered" {{ 'selected' if data.secondCallBackStatus==='Second call failed - not answered'
                               else ''}}>Second call failed - not answered</option>
-                          </select> -->
-
-                          <fieldset>
-                            
-                                  <legend>
-                                    <h1 class="heading-medium">Set status</h1>
-                                  </legend>
-                                  <div class="multiple-choice">
-                                    <input id="radio-2" type="radio" name="secondCallBackStatus" value="Second call failed - engaged" {{ 'checked' if data['secondCallBackStatus']==='Second call failed - engaged' else ''}}>
-                                    <label for="radio-2">Call failed - engaged</label>
-                                  </div>
-                                  <div class="multiple-choice">
-                                    <input id="radio-3" type="radio" name="secondCallBackStatus" value="Second call failed - number unobtainable" {{ 'checked' if data['secondCallBackStatus']==='Second call failed - number unobtainable'
-                                    else ''}}>
-                                    <label for="radio-3">Call failed - number unobtainable</label>
-                                  </div>
-
-                                  <div class="multiple-choice">
-                                    <input id="radio-4" type="radio" name="secondCallBackStatus" value="Second call failed - not answered" {{ 'checked' if data['secondCallBackStatus']==='Second call failed - not answered'
-                                    else ''}}>
-                                    <label for="radio-4">Call failed - not answered</label>
-                                  </div>
-                                  <p class="form-block">or</p>
-
-                                  <div class="multiple-choice">
-                                    <input id="radio-1" type="radio" name="secondCallBackStatus" value="Second call successful" {{ 'checked' if data[ 'secondCallBackStatus']==='Second call successful'
-                                    else ''}}>
-                                    <label for="radio-1">Call successful</label>
-                                  </div>
-                            
-                                </fieldset>
+                          </select>
       
                           {% else %}
-                        <!--  <select class="select form-control form-control-1-2" name="callBackStatus" id="callBackStatus">{{ data['callBackStatus'] }}
+                          <select class="select form-control form-control-1-2" name="callBackStatus" id="callBackStatus">{{ data['callBackStatus'] }}
                             <option value="">Select</option>
                             <option value="First call successful" {{ 'selected' if data.callBackStatus==='First call successful' else ''}}>First call successful</option>
                             <option value="First call failed - engaged" {{ 'selected' if data.callBackStatus==='First call failed - engaged' else ''}}>First call failed - engaged</option>
@@ -204,35 +158,10 @@
                               else ''}}>First call failed - number unobtainable</option>
                             <option value="First call failed - not answered" {{ 'selected' if data.callBackStatus==='First call failed - not answered'
                               else ''}}>First call failed - not answered</option>
-                          </select> -->
+                          </select>
 
-                          <fieldset>
-                            
-                                  <legend>
-                                    <h1 class="heading-medium">Set status</h1>
-                                  </legend>                      
-                                  <div class="multiple-choice">
-                                    <input id="radio-2" type="radio" name="callBackStatus" value="First call failed - engaged" {{ 'checked' if data['callBackStatus']==='First call failed - engaged' else ''}}>
-                                    <label for="radio-2">Call failed - engaged</label>
-                                  </div>
-                                  <div class="multiple-choice">
-                                    <input id="radio-3" type="radio" name="callBackStatus" value="First call failed - number unobtainable" {{ 'checked' if data['callBackStatus']==='First call failed - number unobtainable'
-                                    else ''}}>
-                                    <label for="radio-3">Call failed - number unobtainable</label>
-                                  </div>
 
-                                  <div class="multiple-choice">
-                                    <input id="radio-4" type="radio" name="callBackStatus" value="First call failed - not answered" {{ 'checked' if data['callBackStatus']==='First call failed - not answered'
-                                    else ''}}>
-                                    <label for="radio-4">Call failed - not answered</label>
-                                  </div>
-                                  <p class="form-block">or</p>
-                                  <div class="multiple-choice">
-                                    <input id="radio-1" type="radio" name="callBackStatus" value="First call successful" {{ 'checked' if data[ 'callBackStatus']==='First call successful'
-                                    else ''}}>
-                                    <label for="radio-1">Call successful</label>
-                                  </div>
-                                </fieldset>
+                          
       
                           {% endif %} 
                        
@@ -263,7 +192,7 @@
                       <fieldset>
                         
                               <legend>
-                                <h1 class="heading-medium">Set status</h1>
+                                <h1 class="heading-medium">Current status</h1>
                               </legend>
                         
                               <div class="multiple-choice">
@@ -276,11 +205,9 @@
                                 else ''}}>
                                 <label for="radio-2">Callback required</label>
                               </div>
-                              <p class="form-block">or</p>
                               <div class="multiple-choice">
-                                <input id="radio-3" type="radio" name="callbackRequired" value="cleared" {{ 'checked' if data[ 'callbackRequired']==='cleared'
-                                else ''}}>
-                                <label for="radio-3">Completed clear handover</label>
+                                <input id="radio-3" type="radio" name="radio-group" value="I am a British citizen living abroad">
+                                <label for="radio-3">Completed Clear handover</label>
                               </div>
                         
                             </fieldset>
@@ -288,8 +215,24 @@
                       
       
                      
-                    </div>      
-     
+                    </div>
+
+                    <div class="form-group">
+                        <fieldset>
+                            
+                                <legend>
+                                  <h3 class="heading-medium">Escalate</h3>
+                                </legend>
+                            
+                                <div class="multiple-choice">
+                                  <input id="waste-type-1" name="waste-types" type="checkbox" value="escalate">
+                                  <label for="escalate">Escalate</label>
+                                </div>                           
+                              </fieldset>
+                    </div>
+      
+      
+      
                     <input type="submit" class="button" value="Save and update"><!--<a href="#clearHandover" class="button text" id="clear">Clear handover</a></span>-->
                   </div>
       
@@ -299,13 +242,13 @@
                     <label class="form-label-bold mt1" for="handover-note-reallocate">Add a note</label>
                     <textarea class="form-control form-control-3-4" id="handover-note-reallocate" name="handover-note-reallocate" rows="6">{{ data['handover-note-realocate'] }}</textarea> 
                     </div>
-                  {% include "includes/editHandover/reallocateAgent.html" %}
+                  {% include "includes/v2/reallocateAgent.html" %}
                     
                     <div class="form-group">
-                      {% include "includes/editHandover/selectBenefit.html" %}
+                      {% include "includes/v2/selectBenefit.html" %}
                       <div class="panel panel-border-narrow">
-                        {% include "includes/editHandover/selectHandoverType.html" %}
-                        <div class="panel panel-border-narrow"> {% include "includes/editHandover/selectHandoverReason.html" %}</div>
+                        {% include "includes/v2/selectHandoverType.html" %}
+                        <div class="panel panel-border-narrow"> {% include "includes/v2/selectHandoverReason.html" %}</div>
                       </div>
                     </div>
             <!--        <hr class="w100">
@@ -378,7 +321,7 @@
                                   <h3 class="heading-small">Note</h3> 
                                 <div class="panel panel-border-wide alert-default">    
                                   <p>{{ data['handover-note-reallocate'] }}</p></div>
-                                <p class="timeline_datetime font-xsmall">Calumn Dalton, Hyde Benefit Service Centre on {% include "includes/editHandover/date.html" %} at 10.05</p>
+                                <p class="timeline_datetime font-xsmall">Calumn Dalton, Hyde Benefit Service Centre on {% include "includes/v2/date.html" %} at 10.05</p>
                               </div>
             
               {% endif %}         
@@ -387,7 +330,7 @@
                       <h3 class="heading-small">Reallocated</h3> 
                     <div class="panel panel-border-wide alert-success">    
                       <p>JSA maintenance to IS maintenance</p></div>
-                    <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre on {% include "includes/editHandover/date.html" %} at 9:45</p>
+                    <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre on {% include "includes/v2/date.html" %} at 9:45</p>
                   </div>
                 
                   <span class="line"></span>
@@ -395,14 +338,14 @@
                       <h3 class="heading-small">Note</h3> 
                     <div class="panel panel-border-wide alert-default">    
                       <p>JSA claim closed, new claim to IS (income support) – JSAPS updated to reflect</p></div>
-                    <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre on {% include "includes/editHandover/date.html" %} at 9:45</p>
+                    <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre on {% include "includes/v2/date.html" %} at 9:45</p>
                   </div>
 
 
                 <span class="line"></span>
                 <div class="timeline__event">
                   <h3 class="heading-small">Handover created</h3>
-                  <p class="font-xsmall hint">Spencer Davies, Annesley Contact Centre on {% include "includes/editHandover/date.html" %} at 9:33</p>
+                  <p class="font-xsmall hint">Spencer Davies, Annesley Contact Centre on {% include "includes/v2/date.html" %} at 9:33</p>
                 </div>
 
                 <div style="clear:both"></div>

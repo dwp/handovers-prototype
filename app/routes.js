@@ -21,5 +21,22 @@ router.post('./agent/create', function (req, res) {
         res.redirect('./agent/customer')
     })
 
+ // add your routes here
+router.post('v2/queue',function (req, res) {
+    
+      var scenario = req.session.data['scenario']
+    
+      if(scenario == "editAgent"){
+        res.redirect('/v2/queue')
+      }
+    
+      else {
+        res.redirect('/v2/edit')
+      }
+    
+    })   
+
+    
+
 
 module.exports = router;
