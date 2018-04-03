@@ -1,0 +1,39 @@
+{% extends "layout.html" %} {% block content %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-full">
+        <h1 class="heading-large">
+          Handover's prototype V2
+          <span class="heading-secondary">Edit handover</span>
+        </h1>
+        <form class="form" action="queue" method="post">
+          <div class="form-group">
+            <fieldset>
+
+              <legend>
+                <h1 class="heading-medium">Scenario</h1>
+              </legend>
+
+              <div class="multiple-choice">
+                <input id="radio-inline-2" type="radio" name="scenario" value="agentEdit" {{ 'checked' if data[ 'scenario']==='agentEdit'
+                  else ''}}>
+                <label for="radio-1">Agent edit handover</label>
+              </div>
+              <div class="multiple-choice">
+                  <input id="radio-inline-2" type="radio" name="scenario" value="agentEditEscalate" {{ 'checked' if data[ 'scenario']==='agentEditEscalate'
+                    else ''}}>
+                  <label for="radio-1">Agent edit escalate handover</label>
+                </div>
+              <div class="multiple-choice">
+                <input id="radio-inline-1" type="radio" name="scenario" value="allocatorEdit" {{ 'checked' if data[ 'scenario']==='allocatorEdit'
+                  else ''}}>
+                <label for="radio-2">Allocator edit handover</label>
+              </div>
+            </fieldset>
+          </div>
+          <button type="submit" class="button">Continue</button>
+        </form>
+      </div>
+</main>
+{% endblock %}
