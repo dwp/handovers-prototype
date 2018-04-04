@@ -2,11 +2,14 @@
         <label class="form-label-bold" for="select-box">Select a handover type</label>
         <select class="form-control form-control-1-2" id="handoverType" name="handoverType">{{ data['handoverType'] }}
           <option value="" id="type1">Select</option>
-          <option value="Mortgage" {{ 'selected' if  data.handoverType === 'Mortgage' else 'selected'}}>Mortgage</option>
+          {% if data['scenario'] === 'agentClear' %} 
+          <option value="Maintenace" {{ 'selected' if  data.handoverType === 'Maintenance' else 'selected'}}>Maintenance</option>
+          {% else %}
+          <option value="New claim" {{ 'selected' if  data.handoverType === 'New claim' else 'selected'}}>New Claim</option>
+          {% endif%}
           <option value="Claim closure" {{ 'selected' if  data.handoverType === 'Claim closure' else ''}}>Claim closure</option>
           <option value="Hardship" {{ 'selected' if  data.handoverType === 'Hardship' else ''}} >Hardship</option>
           <option value="Missing evidence" {{ 'selected' if  data.handoverType === 'Missing evidence' else ''}}>Missing evidence</option>
-          <option value="New claim" {{ 'selected' if  data.handoverType === 'New claim' else ''}}>New claim</option>
           <option value="Reconsiderations" {{ 'selected' if  data.handoverType === 'Reconsiderations' else ''}}>Reconsiderations</option>
         </select>
   

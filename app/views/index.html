@@ -1,37 +1,51 @@
 {% extends "layout.html" %}
 
+
 {% block content %}
 
-{% include "includes/dummy_dcams_summary_nav.html" %}
+<div class="index-page-banner">
+    <div class="index-heading-wrapper">
+      <h1 class="heading-xlarge index-heading-xlarge">DCAMS Handovers Prototype</h1>
+      <h2 class="heading-large index-heading-large">Prototypes</h2>
+    </div>
+  </div>
+
 
 <main id="content" role="main">
 <div class="main-content">
   <div class="grid-row">
     <div class="column-full">
-      <h1 class="heading-xlarge">
-        DCAMS Handovers Prototype
-        <span class="heading-secondary">{{releaseVersion}}</span>
-      </h1>{{ releaseVersion | log }}
-      <p>
-        Allows prototyping of service to raise and process handovers
+        <div class="phase-banner">
+            <p>
+              <strong class="phase-tag tag--red">NOTE</strong>
+              <span>This page introduces the prototype and allows prototyping of service to raise and process handovers</span>
+            </p>
+          </div>
       </p>
     </div>
   </div>
-
   <div class="grid-row">
-
-    {% set v2Screens = [{
-    workTitle : 'Queues + Edit ',
-    links: [{
-    link : '/allocator-queue-flow/allocator-queue', title : 'Alternative office queue # 1 ' },
-    {link : '/v2/start-page', title : 'Start page'},
-    {link : '/v2/queue', title : 'Agent queue'},
-    {link : '/v2/edit', title : 'Edit handover'}]
-    }] %}
-
-    {{ sprintLinks( 'Alternative views test', v2Screens) }}
-
-  </div>
+      
+          
+      
+          <div class="mt1"></div>
+      
+          <div class="column-third">
+            <p class="mb0">Version</p>
+            <h3 class="heading-medium mt0 mb0">Design exploration v2</h3>
+            <p>For user research in Birmingham on 5 April 2018</p>
+          </div>
+    
+      
+          <div class="column-two-thirds">
+            <a href="/v2/start-page" class="button button-start mth mb1">Launch prototype</a>
+            <h3 class="heading-small mth">Changes made</h3>
+            <ul class="list list-bullet changes mb1">
+              <li>updated edit screen</li>
+            </ul>
+          </div>
+      <hr class="w100">
+        </div>
   <div class="grid-row">
 
     {% set allocatorScreens = [{

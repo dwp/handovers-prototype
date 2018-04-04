@@ -12,23 +12,36 @@
             <fieldset>
 
               <legend>
-                <h1 class="heading-medium">Scenario</h1>
+                <h1 class="heading-medium">Scenarios</h1>
               </legend>
 
               <div class="multiple-choice">
-                <input id="radio-inline-2" type="radio" name="scenario" value="agentEdit" {{ 'checked' if data[ 'scenario']==='agentEdit'
-                  else ''}}>
-                <label for="radio-1">Agent edit handover</label>
-              </div>
-              <div class="multiple-choice">
-                  <input id="radio-inline-2" type="radio" name="scenario" value="agentEditEscalate" {{ 'checked' if data[ 'scenario']==='agentEditEscalate'
+                  <input id="radio-inline-1" type="radio" name="scenario" value="agentClear" {{ 'checked' if data[ 'scenario']==='agentClear'
                     else ''}}>
-                  <label for="radio-1">Agent edit escalate handover</label>
+                  <label for="radio-1">Agent clear handover (non callback)</label>
+                </div>
+
+              <div class="multiple-choice">
+                <input id="radio-inline-2" type="radio" name="callbackRequired" value="Yes" {{ 'checked' if data[ 'callbackRequired']==='Yes'
+                  else ''}}>
+                <label for="radio-2">Agent edit handover (status change)</label>
+              </div>
+
+              <div class="multiple-choice">
+                  <input id="radio-inline-3" type="radio" name="scenario" value="agentReallocate" {{ 'checked' if data[ 'scenario']==='agentReallocate'
+                    else ''}}>
+                  <label for="radio-3">Agent reallocate handover</label>
+                </div>
+                
+              <div class="multiple-choice">
+                  <input id="radio-inline-4" type="radio" name="scenario" value="agentEditEscalate" {{ 'checked' if data[ 'scenario']==='agentEditEscalate'
+                    else ''}}>
+                  <label for="radio-4">Agent edit escalate handover</label>
                 </div>
               <div class="multiple-choice">
-                <input id="radio-inline-1" type="radio" name="scenario" value="allocatorEdit" {{ 'checked' if data[ 'scenario']==='allocatorEdit'
+                <input id="radio-inline-5" type="radio" name="scenario" value="allocatorEdit" {{ 'checked' if data[ 'scenario']==='allocatorEdit'
                   else ''}}>
-                <label for="radio-2">Allocator edit handover</label>
+                <label for="radio-5">Allocator edit handover (reallocate)</label>
               </div>
             </fieldset>
           </div>

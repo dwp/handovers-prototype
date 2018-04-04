@@ -1,23 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-{% include "includes/allocator-queue-flow/allocator-nav.html" %}
+{% include "includes/v2/nav.html" %}
 <main id="content" role="main">
     <div class="main-content">
         
-       
-
-            {% if data['test'] === 'No' %}
-            jackpot escalated handover <br >
-            {% endif %}
-
-
-
-        {% if data['scenario'] === 'agentEdit' %}
-        agent edit
-        {% endif %}
-
-   
-  
   
         {% if data['handoverStatus'] %} 
         <div class="grid-row">
@@ -73,7 +59,40 @@
                         </tr>
 
                         {% elif data['test'] === 'No' %}
-                        jackpot escalated handover <br >
+                        <tr>
+                                <td><span class="bold">59 mins <br /></span><span class="badge badge-danger">ESCALATED</span></td>   
+                                <td><span class="font-small">Christine Dixon</span><br><span class="secondary-color">ZZ123456A</span></td>  
+                                    <td>{% include "includes/v2/date.html" %}<br><span class="secondary-color">10:56am</span></td>
+                                        {% if data['benefit'] %}   
+                                        <td>{{ data['benefit'] }}</td>
+                                        {% else %}
+                                        <td>JSA</td>
+                                        {% endif %}
+                                
+                                        {% if data['handoverType'] %}
+                                            <td>{{ data['handoverType'] }}</td>
+                                        {% else %}
+                                            <td>New claim</td>
+                                        {% endif %}
+                                        {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' %}
+                                        <td>First call pending</td>
+                                        {% elif data['callBackStatus']==='First call failed - engaged' %}
+                                        <td>Second call pending</td>
+                                        {% else %}
+                                        <td>Allocated</td>
+                                        {% endif %}
+                                        <td><a href="/v2/edit">Veiw and update</a></td>
+                                    </tr>      
+    
+                    <tr>
+                        <td><span class="bold">2 hours 10mins</span></td>   
+                        <td><span class="font-small">Ian Jackson</span><br><span class="secondary-color">AA345678B</span></td>  
+                            <td>{% include "includes/v2/date.html" %}<br><span class="secondary-color">11:06am</span></td>
+                                <td>JSA</td>
+                                    <td>Ongoing appeal</td>
+                                <td>In progress</td>
+                                <td><a href="/agent/edit">View and Update</a></td>
+                            </tr>
     
 
                         {% elif data['scenario'] === 'agentEditEscalate' %}
@@ -90,14 +109,17 @@
                                     {% if data['handoverType'] %}
                                         <td>{{ data['handoverType'] }}</td>
                                     {% else %}
-                                        <td>Mortgage</td>
+                                    {% if data['scenario'] === 'agentClear' %}
+                                    <td>New claim</td>
+                                    {% endif %}
+                                    <td>Maintenance</td>   
                                     {% endif %}
                                     {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' %}
                                     <td>First call pending</td>
                                     {% elif data['callBackStatus']==='First call failed - engaged' %}
                                     <td>Second call pending</td>
                                     {% else %}
-                                    <td>In progress</td>
+                                    <td>Allocated</td>
                                     {% endif %}
                                     <td><a href="/v2/edit">Veiw and update</a></td>
                                 </tr>      
@@ -125,14 +147,14 @@
                                     {% if data['handoverType'] %}
                                         <td>{{ data['handoverType'] }}</td>
                                     {% else %}
-                                        <td>Mortgage</td>
+                                        <td>New claim</td>
                                     {% endif %}
                                     {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' %}
                                     <td>First call pending</td>
                                     {% elif data['callBackStatus']==='First call failed - engaged' %}
                                     <td>Second call pending</td>
                                     {% else %}
-                                    <td>In progress</td>
+                                    <td>Allocated</td>
                                     {% endif %}
                                     <td><a href="/v2/edit">Veiw and update</a></td>
                                 </tr>      
@@ -143,7 +165,7 @@
                         <td>{% include "includes/v2/date.html" %}<br><span class="secondary-color">11:06am</span></td>
                             <td>JSA</td>
                                 <td>Ongoing appeal</td>
-                            <td>In progress</td>
+                            <td>Allocated</td>
                             <td><a href="/agent/edit">View and Update</a></td>
                         </tr>
 

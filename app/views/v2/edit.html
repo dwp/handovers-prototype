@@ -1,4 +1,5 @@
-{% extends "layout.html" %} {% block content %} {% include "includes/allocator-queue-flow/allocator-nav.html" %}
+{% extends "layout.html" %} {% block content %}
+{% include "includes/v2/nav.html" %}
 <main id="content" role="main">
   <div class="main-content">
     {% include "includes/error-summary.html" %} {% include "includes/message-banner.html" %}
@@ -20,12 +21,27 @@
             <a href="queueClear" class="button">Yes, clear handover</a>
             <a href="#" class="button text cancel">Cancel</a>
           </div>
+
+          <div class="panel alt mt1" role="group" id="reallocateHandover" aria-labelledby="" tabindex="-1" style="display:none">
+              
+              
+                          <p class="bold icon" style="display:inline-block">
+                            <i class="icon icon-important">
+                              <span class="visually-hidden">Warning</span>
+                            </i>Are you sure you want to Reallocate this handover from <span class="bold">JSA to IS</span>
+
+                          </p>
+                          <br />
+                          <a href="queueClear" class="button">Yes, reallocate handover</a>
+                          <a href="#" class="button text cancel">Cancel</a>
+                        </div>
         
 
-          <h1 class="heading-large">
+          <h1 class="heading-large mb0">
             Christine Dixon
             <span class="heading-secondary">ZZ123456A</span>
           </h1>
+          <a href="/customer/summary" class="link-back mt0 mb1">Customer details</a>
           <div class="status">
               {% if data['scenario'] === 'allocatorEdit' %}
             <div class="status__header">
@@ -113,9 +129,9 @@
                                                <h3 class="heading-medium">Escalate handover</h3>
                                              </legend>
                                              <div class="multiple-choice">
-                                                <input id="radio-inline-2" type="checkbox" name="test" value="No" {{ 'checked' if data[ 'test']==='No'
+                                                <input id="radio-inline-2" type="radio" name="test" value="No" {{ 'checked' if data[ 'test']==='No'
                                                   else ''}}>
-                                                <label for="radio-1">test</label>
+                                                <label for="radio-1">Escalate handover</label>
                                               </div>
                                            </fieldset>
                                          </div>
@@ -124,8 +140,11 @@
                {% endif %}
               <h2 class="heading-medium">Description</h2>
               <!--<p class="lede">{{ data['description'] }}</p>-->
-              <p>Customer called with concern over mortgage docs she fwwd WC 19/03/18 – nothing showing in JSAPS, please update
-                customer of progress</p>
+              {% if data['scenario'] === 'agentClear' %}
+              <p>Change of address</p>
+              {% else %}
+              <p>Payment due last week, customer checked account and payment is still outstanding</p>
+              {% endif %}
 
               <label class="form-label-bold" for="handover-note">Add a note</label>
 
@@ -259,8 +278,11 @@
 
 
               </div>
-
+              {% if data['scenario'] === 'agentClear' %}
+              <a href="#" id="clear" class="button">Save and update</a>
+              {% else %}
               <input type="submit" class="button" value="Save and update">
+              {% endif %}
             </div>
 
             <!-- Tab 2 -->
@@ -269,8 +291,9 @@
                 <label class="form-label-bold mt1" for="handover-note-reallocate">Add a note</label>
                 <textarea class="form-control form-control-3-4" id="handover-note-reallocate" name="handover-note-reallocate" rows="6">{{ data['handover-note-realocate'] }}</textarea>
               </div>
+              {% if data['scenario'] === 'allocatorEdit' %} 
               {% include "includes/v2/reallocateAgent.html" %}
-
+              {% endif %}
               <div class="form-group">
                 {% include "includes/v2/selectBenefit.html" %}
                 <div class="panel panel-border-narrow">
@@ -297,7 +320,12 @@
                         </div>
                       </fieldset>
                     </div>
-              <input type="submit" class="button" value="Reallocate handover">
+                    {% if data['scenario'] === 'agentReallocate' %}
+                    <a href="#" id="reallocate" class="button">Reallocate handover</a>
+                    {% else %}
+                    <input type="submit" class="button" value="Reallocate handover">
+                    {% endif %}      
+             
             </div>
 
 
@@ -357,17 +385,30 @@
             </div>
 
             {% endif %}
+            {% if data['scenario'] === 'agentClear' %}
             <span class="line"></span>
             <div class="timeline__event">
-              <h3 class="heading-small">Reallocated</h3>
+              <h3 class="heading-small">Allocated</h3>
               <div class="panel panel-border-wide alert-success">
-                <p>JSA maintenance to IS maintenance</p>
+                <p>JSA / maintenance / Change of address</p>
               </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:45</p>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
+              <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
+            </div>
+            {% else %}
+
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Allocated</h3>
+              <div class="panel panel-border-wide alert-success">
+                <p>JSA / New claim / Payment query</p>
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
               <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
             </div>
 
-            <span class="line"></span>
+            {% endif %}
+           <!-- <span class="line"></span>
             <div class="timeline__event">
               <h3 class="heading-small">Note</h3>
               <div class="panel panel-border-wide alert-default">
@@ -375,14 +416,14 @@
               </div>
               <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:45</p>
               <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
-            </div>
+            </div>-->
 
 
             <span class="line"></span>
             <div class="timeline__event">
               <h3 class="heading-small">Handover created</h3>
               <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
-              <p class="font-xsmall timeline_datetime">Spencer Davies, Annesley Contact Centre</p>
+              <p class="font-xsmall timeline_datetime">Bobby Brown, Hyde Benefit Service Centre</p>
             </div>
 
             <div style="clear:both"></div>

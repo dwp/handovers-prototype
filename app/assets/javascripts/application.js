@@ -56,9 +56,19 @@ if (hash) {
 
 
 $("#clear").click(function () {
+  
   $('#clearHandover').css('display','block');
  });
 
  $(".cancel").click(function () {
   $('#clearHandover').css('display','none');
+ });
+
+ $("#reallocate").click(function () {
+  
+  $('#reallocateHandover').css('display','block');
+ });
+
+ $(".cancel").click(function () {
+  $('#reallocateHandover').css('display','none');
  });

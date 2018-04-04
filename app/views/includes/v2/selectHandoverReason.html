@@ -2,7 +2,12 @@
         <label class="form-label-bold" for="select-box">Select a handover reason</label>
         <select class="select form-control form-control-1-2" id="handoverReason" name="handoverReason">{{ data['handoverReason'] }}
           <option value="">Select</option>
-          <option value="Checking receipt of post or documents" {{ 'selected' if  data.handoverReason === 'Checking receipt of post or documents' else 'selected'}}>Checking receipt of post or documents</option>
+          {% if data['scenario'] === 'agentClear' %} 
+          <option value="Change of address" {{ 'selected' if  data.handoverType === 'Change of address' else 'selected'}}>Change of address</option>
+          {% else %}
+          <option value="Payment query" {{ 'selected' if  data.handoverType === 'Payment query' else 'selected'}}>Payment query</option>
+          {% endif%}
+    
           <option value="Claim termination" {{ 'selected' if  data.handoverReason === 'Claim termination' else ''}}>Claim termination</option>
           <option value="General query" {{ 'selected' if  data.handoverReason === 'General query' else ''}}>General query</option>
           <option value="Joint claim" {{ 'selected' if  data.handoverReason === 'Joint claim' else ''}}>Joint claim</option>

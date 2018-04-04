@@ -22,21 +22,19 @@ router.post('./agent/create', function (req, res) {
     })
 
  // add your routes here
-router.post('v2/queue',function (req, res) {
+router.post('/v2/queue',function (req, res) {
     
       var scenario = req.session.data['scenario']
     
-      if(scenario == "editAgent"){
-        res.redirect('/v2/queue')
+      if(scenario == "allocatorEdit"){
+        res.redirect('/v2/allocator-queue')
       }
     
       else {
-        res.redirect('/v2/edit')
+        res.redirect('/v2/queue')
       }
     
-    })   
-
-    
-
+    })  
+       
 
 module.exports = router;
