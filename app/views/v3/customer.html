@@ -1,0 +1,162 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% include "includes/v2/nav.html" %}
+<main id="content" role="main">
+    <div class="main-content">
+            <form class="form" action="queue" method="post">
+        {% include "includes/message-banner.html" %}
+        {% include "includes/error-summary.html" %}
+        <h1 class="heading-large">
+            <span class="heading-secondary">View summary details for</span>
+            Ian Jackson
+        </h1>
+
+        <div>
+            <h3 class="heading-medium">Customer details</h3>
+        <div class="grid-row">
+            <div class="column-half">
+                <div>
+                    <table>
+                        <tr>
+                            <td>National insurance number</td>
+                            <td>AA345678B</td>
+                        </tr>
+                        <tr>
+                            <td>Postcode</td>
+                            <td>S17 3JX</td>
+                        </tr>
+                        <tr>
+                            <td>Job Centre</td>
+                            <td>Sheffield South West</td>
+                        </tr>
+                        <tr>
+                            <td>Preferred contact number</td>        
+                            <td>01234 567891</td>
+                        
+                        </tr>
+                
+                    </table>
+                </div>
+            </div>
+
+            <div class="column-half">
+                <div>
+                    <table>
+                        <tr>
+                            <td>Date of birth</td>
+                            <td>16/12/1960</td>
+                        </tr>
+                        <tr>
+                            <td>Welsh speaker ?</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Translator required ?</td>
+                            <td>no</td>
+                        </tr>
+                        <tr>
+                                <td>Email address</td>
+                                <td>cdixon@hotmailc.com</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="/customer/edit?nino={{ customer.nino }}" class="button">Amend customer details</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="grid-row">
+            <div class="column-full">
+                <h3 class="heading-medium">Handovers</h3>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col"><span>Time left to clear</span></th>
+                                <th scope="col"><span>Date/time raised</span></th>
+                                <th scope="col"><span>Routed to</span></th>
+                                <th scope="col"><span>Agent</span></th>
+                                <th scope="col"><span>Benefit type</span></th>
+                                <th scope="col"><span>Handover type</span></th>
+                                <th scope="col"><span>Status</span></th>
+                                <th scope="col"><span></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                     
+                            <tr >
+                                {% if data['scenario'] === 'customerUpdate' %}
+                
+                                <td><span class="bold">1 hour 59 mins</td>
+                                {% else %}
+                                <td><span class="bold">Expired</span></td>
+                                {% endif %}
+                                <td>02/03/2018<br><span class="hint">9:33am</span></td>
+                        
+                                    <td>Birkenhead</td>
+                                    <td>Calumn Dalton</td>
+                              
+                                    
+                                    <td>JSA</td>
+                        
+                            
+                                    <td>New claim</td>
+                                
+                              
+                              
+                                <td>First call pending</td>
+                        
+                                <td><a href="edit">View and update</a></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="/index">Back to index page</a>
+                </div>
+            </div>
+        </div>
+        </div>
+        </form>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.3.min.js"></script>
+
+<script>
+    $('table').DataTable({
+        paging: false,
+        info: false,
+        filter: false,
+        order: [[ 3, "desc" ]],
+    })
+</script>
+
+{% endblock %}
+
+{% macro handoverUpdateLink(handover) %}
+{% set queryString = '?id=' + handover.id %}
+<a href="/handover/edit{{queryString}}">Update</a>
+{% endmacro %}

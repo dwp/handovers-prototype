@@ -206,3 +206,19 @@ caption {
   }
 }
 
+.panel.warning{
+  border:5px solid darken(#FFBF47,5%);
+  //background:lighten(#FFBF47,30%);
+  padding:25px;
+  p.icon{
+    margin-top:10px;
+    .icon{
+      float:left;
+      margin:-9px 10px 0 0;
+    }
+  }
+}
+
+table td {
+  font-size:18px;
+}

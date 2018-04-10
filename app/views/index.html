@@ -18,12 +18,13 @@
         <div class="phase-banner">
             <p>
               <strong class="phase-tag tag--red">NOTE</strong>
-              <span>This page introduces the prototype and allows prototyping of service to raise and process handovers</span>
+              <span>This page introduces the prototype and allows prototyping of service, to raise and process handovers</span>
             </p>
           </div>
       </p>
     </div>
   </div>
+
   <div class="grid-row">
       
           
@@ -32,20 +33,74 @@
       
           <div class="column-third">
             <p class="mb0">Version</p>
+            <h3 class="heading-medium mt0 mb0">Design exploration v3</h3>
+            <p>For user research in Sheffield on 11th April 2018</p>
+          </div>
+    
+      
+          <div class="column-two-thirds">
+            <a href="/v3/start-page" class="button button-start mth mb1">Launch prototype</a>
+            <h3 class="heading-small mth">Changes made</h3>
+            <ul class="list list-bullet changes mb1">
+              <li>Re worked tabs to give them more visual hierarchy on the page</li>
+              <li>More detailed history</li>
+            </ul>
+          </div>
+      <hr class="w100">
+        </div>
+
+  <div class="grid-row">
+      
+      <details>
+          
+            <summary><span class="summary">Design exploration v2</span></summary>
+          
+            <div class="panel panel-border-narrow">
+          <div class="column-third">
+            <p class="mb0">Version</p>
             <h3 class="heading-medium mt0 mb0">Design exploration v2</h3>
             <p>For user research in Birmingham on 5 April 2018</p>
+            <p>This prototype was produced as direct action from the following design review and user testing 
+            <h4 class="heading-small">Design review</h4>
+              <a href="https://confluence.dwp.gov.uk/download/attachments/119572217/Handovers%20Design%20Review%209%3A03%3A2018.key?api=v2">Review screens and comments</a><br/>
+              <a href="https://confluence.dwp.gov.uk/pages/viewpage.action?pageId=119572217">Design review images</a>
+              <h4 class="heading-small">User testing</h4>
+            <ul>
+              <li>St Helen's(27/02/2018) Am</li>
+              <li>Birkenhead(27/02/2018) Pm</li>
+              <li>Wrexham(11/03/2018)</li>
+              <li>Hyde(12/03/2018)</li>
+            </ul>
           </div>
     
       
           <div class="column-two-thirds">
             <a href="/v2/start-page" class="button button-start mth mb1">Launch prototype</a>
-            <h3 class="heading-small mth">Changes made</h3>
+            <h3 class="heading-medium mth">Changes made</h3>
+            <h4 class="heading-small">Allocator screen</h4>
             <ul class="list list-bullet changes mb1">
-              <li>updated edit screen</li>
+              <li><p>Moved time remaining to first column</p></li>
+              <li><p>Added a description column</p></li>
+              <li><p>Added status indicator with the word escalation to the time remaining column to repace salmon pink hi-light row status</p></li>
+              <li><p>Added link to agents queue and number indication of how many handovers an agent has in there queue, also added an availabilty indicator to
+                the agent column </p></li>
+            </ul>
+
+            <h4 class="heading-small">Edit screen</h4>
+            <ul class="list list-bullet changes mb1">
+              <li><p>Added status bar to highlight key information to help the agent deal with the handover</p></li>
+              <li><p>Added tabs to split out the two main functions of the edit screen update/reallocate</p></li>
+              <li><p>Added history to the right hand column which will amalgamate timeline/notes and callback status </p></li>
+              <li><p>Removed redundant information</p></li>
             </ul>
           </div>
-      <hr class="w100">
+   
         </div>
+      </details>
+      <hr class="w100">
+      </div>
+      
+   
   <div class="grid-row">
 
     {% set allocatorScreens = [{

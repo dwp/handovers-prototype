@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+{% include "includes/v2/nav.html" %}
+<main id="content" role="main">
+    <div class="main-content">
+            <form class="form" action="customer" method="post">
+            <div class="grid-row">
+                    <div class="column-full">
+                        <div class="search-box-container">
+                            <h1 class="heading-large">Search for customer</h1>
+                            <form action="/customer/find" method="post" class="form" id="search-form">
+                                <label class="form-hint" for="nino">Enter a National Insurance Number</label>
+                                <input id="nino" type="search" autocomplete="off" name="nino" autofocus="autofocus" class="js-search-focus">
+                                <input id="search-submit" type="submit" class="" value="Search">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </form>
+          </div>
+</main>
+
+
+
+
+{% endblock %}
