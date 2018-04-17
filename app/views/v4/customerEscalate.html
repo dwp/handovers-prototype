@@ -2,76 +2,12 @@
 
 {% block content %}
 {% include "includes/v2/nav.html" %}
+{% include "includes/v2/caseHeader.html" %}
 <main id="content" role="main">
     <div class="main-content">
             <form class="form" action="queue" method="post">
-        {% include "includes/message-banner.html" %}
-        {% include "includes/error-summary.html" %}
-        <h1 class="heading-large">
-            <span class="heading-secondary">View summary details for</span>
-            Ian Jackson
-        </h1>
 
-        <div>
-            <h3 class="heading-medium">Customer details</h3>
-        <div class="grid-row">
-            <div class="column-half">
-                <div>
-                    <table>
-                        <tr>
-                            <td>National insurance number</td>
-                            <td>AA345678B</td>
-                        </tr>
-                        <tr>
-                            <td>Postcode</td>
-                            <td>S17 3JX</td>
-                        </tr>
-                        <tr>
-                            <td>Job Centre</td>
-                            <td>Sheffield South West</td>
-                        </tr>
-                        <tr>
-                            <td>Preferred contact number</td>        
-                            <td>01234 567891</td>
-                        
-                        </tr>
-                
-                    </table>
-                </div>
-            </div>
 
-            <div class="column-half">
-                <div>
-                    <table>
-                        <tr>
-                            <td>Date of birth</td>
-                            <td>16/12/1960</td>
-                        </tr>
-                        <tr>
-                            <td>Welsh speaker ?</td>
-                            <td>No</td>
-                        </tr>
-                        <tr>
-                            <td>Translator required ?</td>
-                            <td>no</td>
-                        </tr>
-                        <tr>
-                                <td>Email address</td>
-                                <td>cdixon@hotmailc.com</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="grid-row">
-            <div class="column-half">
-                <div class="form-group">
-                    <a href="/customer/edit?nino={{ customer.nino }}" class="button">Amend customer details</a>
-                </div>
-            </div>
-        </div>
-        <br>
         <div class="grid-row">
             <div class="column-full">
                 <h3 class="heading-medium">Handovers</h3>
@@ -121,13 +57,17 @@
         <br>
         <div class="grid-row">
             <div class="column-half">
-                    <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>           
+                <div class="form-group">
+                    <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>
+                </div>
             </div>
         </div>
 
         <div class="grid-row">
             <div class="column-half">
-                        <a href="find" class="link-back">Back to find customer</a>
+                <div class="form-group">
+                    <a href="find">Back to find customer</a>
+                </div>
             </div>
         </div>
         </div>

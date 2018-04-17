@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 
 {% block content %}
@@ -125,17 +126,14 @@
         <br>
         <div class="grid-row">
             <div class="column-half">
-                <div class="form-group">
-                    <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>
-                </div>
+                    <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>       
             </div>
         </div>
 
         <div class="grid-row">
             <div class="column-half">
-                <div class="form-group">
-                    <a href="/index">Back to index page</a>
-                </div>
+                    <a href="find" class="link-back">Back to find customer</a>
+             
             </div>
         </div>
         </div>

@@ -1,0 +1,23 @@
+
+    <div class="multiple-choice">
+        <input id="radio-2" type="radio" name="callBackStatus" value="First call failed - engaged" {{ 'checked' if data[
+            'callBackStatus']==='First call failed - engaged' else ''}}>
+        <label for="radio-2">Call failed - engaged</label>
+    </div>
+    <div class="multiple-choice">
+        <input id="radio-3" type="radio" name="callBackStatus" value="First call failed - number unobtainable" {{ 'checked' if data[
+            'callBackStatus']==='First call failed - number unobtainable' else ''}}>
+        <label for="radio-3">Call failed - number unobtainable</label>
+    </div>
+
+    <div class="multiple-choice">
+        <input id="radio-4" type="radio" name="callBackStatus" value="First call failed - not answered" {{ 'checked' if data[
+            'callBackStatus']==='First call failed - not answered' else ''}}>
+        <label for="radio-4">Call failed - not answered</label>
+    </div>
+    <p class="form-block">or</p>
+    <div class="multiple-choice">
+        <input id="radio-1" type="radio" name="callBackStatus" value="First call successful" {{ 'checked' if data[
+            'callBackStatus']==='First call successful' else ''}}>
+        <label for="radio-1">Call successful complete handover</label>
+    </div>

@@ -1,0 +1,80 @@
+<div class="case-header">
+        <div class="case-header">
+            {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
+            <h1 class="heading-large mt0 mb0">
+                Ian Jackson
+                <!--<span class="heading-secondary">AA345678B</span> -->
+            </h1>
+            {% else %}
+    
+            <h1 class="heading-large mt0 mb0">
+                Christine Dixon
+                <!--<span class="heading-secondary">AA345678B</span> -->
+            </h1>
+    
+            {% endif %}
+        </div>
+    
+        <div class="case-body">
+            <ul>
+                <li>
+                    <h3>Nino</h3>
+                    <p class="bold mt-0">
+                    {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
+                      AA345678B
+                    {% else %}
+                    ZZ123456A
+                    {% endif %}
+                  </p>
+                </li>
+                <li>
+    
+                    <h3>Telephone</h3>
+                    <p>01234 567891</p>
+                </li>
+                <li>
+                    <h3>Date of birth</h3>
+                    <p class="bold mt-0">16/12/1960</p>
+                </li>
+                <li>
+                    <h3>Postcode</h3>
+                    <p>S17 3JX</p>
+                </li>
+            </ul>
+    
+            <details>
+    
+                <summary>
+                    <span class="summary">More customer details</span>
+                </summary>
+    
+                <ul>
+                    <li>
+                        <h3>Jobcenter</h3>
+                        <p>Sheffield South West</p>
+                    </li>
+                    <li>
+                        <h3>Email</h3>
+                        <p>cdixon@hotmailc.com</p>
+                    </li>
+                    </li>
+                    <li>
+                        <h3>Translator required</h3>
+                        <p>No</p>
+                    </li>
+                    <li>
+                        <h3>Welsh speaker ?</h3>
+                        <p>No</p>
+                    </li>
+                </ul>
+                <a href="" class="button mt1 mb1">Amend customer details</a>
+            </details>
+        </div>
+        {% if data['scenario'] === 'allocatorEdit' %}
+        <div class="case-footer">
+            <h3>Agent:</h3>
+            <p class="bold  mt0">Callum Dalton</p>
+        </div>
+        {% endif %}
+    </div>
+    
