@@ -1,4 +1,8 @@
 {% extends "layout.html" %} {% block content %} {% include "includes/v2/nav.html" %}
+
+{% include "includes/v2/caseHeader.html" %}
+
+
 <main id="content" role="main">
   <div class="main-content">
     <form class="form" action="queue" method="post">
@@ -6,7 +10,7 @@
         <div class="column-full">
 
 
-          <div class="panel warning mt1" role="group" id="clearHandover" aria-labelledby="" tabindex="-1" style="display:none">
+          <div class="panel alt warning mt1" role="group" id="clearHandover" aria-labelledby="" tabindex="-1" style="display:none">
 
 
             <p class="bold icon" style="display:inline-block">
@@ -34,94 +38,135 @@
             <a href="#" class="button text cancel">Cancel</a>
           </div>
 
-          {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
-          <h1 class="heading-large mb0">
-            Ian Jackson
-            <span class="heading-secondary">AA345678B</span>
-          </h1>
-          {% else %}
-          <h1 class="heading-large mb0">
-            Christine Dixon
-            <span class="heading-secondary">ZZ123456A</span>
-          </h1>
-          {% endif %}
-          <a href="customer" class="link-back mt0 mb1">Customer details</a>
-          <div class="status">
-            {% if data['scenario'] === 'allocatorEdit' %}
-            <div class="status__header">
-              <h3>Agent:</h3>
-              <p class="bold  mt0">Callum Dalton</p>
-            </div>
-            {% endif %}
-            <div class="status__body">
-              <div class="col">
-                {% if data['scenario'] === 'agentEditEscalate' %}
-                <h3>Time remaining</h3>
-                <p class="bold  mt0">Expired
-                  <!-- <span class="badge badge-danger">ESCALATED</span> -->
-                </p>
-                {% elif data[ 'scenario'] === 'allocatorEdit' or data['scenario'] === 'agentEditEscalate' and data[ 'escalatedHandover'] === 'escalate'  %}
-                <h3>Time remaining</h3>
-                <p class="bold  mt0">30mins
-                  <br />
-                  <span class="badge badge-danger">ESCALATED</span>
-                </p>
-                {% else %}
-                <h3>Time remaining</h3>
-                <p class="bold  mt0">1 hour 59 mins
-                  <!-- <span class="badge badge-danger">ESCALATED</span> -->
-                </p>
-                {% endif%}
-              </div>
-              {% if data['callbackRequired'] === 'Yes' or data[ 'scenario']==='agentEditEscalate' or data[ 'scenario']==='agentChangeStatus'
-              or data[ 'scenario']==='customerUpdate' or data[ 'scenario']==='allocatorEdit' %}
-              <div class="col">
-                <h3>Call back required</h3>
-                <p class="bold mt-0">Yes</p>
-              </div>
-              <!--<div class="col">
-                <h3>Telephone</h3>
-                <p class="bold mt-0">01234 567891</p>
-              </div> -->
-              {% else %}
-              <div class="col">
-                <h3>Call back required</h3>
-                <p class="bold mt-0">No</p>
-              </div>
-             <!-- <div class="col">
-                  <h3>Telephone</h3>
-                  <p class="bold mt-0">01234 567891</p>
-                </div> -->
-              {% endif %} {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' or data[
-              'scenario']==='agentEditEscalate' and data['callBackStatus'] !== 'First call failed - engaged' or data[ 'scenario']==='agentChangeStatus'
-              and data['callBackStatus'] !== 'First call failed - engaged' or data[ 'scenario']==='customerUpdate'and data['callBackStatus']
-              !== 'First call failed - engaged' or data[ 'scenario']==='allocatorEdit'and data['callBackStatus'] !== 'First
-              call failed - engaged' %}
-              <div class="col">
-                <h3>Status</h3>
-                <p class="bold mt-0">First call pending</p>
-              </div>
-              {% elif data['callbackRequired']==='Yes' and data['callBackStatus']==='First call failed - engaged' or data['callBackStatus']==='First
-              call failed - engaged' and data[ 'scenario']==='agentEditEscalate' or data[ 'scenario']==='agentChangeStatus'
-              and data['callBackStatus'] === 'First call failed - engaged' %}
-              <div class="col">
-                <h3>Status</h3>
-                <p class="bold mt-0">Second call pending</p>
-              </div>
-              {% else %}
-              <div class="col">
-                <h3>Status</h3>
-                <p class="bold mt-0">In progress</p>
-              </div>
-              {% endif %}
-
-            </div>
-          </div>
         </div>
       </div>
+
+      <div class="status v2">
+          <div class="status__body">
+            <div class="col">
+              {% if data['scenario'] === 'agentEditEscalate' %}
+              <h3>Time remaining</h3>
+              <p class="bold  mt0">Expired
+                <!-- <span class="badge badge-danger">ESCALATED</span> -->
+              </p>
+              {% elif data[ 'scenario'] === 'allocatorEdit'%}
+              <h3>Time remaining</h3>
+              <p class="bold  mt0">30mins
+                <br />
+                <span class="badge badge-danger">ESCALATED</span>
+              </p>
+              {% else %}
+              <h3>Time remaining</h3>
+              <p class="bold  mt0">1 hour 59 mins
+                <!-- <span class="badge badge-danger">ESCALATED</span> -->
+              </p>
+              {% endif%}
+            </div>
+            {% if data['callbackRequired'] === 'Yes' or data[ 'scenario']==='agentEditEscalate' or data[ 'scenario']==='agentChangeStatus'
+            or data[ 'scenario']==='customerUpdate' or data[ 'scenario']==='allocatorEdit' %}
+            <div class="col">
+              <h3>Call back required</h3>
+              <p class="bold mt-0">Yes</p>
+            </div>
+          
+    
+            {% else %}
+            <div class="col">
+              <h3>Call back required</h3>
+              <p class="bold mt-0">No</p>
+            </div>
+            {% endif %} {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' or data[
+            'scenario']==='agentEditEscalate' and data['callBackStatus'] !== 'First call failed - engaged' or data[ 'scenario']==='agentChangeStatus'
+            and data['callBackStatus'] !== 'First call failed - engaged' or data[ 'scenario']==='customerUpdate'and data['callBackStatus']
+            !== 'First call failed - engaged' or data[ 'scenario']==='allocatorEdit'and data['callBackStatus'] !== 'First
+            call failed - engaged' %}
+            <div class="col">
+              <h3>Status</h3>
+              <p class="bold mt-0">First call pending</p>
+            </div>
+            {% elif data['callbackRequired']==='Yes' and data['callBackStatus']==='First call failed - engaged' or data['callBackStatus']==='First
+            call failed - engaged' and data[ 'scenario']==='agentEditEscalate' or data[ 'scenario']==='agentChangeStatus'
+            and data['callBackStatus'] === 'First call failed - engaged' %}
+            <div class="col">
+              <h3>Status</h3>
+              <p class="bold mt-0">Second call pending</p>
+            </div>
+            {% else %}
+            <div class="col">
+              <h3>Status</h3>
+              <p class="bold mt-0">In progress</p>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+     <!-- <div class="grid-row">
+          <div class="column-one-third mt1">
+              <div class="panel alt default">
+                  {% if data['scenario'] === 'agentEditEscalate' %}
+                  <h3>Time remaining</h3>
+                  <p class="bold  mt0">Expired
+                   
+                  </p>
+                  {% elif data[ 'scenario'] === 'allocatorEdit'%}
+                  <h3>Time remaining</h3>
+                  <p class="bold  mt0">30mins
+                    
+                    <span class="badge badge-danger">ESCALATED</span>
+                  </p>
+                  {% else %}
+                  <h3>Time remaining</h3>
+                  <p class="bold  mt0">1 hour 59 mins
+                  </p>
+                  {% endif%}
+                </div>
+          </div>
+          <div class="column-one-third mt1">
+              <div class="panel alt default">
+                  {% if data['callbackRequired'] === 'Yes' or data[ 'scenario']==='agentEditEscalate' or data[ 'scenario']==='agentChangeStatus'
+                  or data[ 'scenario']==='customerUpdate' or data[ 'scenario']==='allocatorEdit' %}
+          
+                    <h3>Call back required</h3>
+                    <p class="bold mt0">Yes</p>
+                 
+                  {% else %}
+            
+                    <h3>Call back required</h3>
+                    <p class="bold mt0">No</p>
+                 
+                  {% endif %} 
+                </div>
+            </div>
+            <div class="column-one-third mt1">
+                <div class="panel alt default">
+                    {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' or data[
+                    'scenario']==='agentEditEscalate' and data['callBackStatus'] !== 'First call failed - engaged' or data[ 'scenario']==='agentChangeStatus'
+                    and data['callBackStatus'] !== 'First call failed - engaged' or data[ 'scenario']==='customerUpdate'and data['callBackStatus']
+                    !== 'First call failed - engaged' or data[ 'scenario']==='allocatorEdit'and data['callBackStatus'] !== 'First
+                    call failed - engaged' %}
+                   
+                      <h3>Status</h3>
+                      <p class="bold mt0">First call pending</p>
+                    
+                    {% elif data['callbackRequired']==='Yes' and data['callBackStatus']==='First call failed - engaged' or data['callBackStatus']==='First
+                    call failed - engaged' and data[ 'scenario']==='agentEditEscalate' or data[ 'scenario']==='agentChangeStatus'
+                    and data['callBackStatus'] === 'First call failed - engaged' %}
+                  
+                      <h3>Status</h3>
+                      <p class="bold mt0">Second call pending</p>
+                    
+                    {% else %}
+                
+                      <h3>Status</h3>
+                      <p class="bold mt0">In progress</p>
+                 
+                    {% endif %}
+                  </div>
+            </div>
+      </div> -->
       <div class="grid-row">
         <div class="column-two-thirds">
-
           <div class="js-tabs tabs">
             <!-- JS will add .tabs class -->
             <ul class="list list-bullet">
@@ -141,7 +186,7 @@
 
 
 
-              <div class="panel panel-borderc mt1">
+              <div class="panel panel-border mt1">
 
                 <div class="form-group">
                   <fieldset>
@@ -171,7 +216,20 @@
               <label class="form-label-bold" for="handover-note">Add a note</label>
 
               <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note" rows="6">{{ data['handover-note'] }}</textarea>
-      
+              <br />
+              <div class="panel panel-border-narrow">
+                <legend class="form-label-bold">Did this update result from customer contact ?</legend>
+                <fieldset class="inline">
+                  <div class="multiple-choice">
+                    <input id="handover-contact-no" type="radio" name="handover-contact-indicator" value="No" checked="checked">
+                    <label for="handover-contact-no">No</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="handover-contact-yes" type="radio" name="handover-contact-indicator" value="Yes">
+                    <label for="handover-contact-yes">Yes</label>
+                  </div>
+                </fieldset>
+              </div>
 
 
 
@@ -210,7 +268,7 @@
                     <label for="radio-2">Call back required</label>
                   </div>
                   <div class="panel panel-border-narrow js-hidden" id="callbackRequired">
-                      <div class="panel alt default">
+                      <div class="panel warning alt">
                           <p class="bold">First call pending</p>
                         </div>
                     {% include "includes/v2/setStatusFirstCall.html" %}
@@ -442,6 +500,6 @@
     </div>
 </main>
 
-
+<script src="/public/javascripts/tabs.js"></script>
 
 {% endblock %}

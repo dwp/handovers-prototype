@@ -5,6 +5,8 @@ i.fa-exclamation-circle{
   color: $mellow-red;
 }
 
+//@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
+
 // mark the passed indicator on the office performance page as red
 .search_string .passed, tr .passed {
     color: $red;
@@ -114,76 +116,105 @@ caption {
 
 
 // https://home-office-digital-patterns.herokuapp.com/components/status extended it to meet handover's needs
-  .status {
-    background-color: $govuk-blue;
-    color: $white;
-    margin-bottom:30px;
+.status {
 
-    .status__body{
-      padding:15px 0;
-      display:flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      
-    }
+ 
+  background-color: $govuk-blue;
+  color: $white;
+  margin-bottom:30px;
 
-    .status__header{
-      padding:15px;
-      background-color: darken($govuk-blue, 10%);
-      p, h3 {
-        display:inline;
-      }
-    }
-
-  
-    p {
-      font-weight: 700;
-    }
-  
-    .status-extra {
-      font-weight: normal;
-    }
-
-    .col{
-      padding:0 15px;
-    }
-
-
-   @media screen and (min-width:640px){
-    .col {
-      border-right:1px solid rgba(#fff, 0.2);
-      flex:1;
-
-      &:last-of-type{
-        border:none;
-      }
-
-    }
-  }
+  &.v2{
+    background-color:#f9f9f9;
+    color: $text-colour;
+    margin-top:30px;
+    border-bottom: 1px solid #bfc1c3;
+    border-left:10px solid $light-blue;
+    margin-bottom:0px;
 
     .badge-danger {
-      color: #dc3545;
-      background-color: #fff;
+      color: #fff;
+      background-color: $red;
       
       }
+
+      @media screen and (min-width:640px){
+        .col {
+          border-right:1px solid $border-colour;
+          flex:1;
+      
+          &:last-of-type{
+            border:none;
+          }
+      
+        }
+      }
   }
-  
-  @include media(tablet) {
-    .status .status__body {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-  
-      p {
-        margin: 0;
-      }
-  
-      .status-extra {
-        font-size: 18px;
-      }
+
+  .status__body{
+    padding:15px 0;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+  }
+
+  .status__header{
+    padding:15px;
+    background-color: darken($govuk-blue, 10%);
+    p, h3 {
+      display:inline;
     }
   }
+
+
+  p {
+    font-weight: 700;
+  }
+
+  .status-extra {
+    font-weight: normal;
+  }
+
+  .col{
+    padding:0 15px;
+  }
+
+
+ @media screen and (min-width:640px){
+  .col {
+    border-right:1px solid rgba(#fff, 0.2);
+    flex:1;
+
+    &:last-of-type{
+      border:none;
+    }
+
+  }
+}
+
+  .badge-danger {
+    color: #dc3545;
+    background-color: #fff;
+    
+    }
+}
+
+@include media(tablet) {
+  .status .status__body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    p {
+      margin: 0;
+    }
+
+    .status-extra {
+      font-size: 18px;
+    }
+  }
+}
 
   .button.text {
     background: none;
@@ -193,21 +224,9 @@ caption {
     box-shadow: none;
 }
 
-.panel.alt{
-  border-color:#FFBF47;
-  background:lighten(#FFBF47,30%);
-
-  p.icon{
-    margin-top:10px;
-    .icon{
-      float:left;
-      margin:-9px 10px 0 0;
-    }
-  }
-}
 
 .panel.warning{
-  border:5px solid darken(#FFBF47,5%);
+  border:5px solid orange;
   //background:lighten(#FFBF47,30%);
   padding:25px;
   p.icon{
@@ -219,6 +238,126 @@ caption {
   }
 }
 
+.panel.alt{
+
+  border-bottom: 1px solid $border-colour;
+  background:#f9f9f9;
+  border-left:10px solid $border-colour;
+
+&.default{
+  border-left:10px solid $light-blue;
+}
+
+&.success{
+  border-left:10px solid $green;
+}
+
+&.danger{
+  border-left:10px solid $mellow-red;
+} 
+&.warning{
+  border-left:10px solid orange;
+  border-top:none;
+  border-right:none;
+  }
+}
+
+
 table td {
   font-size:18px;
 }
+
+
+.case-header {
+  background-color: $govuk-blue;
+  color: $white;
+  font-size:20px;
+
+ ul 
+ {
+  padding-top:15px;
+  border-top:1px solid rgba(#fff, 0.2);
+
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+    }
+  
+ 
+ li{
+   float: left;
+   width:25%;
+   padding:0 30px;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   border-right:1px solid rgba(#fff, 0.2);
+
+   &:last-of-type{
+     border:none;
+   }
+
+   &:first-of-type{
+    padding-left:0px;
+   }
+ }
+
+}
+
+
+  .case-header, .case-body, .case-footer{
+    padding:20px 2.10526em 15px ;
+  }
+ .case-body{
+    padding-top:0px;
+    //background-color: darken($govuk-blue, 5%);
+  }
+
+  .case-footer{
+    background-color: darken($govuk-blue, 5%);
+
+    h3, p{
+      display:inline;
+    }
+  }
+
+
+
+  .heading-secondary, a{
+    color:#fff;
+  }
+
+  p {
+    font-weight: bold;
+    font-size:22px;
+    margin:0px;
+  }
+
+
+
+  details 
+  {
+  ul{
+    border-top:none;
+  }
+    
+  summary{
+    color:#fff;
+    margin-top:15px;
+
+   // &:before {
+   //   font-family: FontAwesome;
+  //    content: '\F055';
+   //   font-size: 22px;
+  //  }
+  }
+}
+
+}
+
+
+
+
+
+  
