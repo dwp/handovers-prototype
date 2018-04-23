@@ -72,3 +72,4 @@ $("#clear").click(function () {
  $(".cancel").click(function () {
   $('#reallocateHandover').css('display','none');
  });
+

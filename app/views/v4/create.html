@@ -1,82 +1,40 @@
 {% extends "layout.html" %}
 {% block content %}
 {% include "includes/v2/nav.html" %}
+{% include "includes/v2/caseHeader.html" %}
 <main id="content" role="main">
     <div class="main-content">
         <div class="grid-row">
             <div class="column-two-thirds">
                 <h1 class="heading-large">
-                    <span class="heading-secondary">Create handover</span>
-                    Christine Dixon
-                    <span class="heading-secondary">AA123456B</span>
+                    Create
                 </h1>
                 <form class="form" action="customer" method="post">
                 <div class="form-group">
-                <label class="form-label-bold" for="textarea">
+                <label class="heading-small" for="textarea">
                         Description
                 </label>
                       <textarea class="form-control form-control-3-4" id="description" name="description" rows="5">{{ data['description'] }}</textarea>
                  </div>
-                 <hr class="w100">
                  <div class="form-group">
-                        <label class="form-label-bold" for="select-box">Select a benefit</label>
-                        <select class="select form-control form-control-3-4" name="benefit" id="benefit">{{ data['benefit'] }}
-                        <option value="" id="benSelect">Select a benefit</option>
-                        <option value="[ESA]" id="ben-1">Employment &amp; Support Allowance [ESA]</option>
-                        <option value="[JSA]" id="ben-2">Jobseekers Allowance [JSA]</option>
-                        <option value="[UC]" id="ben-3">Universal Credit [UC]</option>
-                        <option value="HB]" id="ben-4">Housing Benefit [HB]</option>
-                        <option value="[SF]" id="ben-5">Social Fund [SF]</option>
-                        </select>
-                      </div>
-
-                      <div class="form-group">
-                            <label class="form-label-bold" for="select-box">Select a Centre</label>
-                            <select class="select form-control form-control-3-4" name="centre" id="centre">{{ data['centre'] }}
-                            <option value="" id="cenSelect">Select Service Centre</option>
-                            <option value="Birkenhead" id="cen-1">Birkenhead Service Center</option>
-                            <option value="St Helens" id="cen-2">St Helens Service Centre</option>
-                            <option value="Wolverhampton" id="cen-3">Wolverhampton Service Centre</option>
-                            <option value="Sunderland" id="cen-4">Sunderland Service Centre</option>
-                            </select>
-                          </div>
-                          <hr class="w100">
-                          <div class="form-group">
-                                <label class="form-label-bold" for="select-box">Select a handover type</label>
-                                <select class="form-control form-control-3-4" id="handover-type" name="handover-type">{{ data['handover-type'] }}
-                                  <option value="">Select handover type</option>
-                                  <option value="Appointment confirmation">Appointment confirmation</option>
-                                  <option value="Claim closure">Claim closure</option>
-                                  <option value="Hardship">Hardship</option>
-                                  <option value="Missing evidence">Missing evidence</option>
-                                  <option value="New claim">New claim</option>
-                                  <option value="Reconsiderations">Reconsiderations</option>
-                                </select>
-                              </div>
-                              <div class="form-group">
-                                    <label class="form-label-bold" for="select-box">Select a handover reason</label>
-                                    <select class="select form-control form-control-3-4" id="handover-reason" name="handover-reason">{{ data['handover-reason'] }}
-                                      <option value="">Select handover reason</option>
-                                      <option value="Appointment form">Appointment form</option>
-                                      <option value="Claim termination">Claim termination</option>
-                                      <option value="General query">General query</option>
-                                      <option value="Joint claim">Joint claim</option>
-                                      <option value="Missing direct payment">Missing direct payment</option>
-                                      <option value="Payment query">Payment query</option>
-                                    </select>
-                                  </div>
-                                  <hr class="w100">
+                    {% include "includes/v2/selectBenefit.html" %}
+                    <div class="panel panel-border-narrow type" id="type">
+                      {% include "includes/v2/selectHandoverType.html" %}
+                      <div class="panel panel-border-narrow reason" id="reason"> {% include "includes/v2/selectHandoverReason.html" %}</div>
+                    </div>
+                  </div>
+                
                             <div class="form-group">
-                                    <fieldset class="inline">
+                                    <fieldset>
                                 
                                       <legend>
-                                        <h1 class="form-label-bold">
+                                        <h1 class="heading-small">
                                              Callback required ?
                                         </h1>
                                       </legend>
                                 
                                       <div class="multiple-choice">
-                                        <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes" checked="checked">
+                                        <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
                                         <label for="radio-inline-1">Yes</label>
                                       </div>
                                       <div class="multiple-choice">
@@ -87,20 +45,47 @@
                                     </fieldset>
                                   </div>
                                   <div class="form-group">
-                                        <input type="submit" class="button" value="Submit">
+                                      <fieldset>
+                      
+                                          <h1 class="heading-small">
+                                            Recieving office type
+                                          </h1>
+                                        </legend>
+                      
+                                        <div class="multiple-choice">
+                                          <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Benefit" checked="checked">
+                                          <label for="radio-inline-1">Benefit office</label>
+                                        </div>
+                                        <div class="multiple-choice">
+                                          <input id="radio-inline-2" type="radio" name="radio-inline-group" value="Jobcentre">
+                                          <label for="radio-inline-2">Jobcentre</label>
+                                        </div>
+                                      </fieldset>
+                                    </div>  
+                                  <div class="form-group">
+                                        <input type="submit" class="button" value="Create">
                                 </div>
                                 </form>
 
                           
             </div>
-            <div class="column-one-third">
-                    <div side class="panel-alt">
-                            <h2 class="heading-medium mth" id="subsection-title">Summary</h2>
-                            <h3 class="heading-small">Customer's Jobcentre</h3>
-                            <p>Sheffield South West</p>
-                    </div>        
-            </div>
         </div>
     </div>
 </main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script>
+
+  $(function() {
+    $("#type").hide();
+    $("#reason").hide();
+});
+
+$("#benefit").change(function(){
+            $("#type").show();
+    });
+
+    $("#handoverType").change(function(){
+            $("#reason").show();
+    });    
+</script>
 {% endblock %}

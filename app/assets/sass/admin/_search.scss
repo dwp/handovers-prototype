@@ -1,3 +1,5 @@
+
+
 .search-box-container{
     #nino {
         height: 34px;
@@ -16,3 +18,37 @@
         top: -1px;
     }
 }
+
+
+.search-box-container{
+    .form-control {
+        height: 27px;
+        //margin-top:1px;
+    }
+
+   .button{
+        background: $button-colour ; //url('/public/images/search-button.png') no-repeat 4px 50%
+        //height: 40px;
+        //width: 40px;
+        border: 0;
+        //margin-left: -4px;
+        //text-indent: -5000px;
+        position: relative;
+        //top: -1px;
+        font-weight: bold;
+        position:relative;
+        padding-right:38px;
+
+         &:after {
+         font-family: FontAwesome;
+         content: '\F002';
+         font-size: 22px;
+         position: absolute;
+         right:10px;
+         top:5px;
+
+
+  }
+    }
+}
+

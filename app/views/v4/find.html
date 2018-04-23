@@ -4,23 +4,65 @@
 <main id="content" role="main">
     <div class="main-content">
             <form class="form" action="customer" method="post">
+           
+                    {% if data['scenario'] === 'createCustomer' %}
+                    
             <div class="grid-row">
-                    <div class="column-full">
+                    <div class="column-half">
                         <div class="search-box-container">
                             <h1 class="heading-large">Search for customer</h1>
                             <form action="/customer/find" method="post" class="form" id="search-form">
                                 <label class="form-hint" for="nino">Enter a National Insurance Number</label>
-                                <input id="nino" type="search" autocomplete="off" name="nino" autofocus="autofocus" class="js-search-focus">
-                                <input id="search-submit" type="submit" class="" value="Search">
+                                <input id="" type="search" autocomplete="off" name="nino" autofocus="autofocus" class="js-search-focus form-control" value="{{ customer.nino }}">
+                                <a href="#" id="resultTrigger" class="button">Search</a>
                             </form>
                         </div>
                     </div>
                 </div>
+                <div class="grid-row">
+                        <div class="column-full">
+                                <div class="panel panel-border-narrow mt1" id="noResults">
+                                        <h2 class="heading-medium">No results found</h2>
+                                        <p>There is no entry for <span class="bold">{{ customer.nino }}</span>.</p>
+                                        <div class="form-group">
+                                                <a class="button button-secondary" href="createCustomer">Create new customer record</a>
+                                        </div>
+                                      </div>
+                            
+                        </div>
+                  
+                          
+                   
+                {% else %}
+                <div class="grid-row">
+                        <div class="column-half">
+                            <div class="search-box-container">
+                                <h1 class="heading-large">Search for customer</h1>
+                                <form action="/customer/find" method="post" class="form" id="search-form">
+                                    <label class="form-hint" for="nino">Enter a National Insurance Number</label>
+                                    <input id="" type="search" autocomplete="off" name="nino" autofocus="autofocus" class="js-search-focus form-control" value="{{ customer.nino }}">
+                                    <button id="" type="submit" class="button" value="Search">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                 {% endif %}   
             </form>
           </div>
 </main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script>
+   
+ $(function() {
+    $("#noResults").css('display','none');
+});
+   
+$('#resultTrigger').click(function () {
+  $('#noResults').css('display','block');
 
+ });
 
+</script>
 
 
 {% endblock %}

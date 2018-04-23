@@ -87,8 +87,3 @@
 </script>
 
 {% endblock %}
-
-{% macro handoverUpdateLink(handover) %}
-{% set queryString = '?id=' + handover.id %}
-<a href="/handover/edit{{queryString}}">Update</a>
-{% endmacro %}
