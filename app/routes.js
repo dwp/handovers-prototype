@@ -72,6 +72,27 @@ router.post('/v2/queue',function (req, res) {
       
       router.post('/v3/find', function (req, res) {
         res.redirect('/v3/customer')
-    })    
+    })  
+    
+    router.post('/v4/queue',function (req, res) {
+      
+        var scenariopicker = req.session.data['scenario']
+      
+        if("queue"  == "agentEditEscalate"){
+          res.redirect('/v4/find')
+        }
+
+
+        if(scenariopicker   == "allocatorEdit"){
+          res.redirect('/v4/allocator-queue')
+        }
+     
+        else {
+          res.redirect('/v4/queue')
+        }
+      
+      }) 
+
+    
 
 module.exports = router;

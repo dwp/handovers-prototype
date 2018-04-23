@@ -12,8 +12,21 @@
             <fieldset>
 
               <legend>
-                <h1 class="heading-medium">Scenarios (recieving)</h1>
+                <h1 class="heading-medium">Benefit Center Agent</h1>
               </legend>
+
+            <!--  <div class="multiple-choice">
+                <input id="radio-inline-1" type="radio" name="scenario" value="caseHeader" {{ 'checked' if data[ 'scenario']==='caseHeader'
+                  else ''}}>
+                <label for="radio-1">Case header alternative</label>
+              </div>
+
+              <div class="multiple-choice">
+                  <input id="radio-inline-1" type="radio" name="scenario" value="caseHeader2" {{ 'checked' if data[ 'scenario']==='caseHeader2'
+                    else ''}}>
+                  <label for="radio-1">Case header alternative 2</label>
+                </div> -->
+
 
               <div class="multiple-choice">
                   <input id="radio-inline-1" type="radio" name="scenario" value="agentClear" {{ 'checked' if data[ 'scenario']==='agentClear'
@@ -48,8 +61,14 @@
               <fieldset>
   
                 <legend>
-                  <h1 class="heading-medium">Scenarios (search)</h1>
+                  <h1 class="heading-medium">Frontline Agent</h1>
                 </legend>
+
+                <div class="multiple-choice">
+                    <input id="radio-inline-5" type="radio" name="scenario" value="createCustomer" {{ 'checked' if data[ 'scenario']==='createCustomer'
+                      else ''}}>
+                    <label for="radio-5">Create customer</label>
+                  </div>
                 <div class="multiple-choice">
                     <input id="radio-inline-4" type="radio" name="scenario" value="agentEditEscalate" {{ 'checked' if data[ 'scenario']==='agentEditEscalate'
                     else ''}}>
