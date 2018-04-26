@@ -93,6 +93,11 @@ router.post('/v2/queue',function (req, res) {
       
       }) 
 
+
+      router.post('/v3/customer', function (req, res) {
+        res.redirect('/v3/customer')
+    })  
+
     
 
 module.exports = router;

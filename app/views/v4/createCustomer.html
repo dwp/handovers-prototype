@@ -2,13 +2,14 @@
 {% block content %}
 {% include "includes/v2/nav.html" %}
 <main id="content" role="main">
+    <form class="form" action="customer" method="get">
     <div class="main-content">
         <div class="grid-row">
             <div class="column-two-thirds">
                 <h1 class="heading-large">
                     Create Customer Record
                     <span class="heading-secondary">AA345678B</span>
-                    <span class="heading-secondary">{{ customer.nino }}</span>
+                    <span class="heading-secondary">{{ data['customer.nino'] }}</span>
                 </h1>
                 <form class="form" action="customer" method="post">
                     <div class="form-group">
@@ -123,21 +124,7 @@
             </div>
         </div>
     </div>
+  </form>
 </main>
-<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
-<script>
 
-  $(function() {
-    $("#type").hide();
-    $("#reason").hide();
-});
-
-$("#benefit").change(function(){
-            $("#type").show();
-    });
-
-    $("#handoverType").change(function(){
-            $("#reason").show();
-    });    
-</script>
 {% endblock %}
