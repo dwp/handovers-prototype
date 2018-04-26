@@ -13,7 +13,7 @@
                             <h1 class="heading-large">Search for customer</h1>
                             <form action="/customer/find" method="post" class="form" id="search-form">
                                 <label class="form-hint" for="nino">Enter a National Insurance Number</label>
-                                <input id="" type="search" autocomplete="off" name="nino" autofocus="autofocus" class="js-search-focus form-control" value="{{ customer.nino }}">
+                                <input type="search" autocomplete="off" name="nino" autofocus="autofocus" class="form-control" value="{{ customer.nino }}">
                                 <a href="#" id="resultTrigger" class="button">Search</a>
                             </form>
                         </div>
@@ -23,7 +23,7 @@
                         <div class="column-full">
                                 <div class="panel panel-border-narrow mt1" id="noResults">
                                         <h2 class="heading-medium">No results found</h2>
-                                        <p>There is no entry for <span class="bold">{{ customer.nino }}</span>.</p>
+                                        <p>There is no entry for <span class="bold" id="displayNino">{{ customer.nino }}</span>.</p>
                                         <div class="form-group">
                                                 <a class="button button-secondary" href="createCustomer">Create new customer record</a>
                                         </div>
@@ -52,6 +52,9 @@
 </main>
 <script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
 <script>
+
+
+ 
    
  $(function() {
     $("#noResults").css('display','none');
@@ -59,9 +62,10 @@
    
 $('#resultTrigger').click(function () {
   $('#noResults').css('display','block');
+  var value = $('input').val();
 
+    $("#displayNino").text(value);
  });
-
 </script>
 
 
