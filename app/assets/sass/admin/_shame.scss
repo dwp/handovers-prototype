@@ -410,6 +410,31 @@ table td {
 
 }
 
+.availability{
+  border:1px solid #555;
+  //background:#666;
+  padding:5px 35px 5px 10px;
+  //border-radius:20px;
+  position:relative;
+   
+  &:after{
+    content:'';
+    background:$button-colour;
+    width: 15px;
+    height:15px;
+    border-radius:50%;
+    position: absolute;
+    right:9px;
+    top:8px;
+  }
+
+  &.warning:after{
+    background:$error-colour;
+  }
+ 
+
+}
+
 
 
 

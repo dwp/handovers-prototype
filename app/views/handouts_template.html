@@ -91,6 +91,7 @@
     <div id="global-app-error" class="app-error hidden"></div>
 
     <script src="{{ asset_path }}javascripts/govuk-template.js?0.22.1"></script>
+    <script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
     <script>
 
     $(function(){
@@ -102,8 +103,27 @@
             if($this.attr('href').indexOf(current) !== -1){
                 $(this).parents('li').addClass('selected');
             }
-        });
+        });    
+
+  
+
     });
+
+    
+
+    $( ".availability" ).click(function(e) {
+      e.preventDefault()
+      var $this = $(this);
+      $this.toggleClass('warning');
+
+  if($this.hasClass('warning')){
+        $this.text('Not available');         
+    } else {
+        $this.text('Available');
+    }
+});
+
+
 
 
 </script>

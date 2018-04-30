@@ -18,14 +18,22 @@
                  </div>
                  <div class="form-group">
                     {% include "includes/v2/selectBenefit.html" %}
-                    <div class="panel panel-border-narrow type" id="type">
+                    <div class="panel panel-border-narrow" id="subBen">
+                       {% include "includes/v2/selectSubBenefit.html" %}
+                    <div class="panel panel-border-narrow " id="subType">
                       {% include "includes/v2/selectHandoverType.html" %}
-                      <div class="panel panel-border-narrow reason" id="reason"> {% include "includes/v2/selectHandoverReason.html" %}</div>
+                      <div class="panel panel-border-narrow" id="subReason"> {% include "includes/v2/selectHandoverReason.html" %}</div>
                     </div>
                   </div>
+                   <div class="panel panel-border-narrow " id="type">
+                     {% include "includes/v2/selectHandoverType.html" %}
+                     <div class="panel panel-border-narrow" id="reason"> {% include "includes/v2/selectHandoverReason.html" %}</div>
+                   </div>
+                 </div>
+                 
                 
                             <div class="form-group">
-                                    <fieldset>
+                                    <fieldset class="inline">
                                 
                                       <legend>
                                         <h1 class="heading-small">
@@ -45,7 +53,7 @@
                                     </fieldset>
                                   </div>
                                   <div class="form-group">
-                                      <fieldset>
+                                      <fieldset class="inline">
                       
                                           <h1 class="heading-small">
                                             Recieving office type
@@ -53,12 +61,12 @@
                                         </legend>
                       
                                         <div class="multiple-choice">
-                                          <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Benefit" checked="checked">
-                                          <label for="radio-inline-1">Benefit office</label>
+                                          <input id="radio-inline-3" type="radio" name="radio-inline-group" value="Benefit" checked="checked">
+                                          <label for="radio-inline-3">Benefit office</label>
                                         </div>
                                         <div class="multiple-choice">
-                                          <input id="radio-inline-2" type="radio" name="radio-inline-group" value="Jobcentre">
-                                          <label for="radio-inline-2">Jobcentre</label>
+                                          <input id="radio-inline-4" type="radio" name="radio-inline-group" value="Jobcentre">
+                                          <label for="radio-inline-4">Jobcentre</label>
                                         </div>
                                       </fieldset>
                                     </div>  
@@ -75,17 +83,43 @@
 <script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
 <script>
 
-  $(function() {
+
+  $(function(){
     $("#type").hide();
     $("#reason").hide();
-});
+    $("#subBen").hide();
+    $("#subType").hide();
+    $("#subReason").hide();
 
-$("#benefit").change(function(){
-            $("#type").show();
-    });
+    // We can use the change(); function to watch the state of the select box and run some conditional logic every time it's changes to hide or show the second select box
 
+  $('#benefit').change(function(){
+    if( $("#SF").is(':selected') ){
+      $("#subBen").show();
+      $("#type").hide();
+    }else{
+   
+   $("#type").show();
+   $("#subBen").hide();
+   $("#reason").hide();
+   $("#subType").hide();
+   $("#subReason").hide();
+    }
+  });
+
+  $("#type").change(function(){
+            $("#reason").val('select').show();
+    }); 
+
+
+    $("#subBenefit").change(function(){
+            $("#subType").show();
+            $("#subReason").hide();
+    });   
     $("#handoverType").change(function(){
-            $("#reason").show();
-    });    
+            $("#subReason").show();
+    });   
+
+});
 </script>
 {% endblock %}
