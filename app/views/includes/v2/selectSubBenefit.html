@@ -1,0 +1,10 @@
+
+            <label class="form-label-bold" for="select-box">Select a Sub benefit</label>
+            <select class="select form-control form-control-1-2" name="benefit" id="subBenefit">{{ data['SubBenefit'] }}
+                <option value="" id="subBenSelect">Select</option>
+                <option value="ESA" id="ben-1" {{ 'selected' if data.benefit==='ESA' else ''}}>Sub ben 1</option>
+                <option value="IS" id="ben-2" {{ 'selected' if data.benefit==='IS' else ''}}>Sub ben 2</option>
+                <option value="JSA" id="ben-3" {{ 'selected' if data.benefit==='JSA' else 'selected'}}>Sub ben 3</option>
+                <option value="UC" id="ben-4" {{ 'selected' if data.benefit==='UC' else ''}}>Sub ben 4</option>
+                <option value="HB" id="ben-5" {{ 'selected' if data.benefit==='HB' else ''}}>Sub ben 5</option>
+            </select>

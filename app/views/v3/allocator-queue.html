@@ -112,7 +112,7 @@
 
                         <tr>
                             <td>
-                                <span class="bold">56mins</span>
+                                <span class="bold">45 mins</span>
                             </td>
                             <td>
 
@@ -132,12 +132,7 @@
                             </td>
                             <td>
 
-                                {% if data['agent'] %}
-                                <a href="queue.html">Imogen Johnson (2)</a>
-                                {% else %}
-                                <a href="queue.html">Imogen Johnson (1)</a>
-                                {% endif %}
-
+                           Unallocated
 
 
                             </td>
@@ -211,7 +206,11 @@
                                     <span class="form-hint"> 11:06</span>
                                 </td>
                                 <td>
-                                    <a href="/v2/queue.html">Grant Hopper (2)</a>
+                                    <a href="/v2/queue.html">      {% if data['agent'] %}
+                                        <a href="queue.html">Imogen Johnson (2)</a>
+                                        {% else %}
+                                        <a href="queue.html">Imogen Johnson (1)</a>
+                                        {% endif %}</a>
                                 </td>
     
                                 <td>Ongoing appeal</td>

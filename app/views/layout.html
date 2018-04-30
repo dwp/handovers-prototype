@@ -27,14 +27,18 @@
     </nav> -->
     <nav id="sign-out-menu">
       <ul>
-
-
-       <!-- <li>
-              <a href="" style="color:#2b8cc4" class="availability">set availabilty</a>
-              <span class="badge badge-success available">AVAILABLE</span>
-              <span class="badge not-available" style="display:none">NOT AVAILABLE</span> |
-            </li> -->
-        <li><a class="bold-nav-link" href="/toggle_user_role">{{ data.user.firstName }} {{ data.user.lastName }}</a></li>
+        <li><a class="bold-nav-link" href="/toggle_user_role">  {% if data['scenario'] === 'allocatorEdit' %}
+          Alex Black
+          {% else %}
+          Callum Dalton
+          {% endif %}
+          <!--{{ data.user.firstName }} {{ data.user.lastName }}--></a> |</li>
+        <li>
+          <a href="">  Set location  </a>|
+        </li>
+       <li>
+              <a href="" class="availability">Available <span class="visually-hidden">Set your availability to not Available</span></a>
+      </li>
       </ul>
     </nav>
   </div>

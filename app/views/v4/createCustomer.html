@@ -57,38 +57,30 @@
                     </div>
 
                     <div class="form-group">
-                        <legend class="form-label-bold">Email address</legend>
-                        <div>
-                            <input type="email" class="form-control" id="emailAddr" name="emailAddr" value="">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <legend class="form-label-bold">Welsh speaker ?</legend>
-                        <fieldset>
-                            <div class="multiple-choice">
-                                <input id="welshSpeaker_no" type="radio" name="welsh-speaker"  value="No" checked="checked">
-                                <label for="welshSpeaker_no">No</label>
-                            </div>
+                        <fieldset class="inline">
                             <div class="multiple-choice">
                                 <input id="welshSpeaker_yes" type="radio" name="welsh-speaker"  value="Yes">
                                 <label for="welshSpeaker_yes">Yes</label>
                             </div>
+                            <div class="multiple-choice">
+                                    <input id="welshSpeaker_no" type="radio" name="welsh-speaker"  value="No">
+                                    <label for="welshSpeaker_no">No</label>
+                                </div>
                         </fieldset>
                     </div>
 
                     <div class="form-group">
                         <legend class="form-label-bold">Translator required ?</legend>
-                        <fieldset>
-                            <div class="multiple-choice">
-                                <input id="translator-no" type="radio" name="translator" value="No" checked="checked">
-                                <label for="translator-no">No</label>
-                            </div>
+                        <fieldset class="inline">
                             <div class="multiple-choice" data-target="language-gp">
                                 <input id="translator-yes" type="radio" name="translator"  value="Yes" aria-controls="language-gp" aria-expanded="false">
                                 <label for="translator-yes">Yes</label>
                             </div>
-                            
+                            <div class="multiple-choice">
+                                    <input id="translator-no" type="radio" name="translator" value="No">
+                                    <label for="translator-no">No</label>
+                                </div>
                             
                             
                                 <div class="panel panel-border-narrow js-hidden" id="language-gp" aria-hidden="true">
@@ -103,15 +95,15 @@
 
                     <div class="form-group">
                         <legend class="form-label-bold">Does the customer have a representative ?</legend>
-                        <fieldset>
-                            <div class="multiple-choice">
-                                <input id="approved-rep-no" type="radio" name="approved-rep"  value="No" checked="checked">
-                                <label for="approved-rep-no">No</label>
-                            </div>
+                        <fieldset class="inline">
                             <div class="multiple-choice" data-target="approved-rep-group">
                                 <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" aria-controls="approved-rep-group" aria-expanded="false">
                                 <label for="approved-rep-yes">Yes</label>
                             </div>
+                            <div class="multiple-choice">
+                                    <input id="approved-rep-no" type="radio" name="approved-rep"  value="No">
+                                    <label for="approved-rep-no">No</label>
+                                </div>
                         </fieldset>
                     </div>
 

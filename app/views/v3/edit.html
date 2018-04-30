@@ -373,7 +373,7 @@
                 <p>Called customer to inform them they need to provide there last two payslips, but customer didn't answer.</p>
               </div>
               <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:15</p>
-              <p class="timeline_datetime font-xsmall">Birkenhead Service Centre</p>
+              <p class="timeline_datetime font-xsmall">Callum Dalton, Birkenhead Service Centre</p>
             </div>
 
             <span class="line"></span>
@@ -414,6 +414,57 @@
                 <p>JSA / maintenance / Change of address</p>
               </div>
               <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
+              <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
+            </div>
+
+            {% elif data['scenario'] === 'allocatorEdit' %}
+
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Note</h3>
+              <div class="panel panel-border-wide alert-default">
+                <p>Escalated due to customer contact and not being called back within the 3 hours as stated </p>
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 12:40pm</p>
+              <p class="timeline_datetime font-xsmall">Julie Smith, Hyde Benefit Service Centre</p>
+            </div>
+
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Escalated</h3>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 12:40pm</p>
+              <p class="timeline_datetime font-xsmall">Julie Smith, Hyde Benefit Service Centre</p>
+            </div>
+
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Allocated to</h3>
+              <div class="panel panel-border-wide alert-success">
+                <p>Callum Dalton</p>
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:15</p>
+              <p class="timeline_datetime font-xsmall">Birkenhead Service Centre</p>
+            </div>
+
+
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Sent to</h3>
+              <div class="panel panel-border-wide alert-success">
+                <p>Birkenhead Benefit Centre</p>
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
+              <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
+            </div>
+
+
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Handover created</h3>
+              <div class="panel panel-border-wide alert-success">
+                <p>JSA / New Claim / Payment query</p>
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33am</p>
               <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
             </div>
             {% else %}

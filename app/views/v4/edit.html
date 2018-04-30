@@ -146,23 +146,24 @@
               </div>
 
               {% endif %}
-              <h2 class="heading-medium">Description</h2>
+              <h2 class="heading-small">Description</h2>
               <!--<p class="lede">{{ data['description'] }}</p>-->
               {% if data['scenario'] === 'agentClear' %}
               <p>Change of address</p>
               {% else %}
               <p>Payment due last week, customer checked account and payment is still outstanding</p>
               {% endif %}
-
-              <label class="form-label-bold" for="handover-note">Add a note</label>
+              <div class="form-group">
+              <label class="heading-small" for="handover-note">Add a note</label>
 
               <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note" rows="6">{{ data['handover-note'] }}</textarea>
+              </div>
               <div class="form-group">
 
                   <fieldset>
                       
                 <legend>
-                  <h1 class="heading-medium">Set status</h1>
+                  <h1 class="form-label-bold">Set status</h1>
                 </legend>
 
                 {% if data['callbackRequired'] === 'Yes' or data[ 'scenario']==='agentEditEscalate' or data[ 'scenario']==='agentEditEscalate'
@@ -192,7 +193,7 @@
                     <label for="radio-2">Call back required</label>
                   </div>
                   <div class="panel panel-border-narrow js-hidden" id="callbackRequired">
-                      <div class="panel warning alt">
+                      <div class="panel default alt">
                           <p class="bold">First call pending</p>
                         </div>
                     {% include "includes/v2/setStatusFirstCall.html" %}
@@ -204,11 +205,38 @@
                     <label for="radio-3">Completed clear handover</label>
                   </div>
 
+                
+                  
+             
+              
+
                 {% endif %}
               </fieldset>
 
 
               </div>
+
+              <div class="form-group">
+                <fieldset class="inline">
+              
+                  <legend>
+                    <h1 class="form-label-bold">
+                      Was this an inappropriate handover?
+                    </h1>
+                  </legend>
+              
+                  <div class="multiple-choice">
+                    <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
+                    <label for="radio-inline-1">Yes</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No" checked>
+                    <label for="radio-inline-2">No</label>
+                  </div>
+              
+                </fieldset>
+              </div>
+
               {% if data['scenario'] === 'agentClear' %}
               <a href="#" id="clear" class="button">Save and update</a>
 
@@ -424,6 +452,5 @@
     </div>
 </main>
 
-<script src="/public/javascripts/tabs.js"></script>
 
 {% endblock %}
