@@ -40,7 +40,7 @@
 
         </div>
       </div>
-      <h1 class="heading-large">Update</h1>
+      <!--<h1 class="heading-large">Update</h1>-->
       {% include "includes/v2/statusBar.html" %}
      <!-- <div class="grid-row">
           <div class="column-one-third mt1">
@@ -151,13 +151,39 @@
               {% if data['scenario'] === 'agentClear' %}
               <p>Change of address</p>
               {% else %}
-              <p>Payment due last week, customer checked account and payment is still outstanding</p>
+              <p>Change of address, customer is moving from sheffield to London</p>
               {% endif %}
               <div class="form-group">
               <label class="heading-small" for="handover-note">Add a note</label>
 
               <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note" rows="6">{{ data['handover-note'] }}</textarea>
               </div>
+              <h2 class="heading-small">Attachments</h2>
+              <ul class="list">
+                  <li><a href="/public/images/sort_both.png">Change of address form <span class="font-secondary">56KB</span></a></li>
+              </ul>
+
+              <h2 class="heading-small">Upload document</h2>
+              <form class="form" action="payment-date" method="post">
+                  
+                          <div class="form-group">
+                            <label class="form-label visuallyhidden" for="file-input">
+                              Upload file
+                            </label>
+                            <input type="file" name="uploaded-file" id="selectedFile" style="display: none;" class="js-upload">
+                            <a class="button button-secondary" onclick="document.getElementById('selectedFile').click();">Choose file</a>
+                          </div>
+                  
+                          <p class="js-upload_filename" style="display: none"></p>
+                  
+                          <div class="panel panel-border-wide">
+                            <p>File size limit: 4MB</p>
+                            <p>File types accepted: PDF, CSV, Word, XML, HTML</p>
+                          </div>
+                  
+                        
+                  
+                        </form>
               <div class="form-group">
 
                   <fieldset>
@@ -329,115 +355,22 @@
               <p class="timeline_datetime font-xsmall">Calumn Dalton, Hyde Benefit Service Centre</p>
             </div>
 
-            {% endif %} {% if data['handover-note-reallocate'] %}
+            {% endif %} 
+      
 
 
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Note</h3>
-              <div class="panel panel-border-wide alert-default">
-                <p>{{ data['handover-note-reallocate'] }}</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:05</p>
-              <p class="timeline_datetime font-xsmall">Calumn Dalton, Hyde Benefit Service Centre</p>
-            </div>
-
-            {% endif %} {% if data['scenario'] === 'agentEditEscalate' %}
-
-
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Allocated to</h3>
-              <div class="panel panel-border-wide alert-success">
-                <p>Callum Dalton</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:15</p>
-              <p class="timeline_datetime font-xsmall">Birkenhead Service Centre</p>
-            </div>
-
-
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Sent to</h3>
-              <div class="panel panel-border-wide alert-success">
-                <p>Birkenhead Benefit Centre</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
-              <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
-            </div>
+   
 
             <span class="line"></span>
             <div class="timeline__event">
               <h3 class="heading-small">Handover created</h3>
               <div class="panel panel-border-wide alert-success">
-                <p>JSA / maintenance / Change of address</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
-              <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
-            </div>
-            {% elif data['scenario'] === 'customerUpdate' %}
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Note</h3>
-              <div class="panel panel-border-wide alert-default">
-                <p>Called customer to inform them they need to provide there last two payslips, but customer didn't answer.</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:15</p>
-              <p class="timeline_datetime font-xsmall">Birkenhead Service Centre</p>
-            </div>
-
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Allocated to</h3>
-              <div class="panel panel-border-wide alert-success">
-                <p>Callum Dalton</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:15</p>
-              <p class="timeline_datetime font-xsmall">Birkenhead Service Centre</p>
-            </div>
-
-
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Sent to</h3>
-              <div class="panel panel-border-wide alert-success">
-                <p>Birkenhead Benefit Centre</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
-              <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
-            </div>
-
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Handover created</h3>
-              <div class="panel panel-border-wide alert-success">
-                <p>JSA / maintenance / Change of address</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
-              <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
-            </div>
-            {% elif data['scenario'] === 'agentClear' %}
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Handover created</h3>
-              <div class="panel panel-border-wide alert-success">
-                <p>JSA / maintenance / Change of address</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
-              <p class="timeline_datetime font-xsmall">Bobby Brown, Hyde Benefit Service Centre</p>
-            </div>
-            {% else %}
-
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Handover created</h3>
-              <div class="panel panel-border-wide alert-success">
-                <p>JSA / New claim / Payment query</p>
+                <p>IS / Maintenance / Change of address</p>
               </div>
               <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
               <p class="font-xsmall timeline_datetime">Bobby Brown, Hyde Benefit Service Centre</p>
             </div>
-            {% endif %}
+          
 
 
 

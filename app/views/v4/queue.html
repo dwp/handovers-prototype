@@ -51,7 +51,7 @@
                         <td><span class="bold">2 hours 10mins</span></td>        
                         <td><span class="font-small">Ian Jackson</span><br><span class="secondary-color">AA345678B</span></td>  
                         <td>{% include "includes/v2/date.html" %}<br><span class="secondary-color">11:06am</span></td>
-                            <td>JSA</td>
+                            <td>IS</td>
                                 <td>Ongoing appeal</td>
                             <td>In progress</td>
                             <td><a href="/v2/edit">View and Update</a></td>
@@ -65,13 +65,13 @@
                                         {% if data['benefit'] %}   
                                         <td>{{ data['benefit'] }}</td>
                                         {% else %}
-                                        <td>JSA</td>
+                                        <td>IS</td>
                                         {% endif %}
                                 
                                         {% if data['handoverType'] %}
                                             <td>{{ data['handoverType'] }}</td>
                                         {% else %}
-                                            <td>New claim</td>
+                                            <td>Maintenance</td>
                                         {% endif %}
                                         {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' %}
                                         <td>First call pending</td>
@@ -80,7 +80,7 @@
                                         {% else %}
                                         <td>Allocated</td>
                                         {% endif %}
-                                        <td><a href="edit">Veiw and update</a></td>
+                                        <td><a href="edit">View and update</a></td>
                                     </tr>      
     
                     <tr>
@@ -102,14 +102,14 @@
                                     {% if data['benefit'] %}   
                                     <td>{{ data['benefit'] }}</td>
                                     {% else %}
-                                    <td>JSA</td>
+                                    <td>IS</td>
                                     {% endif %}
                             
                                     {% if data['handoverType'] %}
                                         <td>{{ data['handoverType'] }}</td>
                                     {% else %}
                                     {% if data['scenario'] === 'agentClear' %}
-                                    <td>New claim</td>
+                                    <td>Maintenance</td>
                                     {% endif %}
                                     <td>Maintenance</td>   
                                     {% endif %}
@@ -120,14 +120,14 @@
                                     {% else %}
                                     <td>First call pending</td>
                                     {% endif %}
-                                    <td><a href="edit">Veiw and update</a></td>
+                                    <td><a href="edit">View and update</a></td>
                                 </tr>      
 
                 <tr>
                     <td><span class="bold">2 hours 10mins</span></td>   
                     <td><span class="font-small">Ian Jackson</span><br><span class="secondary-color">AA345678B</span></td>  
                         <td>{% include "includes/v2/date.html" %}<br><span class="secondary-color">11:06am</span></td>
-                            <td>JSA</td>
+                            <td>IS</td>
                                 <td>Ongoing appeal</td>
                             <td>In progress</td>
                             <td><a href="edit">View and Update</a></td>
@@ -140,13 +140,13 @@
                                     {% if data['benefit'] %}   
                                     <td>{{ data['benefit'] }}</td>
                                     {% else %}
-                                    <td>JSA</td>
+                                    <td>IS</td>
                                     {% endif %}
                             
                                     {% if data['handoverType'] %}
                                         <td>{{ data['handoverType'] }}</td>
                                     {% else %}
-                                        <td>New claim</td>
+                                        <td>Maintenance</td>
                                     {% endif %}
                                     {% if data['callbackRequired']==='Yes' and data['callBackStatus'] !== 'First call failed - engaged' or data[ 'scenario']==='agentChangeStatus'and data['callBackStatus'] !== 'First call failed - engaged' %}
                                     <td>First call pending</td>
@@ -155,14 +155,14 @@
                                     {% else %}
                                     <td>Allocated</td>
                                     {% endif %}
-                                    <td><a href="edit">Veiw and update</a></td>
+                                    <td><a href="edit">View and update</a></td>
                                 </tr>      
 
                 <tr>
                     <td><span class="bold">2 hours 10mins</span></td>   
                     <td><span class="font-small">Ian Jackson</span><br><span class="secondary-color">AA345678B</span></td>  
                         <td>{% include "includes/v2/date.html" %}<br><span class="secondary-color">11:06am</span></td>
-                            <td>JSA</td>
+                            <td>IS</td>
                                 <td>Ongoing appeal</td>
                             <td>Allocated</td>
                             <td><a href="edit">View and Update</a></td>

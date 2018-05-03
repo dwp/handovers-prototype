@@ -5,8 +5,11 @@
         <form class="form" action="queue" method="post">
             <div class="grid-row">
                 <div class="column-full">
-                    <h3 class="heading-medium">Handovers</h3>
-                    <div>
+                    <h2 class="heading-medium">Handovers</h2>
+                   {% if data[ 'scenario']==='createCustomer'%}
+
+                   {% else %}
+                   
                         <table>
                             <thead>
                                 <tr>
@@ -72,11 +75,9 @@
 
                             </tbody>
                         </table>
-                    </div>
+                       {% endif %}
                 </div>
             </div>
-            <br>
-            <br>
             <div class="grid-row">
                 <div class="column-half">
                         <a href="create" class="button">Create handover</a><br />

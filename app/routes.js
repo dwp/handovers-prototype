@@ -98,6 +98,27 @@ router.post('/v2/queue',function (req, res) {
         res.redirect('/v3/customer')
     })  
 
+    router.post('/v4/find', function (req, res) {
+     
+      var scenariopicker = req.session.data['scenario']
+
+      if("find" !== "createCustomer"){
+        res.redirect('/v4/find')
+      }
+
+      else {
+        res.redirect('/v4/createCustomer')
+      }
+  })  
+
+  router.post('/v4/customer', function (req, res) {
+    res.redirect('/v4/createCustomer')
+}) 
+
+  router.post('/v4/createCustomer', function (req, res) {
+    res.redirect('/v4/customer')
+})  
+
     
 
 module.exports = router;

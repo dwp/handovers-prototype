@@ -275,22 +275,18 @@ table td {
   
 
   &.alt{
-    background:darken($highlight-colour,1%);
-    color:$text-colour;
 
-    &.alt2{
-      background:transparent;
-      color:$text-colour;
-      border-bottom:1px solid $border-colour;
-    }
-    
+    p {
+      font-weight:normal;
+      font-size:19px;
+      margin:0px;
+    } 
 
-    ul,li{
-      border-color:$border-colour;
-    }
+  li{
+     width:33%;
+     padding:0 15px 0 0;
+     border-right:none;
 
-    summary{
-      color:$link-colour;
     }
   }
 
