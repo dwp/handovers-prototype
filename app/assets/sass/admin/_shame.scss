@@ -124,11 +124,11 @@ caption {
   margin-bottom:30px;
 
   &.alt{
-    background-color:$grey-4;
+    background-color:transparent;
     color: $text-colour;
     margin-top:30px;
+    border:1px solid $border-colour;
     //border: 1px solid $border-colour;
-    border-left:10px solid $light-blue;
     margin-bottom:0px ;
 
     .badge-danger {
@@ -140,7 +140,7 @@ caption {
       @media screen and (min-width:640px){
         .col {
           border-right:1px solid $border-colour;
-          flex:1;
+         // flex:1;
       
           &:last-of-type{
             border:none;
@@ -152,12 +152,27 @@ caption {
 
   .status__body{
     padding:15px 0;
-    display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    
+   // display:flex;
+  //  flex-direction: row;
+  //  flex-wrap: wrap;
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
   }
 
+  p{
+    margin-bottom:0px;
+  }
+
+
+}
+  @media screen and (max-width:640px){
+   h3, p{
+     display:inline;
+     margin:0 5px 5px 0;
+   }
+  }
   .status__header{
     padding:15px;
     background-color: darken($govuk-blue, 10%);
@@ -183,11 +198,18 @@ caption {
  @media screen and (min-width:640px){
   .col {
     border-right:1px solid rgba(#fff, 0.2);
-    flex:1;
+   // flex:1;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   float:left;
+   width:33.333%;
 
     &:last-of-type{
       border:none;
+
     }
+  
 
   }
 }
@@ -199,22 +221,6 @@ caption {
     }
 }
 
-@include media(tablet) {
-  .status .status__body {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    p {
-      margin: 0;
-    }
-
-    .status-extra {
-      font-size: 18px;
-    }
-  }
-}
 
   .button.text {
     background: none;

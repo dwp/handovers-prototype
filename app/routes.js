@@ -77,17 +77,13 @@ router.post('/v2/queue',function (req, res) {
     router.post('/v4/queue',function (req, res) {
       
         var scenariopicker = req.session.data['scenario']
-      
-        if("queue"  == "agentEditEscalate"){
+
+
+        if(scenariopicker   == "createCustomer"){
           res.redirect('/v4/find')
         }
-
-
-        if(scenariopicker   == "allocatorEdit"){
-          res.redirect('/v4/allocator-queue')
-        }
-     
-        else {
+    
+        else{
           res.redirect('/v4/queue')
         }
       
@@ -98,25 +94,22 @@ router.post('/v2/queue',function (req, res) {
         res.redirect('/v3/customer')
     })  
 
-    router.post('/v4/find', function (req, res) {
-     
+    router.post('/v4/customer', function (req, res) {
       var scenariopicker = req.session.data['scenario']
-
-      if("find" !== "createCustomer"){
-        res.redirect('/v4/find')
+      if(scenariopicker  == "createCustomer"){
+        res.redirect('/v4/createCustomer')
       }
 
-      else {
-        res.redirect('/v4/createCustomer')
+      else{
+        res.redirect('/v4/customer')
       }
   })  
 
-  router.post('/v4/customer', function (req, res) {
-    res.redirect('/v4/createCustomer')
-}) 
-
-  router.post('/v4/createCustomer', function (req, res) {
-    res.redirect('/v4/customer')
+  router.post('/v4/create', function (req, res) {
+      res.redirect('/v4/customer')
+  })  
+router.post('/v4/createCustomer', function (req, res) {
+  res.redirect('/v4/customer')
 })  
 
     

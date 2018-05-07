@@ -7,7 +7,7 @@
                 Ian Jackson
                 <!--<span class="heading-secondary">AA345678B</span> -->
             </h1>
-            {% elseif data['scenario'] === 'createCustomer'%}
+            {% elseif data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
             <h1 class="heading-large mt0 mb0">
                 {{ data['firstName'] }} {{ data['lastName'] }}
                 {% if data['approved-rep']=== 'Yes'%}
@@ -30,63 +30,57 @@
             <ul>
             
                 <li>
-                    <p>  Nino:
-                            <span class="">
+                   
+                            
                             {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
-                      AA345678B 
-                      {% elseif data['scenario'] === 'createCustomer'%}
-                      {{ data['nino'] }} 
+                            <p>  Nino:AA345678B </p>
+                      {% elseif data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
+                      <p>  Nino: {{ data['nino'] }} </p>
                     {% else %}
-                    ZZ123456A
+                    <p>  Nino: ZZ123456A </p>
                     {% endif %}
-                    </span>
-                  </p>
                 </li>
               
-                {% if data['scenario'] === 'createCustomer'%}
-                <li>
-    
-                    <p>
-                        Number:
-                        <span class="">
-                        {{ data['prefContNum'] }}
+                {% if data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
+               
+                   <li> <p> Number:{{ data['prefContNum'] }} </p> </li>
                       {% else %}
-                      07854234567
-                      </span>
-
-                    </p>
+                     <li> <p> Number: 07854234567 </p> </li>
+                      
                     
 
-
-                </li>
                 {% endif %}
-                {% if data['scenario'] === 'createCustomer'%}
-                <li>
-                    <p >
-                        Date of birth:
-                        <span class="">
-                            {{ data['birthDay'] }}/{{ data['birthMonth'] }}/ {{ data['birthYear'] }}
+                {% if data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
+            
+                <li><p>Date of birth:   {{ data['birthDay'] }}/{{ data['birthMonth'] }}/ {{ data['birthYear'] }} </p></li>
                           {% else %}
-                          16/12/1960
-                         </span>
-                     
-                    </p>
-                </li>
+                          <li><p>Date of birth:         16/12/1960</p></li>
                 {% endif %}
-                {% if data['scenario'] === 'createCustomer'%}
+                {% if data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
                 <li>
-                       <p>  Postcode:<span class="">
-                        {{ data['postcode'] }}
+                       <p> Postcode:
+                        {{ data['postcode'] }}</p></li>
+                        {% elseif data['scenario'] === 'IS'%}  
+                        <li><p>Poscode:  SW9 0QQ</p></li>
                       {% else %}
-                      S17 3JX
+                      <li><p>Poscode:  BB10 1AA</p></li>
                       </span>
                   </p>
                 </li>
                 {% endif %}
+                {% if data['scenario'] === 'IS' %}
                 <li>
-                        <p> Jobcentre: <span class="">Sheffield South West</span>
+                        <p> Jobcentre: <span class="">Stockwell</span>
                    </p>
                  </li>
+                
+                 {% else %}
+                 <li>
+                        <p> Jobcentre: <span class="">Burnley</span>
+                   </p>
+                 </li>
+                 {% endif %}
+               
                  {% if data['translator'] === 'Yes' %}
                  <li>
                         <p>

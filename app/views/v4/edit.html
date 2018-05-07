@@ -148,10 +148,11 @@
               {% endif %}
               <h2 class="heading-small">Description</h2>
               <!--<p class="lede">{{ data['description'] }}</p>-->
-              {% if data['scenario'] === 'agentClear' %}
-              <p>Change of address</p>
+              {% if data['scenario']==='IS' %}
+              <p>Change of address, customer is moving from London to Burnley, the cusomers new address will be 67 Springfield Rd, Burnley, BB11 3LD. see Attached form</p>
+             
               {% else %}
-              <p>Change of address, customer is moving from sheffield to London</p>
+              <p>STBA Request(short term benifit advance), please see attacted form for more detail</p>
               {% endif %}
               <div class="form-group">
               <label class="heading-small" for="handover-note">Add a note</label>
@@ -159,9 +160,16 @@
               <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note" rows="6">{{ data['handover-note'] }}</textarea>
               </div>
               <h2 class="heading-small">Attachments</h2>
+              {% if data['scenario']==='IS' %}
+              
               <ul class="list">
-                  <li><a href="/public/images/sort_both.png">Change of address form <span class="font-secondary">56KB</span></a></li>
+                  <li><a href="/public/images/sort_both.png">STBA Request form <span class="font-secondary">56KB</span></a></li>
               </ul>
+              {% else %}
+              <ul class="list">
+                  <li><a href="/public/images/sort_both.png">Change of circumstances form  <span class="font-secondary">56KB</span></a></li>
+              </ul>
+              {% endif %}
 
               <h2 class="heading-small">Upload document</h2>
               <form class="form" action="payment-date" method="post">
@@ -176,10 +184,10 @@
                   
                           <p class="js-upload_filename" style="display: none"></p>
                   
-                          <div class="panel panel-border-wide">
+                        <!--  <div class="panel panel-border-wide">
                             <p>File size limit: 4MB</p>
                             <p>File types accepted: PDF, CSV, Word, XML, HTML</p>
-                          </div>
+                          </div> -->
                   
                         
                   
@@ -193,8 +201,8 @@
                 </legend>
 
                 {% if data['callbackRequired'] === 'Yes' or data[ 'scenario']==='agentEditEscalate' or data[ 'scenario']==='agentEditEscalate'
-                or data[ 'scenario']==='agentChangeStatus' or data[ 'scenario']==='customerUpdate' %} {% if data.callBackStatus
-                === 'First call failed - engaged' %}
+                or data[ 'scenario']==='agentChangeStatus' or data[ 'scenario']==='customerUpdate' or data[ 'scenario']==='ESA' %} {% if data.callBackStatus
+                === 'First call failed - engaged'%}
                  
                 {% include "includes/v2/setStatusSecondCall.html" %}
               
@@ -358,19 +366,27 @@
             {% endif %} 
       
 
-
-   
-
+          
             <span class="line"></span>
             <div class="timeline__event">
               <h3 class="heading-small">Handover created</h3>
               <div class="panel panel-border-wide alert-success">
-                <p>IS / Maintenance / Change of address</p>
+                  {% if data['scenario']==='IS' %}
+                  <p>IS / Maintenance / Reporting change of address</p>
+                 
+                  {% else %}
+                  <p>ESA /	STBA - New Claim / STBA Request</p>
+                  
+                  {% endif %}
+                
               </div>
               <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
               <p class="font-xsmall timeline_datetime">Bobby Brown, Hyde Benefit Service Centre</p>
             </div>
           
+           
+
+           
 
 
 
@@ -381,9 +397,18 @@
 
           </div>
         </div>
+        <!-- hidden radio's for prototype scenarios -->
+
+<div class="multiple-choice" style="display:none">
+    <input id="radio-inline-4" type="radio" name="edit" value="editHand" {{ 'checked' if data[ 'edit']==='editHand'
+    else ''}} checked>
+      
+    <label for="radio-4">hidden radio one</label>
+  </div>
     </form>
     </div>
 </main>
+
 
 
 {% endblock %}

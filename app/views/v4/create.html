@@ -9,7 +9,7 @@
                 <h1 class="heading-large">
                     Create
                 </h1>
-                <form class="form" action="customer" method="post">
+                <form class="form" action="create" method="post">
                 <div class="form-group">
                 <label class="heading-small" for="textarea">
                         Description
@@ -73,6 +73,17 @@
                                   <div class="form-group">
                                         <input type="submit" class="button" value="Create">
                                 </div>
+
+                                <div class="multiple-choice" style="display:none">
+                                    <input id="radio-inline-4" type="radio" name="scenario" value="createHand" {{ 'checked' if data[ 'scenario']==='createHand'
+                                    else ''}} checked>
+                                      
+                                    <label for="radio-4">hidden radio one</label>
+                                  </div>
+                                    </form>
+                                    </div>
+                                </main>
+                                
                                 </form>
 
                           

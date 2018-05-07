@@ -1,15 +1,71 @@
 
         <label class="form-label-bold" for="select-box">Select a handover type</label>
-        <select class="form-control form-control-1-2" id="handoverType" name="handoverType">{{ data['handoverType'] }}
+        <select class="form-control form-control-1-2" id="handoverType" name="selectHandoverType">{{ data['selectHandoverType'] }}
           <option value="" id="type1">Select</option>
-          {% if data['scenario'] === 'agentClear' %} 
-          <option value="Maintenace" {{ 'selected' if  data.handoverType === 'Maintenance' else 'selected'}}>Maintenance</option>
+          {% if data['scenario'] === 'IS' %} 
+          <option value="3rd Party Deductions">3rd Party Deductions</option>
+          <option value="Appeal">Appeal</option>
+          <option value="Maintenace">Maintenance</option>
+          <option value="BD Sending Pilot">BD Sending Pilot</option>
+          <option value="Benefit Cap Query">Benefit Cap Query</option>
+          <option value="IS Families">IS Families</option>
+          <option value="Labour Market Decision Making">Labour Market Decision Making</option>
+          <option value="Maintenace" selected>Maintenance</option>
+          <option value="Mandatory Reconsideration">Mandatory Reconsideration</option>
+          <option value="Missing Instrument of Payment (IOP)">Missing Instrument of Payment (IOP)</option>
+          <option value="Mortgages">Mortgages</option>
+          <option value="New Claim">New Claim</option>
+          <option value="Notepad Full">Notepad Full</option>
+          <option value="STBA - Maintenance">STBA - Maintenance</option>
+          <option value="STBA - New Claim">STBA - New Claim</option>
+          <option value="Verbal Explanation">Verbal Explanation</option>
+          <option value="Written Statement of Reasons">Written Statement of Reasons</option>
+
+          {% elseif data['scenario'] === 'ESA' %}
+          <option value="3rd Party Deductions">3rd Party Deductions</option>
+          <option value="Appeal">Appeal</option>
+          <option value="Maintenace">Maintenance</option>
+          <option value="BD Sending Pilot">BD Sending Pilot</option>
+          <option value="Benefit Cap Query">Benefit Cap Query</option>
+          <option value="Hardship">Hardship</option>
+          <option value="Labour Market Decision Making">Labour Market Decision Making</option>
+          <option value="Maintenace">Maintenance</option>
+          <option value="Mandatory Reconsideration">Mandatory Reconsideration</option>
+          <option value="Missing Instrument of Payment (IOP)">Missing Instrument of Payment (IOP)</option>
+          <option value="Mortgages">Mortgages</option>
+          <option value="Sickness">Sickness</option>
+          <option value="Sickness">Sickness</option>
+          <option value="Notepad Full">Notepad Full</option>
+          <option value="SOFFW (JD Use Only)">SOFFW (JD Use Only)</option>
+          <option value="STBA - Maintenance">STBA - Maintenance</option>
+          <option value="STBA - New Claim" selected>STBA - New Claim</option>
+          <option value="Verbal Explanation">Verbal Explanation</option>
+          <option value="Verbal Explanation">WCA</option>
+          <option value="Written Statement of Reasons">Written Statement of Reasons</option>
+          
+          
+          
           {% else %}
-          <option value="New claim" {{ 'selected' if  data.handoverType === 'New claim' else 'selected'}}>New Claim</option>
+          <option value="3rd Party Deductions">3rd Party Deductions</option>
+          <option value="Appeal">Appeal</option>
+          <option value="Maintenace">Maintenance</option>
+          <option value="BD Sending Pilot">BD Sending Pilot</option>
+          <option value="Benefit Cap Query">Benefit Cap Query</option>
+          <option value="Hardship">Hardship</option>
+          <option value="Labour Market Decision Making">Labour Market Decision Making</option>
+          <option value="Maintenace">Maintenance</option>
+          <option value="Mandatory Reconsideration">Mandatory Reconsideration</option>
+          <option value="Missing Instrument of Payment (IOP)">Missing Instrument of Payment (IOP)</option>
+          <option value="Mortgages">Mortgages</option>
+          <option value="Sickness">Sickness</option>
+          <option value="Sickness">Sickness</option>
+          <option value="Notepad Full">Notepad Full</option>
+          <option value="SOFFW (JD Use Only)">SOFFW (JD Use Only)</option>
+          <option value="STBA - Maintenance">STBA - Maintenance</option>
+          <option value="STBA - New Claim">STBA - New Claim</option>
+          <option value="Verbal Explanation">Verbal Explanation</option>
+          <option value="Verbal Explanation">WCA</option>
+          <option value="Written Statement of Reasons">Written Statement of Reasons</option>
           {% endif%}
-          <option value="Claim closure" {{ 'selected' if  data.handoverType === 'Claim closure' else ''}}>Claim closure</option>
-          <option value="Hardship" {{ 'selected' if  data.handoverType === 'Hardship' else ''}} >Hardship</option>
-          <option value="Missing evidence" {{ 'selected' if  data.handoverType === 'Missing evidence' else ''}}>Missing evidence</option>
-          <option value="Reconsiderations" {{ 'selected' if  data.handoverType === 'Reconsiderations' else ''}}>Reconsiderations</option>
         </select>
   
