@@ -1,78 +1,106 @@
-
-{% if data['scenario'] === 'caseHeader' %}
+   
 <div class="case-header-container alt">
-{% elseif data['scenario'] === 'caseHeader2'%} 
-<div class="case-header-container alt alt2">
-{% else %}    
-<div class="case-header-container">
-{% endif %}
+
         <div class="case-header">
             {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
             <h1 class="heading-large mt0 mb0">
                 Ian Jackson
                 <!--<span class="heading-secondary">AA345678B</span> -->
             </h1>
+            {% elseif data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
+            <h1 class="heading-large mt0 mb0">
+                {{ data['firstName'] }} {{ data['lastName'] }}
+                {% if data['approved-rep']=== 'Yes'%}
+                <br>
+                <span class="badge badge-light">Approved representative</span>
+                {% endif %}
+            </h1>
+          
             {% else %}
-    
             <h1 class="heading-large mt0 mb0">
                 Christine Dixon
                 <!--<span class="heading-secondary">AA345678B</span> -->
             </h1>
-    
+           
             {% endif %}
+            <a href="createCustomer" class="font-xsmall">Update customer details</a>
         </div>
     
         <div class="case-body">
             <ul>
+            
                 <li>
-                    <h3>Nino </h3>
-                    <p>
-                    {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
-                      AA345678B
+                   
+                            
+                            {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
+                            <p>  Nino:AA345678B </p>
+                      {% elseif data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
+                      <p>  Nino: {{ data['nino'] }} </p>
                     {% else %}
-                    ZZ123456A
+                    <p>  Nino: ZZ123456A </p>
                     {% endif %}
+                </li>
+              
+                {% if data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
+               
+                   <li> <p> Number:{{ data['prefContNum'] }} </p> </li>
+                      {% else %}
+                     <li> <p> Number: 07854234567 </p> </li>
+                      
+                    
+
+                {% endif %}
+                {% if data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
+            
+                <li><p>Date of birth:   {{ data['birthDay'] }}/{{ data['birthMonth'] }}/ {{ data['birthYear'] }} </p></li>
+                          {% else %}
+                          <li><p>Date of birth:         16/12/1960</p></li>
+                {% endif %}
+                {% if data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
+                <li>
+                       <p> Postcode:
+                        {{ data['postcode'] }}</p></li>
+                        {% elseif data['scenario'] === 'IS'%}  
+                        <li><p>Poscode:  SW9 0QQ</p></li>
+                      {% else %}
+                      <li><p>Poscode:  BB10 1AA</p></li>
+                      </span>
                   </p>
                 </li>
+                {% endif %}
+                {% if data['scenario'] === 'IS' %}
                 <li>
-    
-                    <h3>Telephone </h3>
-                    <p>01234 567891</p>
-                </li>
-                <li>
-                    <h3>Date of birth </h3>
-                    <p >16/12/1960</p>
-                </li>
-                <li>
-                    <h3>Postcode </h3>
-                    <p>S17 3JX</p>
-                </li>
+                        <p> Jobcentre: <span class="">Stockwell</span>
+                   </p>
+                 </li>
+                
+                 {% else %}
+                 <li>
+                        <p> Jobcentre: <span class="">Burnley</span>
+                   </p>
+                 </li>
+                 {% endif %}
+               
+                 {% if data['translator'] === 'Yes' %}
+                 <li>
+                        <p>
+                                Tanslator required: <span class="">{{ data['language'] }} </span>
+                                
+                   </p>
+                 </li>
+                 {% endif %}
+
+                 {% if data['welsh-speaker'] === 'Yes' %}
+                 <li>
+                        <p>
+                            Welsh speaker
+                                
+                   </p>
+                 </li>
+                 {% endif %}
+                
             </ul>
-    
-            <details>
-    
-                <summary>
-                    <span class="summary">More customer details</span>
-                </summary>
-    
-                <ul>
-                    <li>
-                        <h3>Jobcenter </h3>
-                        <p>Sheffield South West</p>
-                    </li>
-                 
-                    
-                   <!-- <li>
-                        <h3>Translator required</h3>
-                        <p>No</p>
-                    </li>
-                    <li>
-                        <h3>Welsh speaker ?</h3>
-                        <p>No</p>
-                    </li> -->
-                </ul>
-                <a href="" class="button button-secondary mt1 mb1">Amend customer details</a>
-            </details>
+            
         </div>
         {% if data['scenario'] === 'allocatorEdit' %}
         <div class="case-footer">

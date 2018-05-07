@@ -1,12 +1,28 @@
 
 
             <label class="form-label-bold" for="select-box">Select a benefit</label>
-            <select class="select form-control form-control-1-2" name="benefit" id="benefit">{{ data['benefit'] }}
+            <select class="select form-control form-control-1-2" name="selectBenefit" id="benefit">{{ data['selectBenefit'] }}
                 <option value="" id="benSelect">Select</option>
-                <option value="ESA" id="ben-1" {{ 'selected' if data.benefit==='ESA' else ''}}>Employment &amp; Support Allowance [ESA]</option>
-                <option value="IS" id="ben-2" {{ 'selected' if data.benefit==='IS' else ''}}>Income Support [IS]</option>
-                <option value="JSA" id="ben-3" {{ 'selected' if data.benefit==='JSA' else 'selected'}}>Jobseekers Allowance [JSA]</option>
-                <option value="UC" id="ben-4" {{ 'selected' if data.benefit==='UC' else ''}}>Universal Credit [UC]</option>
-                <option value="HB" id="ben-5" {{ 'selected' if data.benefit==='HB' else ''}}>Housing Benefit [HB]</option>
-                <option value="SF" id="SF" {{ 'selected' if data.benefit==='SF' else ''}}>Social Fund [SF]</option>
+                {% if data['scenario']==='IS' %}
+                <option value="ESA" id="ben-1" {{ 'selected' if data.selectBenefit==='ESA' else ''}}>Employment &amp; Support Allowance [ESA]</option>
+                <option value="IS" id="ben-2" {{ 'selected' if data.selectBenefit==='IS' else 'selected'}}>Income Support [IS]</option>
+                {% elseif data['scenario']==='ESA' %}
+        
+                <option value="ESA" id="ben-1" {{ 'selected' if data.selectBenefit==='ESA' else 'selected'}}>Employment &amp; Support Allowance [ESA]</option>
+                <option value="IS" id="ben-2" {{ 'selected' if data.selectBenefit==='IS' else ''}}>Income Support [IS]</option>
+                
+                {% else %}
+                <option value="ESA" id="ben-1" {{ 'selected' if data.selectBenefit==='ESA' else ''}}>Employment &amp; Support Allowance [ESA]</option>
+                <option value="IS" id="ben-2" {{ 'selected' if data.selectBenefit==='IS' else ''}}>Income Support [IS]</option>  
+              
+                {% endif %}
+                <option value="DLA - Adult" id="ben-5" {{ 'selected' if data.selectBenefit==='HB' else ''}}>[DLA - Adult]</option>
+                <option value="DLA - Child" id="ben-5" {{ 'selected' if data.selectBenefit==='HB' else ''}}>[DLA - Child]</option>
+                <option value="JSA" id="ben-3" {{ 'selected' if data.selectBenefit==='JSA' else ''}}>Jobseekers Allowance [JSA]</option>
+                <option value="UC" id="ben-4" {{ 'selected' if data.selectBenefit==='UC' else ''}}>Universal Credit [UC]</option>
+                <option value="IB" id="ben-5" {{ 'selected' if data.selectBenefit==='HB' else ''}}>[IB]</option>
+                <option value="B(IS) Reassessment" id="ben-5" {{ 'selected' if data.selectBenefit==='HB' else ''}}>B(IS) Reassessment</option>
+                <option value="JEL" id="ben-5" {{ 'selected' if data.selectBenefit==='HB' else ''}}>[JEL]</option>
+                <option value="MA" id="ben-5" {{ 'selected' if data.selectBenefit==='HB' else ''}}>[MA]</option>
+                <option value="SF" id="SF" {{ 'selected' if data.selectBenefit==='SF' else ''}}>Social Fund [SF]</option>
             </select>
