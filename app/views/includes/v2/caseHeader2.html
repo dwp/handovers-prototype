@@ -1,11 +1,6 @@
 
-{% if data['scenario'] === 'caseHeader' %}
+  
 <div class="case-header-container alt">
-{% elseif data['scenario'] === 'caseHeader2'%} 
-<div class="case-header-container alt alt2">
-{% else %}    
-<div class="case-header-container">
-{% endif %}
         <div class="case-header">
             {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
             <h1 class="heading-large mt0 mb0">

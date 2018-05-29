@@ -46,8 +46,8 @@
           </h1>
           {% endif %}
           <a href="customer" class="link-back mt0 mb1">Customer details</a>
-          <div class="status">
-            {% if data['scenario'] === 'allocatorEdit' %}
+          <div class="status alt2">
+            {% if data['scenario'] === 'customerUpdate' %}
             <div class="status__header">
               <h3>Agent:</h3>
               <p class="bold  mt0">Callum Dalton</p>
@@ -493,6 +493,39 @@
     </div>
 </main>
 
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script src="/public/javascripts/tabs.js"></script>
+<script>
+// as JS is working, add 'tabs' class, which will style tabs and allow taken from https://home-office-digital-patterns.herokuapp.com/components/tabs
+// functionality
+$('.js-tabs').addClass('tabs');
 
+// hide all of the tab content for now
+$('.tab-content').hide();
+//show the first tab and content
+$('.tabs').each(function(){
+  $(this).find('.tab-content:first').show();
+  $(this).find('ul li:first').addClass('active');
+});
+
+// click function for tabs
+$('.tabs__link').click(function(e){
+  e.preventDefault();
+
+  var tabs = $(this).parents('.tabs');
+  var link = $(this);
+  var currentTab = link.attr('href');
+
+  // remove active class from nav and add to newly selected tab
+  tabs.find('li').removeClass('active');
+  link.parent('li').addClass('active');
+
+  // hide all of the tab content and show newly selected then update hash in URL
+  tabs.find('.tab-content').hide();
+  $(currentTab).show();
+  history.pushState({}, '', currentTab);
+});
+
+</script>
 
 {% endblock %}

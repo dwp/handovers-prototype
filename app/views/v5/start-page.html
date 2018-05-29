@@ -1,0 +1,70 @@
+{% extends "layout.html" %} {% block content %}
+<main id="content" role="main">
+
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-full">
+        <h1 class="heading-large">
+          Handover's prototype V4
+          <span class="heading-secondary">Edit handover</span>
+        </h1>
+
+        <form class="form" action="queue" method="post">
+            <div class="form-group">
+              <fieldset>
+  
+                <legend>
+                  <h1 class="heading-medium">Processing Agent</h1>
+                </legend>
+
+                <div class="multiple-choice">
+                    <input id="radio-inline-4" type="radio" name="scenario" value="IS" {{ 'checked' if data[ 'scenario']==='IS'
+                    else ''}}>
+                      
+                    <label for="radio-4">Processing (IS)</label>
+                  </div>
+                  <div class="multiple-choice">
+                      <input id="radio-inline-4" type="radio" name="scenario" value="ESA" {{ 'checked' if data[ 'scenario']==='ESA'
+                      else ''}}>
+                        
+                      <label for="radio-4">Processing (ESA)</label>
+                    </div>
+              </fieldset>
+            </div>
+            <button type="submit" class="button">Continue</button>
+      
+            <div class="multiple-choice js-hidden">
+                <input id="radio-inline-4" type="radio" name="scenario" value="rebrand" {{ 'checked' if data[ 'scenario']==='rebrand'
+                else ''}} checked >
+                  
+                <label for="radio-4">Hidden radio for prototype</label>
+              </div>
+          </form>
+
+          <form class="form" action="find" method="post">
+              <div class="form-group">
+                <fieldset>
+    
+                  <legend>
+                    <h1 class="heading-medium">Frontline Agent</h1>
+                  </legend>
+                  <div class="multiple-choice">
+                      <input id="radio-inline-4" type="radio" name="scenario" value="createCustomer" {{ 'checked' if data[ 'scenario']==='createCustomer'
+                      else ''}}>
+                        
+                      <label for="radio-4">Create Customer</label>
+                    </div>
+                  <div class="multiple-choice">
+                      <input id="radio-inline-5" type="radio" name="scenario" value="customerUpdate" {{ 'checked' if data[ 'scenario']==='customerUpdate'
+                        else ''}}>
+                      <label for="radio-5">Customer update (history)</label>
+                    </div>
+                </fieldset>
+              </div>
+              <button type="submit" class="button">Continue</button>
+            </form>
+      </div>
+</main>
+
+
+{% endblock %}
