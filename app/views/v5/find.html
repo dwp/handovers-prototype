@@ -1,4 +1,10 @@
 {% extends "layout.html" %}
+
+
+{% block brand %}
+{% include "includes/v2/brandChange.html" %}
+{% endblock %}
+
 {% block content %}
 {% include "includes/v2/navV5.html" %}
 <main id="content" role="main">
@@ -12,8 +18,8 @@
                         <div class="search-box-container">
                             <h1 class="heading-large">Search for customer</h1>
     
-                                <label class="form-hint" for="nino">Enter a National Insurance Number</label>
-                                <input type="search" autocomplete="off" name="nino" autofocus="autofocus" class="form-control" value="{{ customerNino }}" {{ data['customerNino']}}>
+                                <label class="form-hint" for="nino">Enter a National Insurance Number for example ZZ1234567B</label>
+                                <input type="search" autocomplete="off" name="nino" autofocus="autofocus" class="form-control form" value="{{ customerNino }}" {{ data['customerNino']}}>
                                 <a href="#" id="resultTrigger" class="button search">Search</a>
                             
                         </div>

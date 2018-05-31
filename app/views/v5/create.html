@@ -1,4 +1,10 @@
 {% extends "layout.html" %}
+
+
+{% block brand %}
+{% include "includes/v2/brandChange.html" %}
+{% endblock %}
+
 {% block content %}
 {% include "includes/v2/nav.html" %}
 {% include "includes/v2/caseHeader.html" %}
@@ -73,13 +79,22 @@
                                   <div class="form-group">
                                         <input type="submit" class="button" value="Create">
                                 </div>
-
+                                {% if data[ 'scenario']==='createCustomer'%}
                                 <div class="multiple-choice" style="display:none">
                                     <input id="radio-inline-5" type="radio" name="scenario" value="createHand" {{ 'checked' if data[ 'scenario']==='createHand'
                                     else ''}} checked>
                                       
                                     <label for="radio-4">hidden radio one</label>
                                   </div>
+                                 {% endif %} 
+                                 {% if data[ 'scenario']==='customerUpdate'%}
+                                 <div class="multiple-choice" style="display:none">
+                                     <input id="radio-inline-5" type="radio" name="scenario" value="createHand2" {{ 'checked' if data[ 'scenario']==='createHand2'
+                                     else ''}} checked>
+                                       
+                                     <label for="radio-4">hidden radio one</label>
+                                   </div>
+                                  {% endif %} 
                                     </form>
                                     </div>
                                 </main>

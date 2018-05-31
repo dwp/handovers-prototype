@@ -112,6 +112,47 @@ router.post('/v4/createCustomer', function (req, res) {
   res.redirect('/v4/customer')
 })  
 
+
+
+router.post('/v5/customer', function (req, res) {
+  var scenariopicker = req.session.data['scenario']
+  if(scenariopicker  == "createCustomer"){
+    res.redirect('/v5/createCustomer')
+  }
+
+  else{
+    res.redirect('/v5/customer')
+  }
+})  
+
+router.post('/v5/createCustomer', function (req, res) {
+  res.redirect('/v5/customer')
+}) 
+
+router.post('/v5/create', function (req, res) {
+  res.redirect('/v5/customer')
+})  
+
+router.post('/v5/queue',function (req, res) {
+      
+  var scenariopicker = req.session.data['scenario']
+
+
+  if(scenariopicker   == "agentEditEscalate"){
+    res.redirect('/v5/customer')
+  }
+
+  if(scenariopicker   == "allocatorEdit"){
+    res.redirect('/v5/allocator-queue')
+  }
+
+
+  else{
+    res.redirect('/v5/queue')
+  }
+
+}) 
+
     
 
 module.exports = router;

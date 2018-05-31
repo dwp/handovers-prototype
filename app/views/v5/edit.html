@@ -1,4 +1,11 @@
-{% extends "layout.html" %} {% block content %} {% include "includes/v2/nav.html" %}
+{% extends "layout.html" %} 
+
+
+{% block brand %}
+{% include "includes/v2/brandChange.html" %}
+{% endblock %}
+
+{% block content %} {% include "includes/v2/nav.html" %}
 
 {% include "includes/v2/caseHeader.html" %}
 
@@ -10,7 +17,7 @@
         <div class="column-full">
 
 
-          <div class="panel alt warning mt1" role="group" id="clearHandover" aria-labelledby="" tabindex="-1" style="display:none">
+          <div class="panel warning mt1" role="group" id="clearHandover" aria-labelledby="" tabindex="-1" style="display:none">
 
 
             <p class="bold icon" style="display:inline-block">
@@ -19,7 +26,7 @@
               </i>Are you sure you want to clear this handover
             </p>
             <br />
-            <a href="queueClear" class="button">Yes, clear handover</a>
+            <button class="button">Yes, clear handover</button>
             <a href="#" class="button text cancel">Cancel</a>
           </div>
 
@@ -87,13 +94,12 @@
   
   
   
-                <div class="panel panel-border mt1">
   
-                  <div class="form-group">
+                  <div class="form-group mb0">
                     <fieldset>
   
                       <legend>
-                        <h3 class="heading-medium">Escalate handover</h3>
+                        <h3 class="heading-small">Escalate handover</h3>
                       </legend>
                       <div class="multiple-choice">
                         <input id="radio-inline-2" type="radio" name="escalatedHandover" value="escalate" {{ 'checked' if data[
@@ -103,7 +109,7 @@
   
                     </fieldset>
                   </div>
-                </div>
+               
   
                 {% endif %}
                
@@ -157,10 +163,10 @@
                     <fieldset>
                         
                   <legend>
-                    <h1 class="form-label-bold">Set status</h1>
+                    <label class="form-label-bold">Set status</label>
                   </legend>
   
-                  {% if data['callbackRequired'] === 'Yes' %} 
+                  {% if data['callbackRequired'] === 'Yes' or data['scenario']==="customerUpdate" or data['scenario']==="ESA" %} 
   
   
                   {% if data['secondCallBackStatus'] %}
@@ -237,11 +243,8 @@
                   </fieldset>
                 </div>
   
-                {% if data['scenario'] === 'agentClear' %}
+                {% if data['scenario'] === 'IS' %}
                 <a href="#" id="clear" class="button">Save and update</a>
-  
-                {% elif data['scenario'] === 'agentEditEscalate' %}
-                <a href="customerEscalate" id="clear" class="button">Save and update</a>
                 {% else %}
                 <input type="submit" class="button" value="Save and update"> {% endif %}
               </div>
@@ -301,8 +304,10 @@
           
 
 
-          {% if data['scenario'] === 'customerUpdate'%} {% else %}
-          <a href="queue" class="link-back">Back to queue</a>
+          {% if data['scenario'] === 'customerUpdate'%} 
+          <a href="customer" class="link-back">Back</a>
+          {% else %}
+          <a href="queue" class="link-back">Back</a>
           {% endif %}
         </div>
 
@@ -457,8 +462,19 @@
 
             {% endif %} 
             
-            
-           <!-- <span class="line"></span>
+            {% if data['scenario']==="customerUpdate" %} 
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Note</h3>
+              <div class="panel panel-border-wide alert-default">
+                <p>Sent information to the decision maker, awaiting decision</p>
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:35</p>
+              <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+            </div>
+
+
+           <span class="line"></span>
             <div class="timeline__event">
               <h3 class="heading-small">Allocated</h3>
               <div class="panel panel-border-wide alert-success">
@@ -467,8 +483,8 @@
                 
               </div>
               <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:53</p>
-            </div> -->
-
+            </div>
+            {% endif %} 
             <span class="line"></span>
             <div class="timeline__event">
               <h3 class="heading-small">Routed</h3>
