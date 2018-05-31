@@ -1,0 +1,141 @@
+
+.case-header-container {
+    background-color: $govuk-blue;
+    color: $white;
+    font-size:20px;
+    
+  
+    &.alt{
+
+      p {
+        font-weight: bold;
+        font-size:22px;
+        margin:0px;
+      }
+
+      li {
+          width:25%;
+          border-right:1px solid rgba(#fff, 0.2);
+          padding-left:15px;
+
+          &:first-of-type{
+              padding-left:0px;
+          }
+      }
+    
+    }
+  
+   ul 
+   {
+    padding-top:15px;
+    border-top:1px solid rgba(#fff, 0.2);
+  
+    &:after {
+      content: '';
+      display: table;
+      clear: both;
+      }
+    
+   
+   li{
+     float: left;
+     width:33%;
+     padding:0 30px;
+     -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+     border-right:1px solid rgba(#fff, 0.2);
+     padding:0 15px 0 0;
+     border-right:none;
+  
+     @media screen and (max-width:768px){
+       width:50%;
+  
+  
+  
+    
+  
+  
+     }
+  
+     @media screen and (max-width:640px){
+      width:100%;
+      border-right:none;
+      padding:10px 0;
+  
+      &:first-of-type{
+        padding-top:0px;
+      }
+  
+      &:nth-child(odd){
+        border-right:none;
+       }
+       h3, p{
+         display:inline;
+       }
+    }
+  
+     &:last-of-type{
+       border:none;
+     }
+  
+     &:first-of-type{
+      padding-left:0px;
+     }
+   }
+  
+  }
+  
+  
+    .case-header, .case-body, .case-footer{
+      padding:20px 2.10526em 15px ;
+    }
+   .case-body{
+      padding-top:0px;
+      //background-color: darken($govuk-blue, 5%);
+    }
+  
+    .case-footer{
+      background-color: darken($govuk-blue, 5%);
+  
+      h3, p{
+        display:inline;
+      }
+    }
+  
+  
+  
+    .heading-secondary, a{
+      color:#fff;
+    }
+  
+
+     
+        p {
+            font-weight:normal;
+            font-size:19px;
+            margin:0px;
+          } 
+      
+   
+  
+  
+    details 
+    {
+    ul{
+      border-top:none;
+    }
+      
+    summary{
+      color:#fff;
+      margin-top:15px;
+  
+     // &:before {
+     //   font-family: FontAwesome;
+    //    content: '\F055';
+     //   font-size: 22px;
+    //  }
+    }
+  }
+  
+  }

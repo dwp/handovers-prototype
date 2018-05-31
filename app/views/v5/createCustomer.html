@@ -1,4 +1,11 @@
 {% extends "layout.html" %}
+
+
+{% block brand %}
+{% include "includes/v2/brandChange.html" %}
+{% endblock %}
+
+
 {% block content %}
 {% include "includes/v2/nav.html" %}
 <main id="content" role="main">
@@ -93,15 +100,18 @@
 
 
                     <div class="form-group">
-                        <legend class="form-label-bold">Preferred contact number</legend>
-                        <div>
+                            <label for="prefContNum">
+                                    <span class="form-label-bold">Preferred contact number</span>
+                                </label>
+                     
                             <input type="text" class="form-control" id="prefContNum" name="prefContNum" pattern="[0-9 ]*"  value="{{ data['prefContNum'] }}">
-                        </div>
+                        
                     </div>
 
                     <div class="form-group">
-                        <legend class="form-label-bold">Welsh speaker ?</legend>
+                       
                         <fieldset class="inline">
+                                <legend class="form-label-bold">Welsh speaker ?</legend>
                             <div class="multiple-choice">
                                 <input id="welshSpeaker_yes" type="radio" name="welsh-speaker"  value="Yes" {{ 'checked' if data[ 'welsh-speaker']==='yes'
                                 else ''}}>
@@ -116,8 +126,9 @@
                     </div>
 
                     <div class="form-group">
-                        <legend class="form-label-bold">Translator required ?</legend>
+                        
                         <fieldset class="inline">
+                                <legend class="form-label-bold">Translator required ?</legend>
                             <div class="multiple-choice" data-target="language-gp">
                                 <input id="translator-yes" type="radio" name="translator"  value="Yes" aria-controls="language-gp" aria-expanded="false" {{ 'checked' if data[ 'translator']==='yes'
                                 else ''}}>
@@ -140,8 +151,9 @@
                     </div>
 
                     <div class="form-group">
-                        <legend class="form-label-bold">Does the customer have a representative ?</legend>
+                       
                         <fieldset class="inline">
+                                <legend class="form-label-bold">Does the customer have a representative ?</legend>
                             <div class="multiple-choice" data-target="approved-rep-group">
                                 <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" aria-controls="approved-rep-group" aria-expanded="false">
                                 <label for="approved-rep-yes">Yes</label>

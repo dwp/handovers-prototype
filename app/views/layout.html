@@ -15,7 +15,12 @@
 
   <div class="content">
       <nav id="proposition-menu">
-          <a href="/index" id="logo" class="content">DCAMS Handovers <strong class="phase-tag">PROTOTYPE</strong></a>
+
+          <a href="/index" id="logo" class="content">
+            {% block brand %}
+            DCAMS Handovers 
+            {% endblock %}
+            <strong class="phase-tag">PROTOTYPE</strong></a>
       </nav>
     <!--  <nav id="proposition-menu">
       <a href="/" id="proposition-name">
@@ -27,11 +32,16 @@
     </nav> -->
     <nav id="sign-out-menu">
       <ul>
-        <li><a class="bold-nav-link" href="/toggle_user_role">  {% if data['scenario'] === 'allocatorEdit' %}
+        <li>
+
+          <a class="bold-nav-link" href="/toggle_user_role">  {% if data['scenario'] === 'createCustomer' or data['scenario'] === 'customerUpdate'%}
           Alex Black
+          {% elif data[ 'scenario']==='allocatorEdit'%}
+          Jane Smith
           {% else %}
           Callum Dalton
           {% endif %}
+
           <!--{{ data.user.firstName }} {{ data.user.lastName }}--></a> |</li>
         <li>
           <a href="">  Set location  </a>|

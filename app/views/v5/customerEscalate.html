@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+
+{% block brand %}
+{% include "includes/v2/brandChange.html" %}
+{% endblock %}
+
+{% block content %}
+{% include "includes/v2/nav.html" %}
+{% include "includes/v2/caseHeader.html" %}
+<main id="content" role="main">
+    <div class="main-content">
+            <form class="form" action="queue" method="post">
+
+
+        <div class="grid-row">
+            <div class="column-full">
+                <h3 class="heading-medium">Handovers</h3>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col"><span>Time left to clear</span></th>
+                                <th scope="col"><span>Date/time raised</span></th>
+                                <th scope="col"><span>Routed to</span></th>
+                                <th scope="col"><span>Agent</span></th>
+                                <th scope="col"><span>Benefit type</span></th>
+                                <th scope="col"><span>Handover type</span></th>
+                                <th scope="col"><span>Status</span></th>
+                                <th scope="col"><span></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                     
+                            <tr >
+                
+                                <td><span class="bold">59 mins <br /></span><span class="badge badge-danger">ESCALATED</span></td>
+                                <td>02/03/2018<br><span class="hint">8:06am</span></td>
+                        
+                                    <td>Birkenhead</td>
+                                    <td>Calumn Dalton</td>
+                              
+                                    
+                                    <td>JSA</td>
+                        
+                            
+                                    <td>New claim</td>
+                                
+                              
+                              
+                                <td>First call pending</td>
+                        
+                                <td><a href="edit">View and update</a></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="/handover/create?nino={{ customer.nino }}" class="button">Create handover</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-row">
+            <div class="column-half">
+                <div class="form-group">
+                    <a href="find">Back to find customer</a>
+                </div>
+            </div>
+        </div>
+        </div>
+        </form>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.3.min.js"></script>
+
+<script>
+    $('table').DataTable({
+        paging: false,
+        info: false,
+        filter: false,
+        order: [[ 3, "desc" ]],
+    })
+</script>
+
+{% endblock %}

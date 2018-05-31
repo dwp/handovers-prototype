@@ -1,0 +1,545 @@
+{% extends "layout.html" %} 
+
+
+{% block brand %}
+{% include "includes/v2/brandChange.html" %}
+{% endblock %}
+
+{% block content %} {% include "includes/v2/nav.html" %}
+
+{% include "includes/v2/caseHeader.html" %}
+
+
+<main id="content" role="main">
+  <div class="main-content">
+    <form class="form" action="queue" method="post">
+      <div class="grid-row">
+        <div class="column-full">
+
+
+          <div class="panel warning mt1" role="group" id="clearHandover" aria-labelledby="" tabindex="-1" style="display:none">
+
+
+            <p class="bold icon" style="display:inline-block">
+              <i class="icon icon-important">
+                <span class="visually-hidden">Warning</span>
+              </i>Are you sure you want to clear this handover
+            </p>
+            <br />
+            <button class="button">Yes, clear handover</button>
+            <a href="#" class="button text cancel">Cancel</a>
+          </div>
+
+          <div class="panel warning mt1" role="group" id="reallocateHandover" aria-labelledby="" tabindex="-1" style="display:none">
+
+
+            <p class="bold icon" style="display:inline-block">
+              <i class="icon icon-important">
+                <span class="visually-hidden">Warning</span>
+              </i>Are you sure you want to Reallocate this handover from
+              <span class="bold">JSA to IS</span>
+
+            </p>
+            <br />
+            <a href="queueClear" class="button">Yes, reallocate handover</a>
+            <a href="#" class="button text cancel">Cancel</a>
+          </div>
+
+        </div>
+      </div>
+      <!--<h1 class="heading-large">Update</h1>-->
+       <h1 class="heading-large">Update handover</h1>
+      
+      {% include "includes/v2/statusBar.html" %}
+
+      <div class="grid-row">
+        <div class="column-two-thirds">
+            <h2 class="heading-medium">Description</h2>
+            <!--<p class="lede">{{ data['description'] }}</p>-->
+            {% if data['scenario']==='IS' %}
+            <p class="lede">Change of address, customer is moving from London to Burnley, the customers new address will be 67 Springfield Rd, Burnley, BB11 3LD. see Attached form</p>
+           
+            {% else %}
+            <p class="lede">STBA Request(short term benefit advance)<!--, please see attacted form for more detail--></p>
+            {% endif %}
+
+
+
+            <div class="tabs">
+                <div class="tabs-nav">
+                  <ul class="tabs-list">
+                    <li>
+                      <a href="#tab-1">
+                        Update handover
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#tab-2">
+                        Change type or reallocate
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              
+                <div class="tabs-content">
+                  <div class="tabs-panel" id="tab-1">
+                    <div class="tabs-panel-inner">
+                      <h2 class="js-hidden heading-medium">
+                        Tab 1
+                      </h2>
+                      
+
+
+                {% if data['scenario'] === 'agentEditEscalate' %}
+  
+  
+  
+  
+                  <div class="form-group mb0">
+                    <fieldset>
+  
+                      <legend>
+                        <h3 class="heading-small">Escalate handover</h3>
+                      </legend>
+                      <div class="multiple-choice">
+                        <input id="radio-inline-2" type="radio" name="escalatedHandover" value="escalate" {{ 'checked' if data[
+                          'escalatedHandover']==='escalate' else ''}}>
+                        <label for="radio-1">Yes</label>
+                      </div>
+  
+                    </fieldset>
+                  </div>
+               
+  
+                {% endif %}
+               
+                <div class="form-group mt1">
+                <label class="heading-small" for="handover-note">Add a note</label>
+                {% if data['handover-note2'] or data['secondCallBackStatus']%}
+                <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note3" rows="6">{{ data['handover-note3'] }}</textarea>
+                {% elif data['handover-note']  or data['callBackStatus']%}
+                <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note2" rows="6">{{ data['handover-note2'] }}</textarea>
+                {% else %}
+                <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note" rows="6">{{ data['handover-note'] }}</textarea>
+                {% endif %}
+                </div>
+  
+          <!--  <h2 class="heading-small">Attachments</h2>
+                {% if data['scenario']==='IS' %}
+                
+          
+                <ul class="list">
+                  <li><a href="/public/images/sort_both.png">Change of circumstances form  <span class="font-secondary">56KB</span></a></li>
+              </ul>
+                {% else %}
+                <ul class="list">
+                  <li><a href="/public/images/sort_both.png">STBA Request form <span class="font-secondary">56KB</span></a></li>
+              </ul>
+                {% endif %}
+  
+                <h2 class="heading-small">Upload document</h2>
+                <form class="form" action="payment-date" method="post">
+                    
+                            <div class="form-group">
+                              <label class="form-label visuallyhidden" for="file-input">
+                                Upload file
+                              </label>
+                              <input type="file" name="uploaded-file" id="selectedFile" style="display: none;" class="js-upload">
+                              <a class="button button-secondary" onclick="document.getElementById('selectedFile').click();">Choose file</a>
+                            </div>
+                    
+                            <p class="js-upload_filename" style="display: none"></p>
+                    
+                          <div class="panel panel-border-wide">
+                              <p>File size limit: 4MB</p>
+                              <p>File types accepted: PDF, CSV, Word, XML, HTML</p>
+                            </div> 
+                    
+                          
+                    
+                          </form> -->
+                <div class="form-group">
+  
+                    <fieldset>
+                        
+                  <legend>
+                    <label class="form-label-bold">Set status</label>
+                  </legend>
+  
+                  {% if data['callbackRequired'] === 'Yes' or data['scenario']==="customerUpdate" or data['scenario']==="ESA" %} 
+  
+  
+                  {% if data['secondCallBackStatus'] %}
+                   
+                  {% include "includes/v2/setStatusThirdCall.html" %}
+                
+  
+                  {% elif data['callBackStatus'] %}
+                   
+                  {% include "includes/v2/setStatusSecondCall.html" %}
+                
+                  {% else %}
+  
+  
+                  {% include "includes/v2/setStatusFirstCall.html" %}
+  
+                  {% endif %} {% else %}
+  
+  
+         
+  
+                    <div class="multiple-choice">
+                      <input id="radio-inline-2" type="radio" name="callbackRequired" value="No" {{ 'checked' if data[ 'callbackRequired']==='No'
+                        else 'checked'}}>
+                      <label for="radio-1">No call back required</label>
+                    </div>
+                    <div class="multiple-choice" data-target="callbackRequired">
+                      <input id="radio-inline-1" type="radio" name="callbackRequired" value="Yes" {{ 'checked' if data[ 'callbackRequired']==='Yes'
+                        else ''}}>
+                      <label for="radio-2">Call back required</label>
+                    </div>
+                    <div class="panel panel-border-narrow js-hidden" id="callbackRequired">
+                        <div class="panel panel-border-wide alert-default">
+                            <p class="bold">First call pending</p>
+                          </div>
+                      {% include "includes/v2/setStatusFirstCall.html" %}
+                    </div>
+                    <p class="form-block">or</p>
+                    <div class="multiple-choice">
+                      <input id="radio-3" type="radio" name="noCallbackRequired" value="cleared" {{ 'checked' if data[ 'noCallbackRequired']==='cleared'
+                        else ''}}>
+                      <label for="radio-3">Completed clear handover</label>
+                    </div>
+  
+                  
+                    
+               
+                
+  
+                  {% endif %}
+                </fieldset>
+  
+  
+                </div>
+  
+                <div class="form-group">
+                  <fieldset class="inline">
+                
+                    <legend>
+                      <h1 class="form-label-bold">
+                        Was this an inappropriate handover?
+                      </h1>
+                    </legend>
+                
+                    <div class="multiple-choice">
+                      <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
+                      <label for="radio-inline-1">Yes</label>
+                    </div>
+                    <div class="multiple-choice">
+                      <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No" checked>
+                      <label for="radio-inline-2">No</label>
+                    </div>
+                
+                  </fieldset>
+                </div>
+  
+                {% if data['scenario'] === 'IS' %}
+                <a href="#" id="clear" class="button">Save and update</a>
+                {% else %}
+                <input type="submit" class="button" value="Save and update"> {% endif %}
+              </div>
+                    </div>
+                
+              
+                  <div class="tabs-panel" id="tab-2">
+                    <div class="tabs-panel-inner">
+                      <h2 class="js-hidden heading-medium">
+                        Tab 2
+                      </h2>
+                      
+                          <div class="form-group">
+                            <label class="form-label-bold mt1" for="handover-note-reallocate">Add a note</label>
+                            <textarea class="form-control form-control-3-4" id="handover-note-reallocate" name="handover-note-reallocate" rows="6">{{ data['handover-note-realocate'] }}</textarea>
+                          </div>
+                          {% if data['scenario'] === 'allocatorEdit' %} {% include "includes/v2/reallocateAgent.html" %} {% endif %}
+                          <div class="form-group">
+                            {% include "includes/v2/selectBenefit.html" %}
+                            <div class="panel panel-border-narrow">
+                              {% include "includes/v2/selectHandoverType.html" %}
+                              <div class="panel panel-border-narrow"> {% include "includes/v2/selectHandoverReason.html" %}</div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <fieldset>
+            
+                                <h1 class="heading-small">
+                                  Recieving office type
+                                </h1>
+                              </legend>
+            
+                              <div class="multiple-choice">
+                                <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes" checked="checked">
+                                <label for="radio-inline-1">Benefit office</label>
+                              </div>
+                              <div class="multiple-choice">
+                                <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No">
+                                <label for="radio-inline-2">Jobcentre</label>
+                              </div>
+                            </fieldset>
+                          </div>      
+                   
+                          {% if data['scenario'] === 'agentReallocate' %}
+                          <a href="#" id="reallocate" class="button">Save and update</a>
+                          {% else %}
+                          <input type="submit" class="button" value="Save and update"> {% endif %}
+            
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+
+          
+
+
+          {% if data['scenario'] === 'customerUpdate'%} 
+          <a href="customer" class="link-back">Back</a>
+          {% else %}
+          <a href="queue" class="link-back">Back</a>
+          {% endif %}
+        </div>
+
+
+        <div class="column-one-third">
+
+
+          <h2 class="heading-medium mt-0">History</h2>
+          <div class="timeline">
+              {% if data[ 'callbackRequired']==='cleared' or data[ 'noCallbackRequired']==='cleared' %}
+
+              <span class="line"></span>
+              <div class="timeline__event">
+                <div class="panel panel-border-wide alert-success">
+                  <p class="bold">COMPLETED 
+                    </p>
+                    <p>
+                        {% if data['thirdCallBackStatus']==="Third call failed - engaged" %}
+                        Call back Failed - engaged
+                        {% elif data['thirdCallBackStatus']==="Third call failed - number unobtainable" %}
+                        Call back Failed - number unobtainable
+                        {% elif data[ 'noCallbackRequired']==='cleared'%}
+                        none callback
+                        {% elif data[ 'callbackRequired']==='cleared'%}
+                        Call successful 
+                        
+
+                        {% else %}
+                        Call back Failed - not answered
+                        {% endif %}
+                    </p>
+  
+                </div>
+                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:45</p>
+                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+  
+              </div>
+              {% endif %}
+
+              {% if data['handover-note3'] %}
+
+
+              <span class="line"></span>
+              <div class="timeline__event">
+                <h3 class="heading-small">Note</h3>
+                <div class="panel panel-border-wide alert-default">
+                  <p>{{ data['handover-note3'] }}</p>
+                </div>
+                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:00</p>
+                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+              </div>
+  
+              {% endif %}  
+
+              {% if data['thirdCallBackStatus']  %}
+              <span class="line"></span>
+              <div class="timeline__event">
+                <h3 class="heading-small">Call back</h3>
+                <div class="panel panel-border-wide alert-warning">
+                  <p>Third call back Failed - 
+                    {% if data['thirdCallBackStatus']==="Third call failed - engaged" %}
+                    engaged
+                    {% elif data['thirdCallBackStatus']==="Third call failed - number unobtainable" %}
+                    number unobtainable
+                    {% else %}
+                    not answered
+                    {% endif %}
+                    </p>
+  
+                </div>
+                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:00</p>
+                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+  
+              </div>
+              {% endif %}
+
+
+              {% if data['handover-note2'] %}
+
+
+              <span class="line"></span>
+              <div class="timeline__event">
+                <h3 class="heading-small">Note</h3>
+                <div class="panel panel-border-wide alert-default">
+                  <p>{{ data['handover-note2'] }}</p>
+                </div>
+                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:45</p>
+                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+              </div>
+  
+              {% endif %}  
+   
+
+              {% if data['secondCallBackStatus'] %}
+              <span class="line"></span>
+              <div class="timeline__event">
+                <h3 class="heading-small">Call back</h3>
+                <div class="panel panel-border-wide alert-warning">
+                  <p>Second call back Failed - 
+                    {% if data['secondCallBackStatus']==="Second call failed - engaged" %}
+                    engaged
+                    {% elif data['secondCallBackStatus']==="Second call failed - number unobtainable" %}
+                    number unobtainable
+                    {% else %}
+                    not answered
+                    {% endif %}
+                    </p>
+  
+                </div>
+                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:45</p>
+                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+  
+              </div>
+              {% endif %}
+
+
+            {% if data['callBackStatus'] %}
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Call back</h3>
+              <div class="panel panel-border-wide alert-warning">
+                <p>First call back Failed - 
+                  {% if data['callBackStatus']==="First call failed - engaged" %}
+                  engaged
+                  {% elif data['callBackStatus']==="First call failed - number unobtainable" %}
+                  number unobtainable
+                  {% else %}
+                  not answered
+                  {% endif %}
+                  </p>
+
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:35</p>
+              <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+
+            </div>
+            {% endif %} 
+
+
+            {% if data['handover-note'] %}
+
+
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Note</h3>
+              <div class="panel panel-border-wide alert-default">
+                <p>{{ data['handover-note'] }}</p>
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:35</p>
+              <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+            </div>
+
+            {% endif %} 
+            
+            {% if data['scenario']==="customerUpdate" %} 
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Note</h3>
+              <div class="panel panel-border-wide alert-default">
+                <p>Sent information to the decision maker, awaiting decision</p>
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:35</p>
+              <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+            </div>
+
+
+           <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Allocated</h3>
+              <div class="panel panel-border-wide alert-success">
+                  
+                  <p>Calumn Dalton - Burnley benefit centre</p>
+                
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:53</p>
+            </div>
+            {% endif %} 
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Routed</h3>
+              <div class="panel panel-border-wide alert-success">
+                  
+                  <p>Burnley benefit centre</p>
+                
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
+            </div>
+
+          
+            <span class="line"></span>
+            <div class="timeline__event">
+              <h3 class="heading-small">Handover created</h3>
+              <div class="panel panel-border-wide alert-success">
+                  {% if data['scenario']==='IS' %}
+                  <p>IS / Maintenance / Reporting change of address</p>
+                 
+                  {% else %}
+                  <p>ESA /	STBA - New Claim / STBA Request</p>
+                  
+                  {% endif %}
+                
+              </div>
+              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
+              <p class="font-xsmall timeline_datetime">Alex Black, Hyde Benefit Service Centre</p>
+            </div>
+          
+           
+
+           
+
+
+
+
+
+            <div style="clear:both"></div>
+
+
+          </div>
+        </div>
+        <!-- hidden radio's for prototype scenarios -->
+
+<div class="multiple-choice" style="display:none">
+    <input id="radio-inline-4" type="radio" name="edit" value="editHand" {{ 'checked' if data[ 'edit']==='editHand'
+    else ''}} checked>
+      
+    <label for="radio-4">hidden radio one</label>
+  </div>
+    </form>
+    </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script src="/public/javascripts/tabs.js"></script>
+
+{% endblock %}

@@ -1,19 +1,15 @@
    
-<div class="case-header-container alt">
+<div class="case-header-container">
 
         <div class="case-header">
             {% if data['scenario'] === 'agentEditEscalate' or data['scenario'] === 'customerUpdate'%}
             <h1 class="heading-large mt0 mb0">
-                Ian Jackson
+                Christine Dixon
                 <!--<span class="heading-secondary">AA345678B</span> -->
             </h1>
             {% elseif data['scenario'] === 'createCustomer' or data['scenario'] === 'createHand'%}
             <h1 class="heading-large mt0 mb0">
                 {{ data['firstName'] }} {{ data['lastName'] }}
-                {% if data['approved-rep']=== 'Yes'%}
-                <br>
-                <span class="badge badge-light">Approved representative</span>
-                {% endif %}
             </h1>
           
             {% else %}
@@ -61,9 +57,9 @@
                        <p> Postcode:
                         {{ data['postcode'] }}</p></li>
                         {% elseif data['scenario'] === 'IS'%}  
-                        <li><p>Poscode:  SW9 0QQ</p></li>
+                        <li><p>Postcode:  SW9 0QQ</p></li>
                       {% else %}
-                      <li><p>Poscode:  BB10 1AA</p></li>
+                      <li><p>Postcode:  BB10 1AA</p></li>
                       </span>
                   </p>
                 </li>
@@ -78,6 +74,12 @@
                  <li>
                         <p> Jobcentre: <span class="">Burnley</span>
                    </p>
+                 </li>
+                 {% endif %}
+
+                 {% if data['approved-rep']=== 'Yes'%}
+                 <li>
+                 <span class="badge badge-light">Has appointee or representative</span>
                  </li>
                  {% endif %}
                
@@ -102,11 +104,11 @@
             </ul>
             
         </div>
-        {% if data['scenario'] === 'allocatorEdit' %}
+      <!--  {% if data['scenario'] === 'customerUpdate' %}
         <div class="case-footer">
             <h3>Agent:</h3>
             <p class="bold  mt0">Callum Dalton</p>
         </div>
-        {% endif %}
+        {% endif %} -->
     </div>
     

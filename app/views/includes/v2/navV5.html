@@ -1,0 +1,22 @@
+<div class="nav-horizontal">
+    <div class="main-nav-wrapper">
+        <ul class="main-nav">
+            <li>
+                <a class="menu-item" href="find" id="customer_find">Search for customer</a>
+            </li>
+            <li>
+                <a class="menu-item" href="queue">My Queue</a>
+
+
+            </li>
+            {% if data['scenario'] === 'allocatorEdit' %}
+            <li>
+
+                <a class="menu-item" href="allocator-queue">Office queue</a>
+
+            </li>
+            {% endif %}
+            
+        </ul>
+    </div>
+</div>

@@ -1,16 +1,23 @@
-{% extends "layout.html" %} {% block content %} {% include "includes/v2/nav.html" %}
+{% extends "layout.html" %} 
+
+
+{% block brand %}
+{% include "includes/v2/brandChange.html" %}
+{% endblock %}
+
+{% block content %} {% include "includes/v2/nav.html" %}
 {% include "includes/v2/caseHeader.html" %}
 <main id="content" role="main">
     <div class="main-content">
         <form class="form" action="queue" method="post">
             <div class="grid-row">
                 <div class="column-full" style="overflow-x:auto;">
-                    <h2 class="heading-medium">Handovers</h2>
+                    <h2 class="heading-medium">Customer handovers</h2>
 
 
                    {% if data[ 'scenario']==='createCustomer'%}
-                   
-                   {% elseif data['scenario'] === 'createHand' %}
+                   <p>This customer currently doesn't have any existing handovers</p>
+                   {% elif data[ 'scenario']==='createHand'%}
                    <table class="mb1">
                         <thead>
                             <tr>
@@ -41,20 +48,27 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             <tr>
-                             
+                                {% if data['scenario'] === 'customerUpdate' %}
                                 <td>
-                                    <span class="bold">59 Mins</span>
+                                    <span class="bold">59 mins</td>
+                                {% elif data['escalatedHandover'] === 'escalate' %}
+                                <td><span class="bold">59 mins <br /></span><span class="badge badge-danger">ESCALATED</span></td>        
+                                {% elif data['scenario'] === 'createHand' %}
+                                <td>
+                                    <span class="bold">2 hours 59 mins</td>
+                                {% else %}
+                                <td>
+                                    <span class="bold">Expired</span>
                                 </td>
-                             
+                                {% endif %}
                                 <td>02/03/2018
-                                    <br>
+                            
                                     <span class="hint">9:33am</span>
                                 </td>
 
                                 <td>Burnley</td>
-                                <td>Not assigned</td>
+                                <td>-</td>
 
 
                                 {% if data[ 'scenario']==='IS' %}
@@ -66,29 +80,18 @@
                                 {% else %}
                                 <td>STBA - New Claim</td>
                                 {% endif %}
-
-
-                                {% if data['secondCallBackStatus'] %}
-                                <td>Third call pending</td>
-                                {% elif data['callBackStatus'] %}
-                                <td>Second call pending</td>
-                                {% elif  data['callbackRequired']==="Yes" %}                               
-                                <td>First call pending</td>
-                                {% elif data['edit']==='editHand' %}
-                                <td>In Progress</td>
-                                {% else %}
-                                <td>Allocated</td>
-                                {% endif %}
+                                
+                                <td>Opened</td>
 
                                 <td>
                                     <a href="edit">View and update</a>
                                 </td>
                             </tr>
-
+                     
+                           
                         </tbody>
                     </table>
                    {% else %}
-                   
                         <table class="mb1">
                             <thead>
                                 <tr>
@@ -119,11 +122,42 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                    {% if data['scenario'] === 'createHand2' %}
+                                    <tr>
+                                            <td>
+                                                    <span class="bold">2 hours 59 mins</td>
+                                            <td>02/03/2018
+                                        
+                                                <span class="hint">9:33am</span>
+                                            </td>
+            
+                                            <td>Burnley</td>
+                                            <td>-</td>
+            
+            
+                                            {% if data[ 'scenario']==='IS' %}
+                                            <td>IS</td>
+                                            {% else %}
+                                            <td>ESA</td>
+                                            {% endif %} {% if data['scenario']==='IS'%}
+                                            <td>Maintenance</td>
+                                            {% else %}
+                                            <td>STBA - New Claim</td>
+                                            {% endif %}
+                                            
+                                            <td>Opened</td>
+            
+                                            <td>
+                                                <a href="edit">View and update</a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
                                 <tr>
-                                    {% if data['scenario'] === 'customerUpdate' %}
+                                    {% if data['scenario'] === 'customerUpdate' or data['scenario'] === 'createHand2'%}
                                     <td>
                                         <span class="bold">59 mins</td>
+                                    {% elif data['escalatedHandover'] === 'escalate' %}
+                                    <td><span class="bold">59 mins <br /></span><span class="badge badge-danger">ESCALATED</span></td>        
                                     {% elif data['scenario'] === 'createHand' %}
                                     <td>
                                         <span class="bold">2 hours 59 mins</td>
@@ -133,7 +167,7 @@
                                     </td>
                                     {% endif %}
                                     <td>02/03/2018
-                                        <br>
+                                
                                         <span class="hint">9:33am</span>
                                     </td>
 
@@ -151,13 +185,13 @@
                                     <td>STBA - New Claim</td>
                                     {% endif %}
                                     
-                                     {% if data[ 'callbackRequired']==='cleared' or data[ 'noCallbackRequired']==='cleared' %}
+                                     {% if data[ 'callbackRequired']==='cleared' or data[ 'noCallbackRequired']==='cleared' or data[ 'scenario']==='createHandover' %}
                                      <td><span class="badge badge-info">Completed</span></td>
                                      {% elif data['secondCallBackStatus'] %}
                                     <td>Third call pending</td>
                                     {% elif data['callBackStatus'] %}
                                     <td>Second call pending</td>
-                                    {% elif  data['callbackRequired']==="Yes" %}                               
+                                    {% elif  data['callbackRequired']==="Yes" or data['scenario']==="customerUpdate"  %}                               
                                     <td>First call pending</td>
                                     {% elif data['edit']==='editHand' %}
                                     <td>In Progress</td>
@@ -169,10 +203,23 @@
                                         <a href="edit">View and update</a>
                                     </td>
                                 </tr>
-
+                                <tr>
+                                      <td><span class="bold">Expired</span></td>
+                                      <td>02/03/2018 
+                                            9:33am</td>
+                                      <td>Oldham</td>
+                                      <td>Imogen Thomas</td>
+                                      <td>ESA</td>
+                                      <td>Change of address</td>
+                                      <td><span class="badge badge-info">Completed</span></td>
+                                        <td>
+                                            <a href="#">View</a>
+                                        </td>
+                                    </tr>
+                               
                             </tbody>
                         </table>
-                       {% endif %}
+                        {% endif %}
                 </div>
             </div>
             <div class="grid-row">
