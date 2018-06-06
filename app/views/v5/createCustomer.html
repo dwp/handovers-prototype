@@ -130,7 +130,7 @@
                         <fieldset class="inline">
                                 <legend class="form-label-bold">Translator required ?</legend>
                             <div class="multiple-choice" data-target="language-gp">
-                                <input id="translator-yes" type="radio" name="translator"  value="Yes" aria-controls="language-gp" aria-expanded="false" {{ 'checked' if data[ 'translator']==='yes'
+                                <input id="translator-yes" type="radio" name="translator"  value="Yes"  {{ 'checked' if data[ 'translator']==='yes'
                                 else ''}}>
                                 <label for="translator-yes">Yes</label>
                             </div>
@@ -155,7 +155,7 @@
                         <fieldset class="inline">
                                 <legend class="form-label-bold">Does the customer have a representative ?</legend>
                             <div class="multiple-choice" data-target="approved-rep-group">
-                                <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes" aria-controls="approved-rep-group" aria-expanded="false">
+                                <input id="approved-rep-yes" type="radio" name="approved-rep" value="Yes">
                                 <label for="approved-rep-yes">Yes</label>
                             </div>
                             <div class="multiple-choice">
