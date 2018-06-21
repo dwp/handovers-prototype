@@ -1,0 +1,106 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Choose reasons to add to skill set
+        </h1>
+        <form class="form" action="agentEdit" method="post">
+
+            <div class="form-group">
+                <fieldset>
+              
+                  <legend>
+                    <h3 class="bold">Select reasons to add to skill set</h3>
+                  </legend>
+
+                  <div class="multiple-choice">
+                    <input id="All" name="enquiry-reason" type="checkbox" value="All"  {{ ('enquiry-reason','All') }}>
+                    <label for="All">All</label>
+                  </div>
+                  <p class="form-block">or</p>
+                  <div class="multiple-choice">
+                      <input id="Deductions" name="enquiry-reason" type="checkbox" value="Deductions" {{ ('enquiry-reason',' Deductions') }}>
+                      <label for="Deductions">Deductions</label>
+                    </div>
+                
+                  <div class="multiple-choice">
+                    <input id="request for a letter " name="enquiry-reason" type="checkbox" value="request for a letter " {{ ('enquiry-reason','request for a letter ') }}>
+                    <label for="request for a letter ">request for a letter </label>
+                  </div>
+                  <div class="multiple-choice">
+                      <input id="clerical" name="enquiry-reason" type="checkbox" value="clerical" {{ checked('enquiry-reason','clerical') }}>
+                      <label for="clerical">clerical</label>
+                    </div>
+
+                    <div class="multiple-choice">
+                        <input id="Post query " name="enquiry-reason" type="checkbox" value="Post query " {{ checked('enquiry-reason','Post query ') }}>
+                        <label for="Post query ">Post query </label>
+                      </div>
+
+                      <div class="multiple-choice">
+                          <input id="Appointment query " name="enquiry-reason" type="checkbox" value="Appointment query " {{ checked('enquiry-reason','Appointment query ') }}>
+                          <label for="Appointment query ">Appointment query </label>
+                        </div>
+
+                        <div class="multiple-choice">
+                            <input id="Hardship" name="enquiry-reason" type="checkbox" value="Hardship" {{ checked('enquiry-reason','Hardship') }}>
+                            <label for="Hardship">Hardship</label>
+                          </div>
+
+                          <div class="multiple-choice">
+                              <input id="More information required " name="enquiry-reason" type="checkbox" value="More information required " {{ checked('enquiry-reason','More information required ') }}>
+                              <label for="More information required ">More information required </label>
+                          </div>
+
+                          <div class="multiple-choice">
+                              <input id="Joint claim" name="enquiry-reason" type="checkbox" value="Joint claim" {{ checked('enquiry-reason','Joint claim') }}>
+                              <label for="Joint claim">Joint claim</label>
+                            </div>
+
+                     
+       
+                      <div class="multiple-choice">
+                          <input id="Payment Query" name="enquiry-reason" type="checkbox" value="Payment Query" {{ checked('enquiry-reason','Payment Query') }}>
+                          <label for="Payment Query">Payment Query</label>
+                        </div>
+
+                        <div class="multiple-choice">
+                            <input id="Signing query " name="enquiry-reason" type="checkbox" value="Signing query " {{ checked('enquiry-reason','Signing query ') }}>
+                            <label for="Signing query ">Signing query </label>
+                          </div>
+
+                          <div class="multiple-choice">
+                              <input id="Part time work " name="enquiry-reason" type="checkbox" value="Part time work " {{ checked('enquiry-reason','Part time work ') }}>
+                              <label for="Part time work ">Part time work </label>
+                            </div>
+
+                            <div class="multiple-choice">
+                                <input id="Progress chasing " name="enquiry-reason" type="checkbox" value="Progress chasing " {{ checked('enquiry-reason','Progress chasing ') }}>
+                                <label for="Progress chasing ">Progress chasing </label>
+                              </div>
+                  
+              
+                </fieldset>
+              </div>
+          <div class="form-group">
+              <input class="button" type="submit" value="Continue">
+          </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+
+
+{% endblock %}

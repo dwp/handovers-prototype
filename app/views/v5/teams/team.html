@@ -1,0 +1,184 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Team A
+        </h1>
+        <form class="form" action="team-list" method="post">
+       
+          <h2 class="heading-medium">Agents</h2>
+         <dl class="govuk-check-your-answers cya-questions-short">
+               
+          
+
+                  <div>
+                
+                      <dt class="cya-question">
+                          Sandra	Nash
+                      </dt>
+              
+                     {% if data['enquiry-type']=='STBA' %} 
+                      <dd class="cya-answer">
+                          <h3 class="heading-small">STBA - New Claim</h3> 
+                          <p>Request for a letter, 	Clerical,	Post query, More information required, 	Payment Query, Progress chasing </p>
+                          <h3 class="heading-small">STBA - Maintenance</h3> 
+                          <p>Request for a letter, 	Clerical,	Post query, More information required, 	Payment Query, Progress chasing </p>
+                        </dd>
+
+                      {% else %}
+                      <dd class="cya-answer">
+                        <h3 class="heading-small">ESA / New claims</h3> 
+                        <p>Request for a letter, 	Clerical,	Post query,  Appointment query,  More information required,	Signing query, 	Part time work ,Progress chasing </p>
+                      </dd>
+                      {% endif %}
+                      <dd class="cya-change">
+                        <a href="agent">
+                          Change<span class="visually-hidden"> name</span>
+                        </a>
+                      </dd>
+                    </div>
+
+                    <div>
+                
+                        <dt class="cya-question">
+                         Matthew Clark
+                         <span class="badge">Agent unavailable</span>
+                        </dt>
+                        <dd class="cya-answer">
+                            <h3 class="heading-small">ESA / New claims</h3> 
+                            <p>All</p>
+                        </dd>
+                        <dd class="cya-change">
+                          <a href="queueName">
+                            Change<span class="visually-hidden"> name</span>
+                          </a>
+                        </dd>
+                      </div>
+
+                  <div>
+
+                   
+                
+                      <dt class="cya-question">
+                          Charlie	Cox
+                      </dt>
+                      <dd class="cya-answer">
+                          <h3 class="heading-small">ESA / New claims</h3>
+                          <p>Hardship,	Joint claim, 	Payment Query</p>
+                      </dd>
+                      <dd class="cya-change">
+                        <a href="queueName">
+                          Change<span class="visually-hidden"> name</span>
+                        </a>
+                      </dd>
+                    </div>
+
+                    <div>
+                
+                        <dt class="cya-question">
+                         Imogen Johnson
+                        
+                        </dt>
+                        <dd class="cya-answer">
+                            <h3 class="heading-small">ESA / New claims</h3> 
+                            <p>All</p>
+                        </dd>
+                        <dd class="cya-change">
+                          <a href="queueName">
+                            Change<span class="visually-hidden"> name</span>
+                          </a>
+                        </dd>
+                      </div>
+                      <div>
+                
+                          <dt class="cya-question">
+                          Grant Hopper
+           
+                          </dt>
+                          <dd class="cya-answer">
+                              <h3 class="heading-small">ESA / New claims</h3> 
+                              <p>Request for a letter, Clerical,	Post query, Appointment query, More information required, Signing query, Part time work </p>
+                          </dd>
+                          <dd class="cya-change">
+                            <a href="queueName">
+                              Change<span class="visually-hidden"> name</span>
+                            </a>
+                          </dd>
+                        </div>
+                        <div>
+                
+                            <dt class="cya-question">
+                             Paul Smith
+                            
+                            </dt>
+                            <dd class="cya-answer">
+                                <h3 class="heading-small">ESA / New claims</h3> 
+                                <p>All</p>
+                            </dd>
+                            <dd class="cya-change">
+                              <a href="queueName">
+                                Change<span class="visually-hidden"> name</span>
+                              </a>
+                            </dd>
+                          </div>
+                          <div>
+                              <dt class="cya-question">
+                               Jane Hudson
+                              </dt>
+                              <dd class="cya-answer">
+                                  <h3 class="heading-small">ESA / STBA - Maintnance</h3> 
+                                  <p>All</p>
+                              </dd>
+                              <dd class="cya-change">
+                                <a href="queueName">
+                                  Change<span class="visually-hidden"> name</span>
+                                </a>
+                              </dd>
+                            </div>
+
+                            <div>
+                                <dt class="cya-question">
+                                 Dan Feeney
+                                </dt>
+                                <dd class="cya-answer">
+                                    <h3 class="heading-small">ESA / STBA - New Claims</h3> 
+                                    <p>All</p>
+                                </dd>
+                                <dd class="cya-change">
+                                  <a href="queueName">
+                                    Change<span class="visually-hidden"> name</span>
+                                  </a>
+                                </dd>
+                              </div>
+
+
+             
+                    </dl>
+              
+                    <div class="form-group">
+                        <input class="button" type="submit" value="Update team">
+                    </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> 
+<script type="text/javascript" src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="/public/javascripts/vendor/accessible-autocomplete.min.js"></script>
+<script>
+  accessibleAutocomplete.enhanceSelectElement({
+    selectElement: document.querySelector('#Agents')
+  })
+</script>
+{% endblock %}

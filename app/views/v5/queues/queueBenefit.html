@@ -1,0 +1,60 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Choose benefit types
+        </h1>
+        <form class="form" action="createQueue" method="post">
+
+            <div class="form-group">
+                <fieldset>
+              
+                  <legend>
+                    <h3 class="">Select benefit types to add to queue</h3>
+                  </legend>
+              
+                  <div class="multiple-choice">
+                    <input id="ESA" name="benefit-type" type="checkbox" value="ESA" {{ checked('benefit-type','ESA') }}>
+                    <label for="ESA">ESA</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="IS" name="benefit-type" type="checkbox" value="IS" {{ checked('benefit-type','IS') }}>
+                    <label for="IS">IS</label>
+                  </div>
+                  <div class="multiple-choice">
+                      <input id="DLA - Adult" name="benefit-type" type="checkbox" value="DLA - Adult" {{ checked('benefit-type','DLA - Adult') }}>
+                      <label for="DLA - Adult">DLA - Adult</label>
+                    </div>
+
+                    <div class="multiple-choice">
+                        <input id="DLA - Child" name="benefit-type" type="checkbox" value="DLA - Child" {{ checked('benefit-type','DLA - Child') }}>
+                        <label for="DLA - Child">DLA - Child</label>
+                      </div>
+
+                      <div class="multiple-choice">
+                          <input id="JSA" name="benefit-type" type="checkbox" value="JSA" {{ checked('benefit-type','JSA') }}>
+                          <label for="JSA">JSA</label>
+                        </div>
+                  
+              
+                </fieldset>
+              </div>
+          <div class="form-group">
+              <input class="button" type="submit" value="Continue">
+          </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> {% endblock %}

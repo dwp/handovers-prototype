@@ -1,0 +1,159 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Create queue
+        </h1>
+        <form class="form" action="create" method="post">
+
+
+            <dl class="govuk-check-your-answers cya-questions-short">
+                <div>
+                    {% if data['queueName'] %} 
+                  <dt class="cya-question">
+                    Name
+                  </dt>
+                  <dd class="cya-answer">
+                      {{ data['queueName'] }}
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="queueName">
+                      Change<span class="visually-hidden"> name</span>
+                    </a>
+                  </dd>
+                  {% else %}
+                  <dt class="cya-question">
+                      <a href="queueName" >Choose name</a>
+                    </dt>
+                    <dd class="cya-answer">
+                       
+                      </dd>
+                      <dd class="cya-change">
+                       
+                      </dd>
+
+                  {% endif %}
+                </div>
+        
+                <div>
+                    {% if data['benefit-type'] %} 
+                  <dt class="cya-question">
+                    Available benefit types
+                  </dt>
+                  <dd class="cya-answer">
+                      {{ data['benefit-type'] }}
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="queueBenefit.html">
+                     Change<span class="visually-hidden"> Benefit types</span>
+                    </a>
+                  </dd>
+                  {% else %}
+                  <dt class="cya-question">
+                      <a href="queueBenefit" >Available benefit types</a>
+                    </dt>
+                    <dd class="cya-answer">
+                    
+                    </dd>
+                    <dd class="cya-change">
+                      
+                    </dd>
+                    {% endif %}
+                </div>
+        
+                <div>
+                    {% if data['enquiry-type'] %} 
+                  <dt class="cya-question">
+                      Available enquiry types
+                  </dt>
+                  <dd class="cya-answer">
+                      {{ data['enquiry-type'] }}
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="queueEnquiryType">
+                      Change<span class="visually-hidden">Enquiry types</span>
+                    </a>
+                  </dd>
+                  {% else %}
+                  <dt class="cya-question">
+                      <a href="queueEnquiryType" >Available enquiry types</a>
+                    </dt>
+                    <dd class="cya-answer">
+                    
+                    </dd>
+                    <dd class="cya-change">
+                      
+                    </dd>
+                    {% endif %}
+                  
+                </div>
+
+                <div>
+                    {% if data['enquiry-reason'] %} 
+                    <dt class="cya-question">
+                     Available enquiry reasons
+                    </dt>
+                    <dd class="cya-answer">
+                        {{ data['enquiry-reason'] }}
+                    </dd>
+                    <dd class="cya-change">
+                      <a href="queueEnquiryReason.html">
+                        Change<span class="visually-hidden">enquiry reason</span>
+                      </a>
+                    </dd>
+                    {% else %}
+                    <dt class="cya-question">
+                        <a href="queueEnquiryReason.html" >Available enquiry reasons</a>
+                      </dt>
+                      <dd class="cya-answer">
+                      
+                      </dd>
+                      <dd class="cya-change">
+                        
+                      </dd>
+                      {% endif %}
+                  </div>
+
+                  <div>
+                      {% if data['enquiry-AZ'] %} 
+                      <dt class="cya-question">
+                       Split queue alphabetically
+                      </dt>
+                      <dd class="cya-answer">
+                          {{ data['enquiry-AZ'] }}
+                      </dd>
+                      <dd class="cya-change">
+                        <a href="queueAZSplit">
+                          Change<span class="visually-hidden">A - Z splits</span>
+                        </a>
+                      </dd>
+                      {% else %}
+                      <dt class="cya-question">
+                          <a href="queueAZSplit" >Split queue alphabetically</a>
+                        </dt>
+                        <dd class="cya-answer">
+                        
+                        </dd>
+                        <dd class="cya-change">
+                          
+                        </dd>
+                        {% endif %}
+                    </div>
+        
+        
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> {% endblock %}

@@ -1,0 +1,82 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Choose enquiry types
+        </h1>
+        <form class="form" action="createQueue" method="post">
+
+            <div class="form-group">
+                <fieldset>
+              
+                  <legend>
+                    <h3 class="">Select enquiry types to add to queue</h3>
+                  </legend>
+              
+                  <div class="multiple-choice">
+                    <input id=" 3rd Party Deductions" name="enquiry-type" type="checkbox" value=" 3rd Party Deductions" {{ checked('enquiry-type',' 3rd Party Deductions') }}>
+                    <label for=" 3rd Party Deductions"> 3rd Party Deductions</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="Appeal" name="enquiry-type" type="checkbox" value="Appeal" {{ checked('enquiry-type','Appeal') }}>
+                    <label for="Appeal">Appeal</label>
+                  </div>
+                  <div class="multiple-choice">
+                      <input id="BD Sending Pilot" name="enquiry-type" type="checkbox" value="BD Sending Pilot" {{ checked('enquiry-type','BD Sending Pilot') }}>
+                      <label for="BD Sending Pilot">BD Sending Pilot</label>
+                    </div>
+
+                    <div class="multiple-choice">
+                        <input id="Benefit Cap Query" name="enquiry-type" type="checkbox" value="Benefit Cap Query" {{ checked('enquiry-type','Benefit Cap Query') }}>
+                        <label for="Benefit Cap Query">Benefit Cap Query</label>
+                      </div>
+
+                      <div class="multiple-choice">
+                          <input id="Mandatory Reconsideration" name="enquiry-type" type="checkbox" value="Mandatory Reconsideration" {{ checked('enquiry-type','Mandatory Reconsideration') }}>
+                          <label for="Mandatory Reconsideration">Mandatory Reconsideration</label>
+                        </div>
+
+                        <div class="multiple-choice">
+                            <input id="Maintenance" name="enquiry-type" type="checkbox" value="Maintenance" {{ checked('enquiry-type','Maintenance') }}>
+                            <label for="Maintenance">Maintenance</label>
+                          </div>
+
+                          <div class="multiple-choice">
+                              <input id="Missing Instrument of Payment (IOP)" name="enquiry-type" type="checkbox" value="Missing Instrument of Payment (IOP)" {{ checked('enquiry-type','Missing Instrument of Payment (IOP)') }}>
+                              <label for="Missing Instrument of Payment (IOP)">Missing Instrument of Payment (IOP)</label>
+                          </div>
+
+                          <div class="multiple-choice">
+                              <input id="Mortgages" name="enquiry-type" type="checkbox" value="Mortgages" {{ checked('enquiry-type','Mortgages') }}>
+                              <label for="Mortgages">Mortgages</label>
+                            </div>
+
+                         
+                      <div class="multiple-choice">
+                          <input id="New Claim" name="enquiry-type" type="checkbox" value="New Claim" {{ checked('enquiry-type','New Claim') }}>
+                          <label for="New Claim">New Claim</label>
+                        </div>
+   
+                  
+              
+                </fieldset>
+              </div>
+          <div class="form-group">
+              <input class="button" type="submit" value="Continue">
+          </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> {% endblock %}

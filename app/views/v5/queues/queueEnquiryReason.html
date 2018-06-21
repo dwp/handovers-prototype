@@ -1,0 +1,82 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Choose enquiry reasons
+        </h1>
+        <form class="form" action="createQueue" method="post">
+
+            <div class="form-group">
+                <fieldset>
+              
+                  <legend>
+                    <h3 class="bold">Select enquiry reasons to add to queue</h3>
+                  </legend>
+              
+                  <div class="multiple-choice">
+                    <input id="  Checking Receipt Of Post Or Documents" name="enquiry-reason" type="checkbox" value="  Checking Receipt Of Post Or Documents" {{ checked('enquiry-reason','  Checking Receipt Of Post Or Documents') }}>
+                    <label for="  Checking Receipt Of Post Or Documents">  Checking Receipt Of Post Or Documents</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="Clerical Claim" name="enquiry-reason" type="checkbox" value="Clerical Claim" {{ checked('enquiry-reason','Clerical Claim') }}>
+                    <label for="Clerical Claim">Clerical Claim</label>
+                  </div>
+                  <div class="multiple-choice">
+                      <input id="Payment Query" name="enquiry-reason" type="checkbox" value="Payment Query" {{ checked('enquiry-reason','Payment Query') }}>
+                      <label for="Payment Query">Payment Query</label>
+                    </div>
+
+                    <div class="multiple-choice">
+                        <input id="Request To Amend Deductions" name="enquiry-reason" type="checkbox" value="Request To Amend Deductions" {{ checked('enquiry-reason','Request To Amend Deductions') }}>
+                        <label for="Request To Amend Deductions">Request To Amend Deductions</label>
+                      </div>
+
+                      <div class="multiple-choice">
+                          <input id="Change of Name (or status)" name="enquiry-reason" type="checkbox" value="Change of Name (or status)" {{ checked('enquiry-reason','Change of Name (or status)') }}>
+                          <label for="Change of Name (or status)">Change of Name (or status)</label>
+                        </div>
+
+                        <div class="multiple-choice">
+                            <input id="Other" name="enquiry-reason" type="checkbox" value="Other" {{ checked('enquiry-reason','Other') }}>
+                            <label for="Other">Other</label>
+                          </div>
+
+                          <div class="multiple-choice">
+                              <input id="Claim Termination" name="enquiry-reason" type="checkbox" value="Claim Termination" {{ checked('enquiry-reason','Claim Termination') }}>
+                              <label for="Claim Termination">Claim Termination</label>
+                          </div>
+
+                          <div class="multiple-choice">
+                              <input id="Reporting Change Of Address" name="enquiry-reason" type="checkbox" value="Reporting Change Of Address" {{ checked('enquiry-reason','Reporting Change Of Address') }}>
+                              <label for="Reporting Change Of Address">Reporting Change Of Address</label>
+                            </div>
+
+                         
+                      <div class="multiple-choice">
+                          <input id="STBA Request" name="enquiry-reason" type="checkbox" value="STBA Request" {{ checked('enquiry-reason','STBA Request') }}>
+                          <label for="STBA Request">STBA Request</label>
+                        </div>
+   
+                  
+              
+                </fieldset>
+              </div>
+          <div class="form-group">
+              <input class="button" type="submit" value="Continue">
+          </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> {% endblock %}

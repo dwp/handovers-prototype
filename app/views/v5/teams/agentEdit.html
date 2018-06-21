@@ -1,0 +1,90 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Agent Sandra Nash
+          <span class="heading-secondary"> Edit Skillset</span>
+        </h1>
+        <form class="form" action="createTeam" method="post">
+
+          <h2 class="heading-medium">Skill sets</h2>
+         <dl class="govuk-check-your-answers cya-questions-short">
+               
+              <div>
+                
+                  <dt class="cya-question">
+                   Benefit
+
+                  </dt>
+                  <dd class="cya-answer">
+                  ESA
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="agentSelectBenefit.html">
+                      Change<span class="visually-hidden"> name</span>
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                
+                  <dt class="cya-question">
+                   Handover type
+
+                  </dt>
+                  <dd class="cya-answer">
+                  Maintenance
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="agentSelectBenefitType.html">
+                      Change<span class="visually-hidden"> name</span>
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                
+                  <dt class="cya-question">
+                   Handover Reasons
+
+                  </dt>
+                  <dd class="cya-answer">
+                  All
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="agentSelectReason.html">
+                      Change<span class="visually-hidden"> name</span>
+                    </a>
+                  </dd>
+                </div>
+                    </dl>
+              
+                    <div class="form-group">
+                        <input class="button" type="submit" value="Update skill set">
+                        <br />
+                        <a href="find" class="link-back">Back</a>
+                    </div>
+                
+
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> 
+<script type="text/javascript" src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="/public/javascripts/vendor/accessible-autocomplete.min.js"></script>
+<script>
+  accessibleAutocomplete.enhanceSelectElement({
+    selectElement: document.querySelector('#Agents')
+  })
+</script>
+{% endblock %}

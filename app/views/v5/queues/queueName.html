@@ -1,0 +1,33 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Name of your queue
+        </h1>
+        <form class="form" action="createQueue" method="post">
+
+
+
+          <div class="form-group">
+            <label class="form-label" for="queueName">Name</label>
+            <input class="form-control" id="queueName" type="text" name="queueName" value="{{ data['queueName'] }}">
+          </div>
+          <div class="form-group">
+              <input class="button" type="submit" value="Continue">
+          </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> {% endblock %}

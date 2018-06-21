@@ -1,0 +1,92 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Agent Sandra Nash
+        </h1>
+        <form class="form" action="team" method="post">
+
+          <h2 class="heading-medium">Skill sets</h2>
+         <dl class="govuk-check-your-answers cya-questions-short">
+               
+              <div>
+                
+                  <dt class="cya-question">
+                    <div class="multiple-choice">
+                    <input id="New claims" name="enquiry-type" type="checkbox" value="New claims" {{ checked('enquiry-type','New claims') }}>
+                    <label for="New claims">Select </label>
+                  </div>
+                   
+                 
+              
+
+                  </dt>
+                  <dd class="cya-answer">
+                      <h3 class="heading-small mt0">New claims</h3>
+                      <p><p>Request for a letter, 	Clerical,	Post query, 	Appointment query, 	Hardship, More information required,	Joint claim, 	Payment Query, 	Signing query, 	Part time work ,Progress chasing </p></p>
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="queueName">
+                      Change<span class="visually-hidden"> name</span>
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                
+                    <dt class="cya-question">
+                      <div class="multiple-choice">
+                      <input id="STBA" name="enquiry-type" type="checkbox" value="STBA" {{ checked('enquiry-type','STBA') }}>
+                      <label for="STBA">ESA</label>
+                    </div>
+                     
+                   
+                
+  
+                    </dt>
+                    <dd class="cya-answer">
+    
+  
+                        <h3 class="heading-small mt0">STBA - New Claim</h3>
+                        <p>Request for a letter, 	Clerical,	Post query, More information required, 	Payment Query, Progress chasing </p>
+                        <h3 class="heading-small mt0">STBA - Maintenance</h3>
+                        <p>Request for a letter, 	Clerical,	Post query, More information required, 	Payment Query, Progress chasing </p>
+                    </dd>
+                    <dd class="cya-change">
+                      <a href="queueName">
+                        Change<span class="visually-hidden"> name</span>
+                      </a>
+                    </dd>
+                  </div>
+                    </dl>
+
+                    <div class="form-group">
+                        <input class="button button-secondary" type="submit" value="Add a new skillset">
+                    </div>
+              
+                    <div class="form-group">
+                        <input class="button" type="submit" value="Save selected skillsets">
+                    </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> 
+<script type="text/javascript" src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="/public/javascripts/vendor/accessible-autocomplete.min.js"></script>
+<script>
+  accessibleAutocomplete.enhanceSelectElement({
+    selectElement: document.querySelector('#Agents')
+  })
+</script>
+{% endblock %}
