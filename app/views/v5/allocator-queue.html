@@ -5,7 +5,7 @@
 {% include "includes/v2/brandChange.html" %}
 {% endblock %}
 
-{% block content %} {% include "includes/v2/nav.html" %}
+{% block content %} {% include "includes/v2/navV5.html" %}
 <main id="content" role="main">
     <div class="main-content">
             <form class="form" action="queue" method="post">
@@ -75,7 +75,7 @@
                                     (2)</a>
                                 {% else %}
                                 <a href="queue.html">Callum Dalton (2)</a>
-                                <span class="badge">NOT AVAILABLE</span>
+                                <span class="badge">AGENT NOT AVAILABLE</span>
                                 {% endif %}
 
 
@@ -181,10 +181,10 @@
 
                                     {% if data['agent'] %}
                                     <a href="queue.html">Callum Dalton (1)
-                                    <span class="badge">NOT AVAILABLE</span></a>
+                                    <span class="badge">AGENT NOT AVAILABLE</span></a>
                                     {% else %}
                                     <a href="queue.html">Callum Dalton (2)</a>
-                                    <span class="badge">NOT AVAILABLE</span>
+                                    <span class="badge">AGENT NOT AVAILABLE</span>
                                     {% endif %}
                              
 
@@ -292,7 +292,7 @@ timeToClear, handoverType, handoverStatus, callbackStatus) %}
             <p>
                 <a href="{{ agentQueueLink }}">{{ agentName }} {% if agentName == "john smith" %}
                     <br>
-                    <span class="badge">NOT AVAILABLE</span>
+                    <span class="badge">AGENT NOT AVAILABLE</span>
                     {% endif %}</a>
             </p>
     </td>

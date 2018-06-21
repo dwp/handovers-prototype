@@ -153,6 +153,14 @@ router.post('/v5/queue',function (req, res) {
 
 }) 
 
+router.post('/v5/queues/createQueue', function (req, res) {
+  res.redirect('/v5/queues/queueSummary')
+}) 
+
+
+
+
+
     
 
 module.exports = router;

@@ -1,0 +1,72 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Choose handover types to add to skill set
+        </h1>
+        <form class="form" action="agentEdit" method="post">
+            <div class="form-group">
+                <fieldset>
+              
+                  <legend>
+                    <h2 class="form-label-bold">Select handover types to add to skillset</h2>
+                  </legend>
+                  {% if data['benefit-type']==='JSA' %} 
+                  <div class="multiple-choice">
+                    <input id=" 3rd Party Deductions" name="enquiry-type" type="checkbox" value=" 3rd Party Deductions" {{ ('enquiry-type',' 3rd Party Deductions') }}>
+                    <label for=" 3rd Party Deductions"> 3rd Party Deductions</label>
+                  </div>
+                  <div class="multiple-choice">
+                    <input id="New claim" name="enquiry-type" type="checkbox" value="New claim" {{ ('enquiry-type','New claim') }}>
+                    <label for="New claim">New claim</label>
+                  </div>
+                  <div class="multiple-choice">
+                      <input id="STBA - New claim" name="enquiry-type" type="checkbox" value="STBA - New claim" {{ ('enquiry-type','STBA - New claim') }}>
+                      <label for="STBA - New claim">STBA - New claim</label>
+                    </div>
+
+                    <div class="multiple-choice">
+                        <input id="STBA - Maintenance" name="enquiry-type" type="checkbox" value="STBA - Maintenance" {{ ('enquiry-type','STBA - Maintenance') }}>
+                        <label for="STBA - Maintenance">STBA - Maintenance</label>
+                      </div>
+
+                      {% else %}
+
+                      <div class="multiple-choice">
+                          <input id="New claim" name="enquiry-type" type="checkbox" value="New claim" {{ ('enquiry-type','New claim') }}>
+                          <label for="New claim">New claim</label>
+                        </div>
+
+                        <div class="multiple-choice">
+                            <input id="STBA - Maintenance" name="enquiry-type" type="checkbox" value="STBA - Maintenance" {{ ('enquiry-type','STBA - Maintenance') }}>
+                            <label for="STBA - Maintenance">STBA - Maintenance</label>
+                          </div>
+
+                          <div class="multiple-choice">
+                              <input id="STBA - New claim" name="enquiry-type" type="checkbox" value="STBA - New claim" {{ ('enquiry-type','STBA - New claim') }}>
+                              <label for="STBA - New claim">STBA - New claim</label>
+                          </div>
+                        {% endif %}
+                  
+              
+                </fieldset>
+              </div>
+          <div class="form-group">
+              <input class="button" type="submit" value="Continue">
+          </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> {% endblock %}

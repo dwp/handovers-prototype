@@ -2,19 +2,24 @@
     <div class="main-nav-wrapper">
         <ul class="main-nav">
             <li>
-                <a class="menu-item" href="find" id="customer_find">Search for customer</a>
+                <a class="menu-item" href="/v5/find" id="customer_find">Search for customer</a>
             </li>
             <li>
-                <a class="menu-item" href="queue">My Queue</a>
+                <a class="menu-item" href="/v5/queue">My Queue</a>
 
 
             </li>
             {% if data['scenario'] === 'allocatorEdit' %}
             <li>
 
-                <a class="menu-item" href="allocator-queue">Office queue</a>
+                <a class="menu-item" href="/v5/allocator-queue">Office queue</a>
 
             </li>
+            <li>
+
+                    <a class="menu-item" href="teams/team-list">Teams</a>
+    
+                </li>
             {% endif %}
             
         </ul>

@@ -244,5 +244,160 @@ table th, table td {
 
 
 
+// taken from filters for gov.uk search to use for multiple checkbox selections ------------------------------------///
+
+.app-c-option-select {
+  background-color: #dee0e2;
+  padding: 5px;
+  margin-bottom: 30px
+}
+
+@media (min-width: 769px) {
+  .app-c-option-select ::-webkit-scrollbar {
+      -webkit-appearance:none;
+      width: 7px
+  }
+
+  .app-c-option-select ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0,0,0,0.5);
+      -webkit-box-shadow: 0 0 1px rgba(255,255,255,0.5)
+  }
+}
+
+.app-c-option-select:focus {
+  outline: 3px solid #ffbf47
+}
+
+.app-c-option-select .container-head {
+  padding: 0 5px
+}
+
+.app-c-option-select .option-select-label {
+
+  font-weight: 400;
+  text-transform: none;
+  font-size: 16px;
+  line-height: 1.25;
+  margin-right: 40px;
+  font-weight: bold;
+  padding-top: 5px
+}
+
+@media (min-width: 641px) {
+  .app-c-option-select .option-select-label {
+      font-size:19px;
+      line-height: 1.3157894737
+  }
+}
+
+.app-c-option-select .options-container {
+  position: relative;
+  background-color: #fff;
+  overflow-y: auto;
+  overflow-x: hidden
+}
+
+@media (min-width: 769px) {
+  .app-c-option-select .options-container {
+      max-height:200px
+  }
+}
+
+.app-c-option-select .options-container label {
+  display: block;
+  cursor: pointer
+}
+
+@media (min-width: 769px) {
+  .app-c-option-select .options-container label {
+      width:90%
+  }
+}
+
+.app-c-option-select .options-container label:hover {
+  background-color: #f8f8f8
+}
+
+.app-c-option-select .options-container input {
+  float: left;
+  margin: 2px 0 0 -27px;
+  width: 20px;
+  height: 20px
+}
+
+.js-enabled .app-c-option-select {
+  padding: 0 0 1px
+}
+
+.js-enabled .app-c-option-select .js-selected-counter {
+  font-family: "nta", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 12px;
+  line-height: 1.25
+}
+
+@media (min-width: 641px) {
+  .js-enabled .app-c-option-select .js-selected-counter {
+      font-size:14px;
+      line-height: 1.4285714286
+  }
+}
+
+ .app-c-option-select .options-container {
+  border: 5px solid #dee0e2
+}
+
+.app-c-option-select {
+
+h2, h3{
+  margin:10px 5px 5px;
+}
+
+.multiple-choice{
+  width:100%;
+  border-bottom:1px solid $border-colour;
+  margin-bottom:0px;
+  padding:11px 10px 10px 50px;
+
+ 
+
+  &:hover
+   { background-color: #f8f8f8}
+
+ & [type=checkbox] + label::before {
+    content: "";
+    border: 2px solid;
+    background: transparent;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+
+& [type=checkbox] + label::after {
+  top: 14px;
+  left: 12px;
+}
+}
+}
+
+@media (min-width: 641px){
+
+.autocomplete__hint, .autocomplete__input {
+ 
+  max-width: 50%;
+}
+
+.autocomplete__menu {
+
+  max-width: 50%;
+  width: calc(50% - 4px)
+}
+}
+
+
 
   

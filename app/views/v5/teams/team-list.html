@@ -1,0 +1,90 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Teams
+        </h1>
+        <form class="form" action="createTeam" method="post">
+         <dl class="govuk-check-your-answers cya-questions-short">
+               
+              <div>
+                
+                  <dt class="cya-question">
+                   Team A
+                  </dt>
+                  <dd class="cya-answer">
+                      ESA / New claims <br />
+                      ESA / STBA Maintenance <br />
+                      ESA / STBA New claim
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="team">
+                      Update team<span class="visually-hidden"> name</span>
+                    </a>
+                  </dd>
+                </div>
+
+                <div>
+                
+                    <dt class="cya-question">
+                     Team B
+                    </dt>
+                    <dd class="cya-answer">
+                        JSA / New claims <br />
+                        JSA / STBA Maintenance <br />
+                        JSA / STBA New claim<br />
+                        JSA / 3rd Party Deductions
+                    </dd>
+                    <dd class="cya-change">
+                      <a href="team">
+                        Update team<span class="visually-hidden"> name</span>
+                      </a>
+                    </dd>
+                  </div>
+
+                  <div>
+                
+                      <dt class="cya-question">
+                       Team C
+                      </dt>
+                      <dd class="cya-answer">
+                         Something else
+                      </dd>
+                      <dd class="cya-change">
+                        <a href="team">
+                          Update team<span class="visually-hidden"> name</span>
+                        </a>
+                      </dd>
+                    </div>
+
+             
+             
+                    </dl>
+              
+                    <div class="form-group">
+                        <input class="button" type="submit" value="Update team">
+                    </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> 
+<script type="text/javascript" src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="/public/javascripts/vendor/accessible-autocomplete.min.js"></script>
+<script>
+  accessibleAutocomplete.enhanceSelectElement({
+    selectElement: document.querySelector('#Agents')
+  })
+</script>
+{% endblock %}

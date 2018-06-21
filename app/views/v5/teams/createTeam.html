@@ -1,0 +1,116 @@
+{% extends "layout.html" %} {% block brand %} {% include "includes/v2/brandChange.html" %} {% endblock %} {% block content
+%} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+  <div class="main-content">
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Create team
+        </h1>
+        <form class="form" action="createTeam" method="post">
+            
+          <div class="form-group">
+              <label class="form-label-bold" for="queueName">Team name</label>
+              <input class="form-control" id="queueName" type="text" name="queueName" value="{{ data['queueName'] }}">
+            </div>
+            {% if data['Agents'] %} 
+          <h2 class="heading-medium">Selected agents</h2>
+         <dl class="govuk-check-your-answers cya-questions-short">
+               
+              <div>
+                
+                  <dt class="cya-question">
+                   Matthew Clark
+                  </dt>
+                  <dd class="cya-answer">
+                    ESA / Maintenace / All
+                  </dd>
+                  <dd class="cya-change">
+                    <a href="queueName">
+                      Change<span class="visually-hidden"> name</span>
+                    </a>
+                  </dd>
+                </div>
+                {% if data['Agents']==="Sandra Nash" %} 
+                <div>
+                
+                    <dt class="cya-question">
+                        Sandra	Nash
+                    </dt>
+                    <dd class="cya-answer">
+                      ESA / Maintenace / Morgages,payments
+                    </dd>
+                    <dd class="cya-change">
+                      <a href="queueName">
+                        Change<span class="visually-hidden"> name</span>
+                      </a>
+                    </dd>
+                  </div>
+                  {% endif %}
+                  {% if data['Agents']==="Charlie Cox" %} 
+                  <div>
+                
+                      <dt class="cya-question">
+                          Sandra	Nash
+                      </dt>
+                      <dd class="cya-answer">
+                        <p>ESA / Maintenace / Morgages,payments,Morgages,payments, Morgages,payments, Morgages,payments, Morgages,payments</p>
+                        <p>IS / All</p>
+                      </dd>
+                      <dd class="cya-change">
+                        <a href="queueName">
+                          Change<span class="visually-hidden"> name</span>
+                        </a>
+                      </dd>
+                    </div>
+                  <div>
+                
+                      <dt class="cya-question">
+                          Charlie	Cox
+                      </dt>
+                      <dd class="cya-answer">
+                        ESA / All <br />
+                        IS / All
+                      </dd>
+                      <dd class="cya-change">
+                        <a href="queueName">
+                          Change<span class="visually-hidden"> name</span>
+                        </a>
+                      </dd>
+                    </div>
+                    {% endif %}
+                    </dl>
+                    {% endif %}
+                    <div class="form-group">
+                  
+
+                    {% include "includes/v2/agentTypeahead.html" %}  
+                    <input class="button button-secondary" type="submit" value="Add agent to team" style="margin-top:15px">
+                   
+                      <!--{% include "includes/v2/filteroptions.html" %} -->
+                    
+                    </div>
+                    <div class="form-group">
+                        <input class="button" type="submit" value="Create team">
+                    </div>
+
+        </form>
+      </div>
+</main>
+
+</form>
+
+
+</div>
+</div>
+</div>
+</main>
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script> 
+<script type="text/javascript" src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="/public/javascripts/vendor/accessible-autocomplete.min.js"></script>
+<script>
+  accessibleAutocomplete.enhanceSelectElement({
+    selectElement: document.querySelector('#Agents')
+  })
+</script>
+{% endblock %}
