@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+
+{% block brand %}
+{% include "includes/v2/brandChange.html" %}
+{% endblock %}
+
+{% block content %} {% include "includes/v2/navV5.html" %}
+<main id="content" role="main">
+    <div class="main-content">
+            <form class="form" action="queue" method="post">
+        {% include "includes/error-summary.html" %} {% include "includes/message-banner.html" %}
+        <h1 class="heading-large">
+            <span class="heading-secondary">Burnley Benefit Centre</span>
+            Handovers queue</h1>
+        <div class="grid-row">
+            <div class="column-quarter">
+               left
+            </div>
+
+            <div class="column-three-quarters">
+                    <ul class="grid-row">
+                            <li class="card escalated">
+                              <a href="edit" class="card__body">
+                                    <div class="column-one-third">
+                                <span><span class="bold">1 hour 25 mins</span> remaining</span>
+                                <span class="font-xsmall">Created: 20/06/2018 9:05am</span>
+                                <span>
+                                        <strong class="app-c-tag">FIRST CALL PENDING</strong>
+                                </span>
+                                
+                                     <!-- <p>
+                                        <strong class="app-c-tag app-c-tag--success">success</strong>
+                                      </p> -->
+                                
+                                      <span>
+                                        <strong class="app-c-tag app-c-tag--danger">Escalated</strong>
+                                      </span>
+                                
+                                     <!-- <p>
+                                        <strong class="app-c-tag app-c-tag--danger">danger</strong>
+                                      </p> -->
+                                </div>
+                                <div class="column-two-thirds ">
+                                        <h3 class="heading-small mt0">Christine Dixon ZZ123456B - ESA / New claims / WCA</h3>
+                                        <p class="mb0">Customer went abroard on the 12/03/18 - 09/04/18 customer’s claim suspended mother states rec’d a call and filled out the form over the telephone, please can this be looked into as the customer now getting desperate for money, call the number 0745 000 0000</p>
+                                        </div>
+                              </a>
+                              <div class="card__footer">
+                                <p class="mb0"><span class="bold">Agent: </span><a href="#">Callum Dalton</a> is <span class="danger">unavailable</span> and has 2 work items <a href="edit?#tab-2">reallocate to another agent</a></p>
+                              </div>
+                            </li>
+                            <li class="card">
+                              <a href="#0" class="card__body">
+                                <span class="bold-xlarge">6</span>
+                                <span class="bold-small">certificates used</span>
+                              </a>
+                              <div class="card__footer">
+                                <span class="font-small">This is how many certificates sponsorship have used.</span>
+                              </div>
+                            </li>
+                          </ul>
+                 </div>
+    </div>
+        <div class="multiple-choice" style="display:none">
+            <input id="radio-inline-4" type="radio" name="scenario" value="allocatorEdit" {{ 'checked' if data[ 'scenario']==='allocatorEdit'
+            else ''}} checked>
+              
+            <label for="radio-4">hidden radio one</label>
+            </div>
+        </form>
+          </div>
+</main>
+
+<script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
+<script src="/public/javascripts/vendor/datatables.min.js"></script>
+
+{% endblock %}
+

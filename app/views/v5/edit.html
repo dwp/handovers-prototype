@@ -7,8 +7,7 @@
 
 {% block content %} {% include "includes/v2/navV5.html" %}
 
-{% include "includes/v2/caseHeader.html" %}
-
+{% include "includes/v2/keydetails.html" %}
 
 <main id="content" role="main">
   <div class="main-content">
@@ -19,7 +18,7 @@
 
           <div class="panel warning mt1" role="group" id="clearHandover" aria-labelledby="" tabindex="-1" style="display:none">
 
-
+          
             <p class="bold icon" style="display:inline-block">
               <i class="icon icon-important">
                 <span class="visually-hidden">Warning</span>
@@ -48,10 +47,11 @@
         </div>
       </div>
       <!--<h1 class="heading-large">Update</h1>-->
-       <h1 class="heading-large">Update handover</h1>
+       <h1 class="heading-medium">Update handover <span class="visually-hidden">for Christine Dixon</span></h1>
       
       {% include "includes/v2/statusBar.html" %}
 
+      
       <div class="grid-row">
         <div class="column-two-thirds">
             <h2 class="heading-medium">Description</h2>
@@ -69,12 +69,12 @@
                 <div class="tabs-nav">
                   <ul class="tabs-list">
                     <li>
-                      <a href="#tab-1">
+                      <a href="#tab-1" class="tab-1">
                         Update handover
                       </a>
                     </li>
                     <li>
-                      <a href="#tab-2">
+                      <a href="#tab-2" class="tab-2">
                         Change type or reallocate
                       </a>
                     </li>
@@ -102,7 +102,7 @@
                         <h3 class="heading-small">Escalate handover</h3>
                       </legend>
                       <div class="multiple-choice">
-                        <input id="radio-inline-2" type="radio" name="escalatedHandover" value="escalate" {{ 'checked' if data[
+                        <input id="radio-inline-2" type="checkbox" name="escalatedHandover" value="escalate" {{ 'checked' if data[
                           'escalatedHandover']==='escalate' else ''}}>
                         <label for="radio-1">Yes</label>
                       </div>
@@ -252,6 +252,7 @@
                 
               
                   <div class="tabs-panel" id="tab-2">
+                      <span id="reallocate"></span>
                     <div class="tabs-panel-inner">
                       <h2 class="js-hidden heading-medium">
                         Tab 2
@@ -261,7 +262,12 @@
                             <label class="form-label-bold mt1" for="handover-note-reallocate">Add a note</label>
                             <textarea class="form-control form-control-3-4" id="handover-note-reallocate" name="handover-note-reallocate" rows="6">{{ data['handover-note-realocate'] }}</textarea>
                           </div>
-                          {% if data['scenario'] === 'allocatorEdit' %} {% include "includes/v2/reallocateAgent.html" %} {% endif %}
+                          
+                          {% if data['scenario'] === 'allocatorEdit' %}
+                   
+                          
+                          
+                          {% include "includes/v2/reallocateAgent.html" %} {% endif %}
                           <div class="form-group">
                             {% include "includes/v2/selectBenefit.html" %}
                             <div class="panel panel-border-narrow">
@@ -300,7 +306,7 @@
               </div>
               
 
-
+              
           
 
 
@@ -313,100 +319,78 @@
 
 
         <div class="column-one-third">
+ 
 
+          <h2 class="heading-medium">History</h2>
+          <ol class="timeline">
 
-          <h2 class="heading-medium mt-0">History</h2>
-          <div class="timeline">
-              {% if data[ 'callbackRequired']==='cleared' or data[ 'noCallbackRequired']==='cleared' %}
+              {% if data[ 'noCallbackRequired']==='cleared' %}
 
-              <span class="line"></span>
-              <div class="timeline__event">
-                <div class="panel panel-border-wide alert-success">
-                  <p class="bold">COMPLETED 
+                <li class="timeline-entry">
+                    <h3 class="timeline-title">Completed</h3>
+                    <p class="timeline-info">
+                      <span class="visually-hidden">Completed</span>
+                      <span class="timeline-author">Calum Dalton</span>
+                      <span class="timeline-author">Burnley Benefit Service Centre</span>
+                      <span class="timeline-date">{% include "includes/v2/date.html" %} at 10:45</span>
                     </p>
-                    <p>
+                  </li>
+  
+            
+              {% endif %}
+
+
+              {% if data['thirdCallBackStatus']  %}
+
+              <li class="timeline-entry">
+                  <h3 class="timeline-title">
+                      Completed - Third call back failed - 
+                      {% if data['thirdCallBackStatus']==="Third call failed - engaged" %}
+                      engaged
+                      {% elif data['thirdCallBackStatus']==="Third call failed - number unobtainable" %}
+                      number unobtainable
+                      {% else %}
+                      not answered
+                      {% endif %}
+                  </h3>
+                  <p class="timeline-info">
+                    <span class="visually-hidden">
+                        Completed - Third call back failed - 
                         {% if data['thirdCallBackStatus']==="Third call failed - engaged" %}
-                        Call back Failed - engaged
+                        engaged
                         {% elif data['thirdCallBackStatus']==="Third call failed - number unobtainable" %}
-                        Call back Failed - number unobtainable
-                        {% elif data[ 'noCallbackRequired']==='cleared'%}
-                        none callback
-                        {% elif data[ 'callbackRequired']==='cleared'%}
-                        Call successful 
-                        
-
+                        number unobtainable
                         {% else %}
-                        Call back Failed - not answered
+                        not answered
                         {% endif %}
-                    </p>
-  
-                </div>
-                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:45</p>
-                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
-  
-              </div>
+                    </span>
+                    <span class="timeline-author">Calum Dalton</span>
+                    <span class="timeline-author">Burnley Benefit Service Centre</span>
+                    <span class="timeline-date">{% include "includes/v2/date.html" %} at 11:00</span>
+                  </p>    
+                </li>
+
               {% endif %}
 
               {% if data['handover-note3'] %}
-
-
-              <span class="line"></span>
-              <div class="timeline__event">
-                <h3 class="heading-small">Note</h3>
-                <div class="panel panel-border-wide alert-default">
-                  <p>{{ data['handover-note3'] }}</p>
-                </div>
-                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:00</p>
-                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
-              </div>
-  
+              <li class="timeline-entry">
+                  <h3 class="timeline-title">Note</h3>
+                  <p class="timeline-body">
+                      {{ data['handover-note3'] }}
+                  </p>
+                  <p class="timeline-info">
+                    <span class="visually-hidden">Note</span>
+                    <span class="timeline-author">Calum Dalton</span>
+                    <span class="timeline-author">Burnley Benefit Service Centre</span>
+                    <span class="timeline-date">{% include "includes/v2/date.html" %} at 11:00</span>
+                  </p>
+                </li>
               {% endif %}  
-
-              {% if data['thirdCallBackStatus']  %}
-              <span class="line"></span>
-              <div class="timeline__event">
-                <h3 class="heading-small">Call back</h3>
-                <div class="panel panel-border-wide alert-warning">
-                  <p>Third call back Failed - 
-                    {% if data['thirdCallBackStatus']==="Third call failed - engaged" %}
-                    engaged
-                    {% elif data['thirdCallBackStatus']==="Third call failed - number unobtainable" %}
-                    number unobtainable
-                    {% else %}
-                    not answered
-                    {% endif %}
-                    </p>
-  
-                </div>
-                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 11:00</p>
-                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
-  
-              </div>
-              {% endif %}
-
-
-              {% if data['handover-note2'] %}
-
-
-              <span class="line"></span>
-              <div class="timeline__event">
-                <h3 class="heading-small">Note</h3>
-                <div class="panel panel-border-wide alert-default">
-                  <p>{{ data['handover-note2'] }}</p>
-                </div>
-                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:45</p>
-                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
-              </div>
-  
-              {% endif %}  
-   
 
               {% if data['secondCallBackStatus'] %}
-              <span class="line"></span>
-              <div class="timeline__event">
-                <h3 class="heading-small">Call back</h3>
-                <div class="panel panel-border-wide alert-warning">
-                  <p>Second call back Failed - 
+              <li class="timeline-entry">
+                  <h3 class="timeline-title">
+                    Second call back failed - 
                     {% if data['secondCallBackStatus']==="Second call failed - engaged" %}
                     engaged
                     {% elif data['secondCallBackStatus']==="Second call failed - number unobtainable" %}
@@ -414,22 +398,50 @@
                     {% else %}
                     not answered
                     {% endif %}
-                    </p>
-  
-                </div>
-                <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:45</p>
-                <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
-  
-              </div>
+                  </h3>
+                  <p class="timeline-info">
+                    <span class="visually-hidden">
+    
+                    Second call back failed - 
+                    {% if data['secondCallBackStatus']==="Second call failed - engaged" %}
+                    engaged
+                    {% elif data['secondCallBackStatus']==="Second call failed - number unobtainable" %}
+                    number unobtainable
+                    {% else %}
+                    not answered
+                    {% endif %}
+                    </span>
+                    <span class="timeline-author">Calum Dalton</span>
+                    <span class="timeline-author">Burnley Benefit Service Centre</span>
+                    <span class="timeline-date">{% include "includes/v2/date.html" %} at 10:45</span>
+                  </p>    
+                </li>
               {% endif %}
 
 
-            {% if data['callBackStatus'] %}
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Call back</h3>
-              <div class="panel panel-border-wide alert-warning">
-                <p>First call back Failed - 
+              {% if data['handover-note2'] %}
+
+                 <li class="timeline-entry">
+                  <h3 class="timeline-title">Note</h3>
+                  <p class="timeline-body">
+                      {{ data['handover-note2'] }}
+                  </p>
+                  <p class="timeline-info">
+                    <span class="visually-hidden">Note</span>
+                    <span class="timeline-author">Calum Dalton</span>
+                    <span class="timeline-author">Burnley Benefit Service Centre</span>
+                    <span class="timeline-date">{% include "includes/v2/date.html" %} at 10:45</span>
+                  </p>
+           
+                </li>
+  
+              {% endif %}  
+
+
+              {% if data['callBackStatus'] %}
+              <li class="timeline-entry">
+              <h3 class="timeline-title">
+                  First call back failed - 
                   {% if data['callBackStatus']==="First call failed - engaged" %}
                   engaged
                   {% elif data['callBackStatus']==="First call failed - number unobtainable" %}
@@ -437,95 +449,105 @@
                   {% else %}
                   not answered
                   {% endif %}
+              </h3>
+              <p class="timeline-info">
+                <span class="visually-hidden">
+
+                    First call back failed - 
+                    {% if data['callBackStatus']==="First call failed - engaged" %}
+                    engaged
+                    {% elif data['callBackStatus']==="First call failed - number unobtainable" %}
+                    number unobtainable
+                    {% else %}
+                    not answered
+                    {% endif %}
+                </span>
+                <span class="timeline-author">Calum Dalton</span>
+                <span class="timeline-author">Burnley Benefit Service Centre</span>
+                <span class="timeline-date">{% include "includes/v2/date.html" %} at 10:35</span>
+              </p>
+       
+            </li>
+
+              {% endif %} 
+
+
+              {% if data['handover-note'] %}
+
+
+              <li class="timeline-entry">
+                  <h3 class="timeline-title">Note</h3>
+                  <p class="timeline-body">
+                      {{ data['handover-note'] }}
                   </p>
+                  <p class="timeline-info">
+                    <span class="visually-hidden">Note</span>
+                    <span class="timeline-author">Calum Dalton</span>
+                    <span class="timeline-author">Burnley Benefit Service Centre</span>
+                    <span class="timeline-date">{% include "includes/v2/date.html" %} at 10:35</span>
+                  </p>
+           
+                </li>
+  
+              {% endif %} 
 
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:35</p>
-              <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
+              {% if data['scenario']==="customerUpdate" %} 
+              <li class="timeline-entry">
+                  <h3 class="timeline-title">Note</h3>
+                  <p class="timeline-body">
+                      Sent information to the decision maker, awaiting decision
+                  </p>
+                  <p class="timeline-info">
+                    <span class="visually-hidden">Note</span>
+                    <span class="timeline-author">Calumn Dalton</span>
+                    <span class="timeline-author">Burnley Benefit Service Centre</span>
+                    <span class="timeline-date">{% include "includes/v2/date.html" %} at 9:53</span>
+                  </p>
+           
+                </li>
 
-            </div>
-            {% endif %} 
-
-
-            {% if data['handover-note'] %}
-
-
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Note</h3>
-              <div class="panel panel-border-wide alert-default">
-                <p>{{ data['handover-note'] }}</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:35</p>
-              <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
-            </div>
-
-            {% endif %} 
-            
-            {% if data['scenario']==="customerUpdate" %} 
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Note</h3>
-              <div class="panel panel-border-wide alert-default">
-                <p>Sent information to the decision maker, awaiting decision</p>
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 10:35</p>
-              <p class="timeline_datetime font-xsmall">Calumn Dalton, Burnley Benefit Service Centre</p>
-            </div>
-
-
-           <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Allocated</h3>
-              <div class="panel panel-border-wide alert-success">
-                  
-                  <p>Calumn Dalton - Burnley benefit centre</p>
-                
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:53</p>
-            </div>
-            {% endif %} 
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Routed</h3>
-              <div class="panel panel-border-wide alert-success">
-                  
-                  <p>Burnley benefit centre</p>
-                
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
-            </div>
-
-          
-            <span class="line"></span>
-            <div class="timeline__event">
-              <h3 class="heading-small">Handover created</h3>
-              <div class="panel panel-border-wide alert-success">
+              <li class="timeline-entry">
+                  <h3 class="timeline-title">Allocated to Calum Dalton</h3>
+                  <p class="timeline-info">
+                    <span class="visually-hidden">Allocated to Calum Dalton</span>
+                    <span class="timeline-author">Burnley Benefit Service Centre</span>
+                    <span class="timeline-date">{% include "includes/v2/date.html" %} at 9:53</span>
+                  </p>
+                 <!-- <p class="timeline-body">
+                    Claimant over state pension age.
+                  </p> -->
+                </li>
+             
+                {% endif %} 
+            <li class="timeline-entry">
+              <h3 class="timeline-title">Routed to Burnley Benefit Centre</h3>
+              <p class="timeline-info">
+                <span class="visually-hidden">Routed to Burnley Benefit Centre</span>
+                <span class="timeline-date">{% include "includes/v2/date.html" %} at 9:33</span>
+              </p>
+             <!-- <p class="timeline-body">
+                Claimant over state pension age.
+              </p> -->
+            </li>
+    
+            <li class="timeline-entry">
+              <h3 class="timeline-title">Created:
                   {% if data['scenario']==='IS' %}
-                  <p>IS / Maintenance / Reporting change of address</p>
+                  <span>IS / Maintenance / Reporting change of address</span>
                  
                   {% else %}
-                  <p>ESA /	STBA - New Claim / STBA Request</p>
+                  <span>ESA /	STBA - New Claim / STBA Request</span>
                   
                   {% endif %}
-                
-              </div>
-              <p class="timeline_datetime">{% include "includes/v2/date.html" %} at 9:33</p>
-              <p class="font-xsmall timeline_datetime">Alex Black, Hyde Benefit Service Centre</p>
-            </div>
-          
-           
-
-           
-
-
-
-
-
-            <div style="clear:both"></div>
-
-
-          </div>
+              </h3>
+              <p class="timeline-info">
+                <span class="visually-hidden">Handover created</span>
+                <span class="timeline-author">by Alex Black</span>
+                <span class="timeline-author">Hyde Benefit Service Centre</span>
+                <span class="timeline-date">{% include "includes/v2/date.html" %} at 9:33</span>
+              </p>
+            </li>
+          </ol>
         </div>
         <!-- hidden radio's for prototype scenarios -->
 
@@ -542,4 +564,29 @@
 <script src="/public/javascripts/vendor/jquery-1.11.3.js"></script>
 <script src="/public/javascripts/tabs.js"></script>
 
+{% if data['scenario'] === 'allocatorEdit' %}
+                   
+<script>
+
+    $( document ).ready(function() {  
+
+          $('#tab-2').attr({
+  'aria-hidden': 'false'
+})
+$('#tab-1').attr({
+  'aria-hidden': 'true'
+})
+
+$('a.tab-1').attr({
+  'aria-selected': 'false'
+})
+
+$('a.tab-2').attr({
+  'aria-selected': 'true'
+})
+
+    });
+      </script>       
+
+{% endif %}
 {% endblock %}

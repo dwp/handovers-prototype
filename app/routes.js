@@ -142,6 +142,11 @@ router.post('/v5/queue',function (req, res) {
     res.redirect('/v5/customer')
   }
 
+
+  if('escalatedHandover'   == "escalate"){
+    res.redirect('/v5/customer')
+  }
+
   if(scenariopicker   == "allocatorEdit"){
     res.redirect('/v5/allocator-queue')
   }
