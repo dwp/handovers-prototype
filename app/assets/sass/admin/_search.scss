@@ -27,28 +27,29 @@
     }
 
    .button{
-        background: $button-colour url('/public/images/search-button.png') no-repeat 8px 50% ;
+        //background: $button-colour url('/public/images/search-button.png') no-repeat 8px 50% ;
         //height: 40px;
         //width: 40px;
         border: 0;
-        margin-left: -4px;
-        text-indent: -5000px;
+        //margin-left: -6px;
+        //text-indent: -5000px;
         position: relative;
         //top: -1px;
         font-weight: bold;
         position:relative;
-        padding-right:38px;
-
-         &:after {
-         font-family: FontAwesome;
-         content: '\F002';
-         font-size: 22px;
-         position: absolute;
-         right:10px;
-         top:5px;
-
-
-  }
+        //padding-right:38px;
     }
 }
 
+@media screen and (max-width: 640px){
+.search-box-container .button {
+    width: auto;
+    height: 38px;
+}
+
+.search-box-container .form-control {
+    width:280px;
+    max-width:65%;
+  }
+  
+};

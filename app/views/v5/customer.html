@@ -16,7 +16,10 @@
 
 
                    {% if data[ 'scenario']==='createCustomer'%}
-                   <p>This customer currently doesn't have any existing handovers</p>
+                   <div class="panel panel-border-narrow">
+                    <p>This customer currently doesn't have any existing handovers</p>
+                  </div>
+                 
                    {% elif data[ 'scenario']==='createHand'%}
                    <table class="mb1">
                         <thead>
@@ -204,7 +207,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                      <td><span class="bold">Expired</span></td>
+                                      <td>Completed on 02/03/2018</td>
                                       <td>02/03/2018 
                                             9:33am</td>
                                       <td>Oldham</td>
