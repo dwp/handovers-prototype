@@ -22,6 +22,24 @@
                 </label>
                       <textarea class="form-control form-control-3-4" id="description" name="description" rows="5">{{ data['description'] }}</textarea>
                  </div>
+                 <h2 class="heading-small">Upload document</h2>
+                
+                     
+                             <div class="form-group">
+                               <label class="form-label visuallyhidden" for="file-input">
+                                 Upload file
+                               </label>
+                               <input type="file" name="uploaded-file" id="selectedFile" style="display: none;" class="js-upload">
+                               <a class="button button-secondary" onclick="document.getElementById('selectedFile').click();">Choose file</a>
+                             </div>
+                     
+                             <p class="js-upload_filename" style="display: none"></p>
+                     
+                           <!-- <div class="panel panel-border-wide">
+                               <p>File size limit: 4MB</p>
+                               <p>File types accepted: PDF, CSV, Word, XML, HTML</p>
+                             </div> -->
+                        
                  <div class="form-group">
                     {% include "includes/v2/selectBenefit.html" %}
                     <div class="panel panel-border-narrow" id="subBen">
@@ -83,7 +101,7 @@
                                 <div class="multiple-choice" style="display:none">
                                     <input id="radio-inline-5" type="radio" name="scenario" value="createHand" {{ 'checked' if data[ 'scenario']==='createHand'
                                     else ''}} checked>
-                                      
+
                                     <label for="radio-4">hidden radio one</label>
                                   </div>
                                  {% endif %} 

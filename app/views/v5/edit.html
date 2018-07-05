@@ -7,7 +7,7 @@
 
 {% block content %} {% include "includes/v2/navV5.html" %}
 
-{% include "includes/v2/keydetails.html" %}
+{% include "includes/v2/caseHeader.html" %}
 
 <main id="content" role="main">
   <div class="main-content">
@@ -60,10 +60,23 @@
             <p class="lede">Change of address, customer is moving from London to Burnley, the customers new address will be 67 Springfield Rd, Burnley, BB11 3LD. see Attached form</p>
            
             {% else %}
-            <p class="lede">STBA Request(short term benefit advance)<!--, please see attacted form for more detail--></p>
+            <p class="lede">STBA Request(short term benefit advance)  cust yet to recv a
+              call Bck, He is struggling financially, please call cust as a matter of
+              urgency, see attached form for more detail</p>
             {% endif %}
 
-
+            <h2 class="heading-small">Attachments</h2>
+            {% if data['scenario']==='IS' %}
+            
+      
+            <ul class="list">
+              <li><a href="/public/images/sort_both.png">Change of circumstances form  <span class="font-secondary">56KB</span></a></li>
+          </ul>
+            {% else %}
+            <ul class="list">
+              <li><a href="/public/images/sort_both.png">STBA Request form <span class="font-secondary">56KB</span></a></li>
+          </ul>
+            {% endif %}
 
             <div class="tabs">
                 <div class="tabs-nav">
@@ -102,7 +115,7 @@
                         <h3 class="heading-small">Escalate handover</h3>
                       </legend>
                       <div class="multiple-choice">
-                        <input id="radio-inline-2" type="checkbox" name="escalatedHandover" value="escalate" {{ 'checked' if data[
+                        <input id="radio-inline-2" type="radio" name="escalatedHandover" value="escalate" {{ 'checked' if data[
                           'escalatedHandover']==='escalate' else ''}}>
                         <label for="radio-1">Yes</label>
                       </div>
@@ -114,7 +127,7 @@
                 {% endif %}
                
                 <div class="form-group mt1">
-                <label class="heading-small" for="handover-note">Add a note</label>
+                <label class="heading-small" for="handover-note">Add a note to the history</label>
                 {% if data['handover-note2'] or data['secondCallBackStatus']%}
                 <textarea class="form-control form-control-3-4" id="handover-note" name="handover-note3" rows="6">{{ data['handover-note3'] }}</textarea>
                 {% elif data['handover-note']  or data['callBackStatus']%}
@@ -124,21 +137,10 @@
                 {% endif %}
                 </div>
   
-          <!--  <h2 class="heading-small">Attachments</h2>
-                {% if data['scenario']==='IS' %}
-                
-          
-                <ul class="list">
-                  <li><a href="/public/images/sort_both.png">Change of circumstances form  <span class="font-secondary">56KB</span></a></li>
-              </ul>
-                {% else %}
-                <ul class="list">
-                  <li><a href="/public/images/sort_both.png">STBA Request form <span class="font-secondary">56KB</span></a></li>
-              </ul>
-                {% endif %}
+  
   
                 <h2 class="heading-small">Upload document</h2>
-                <form class="form" action="payment-date" method="post">
+                <form class="form" method="post">
                     
                             <div class="form-group">
                               <label class="form-label visuallyhidden" for="file-input">
@@ -150,14 +152,11 @@
                     
                             <p class="js-upload_filename" style="display: none"></p>
                     
-                          <div class="panel panel-border-wide">
+                          <!-- <div class="panel panel-border-wide">
                               <p>File size limit: 4MB</p>
                               <p>File types accepted: PDF, CSV, Word, XML, HTML</p>
-                            </div> 
-                    
-                          
-                    
-                          </form> -->
+                            </div> -->
+                          </form> 
                 <div class="form-group">
   
                     <fieldset>
