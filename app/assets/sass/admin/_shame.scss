@@ -396,10 +396,14 @@ h2, h3{
   margin-bottom: 30px;
   position:relative;
 
+  .danger{
+    color: $error-colour;
+  }
+
   &.escalated:after{
 
     content:'';
-    border-left:10px solid $mellow-red;
+    border-left:5px solid $error-colour;
     position:absolute;
     left:0px;
     top:0px;
@@ -423,11 +427,20 @@ h2, h3{
 
   span {
     display: block;
+    line-height: 1.5em;
+
 
     span{
       display:inline;
     }
   }
+
+  @media (max-width: 641px){
+    .column-two-thirds {
+       padding:15px 0 !important;
+    }
+  }
+
 }
 
 a.card__body {
@@ -487,9 +500,7 @@ a.card__body {
 }
 
 
-.danger{
-  color: $mellow-red;
-}
+
 
 
             
